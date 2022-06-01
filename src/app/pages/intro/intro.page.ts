@@ -16,10 +16,12 @@ export class IntroPage implements OnInit {
   ngOnInit() {
   }
   next() {
-    this.slides.slideNext();
+    // this.slides.slideNext();
+    this.router.navigateByUrl('/google-map', { replaceUrl:true });
   }
   async start() {
     await Storage.set({key: INTRO_KEY, value: 'true'});
-    this.router.navigateByUrl('/login', { replaceUrl:true });
+    this.router.navigateByUrl('/scan', { replaceUrl:true });
+    // this.router.navigateByUrl('/login', { replaceUrl:true });
   }
 }

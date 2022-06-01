@@ -1,8 +1,9 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>scan</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar>
+  <ion-title> סריקה</ion-title>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="intro"></ion-back-button>
+  </ion-buttons>
+</ion-toolbar>
 
 <ion-content [class.hideBg]="scanActive" >
   <ion-button expand="full"  color="success" (click)="startScanner()" [hidden]="scanActive">

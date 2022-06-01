@@ -6,30 +6,29 @@ import { IntroGuard } from './guards/intro.guard';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () =>
-      import('./home/home.module').then((m) => m.HomePageModule), canLoad:[AuthGuard]
-  },
-  {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'intro',//login
     pathMatch: 'full',
   },
-
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./home/home.module').then((m) => m.HomePageModule), //canLoad:[AuthGuard]
+  },
   {
     path: 'scan',
     loadChildren: () =>
-      import('./pages/scan/scan.module').then((m) => m.ScanPageModule),canLoad:[AuthGuard]
+      import('./pages/scan/scan.module').then((m) => m.ScanPageModule),//canLoad:[AuthGuard]
   },
   {
     path: 'camera',
     loadChildren: () =>
-      import('./pages/camera/camera.module').then((m) => m.CameraPageModule),canLoad:[AuthGuard]
+      import('./pages/camera/camera.module').then((m) => m.CameraPageModule),//canLoad:[AuthGuard]
   },
   {
     path: 'map',
     loadChildren: () =>
-      import('./pages/map/map.module').then((m) => m.MapPageModule),canLoad:[AuthGuard]
+      import('./pages/map/map.module').then((m) => m.MapPageModule),//canLoad:[AuthGuard]
   },
   {
     path: 'intro',

@@ -1,9 +1,16 @@
 ion-content {
-  --background: #0081ca;
+  --background: url('../../../assets/images/Group\ 2660.png') 0 0/100% 100% no-repeat;
 }
 
 ion-slides {
   height: 100%;
   --bullet-background-active: #fff;
   --bullet-background: #000;
+}
+.introSvg{
+  border: solid 2px #fff;
+  padding: 5%;
+  border-radius: 10px;
+  height: 40vh;
+    width: 45vw
 }

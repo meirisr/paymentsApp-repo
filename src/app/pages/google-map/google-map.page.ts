@@ -37,7 +37,9 @@ export class GoogleMapPage implements OnInit {
       .subscribe((result) => (this.apiLoaded = result));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.printCurrentPosition();
+  }
   // addMarker(event: google.maps.MapMouseEvent) {
 
   //   this.markerPositions.push(event.latLng.toJSON());

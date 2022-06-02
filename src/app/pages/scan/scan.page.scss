@@ -1,3 +1,145 @@
 .hideBg{
   --ion-background-color: #00000000;
 }
+.cut-border {
+  position: absolute;
+  display: inline-block;
+  border: 5px solid 1b1d1a;
+  width: 150px;
+  height: 150px;
+  top: 40%;
+  right: 40%;
+}
+.cut-border::before {
+  content: "";
+  position: absolute;
+  height: calc(100% + 10px);
+  width: 50%;
+  background-color: white;
+  top: -5px;
+  left: 25%;
+}
+.cut-border::after {
+  content: "";
+  position: absolute;
+  height: 50%;
+  width: calc(100% + 10px);
+  background-color: white;
+  top: 25%;
+  left: -5px;
+}
+// .ocrloader p::before {
+//   content: '';
+//   display:inline-block;
+//   width: 12px;
+//   height: 12px;
+//   border-radius: 50%;
+//   background: #6e7271;
+//   position: relative;
+//   right: 4px;
+// }
+.ocrloader p {
+  color: #fff;
+  position: absolute;
+  bottom: -30px;
+  left: 28%;
+  font-size: 16px;
+  font-weight: 600;
+  // animation: blinker 2.5s linear infinite;
+  font-family: sans-serif;
+  text-transform: uppercase;
+}
+
+.ocrloader {
+  width: 60vw;
+  height: 225px;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  top: 35%;
+  backface-visibility: hidden;
+
+  
+}
+
+// .ocrloader span {
+//   position: absolute;
+//   left:22px;
+//   top: 0;
+//   width: 85%;
+//   height: 1px;
+//   background-color: #424441;
+//   box-shadow: 0 0 10px 1px #3f413f,
+//               0 0 90px 1px #565a55;
+//   z-index: 1;
+//   transform: translateY(95px);
+//   animation: move 1.7s cubic-bezier(0.15,0.54,0.76,0.74);
+//   animation-iteration-count: infinite;
+// }
+
+.ocrloader:before,
+.ocrloader:after,
+.ocrloader em:after,
+.ocrloader em:before {
+  border-color: #025381;
+  content: "";
+  position: absolute;
+  width: 45px;
+  height: 46px;
+  border-style: solid;
+  border-width: 0px;
+  animation: blinker 2.5s linear infinite;
+
+}
+.ocrloader:before {
+  left: 0;
+  top: 0;
+  border-left-width: 5px;
+  border-top-width: 5px;
+  border-radius: 10px 0 0 0;
+}
+.ocrloader:after {
+  right: 0;
+  top: 0;
+  border-right-width: 5px;
+  border-top-width: 5px;
+  border-radius: 0 10px 0 0;
+}
+.ocrloader em:before {
+  left: 0;
+  bottom: 0;
+  border-left-width: 5px;
+  border-bottom-width: 5px;
+  border-radius: 0 0 0 10px;
+}
+.ocrloader em:after {
+  right: 0;
+  bottom: 0;
+  border-right-width: 5px;
+  border-bottom-width: 5px;
+  border-radius: 0 0 10
+  
+  px 0;
+}
+
+@keyframes move {
+  0%,
+  100% {
+    transform: translateY(190px);
+  }
+  // 50% {
+  //   transform: translateY(10%);
+  // }
+  60% {
+    transform: translateY(40px);
+  }
+}
+
+@keyframes blinker {  
+  0%{
+    opacity: 1;
+  }
+  50% { opacity: 0.5; }
+  100% { opacity: 0; }
+}

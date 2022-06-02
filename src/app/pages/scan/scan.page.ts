@@ -19,6 +19,7 @@ export class ScanPage implements OnInit {
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngAfterViewInit() {
     BarcodeScanner.prepare();
+    this.startScanner();
   }
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnDestroy() {

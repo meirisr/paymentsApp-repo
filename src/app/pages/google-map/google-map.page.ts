@@ -37,8 +37,12 @@ export class GoogleMapPage implements OnInit {
       .subscribe((result) => (this.apiLoaded = result));
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngAfterViewInit(){
+   setTimeout(() => {
     this.printCurrentPosition();
+   }, 0);
   }
   // addMarker(event: google.maps.MapMouseEvent) {
 
@@ -76,7 +80,7 @@ export class GoogleMapPage implements OnInit {
     this.center = latLng.toJSON();
    const marker= new google.maps.Marker({
       position: latLng.toJSON(),
-      // map: this.mapRef,
+      //  map: this.mapRef,
     });
     this.markers.push(marker);
     this.markerPositions.push(marker.getPosition().toJSON());

@@ -28,3 +28,9 @@
 .md body{
   --ion-background-color: #00000000;
 }
+.ion-color-light{
+  --ion-color-contrast: var(--ion-color-light-contrast, #fff) !important;
+  --ion-color-base: #f5f6f9 !important;
+   color:#fff;
+   
+}

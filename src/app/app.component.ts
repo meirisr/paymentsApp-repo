@@ -13,7 +13,7 @@ export class AppComponent {
     this.platform.backButton.subscribeWithPriority(10, () => {
       if(!this.routerOutlet.canGoBack()){
         // eslint-disable-next-line @typescript-eslint/dot-notation
-        navigator ['app'].exitApp();
+        navigator['app'].exitApp();
       }
       else{
         this.location.back();

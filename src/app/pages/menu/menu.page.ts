@@ -10,19 +10,29 @@ import { Storage } from '@capacitor/storage';
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage implements OnInit {
-  constructor(private menu: MenuController,private router: Router) {}
+  prefersDark;
+
+  constructor(private menu: MenuController, private router: Router) {}
   ngOnInit() {
-     Storage.set({key: INTRO_KEY, value: 'true'});
+    Storage.set({ key: INTRO_KEY, value: 'true' });
+    this.prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.toggleDarkTheme(this.prefersDark.matches);
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+      this.toggleDarkTheme(e);
+    });
+    // this.prefersDark.addListener((mediaQuery) => this.toggleDarkTheme(mediaQuery.matches));
   }
   async openMenu() {
     this.menu.enable(true, 'main');
     await this.menu.open('main');
   }
-  scan(){
+  scan() {
     this.router.navigate(['/scan']);
   }
-  map()
-{
-  this.router.navigate(['/google-map']);
-}
+  map() {
+    this.router.navigate(['/google-map']);
+  }
+  toggleDarkTheme(matchesMode) {
+    this.prefersDark = matchesMode;
+  }
 }

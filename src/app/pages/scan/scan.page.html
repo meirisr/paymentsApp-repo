@@ -5,7 +5,7 @@
   </ion-buttons>
 </ion-toolbar>
 
-<ion-content>
+<ion-content [class.hideBg]="scanActive">
   <ion-row class="ion-text-center ion-padding" [hidden]="!scanNotAllowed">
     <ion-col class="">
       <div class="alert alert-warning" role="alert">
@@ -13,13 +13,8 @@
       </div>
     </ion-col>
   </ion-row>
-  <!-- <ion-button expand="full"  color="success" (click)="startScanner()" [hidden]="scanActive">
-    <ion-icon name="scan" slot="start"></ion-icon>
-    Start Scan
-    </ion-button> -->
 
-  
-  <ion-row [hidden]="!scanActive || !scanNotAllowed" >
+  <ion-row [hidden]="!scanActive" >
     <div class="ocrloader">
       <p>QR סרוק/י קוד</p>
       <em></em>

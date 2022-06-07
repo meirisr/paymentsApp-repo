@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Platform, IonRouterOutlet } from '@ionic/angular';
 import { Location } from '@angular/common';
 
@@ -7,8 +7,9 @@ import { Location } from '@angular/common';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild(IonRouterOutlet, { static: true }) routerOutlet: IonRouterOutlet;
+
   constructor(private platform: Platform, private location: Location) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       if (!this.routerOutlet.canGoBack()) {
@@ -18,5 +19,8 @@ export class AppComponent {
         this.location.back();
       }
     });
+  }
+  ngOnInit() {
+    // console.log(this.prefersDark.matches);
   }
 }

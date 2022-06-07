@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   BarcodeScanner,
   SupportedFormat,
 } from '@capacitor-community/barcode-scanner';
+import { Capacitor } from '@capacitor/core';
 import { AlertController } from '@ionic/angular';
 @Component({
   selector: 'app-scan',
@@ -11,21 +13,36 @@ import { AlertController } from '@ionic/angular';
 })
 export class ScanPage implements OnInit {
   scanActive = false;
+  scanNotAllowed=false;
   result = null;
   element;
-  constructor(private alertController: AlertController) {}
+  constructor(private alertController: AlertController,private router: Router) {}
 
   ngOnInit() {}
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngAfterViewInit() {
-    BarcodeScanner.prepare();
-    this.startScanner();
+    if (Capacitor.isNativePlatform()) {
+      BarcodeScanner.prepare();
+      this.startScanner();
+      this.scanNotAllowed=false;
+    }
+    else{
+      this.scanNotAllowed=true;
+      setTimeout(()=>{
+        this.router.navigate(['/menu']);
+      },3000);
+    }
   }
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnDestroy() {
-    BarcodeScanner.stopScan();
+    document.querySelector('body').classList.remove('scanBg');
+    if (Capacitor.isNativePlatform()) {
+      BarcodeScanner.stopScan();
+    }
+    this.scanNotAllowed=false;
   }
   async startScanner() {
+    document.querySelector('body').classList.add('scanBg');
     const allowed = await this.checkPermission();
     if (allowed) {
       this.scanActive = true;

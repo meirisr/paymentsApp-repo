@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { async, Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
@@ -12,8 +12,9 @@ import { Capacitor } from '@capacitor/core';
   styleUrls: ['./google-map.page.scss'],
 })
 export class GoogleMapPage implements OnInit {
+  unsubscribe = new Subject<void>();
   apiLoaded: boolean;
-  markers=[];
+  markers = [];
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('map') mapRef: ElementRef<HTMLElement>;
   center: google.maps.LatLngLiteral = { lat: 31.79476, lng: 35.18761 };
@@ -24,10 +25,11 @@ export class GoogleMapPage implements OnInit {
   };
   markerPositions: google.maps.LatLngLiteral[] = [];
   constructor(private httpClient: HttpClient) {
+    console.log(this.httpClient);
     const key = environment.googleMapsKey;
-    httpClient
+    this.httpClient
       .jsonp(
-        `https://maps.googleapis.com/maps/api/js?key=${key}&language=he`,
+        `https://maps.googleapis.com/maps/api/js?key=${key}&language=en`,
         'callback'
       )
       .pipe(
@@ -37,12 +39,14 @@ export class GoogleMapPage implements OnInit {
       .subscribe((result) => (this.apiLoaded = result));
   }
 
-  ngOnInit() {}
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
-  ngAfterViewInit(){
-   setTimeout(() => {
+  ngOnInit() {
     this.printCurrentPosition();
-   }, 0);
+  }
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngAfterViewInit() {
+    //  setTimeout(() => {
+    this.printCurrentPosition();
+    //  }, 10);
   }
   // addMarker(event: google.maps.MapMouseEvent) {
 
@@ -64,21 +68,24 @@ export class GoogleMapPage implements OnInit {
           coordinates.coords.latitude,
           coordinates.coords.longitude
         );
-        this.addMarker(latLng);
+        await this.addMarker(latLng);
       });
     } else {
-      const coordinates = await Geolocation.getCurrentPosition();
-      const latLng = new google.maps.LatLng(
-        coordinates.coords.latitude,
-        coordinates.coords.longitude
+      await Geolocation.getCurrentPosition().then(
+        async (coordinates) => {
+          const latLng = new google.maps.LatLng(
+            coordinates.coords.latitude,
+            coordinates.coords.longitude
+          );
+          await this.addMarker(latLng);
+        }
       );
-      this.addMarker(latLng);
     }
   };
-  addMarker(latLng: google.maps.LatLng) {
+  async addMarker(latLng: google.maps.LatLng) {
     this.markerPositions.push(latLng.toJSON());
     this.center = latLng.toJSON();
-   const marker= new google.maps.Marker({
+    const marker = new google.maps.Marker({
       position: latLng.toJSON(),
       //  map: this.mapRef,
     });

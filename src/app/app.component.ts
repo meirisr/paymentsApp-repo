@@ -1,6 +1,6 @@
-import { Component ,ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Platform, IonRouterOutlet } from '@ionic/angular';
-import {Location}from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +8,13 @@ import {Location}from '@angular/common';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  @ViewChild(IonRouterOutlet ,{static:true}) routerOutlet: IonRouterOutlet;
-  constructor(private platform: Platform,private location: Location ) {
+  @ViewChild(IonRouterOutlet, { static: true }) routerOutlet: IonRouterOutlet;
+  constructor(private platform: Platform, private location: Location) {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      if(!this.routerOutlet.canGoBack()){
+      if (!this.routerOutlet.canGoBack()) {
         // eslint-disable-next-line @typescript-eslint/dot-notation
         navigator['app'].exitApp();
-      }
-      else{
+      } else {
         this.location.back();
       }
     });

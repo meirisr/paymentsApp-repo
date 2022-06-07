@@ -23,7 +23,7 @@ export class AuthenticationService {
       this.token = token.value;
       this.isAuthenticated.next(true);
     } else {
-      this.isAuthenticated.next(true);//false
+      this.isAuthenticated.next(false);//false
     }
   }
   login(credentials: { email; password }): Observable<any> {

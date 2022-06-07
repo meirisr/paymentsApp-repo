@@ -17,11 +17,11 @@ export class IntroPage implements OnInit {
   }
   next() {
     // this.slides.slideNext();
-    this.router.navigateByUrl('/google-map', { replaceUrl:true });
+    this.router.navigate(['/google-map']);
   }
   async start() {
     await Storage.set({key: INTRO_KEY, value: 'true'});
-    this.router.navigateByUrl('/scan', { replaceUrl:true });
+    this.router.navigate(['/scan']);
     // this.router.navigateByUrl('/login', { replaceUrl:true });
   }
 }

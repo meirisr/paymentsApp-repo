@@ -7,42 +7,67 @@ import { IntroGuard } from './guards/intro.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'intro',//login
+    redirectTo: 'login', //login
     pathMatch: 'full',
   },
   {
     path: 'home',
     loadChildren: () =>
-      import('./home/home.module').then((m) => m.HomePageModule), //canLoad:[AuthGuard]
+      import('./home/home.module').then((m) => m.HomePageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'scan',
     loadChildren: () =>
-      import('./pages/scan/scan.module').then((m) => m.ScanPageModule),//canLoad:[AuthGuard]
+      import('./pages/scan/scan.module').then((m) => m.ScanPageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'camera',
     loadChildren: () =>
-      import('./pages/camera/camera.module').then((m) => m.CameraPageModule),//canLoad:[AuthGuard]
+      import('./pages/camera/camera.module').then((m) => m.CameraPageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'map',
     loadChildren: () =>
-      import('./pages/map/map.module').then((m) => m.MapPageModule),//canLoad:[AuthGuard]
+      import('./pages/map/map.module').then((m) => m.MapPageModule),
+    canLoad: [AuthGuard],
+  },
+  {
+    path: 'menu',
+    loadChildren: () =>
+      import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
+      canLoad: [AuthGuard],
+    // children:[
+
+    // ]
   },
   {
     path: 'intro',
-    loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule),
-    // canLoad:[AuthGuard]
+    loadChildren: () =>
+      import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),
-    canLoad:[IntroGuard,AutoLoginGuard]
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginPageModule),
+    // canLoad: [IntroGuard, AutoLoginGuard],
   },
   {
     path: 'google-map',
-    loadChildren: () => import('./pages/google-map/google-map.module').then( m => m.GoogleMapPageModule)
+    loadChildren: () =>
+      import('./pages/google-map/google-map.module').then(
+        (m) => m.GoogleMapPageModule
+      ),
+    canLoad: [AuthGuard],
+  },
+
+  {
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
 ];
 

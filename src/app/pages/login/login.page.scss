@@ -7,18 +7,19 @@ ion-content {
 
 .input-group {
   background: #fff;
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
-  margin-bottom: 15px;
+  margin-bottom: 2px;
 }
 
 .errors {
   font-size: small;
   color: #fff;
-  background: var(--ion-color-danger);
+  // background: var(--ion-color-danger);
   padding-left: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-bottom: 15px;
 }
 .loginForm{
   position: absolute;
@@ -26,4 +27,18 @@ ion-content {
     top: 30%;
     left: 5%;
     width: 90%;
+}
+// .ng-valid[required], .ng-valid.required  {
+//   border-left: 3px solid #42A948; /* green */
+// }
+
+// .ng-invalid:not(form)  {
+//   border-left: 3px solid #a94442; /* red */
+// }
+
+.alert div {
+  background-color: #fed3d3;
+  color: #820000;
+  padding: 1rem;
+  margin-bottom: 1rem;
 }

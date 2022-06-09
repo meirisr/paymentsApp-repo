@@ -1,6 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { async, Observable, of, Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
@@ -11,21 +17,57 @@ import { Capacitor } from '@capacitor/core';
   templateUrl: './google-map.page.html',
   styleUrls: ['./google-map.page.scss'],
 })
-export class GoogleMapPage implements OnInit {
-  unsubscribe = new Subject<void>();
-  apiLoaded: boolean;
-  markers = [];
-  // eslint-disable-next-line @typescript-eslint/member-ordering
+export class GoogleMapPage implements OnInit, AfterViewInit {
+  @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('map') mapRef: ElementRef<HTMLElement>;
-  center: google.maps.LatLngLiteral = { lat: 31.79476, lng: 35.18761 };
-  zoom = 16;
+  unsubscribe = new Subject<void>();
+  apiLoaded = false;
+  lineSymbol = {
+    path: 'M -2,0 0,-2 2,0 0,2 z',
+    strokeColor: '#F00',
+    fillColor: '#F00',
+    fillOpacity: 1,
+  };
+  markers = [];
+  vertices = {
+    path: [
+      { lat: 13, lng: 13 },
+      { lat: -13, lng: 0 },
+      { lat: 13, lng: -13 },
+    ],
+    icons: [
+      {
+        icon: this.lineSymbol,
+        offset: '100%',
+      },
+    ],
+  };
+
+  markerPositions: google.maps.LatLngLiteral[] = [
+    { lat: 13, lng: 13 },
+    { lat: -13, lng: 0 },
+    { lat: 13, lng: -13 },
+  ];
+
+
+  mapOptions: google.maps.MapOptions = {
+    center: { lat: 31.79476, lng: 35.18761 },
+    zoom: 16,
+  };
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
     clickable: true,
+    icon: {
+      url:'../../../assets/isr-logo-black.svg' ,
+      scale:2,
+    },
+    // icon:{
+    //   url: location ? this.homeicon : this.icon,
+    //   scaledSize: { height: 35, width: 25 },
+    // }
   };
-  markerPositions: google.maps.LatLngLiteral[] = [];
+
   constructor(private httpClient: HttpClient) {
-    console.log(this.httpClient);
     const key = environment.googleMapsKey;
     this.httpClient
       .jsonp(
@@ -36,24 +78,21 @@ export class GoogleMapPage implements OnInit {
         map(() => true),
         catchError(() => of(false))
       )
-      .subscribe((result) => (this.apiLoaded = result));
+      .subscribe((result) => {
+        this.apiLoaded = result;
+      });
   }
 
-  ngOnInit() {
-    this.printCurrentPosition();
-  }
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnInit() {}
+
   ngAfterViewInit() {
-    //  setTimeout(() => {
+   setTimeout(()=>{
     this.printCurrentPosition();
-    //  }, 10);
+   },100);
   }
-  // addMarker(event: google.maps.MapMouseEvent) {
 
-  //   this.markerPositions.push(event.latLng.toJSON());
-  // }
   moveMap(event: google.maps.MapMouseEvent) {
-    this.center = event.latLng.toJSON();
+    this.mapOptions.center = event.latLng.toJSON();
   }
   markerClick(event) {
     console.log(event);
@@ -61,7 +100,7 @@ export class GoogleMapPage implements OnInit {
 
   printCurrentPosition = async () => {
     if (Capacitor.isNativePlatform()) {
-      Geolocation.requestPermissions().then(async () => {
+      await Geolocation.requestPermissions().then(async () => {
         const coordinates = await Geolocation.getCurrentPosition();
 
         const latLng = new google.maps.LatLng(
@@ -71,26 +110,32 @@ export class GoogleMapPage implements OnInit {
         await this.addMarker(latLng);
       });
     } else {
-      await Geolocation.getCurrentPosition().then(
-        async (coordinates) => {
-          const latLng = new google.maps.LatLng(
-            coordinates.coords.latitude,
-            coordinates.coords.longitude
-          );
-          await this.addMarker(latLng);
-        }
-      );
+      navigator.geolocation.getCurrentPosition((position) => {
+        const latLng = new google.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+        this.addMarker(latLng);
+      });
+      // await Geolocation.getCurrentPosition().then(
+      //   async (coordinates) => {
+      //     const latLng = new google.maps.LatLng(
+      //       coordinates.coords.latitude,
+      //       coordinates.coords.longitude
+      //     );
+      //     await this.addMarker(latLng);
+      //   }
+      // );
     }
   };
   async addMarker(latLng: google.maps.LatLng) {
     this.markerPositions.push(latLng.toJSON());
-    this.center = latLng.toJSON();
+    this.mapOptions.center = latLng.toJSON();
     const marker = new google.maps.Marker({
       position: latLng.toJSON(),
-      //  map: this.mapRef,
     });
     this.markers.push(marker);
-    this.markerPositions.push(marker.getPosition().toJSON());
+    // this.markerPositions.push(marker.getPosition().toJSON());
     console.log(this.markers);
   }
   removeAllMarkers() {

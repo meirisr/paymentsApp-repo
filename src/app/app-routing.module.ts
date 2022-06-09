@@ -14,25 +14,25 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () =>
       import('./home/home.module').then((m) => m.HomePageModule),
-    canLoad: [AuthGuard],
+    // canLoad: [AuthGuard],
   },
   {
     path: 'scan',
     loadChildren: () =>
       import('./pages/scan/scan.module').then((m) => m.ScanPageModule),
-    canLoad: [AuthGuard],
+    // canLoad: [AuthGuard],
   },
   {
     path: 'camera',
     loadChildren: () =>
       import('./pages/camera/camera.module').then((m) => m.CameraPageModule),
-    canLoad: [AuthGuard],
+    // canLoad: [AuthGuard],
   },
   {
     path: 'map',
     loadChildren: () =>
       import('./pages/map/map.module').then((m) => m.MapPageModule),
-    canLoad: [AuthGuard],
+    // canLoad: [AuthGuard],
   },
   {
     path: 'menu',
@@ -47,7 +47,7 @@ const routes: Routes = [
     path: 'intro',
     loadChildren: () =>
       import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
-    canLoad: [AuthGuard],
+    // canLoad: [AuthGuard],
   },
   {
     path: 'login',
@@ -61,7 +61,7 @@ const routes: Routes = [
       import('./pages/google-map/google-map.module').then(
         (m) => m.GoogleMapPageModule
       ),
-    canLoad: [AuthGuard],
+    // canLoad: [AuthGuard],
   },
 
   {

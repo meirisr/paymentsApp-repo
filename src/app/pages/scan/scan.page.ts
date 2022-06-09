@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   BarcodeScanner,
@@ -11,35 +11,37 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
 })
-export class ScanPage implements OnInit {
+export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
   scanActive = false;
-  scanNotAllowed=false;
+  scanNotAllowed = false;
   result = null;
   element;
-  constructor(private alertController: AlertController,private router: Router) {}
+  constructor(
+    private alertController: AlertController,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+
   ngAfterViewInit() {
     if (Capacitor.isNativePlatform()) {
       BarcodeScanner.prepare();
       this.startScanner();
-      this.scanNotAllowed=false;
-    }
-    else{
-      this.scanNotAllowed=true;
-      setTimeout(()=>{
+      this.scanNotAllowed = false;
+    } else {
+      this.scanNotAllowed = true;
+      setTimeout(() => {
         this.router.navigate(['/menu']);
-      },3000);
+      }, 3000);
     }
   }
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+
   ngOnDestroy() {
     document.querySelector('body').classList.remove('scanBg');
     if (Capacitor.isNativePlatform()) {
       BarcodeScanner.stopScan();
     }
-    this.scanNotAllowed=false;
+    this.scanNotAllowed = false;
   }
   async startScanner() {
     document.querySelector('body').classList.add('scanBg');

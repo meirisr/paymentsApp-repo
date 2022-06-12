@@ -54,6 +54,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
     // canLoad: [IntroGuard, AutoLoginGuard],
+    canLoad: [AutoLoginGuard],
   },
   {
     path: 'google-map',

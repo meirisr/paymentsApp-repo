@@ -28,12 +28,35 @@
 .md body.scanBg{
   --ion-background-color: #00000000;
 }
-.ion-color-light{
-  --ion-color-contrast: var(--ion-color-light-contrast, #fff) !important;
-  --ion-color-base: #f5f6f9 !important;
-   color:#fff;
+// .ion-color-light{
+//   --ion-color-contrast: var(--ion-color-light-contrast, #fff) !important;
+//   --ion-color-base: #f5f6f9 !important;
+//    color:#fff;
    
-}
+// }
 .dark{
   
 }
+form{
+    // margin-top: 5vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+form .input-group{
+  margin-top: 5vh;
+}
+form ion-input.sc-ion-input-md-h{
+  border: 1px solid lightgray;
+  border-radius: 10px;
+}
+// .sc-ion-input-md-h{
+//   border: 1px solid lightgray;
+//   border-radius: 10px;
+// }
+.ion-text-center{
+  text-align: center;
+}
+// input{
+//   color: #000000 !important;
+// }

@@ -76,13 +76,14 @@
   --ion-color-light-tint: #f5f6f9;
 }
 
-@media (prefers-color-scheme: dark) {
+// @media (prefers-color-scheme: dark) {
   /*
    * Dark Colors
    * -------------------------------------------
    */
+ 
+  body[color-theme="dark"] {
 
-  body {
     --ion-color-primary: #428cff;
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #ffffff;
@@ -146,7 +147,7 @@
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
   }
-
+  
   /*
    * iOS Dark Theme
    * -------------------------------------------
@@ -154,7 +155,7 @@
  .isr-icon{
    fill: #fff;
  }
-  .ios body {
+  .ios body[color-theme="dark"]{
     --ion-background-color: #000000;
     --ion-background-color-rgb: 0,0,0;
 
@@ -198,7 +199,7 @@
    * -------------------------------------------
    */
 
-  .md body {
+  .md body[color-theme="dark"]{
     --ion-background-color: #121212;
     --ion-background-color-rgb: 18,18,18;
 
@@ -235,4 +236,5 @@
 
     --ion-card-background: #1e1e1e;
   }
-}
+
+// }

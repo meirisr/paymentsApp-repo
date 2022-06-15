@@ -13,13 +13,13 @@ export class AuthGuard implements CanLoad {
     private router: Router
   ) {}
   canLoad(): Observable<boolean> {
-    return this.apiUserServer.isAuthenticated.pipe(
+    return this.apiUserServer.isAuthenticated
+    .pipe(
       filter((val) => val !== null), // Filter out initial Behaviour subject value
-      // take(1), // Otherwise the Observable doesn't complete!
+      take(1), // Otherwise the Observable doesn't complete!
       map((isAuthenticated) => {
         console.log(isAuthenticated);
         if (isAuthenticated) {
-          // this.router.navigateByUrl('/menu', { replaceUrl: true });
           return true;
         } else {
           this.router.navigateByUrl('/login');

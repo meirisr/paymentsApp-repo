@@ -1,23 +1,78 @@
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <!-- <ion-title slot="end">
+        <img *ngIf="prefersDark" src="../../../assets/isr-logo-whit.svg" /><img
+          *ngIf="!prefersDark"
+          src="../../../assets/isr-logo-black.svg"
+      /></ion-title> -->
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen  class=" menu-content">
+      <!-- <div class="nemu-img" style="height:30vh ;">
+        <div class="ion-text-center nemu-text">
+          <h2>welcom</h2>
+        </div> -->
+           <!-- <google-map
+      height="100%"
+      width="100vw"
+      [options]="mapOptions"
+    >
+      <map-traffic-layer [autoRefresh]="false"></map-traffic-layer>
+      <map-transit-layer></map-transit-layer>
+    </google-map> -->
+      <!-- </div> -->
+      <section>
+        <ion-title class="ion-text-center">Scan</ion-title>
+        <ion-button expand="block" slot="icon-only" color="secondary" size="large"  (click)="scan()"><ion-icon name="scan-sharp" slot="start"></ion-icon></ion-button>
+      </section>
+     
+
+  <!-- </ion-row> -->
+  <!-- <ion-row> -->
+    
+    
+  <!-- </ion-row> -->
+<!-- </ion-grid> -->
+  </ion-content>
+</div>
+
+
+
+
+
 <ion-menu side="start" menuId="main" content-id="main-content">
   <ion-header>
     <ion-toolbar translucent>
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content>
+  <ion-content >
     <ion-list>
+      <ion-item (click)="settings()">
+        <ion-icon name="cog-outline" slot="start"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-item>
+      <ion-item (click)="userDetails()">
+        <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+        <ion-label>User Details</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
+        <ion-label>My travels</ion-label>
+      </ion-item>
       <ion-item (click)="scan()">
         <ion-icon name="scan-sharp" slot="start"></ion-icon>
         <ion-label>scan</ion-label>
       </ion-item>
       <ion-item (click)="map()">
-        <ion-icon name="map-outline"  slot="start"></ion-icon>
+        <ion-icon name="map-outline" slot="start"></ion-icon>
         <ion-label>map</ion-label>
       </ion-item>
-      <ion-item>
-        <ion-icon name="heart" slot="start"></ion-icon>
-        <ion-label>Favorites</ion-label>
-      </ion-item>
+
       <ion-item>
         <ion-icon name="archive" slot="start"></ion-icon>
         <ion-label>Archived</ion-label>
@@ -34,17 +89,3 @@
   </ion-content>
 </ion-menu>
 
-<div class="ion-page" id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title slot="end"> <img *ngIf="prefersDark"  src="../../../assets/isr-logo-whit.svg" /><img *ngIf="!prefersDark"  src="../../../assets/isr-logo-black.svg" /></ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding menu-content" >
-    <ion-button expand="block" (click)="openMenu()">Open Menu</ion-button>
-    
-  </ion-content>
-</div>

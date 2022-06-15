@@ -7,36 +7,65 @@
 <ion-content *ngIf="!textForm">
   <form class="loginForm" (ngSubmit)="getSms()" [formGroup]="credentials">
     <div class="input-group">
-   
-        <ion-input  type="text" placeholder=" Enter phone number" id="phone" formControlName="phone" required></ion-input>
+     
+        <ion-input #phoneInput  autofocus="true" type="number" ng-minlength="5" placeholder=" Enter phone number" id="phone" formControlName="phone"  required></ion-input>
     </div>
     
       <div class="help-block" *ngIf="(phone.dirty || phone.touched) && phone.errors">
-        <div *ngIf="phone.errors?.required" class="errors">
+        <div text-center *ngIf="phone.errors?.required" class="errors ion-text-center" >
           phone number is required.
         </div>
-        <div *ngIf="phone.errors?.minlength" class="errors">
+        <div *ngIf="phone.errors?.minlength" class="errors ion-text-center">
           phone number must be at least 4 characters long.
         </div>
       </div>
-    <ion-button type="submit" expand="block" [disabled]="credentials.invalid">Enter</ion-button>
+      
+    <ion-button class="mt-4" type="submit" expand="block" [disabled]="credentials.invalid">Enter</ion-button>
+  
   </form>
 </ion-content>
 <ion-content *ngIf="textForm">
   <form class="loginForm" (ngSubmit)="getToken()" [formGroup]="textCredentials">
-    <div class="input-group">
-   
-        <ion-input  type="text" placeholder="Please enter code number" id="text" formControlName="text" required></ion-input>
+    <div class="input-group code-inputs" style="justify-content: center;">
+      <ion-row text-center>
+        <ion-col size="2">
+         <ion-input   #otp1 type="number"    formControlName="text1" (keyup)="otpController($event,otp2,'')">
+         </ion-input>
+        </ion-col>
+      <ion-col size="2">
+         <ion-input #otp2 type="number"  formControlName="text2" (keyup)="otpController($event,otp3,otp1)">
+         </ion-input>
+        </ion-col>
+      <ion-col size="2">
+         <ion-input  #otp3 type="number"   formControlName="text3" (keyup)="otpController($event,otp4,otp2)">
+         </ion-input>
+        </ion-col>
+      <ion-col size="2">
+         <ion-input #otp4 type="number"   formControlName="text4" (keyup)="otpController($event,otp5,otp3)">
+         </ion-input>
+        </ion-col>
+      <ion-col size="2">
+         <ion-input #otp5 type="number"   formControlName="text5" (keyup)="otpController($event,otp6,otp4)">
+         </ion-input>
+        </ion-col>
+        <ion-col size="2">
+         <ion-input #otp6  type="number"  formControlName="text6" (keyup)="otpController($event,'',otp5)">
+         </ion-input>
+        </ion-col>
+      </ion-row>
+        <!-- <ion-input  type="text" placeholder="Please enter code number" id="text" formControlName="text" required></ion-input> -->
     </div>
     
       <div class="help-block" *ngIf="(text.dirty || text.touched) && text.errors">
-        <div *ngIf="text.errors?.required" class="errors">
+        <ion-text center *ngIf="text.errors?.required" class="errors ion-text-center">
           text number is required.
-        </div>
-        <div *ngIf="text.errors?.minlength" class="errors">
+        </ion-text>
+        <div *ngIf="text.errors?.minlength" class="errors ion-text-center">
           text number must be at least 4 characters long.
         </div>
       </div>
+     
     <ion-button type="submit" expand="block" [disabled]="textCredentials.invalid">Enter</ion-button>
+
   </form>
 </ion-content>

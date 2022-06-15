@@ -1,14 +1,9 @@
-import { AuthenticationService } from './../../services/authentication.service';
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
+
 
 @Component({
   selector: 'app-login',
@@ -16,17 +11,17 @@ import { UserLoginService } from 'src/app/services/api/user-login.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  textForm: boolean;
-  credentials: FormGroup;
-  textCredentials: FormGroup;
+  @ViewChild('phoneInput', { read: ElementRef }) phoneInput: ElementRef;
+  @ViewChild('otp1', { read: ElementRef }) smsInput: ElementRef;
+  public textForm: boolean;
+  public credentials: FormGroup;
+  public textCredentials: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthenticationService,
     private alertController: AlertController,
     private router: Router,
     private loadingController: LoadingController,
-    private apiUserServer: UserLoginService
+    private apiUserServer: UserLoginService,
   ) {}
   get phone() {
     return this.credentials.get('phone');
@@ -35,7 +30,10 @@ export class LoginPage implements OnInit {
     return this.credentials.get('phone');
   }
   ngOnInit() {
-    this.textForm= false;
+    setTimeout(()=>{
+      this.phoneInput.nativeElement.setFocus();
+    },150);
+    this.textForm = false;
     this.credentials = new FormGroup({
       phone: new FormControl(null, [
         Validators.required,
@@ -44,21 +42,43 @@ export class LoginPage implements OnInit {
       // password: new FormControl(null),
     });
     this.textCredentials = new FormGroup({
-      text: new FormControl(null, [
+      text1: new FormControl(null, [
         Validators.required,
-        Validators.minLength(4),
+        Validators.maxLength(1),
       ]),
-      // password: new FormControl(null),
+      text2: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      text3: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      text4: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      text5: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      text6: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(1),
+      ]),
+      password: new FormControl(null),
     });
   }
-
   async getSms() {
     const loading = await this.loadingController.create();
     await loading.present();
     this.apiUserServer.getSms(this.credentials.value).subscribe(
       async (res) => {
         await loading.dismiss();
-        this.textForm=true;
+        this.textForm = true;
+        setTimeout(()=>{
+          this.smsInput.nativeElement.setFocus();
+        },150);
       },
       async (res) => {
         await loading.dismiss();
@@ -74,14 +94,14 @@ export class LoginPage implements OnInit {
   async getToken() {
     const loading = await this.loadingController.create();
     await loading.present();
-    const credentials={
-     phone: this.credentials.value,
-     text:  this.textCredentials.value
+    const credentials = {
+      phone: this.credentials.value,
+      text: Object.values(this.textCredentials.value).join(''),
     };
     this.apiUserServer.getToken(credentials).subscribe(
       async (res) => {
         await loading.dismiss();
-        this.router.navigateByUrl('/menu',{ replaceUrl: true });
+        this.router.navigateByUrl('/menu', { replaceUrl: true });
         console.log(this.apiUserServer.isAuthenticated);
       },
       async (res) => {
@@ -95,14 +115,15 @@ export class LoginPage implements OnInit {
       }
     );
   }
-  // Easy access for form fields
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  // get email() {
-  //   return this.credentials.get('email');
-  // }
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  // get password() {
-  //   return this.credentials.get('password');
-  // }
+  otpController(event,next,prev){
+  if(event.target.value.length < 1 && prev){
+    prev.setFocus();
+  }
+  else if(next && event.target.value.length>0){
+    next.setFocus();
+  }
+  else {
+   return 0;
+  } ;
+}
 }

@@ -1,9 +1,28 @@
 .my-custom-menu {
   --width: 500px;
 }
-//  .menu-content {
-//   --background: url('../../../assets/images/Group\ 2660.png') 0 0/100% 100% no-repeat;
+ .menu-content {
+  
+}
+// ion-menu{
+//   --width: 90vw
 // }
 ion-toolbar{
   height: 90px;
+}
+.nemu-img{
+  background: url('../../../assets/images/Group\ 2660.png') 0 0/100% 100% no-repeat;
+}
+.nemu-text{
+  //  margin-top: 15vh;
+   color: #fff; ;
+}
+section {
+  margin-top: 5em;
+  margin-bottom: 2.5em;
+}
+
+section:not(.full-width),
+.full-width > header {
+  padding: 0 10px;
 }

@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content>
- <div *ngIf="apiLoaded">
+ <!-- <div *ngIf="apiLoaded"> -->
   <!-- <ion-row class="scanner-buttons" >
     <ion-col class="ion-no-padding">
   <ion-button   expand="full" (click)="printCurrentPosition()">Show Position</ion-button>
@@ -22,6 +22,7 @@
 </ion-row> -->
     <google-map  #map id="map" height="90vh"
     width="100vw"  [options]="mapOptions"
+    [center]="center"
     (mapClick)="moveMap($event)">
     <map-traffic-layer [autoRefresh]="false"></map-traffic-layer>
     <map-transit-layer></map-transit-layer>
@@ -30,7 +31,7 @@
     [options]="markerOptions" (mapClick)="markerClick($event)"></map-marker>
     <map-polyline #polyline id="polyline" [path]="vertices.path"></map-polyline>
   </google-map>
-  </div>
+  <!-- </div> -->
    
   <!-- <div>Latitude: {{center?.lat}}</div>
   <div>Longitude: {{center?.lng}}</div> -->

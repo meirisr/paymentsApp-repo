@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { MapPageRoutingModule } from './map-routing.module';
-import { MapPage } from './map.page';
+
+import { SettingsPageRoutingModule } from './settings-routing.module';
+
+import { SettingsPage } from './settings.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MapPageRoutingModule
+    SettingsPageRoutingModule
   ],
-  declarations: [MapPage]
+  declarations: [SettingsPage]
 })
-export class MapPageModule {}
+export class SettingsPageModule {}

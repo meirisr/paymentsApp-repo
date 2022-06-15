@@ -7,21 +7,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides pager="true">
-    <!-- Slide 1 -->
+   <ion-slides pager="true">
+    
     <ion-slide>
       <ion-text class="introSvg" color="light">
-        <img src="../../../assets/isr-logo.svg" />
-
-        <p style="margin-top: 8vh">הצג את המיקום שלי במפה</p>
-        <ion-button (click)="next()" fill="outline" color="light"
-          >הצג</ion-button
-        >
+        <img *ngIf="prefersDark" src="../../../assets/isr-logo-whit.svg" /><img
+        *ngIf="!prefersDark"
+        src="../../../assets/isr-logo-black.svg"
+    />
+     
+        
       </ion-text>
     </ion-slide>
 
-    <!-- Slide 2 -->
-    <ion-slide>
+    <!-- <ion-slide>
       <ion-text class="introSvg" color="light">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,6 +38,6 @@
           >סרוק</ion-button
         >
       </ion-text>
-    </ion-slide>
-  </ion-slides>
+    </ion-slide> -->
+  </ion-slides> 
 </ion-content>

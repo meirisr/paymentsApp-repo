@@ -1,32 +1,30 @@
 ion-content {
-  --padding-top: 40%;
-  --padding-start: 10%;
-  --padding-end: 10%;
-  --background: url('https://images.unsplash.com/photo-1536431311719-398b6704d4cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80') 0 0/100% 100% no-repeat;
+  // --padding-top: 40%;
+  // --padding-start: 10%;
+  // --padding-end: 10%;
+  // --background: url('https://images.unsplash.com/photo-1536431311719-398b6704d4cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80') 0 0/100% 100% no-repeat;
 }
 
-.input-group {
-  background: #fff;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 2px;
-}
+// .input-group {
+//   background: #fff;
+//   border-radius: 5px;
+//   overflow: hidden;
+//   margin-bottom: 2px;
+// }
 
 .errors {
   font-size: small;
-  color: #fff;
+  // color: #fff;
   // background: var(--ion-color-danger);
-  padding-left: 15px;
+  // padding-left: 15px;
   padding-top: 2px;
   padding-bottom: 2px;
   margin-bottom: 15px;
 }
 .loginForm{
   position: absolute;
-    top: 20;
-    top: 30%;
-    left: 5%;
-    width: 90%;
+  top: 30%;
+  width: 90%;
 }
 // .ng-valid[required], .ng-valid.required  {
 //   border-left: 3px solid #42A948; /* green */
@@ -42,3 +40,12 @@ ion-content {
   padding: 1rem;
   margin-bottom: 1rem;
 }
+.code-inputs ion-input{
+  display:inline-block;
+  width:40px;
+  height:40px;
+  // margin:10px;
+  border-radius: 15%;
+  // --background:#e1e1e1;
+  --padding-start:35%;
+  }

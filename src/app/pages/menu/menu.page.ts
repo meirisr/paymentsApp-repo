@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import { INTRO_KEY } from 'src/app/guards/intro.guard';
 import { Router } from '@angular/router';
-import { Storage } from '@capacitor/storage';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -26,18 +23,11 @@ export class MenuPage implements OnInit {
   //       scale:2,
   //     },
   //   };
-  constructor(
-    private menu: MenuController,
-    private router: Router,
-    private apiUserServer: UserLoginService
-  ) {}
-  ngOnInit() {
-    // this.prefersDark.addListener((mediaQuery) => this.toggleDarkTheme(mediaQuery.matches));
+  constructor(private router: Router) {
+    document.querySelector('body').classList.remove('scanBg');
   }
-  // async openMenu() {
-  //   this.menu.enable(true, 'main');
-  //   await this.menu.open('main');
-  // }
+  ngOnInit() {}
+
   settings() {
     this.router.navigate(['/settings']);
   }

@@ -44,7 +44,9 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
     this.scanNotAllowed = false;
   }
   async startScanner() {
-    document.querySelector('body').classList.add('scanBg');
+    // setTimeout(() => {
+
+    // }, 300);
     const allowed = await this.checkPermission();
     if (allowed) {
       this.scanActive = true;
@@ -57,36 +59,25 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
         console.log(result);
         this.scanActive = false;
       }
+      document.querySelector('body').classList.add('scanBg');
     }
   }
   async checkPermission() {
-    return new Promise(async (resolve, reject) => {
-      const status = await BarcodeScanner.checkPermission({ force: true });
-      if (status.granted) {
-        resolve(true);
-      } else if (status.denied) {
-        const alert = await this.alertController.create({
-          header: 'No permission',
-          message: 'Pleas allow camera access in your settings',
-          buttons: [
-            {
-              text: 'No',
-              role: 'cancel',
-            },
-            {
-              text: 'Open Settings',
-              handler: () => {
-                resolve(false);
-                BarcodeScanner.openAppSettings();
-              },
-            },
-          ],
-        });
-        await alert.prepend();
+    const status = await BarcodeScanner.checkPermission({ force: true });
+    if (status.granted) {
+      return true;
+    } else if (status.denied) {
+      // the user denied permission for good
+      // redirect user to app settings if they want to grant it anyway
+      const c = confirm(
+        'If you want to grant permission for using your camera, enable it in the app settings.'
+      );
+      if (c) {
+        BarcodeScanner.openAppSettings();
       } else {
-        resolve(false);
+        navigator['app'].exitApp();
       }
-    });
+    }
   }
 
   stopScanner() {

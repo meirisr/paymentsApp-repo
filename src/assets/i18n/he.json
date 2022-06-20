@@ -1,0 +1,27 @@
+{
+  "pages":{
+    "intro":{
+      "header":"ברוכים הבאים",
+      "title":"כאן אפשר לשלם בכל אמצעי התחבורה",
+      "registration":"הרשמה חד פעמי",
+      "scan":"סורקים קוד",
+      "travel":"מתחילים נסיעה",
+      "nextBtn":"בואו נתחיל"
+      },
+      "login":{
+        "phoneInputText":"הזן מס' טלפון",
+        "nextBtn":"המשך",
+        "backBtn":"חזור",
+        "resendSms":"שלח קוד שוב"
+            },
+      "menu":{
+        "settings":"הגדרות",
+        "userDetails":"פרטי משתמש ",
+        "scan":"סריקה",
+        "map":"מפה" 
+      }
+    },
+    "dir":"rtl"
+
+  }
+  

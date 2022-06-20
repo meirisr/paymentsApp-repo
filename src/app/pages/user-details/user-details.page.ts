@@ -33,13 +33,15 @@ export class UserDetailsPage implements OnInit {
       lastName: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required]),
     });
-    this.getuserInfo();
+    from(this.apiUserServer.getUserDetails()).subscribe(async (res) => {
+      this.getuserInfo();
+    },async (res) => {});
   }
+
+
   async updateUserInfo() {
     from(this.apiUserServer.updateUserInfo(this.userDetails.value)).subscribe(
       async (res) => {
-        this.apiUserServer.getUserDetails();
-        // this.handleButtonClick();
         this.getuserInfo();
       },
       async (res) => {

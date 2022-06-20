@@ -5,7 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { ThemeService } from './services/utils/theme.service';
+import { UtilsService } from './services/utils/utils.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +20,12 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private location: Location,
     private httpClient: HttpClient,
-    private themeService: ThemeService
+    private utils: UtilsService,
+    private translate: TranslateService
   ) {
+    translate.setDefaultLang('en');
+    translate.use('he');
+
     this.platform.backButton.subscribeWithPriority(10, () => {
       if (!this.routerOutlet.canGoBack()) {
         // eslint-disable-next-line @typescript-eslint/dot-notation
@@ -44,6 +49,7 @@ export class AppComponent implements OnInit {
       });
   }
   ngOnInit() {
-    this.themeService.getUserTheme();
+    this.utils.getUserTheme();
+    this.utils.getUserLanguage();
   }
 }

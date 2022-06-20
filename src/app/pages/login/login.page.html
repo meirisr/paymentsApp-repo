@@ -1,14 +1,18 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Devdactic App</ion-title>
+    <ion-title>{{'' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
  
 <ion-content *ngIf="!textForm">
   <form class="loginForm" (ngSubmit)="getSms()" [formGroup]="credentials">
-    <div class="input-group">
-     
-        <ion-input #phoneInput  autofocus="true" type="number" ng-minlength="5" placeholder=" Enter phone number" id="phone" formControlName="phone"  required></ion-input>
+    <div  >
+      <!-- <ion-item> -->
+       <ion-label position="stacked" class="" dir="{{'dir' |translate}}"><h2>{{'pages.login.phoneInputText' |translate}}</h2></ion-label>
+        <ion-input #phoneInput  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" formControlName="phone"  required></ion-input>
+      <!-- </ion-item>  -->
+        
+        <!-- <ion-input class="my-input" maxlength='6'  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" placeholder=" Enter phone number"   required></ion-input> -->
     </div>
     
       <div class="help-block" *ngIf="(phone.dirty || phone.touched) && phone.errors">
@@ -20,36 +24,43 @@
         </div>
       </div>
       
-    <ion-button class="mt-4" type="submit" expand="block" [disabled]="credentials.invalid">Enter</ion-button>
+    <ion-button class="mt-4 " type="submit" class="nextBtn" [disabled]="credentials.invalid">{{'pages.login.nextBtn'| translate}}</ion-button>
   
   </form>
 </ion-content>
 <ion-content *ngIf="textForm">
   <form class="loginForm" (ngSubmit)="getToken()" [formGroup]="textCredentials">
+    <div class="code-header">
+      <ion-text class="ion-text-center ">
+        <h1>קוד אימות</h1>
+        <p>קוד אימות תקף ל5 דק' הקרובות</p>
+      </ion-text>
+      
+    </div>
     <div class="input-group code-inputs" style="justify-content: center;">
       <ion-row text-center>
         <ion-col size="2">
-         <ion-input   #otp1 type="number"    formControlName="text1" (keyup)="otpController($event,otp2,'')">
+         <ion-input   #otp1 type="text" inputmode="numeric" maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text1" (keyup)="otpController($event,otp2,'')">
          </ion-input>
         </ion-col>
       <ion-col size="2">
-         <ion-input #otp2 type="number"  formControlName="text2" (keyup)="otpController($event,otp3,otp1)">
+         <ion-input #otp2 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');" formControlName="text2" (keyup)="otpController($event,otp3,otp1)">
          </ion-input>
         </ion-col>
       <ion-col size="2">
-         <ion-input  #otp3 type="number"   formControlName="text3" (keyup)="otpController($event,otp4,otp2)">
+         <ion-input  #otp3 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text3" (keyup)="otpController($event,otp4,otp2)">
          </ion-input>
         </ion-col>
       <ion-col size="2">
-         <ion-input #otp4 type="number"   formControlName="text4" (keyup)="otpController($event,otp5,otp3)">
+         <ion-input #otp4 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text4" (keyup)="otpController($event,otp5,otp3)">
          </ion-input>
         </ion-col>
       <ion-col size="2">
-         <ion-input #otp5 type="number"   formControlName="text5" (keyup)="otpController($event,otp6,otp4)">
+         <ion-input #otp5 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text5" (keyup)="otpController($event,otp6,otp4)">
          </ion-input>
         </ion-col>
         <ion-col size="2">
-         <ion-input #otp6  type="number"  formControlName="text6" (keyup)="otpController($event,'',otp5)">
+         <ion-input #otp6  type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');" formControlName="text6" (keyup)="otpController($event,'',otp5)">
          </ion-input>
         </ion-col>
       </ion-row>
@@ -64,8 +75,16 @@
           text number must be at least 4 characters long.
         </div>
       </div>
-     
-    <ion-button type="submit" expand="block" [disabled]="textCredentials.invalid">Enter</ion-button>
+      <ion-text (click)="getSms()" class="ion-text-center" ><h2>שלח קוד שוב</h2></ion-text>
+    <div style="display: flex;
+    justify-content: space-between;
+    margin-top: 15%;">
+      <ion-button type="submit" expand="block" class="nextBtn" [disabled]="textCredentials.invalid">{{'pages.login.nextBtn'| translate}}</ion-button>
+      <ion-text  (click)="back()"><h2 class="ion-text-end">חזור</h2></ion-text>
+      <!-- <div></div> -->
+    </div>
+   
+
 
   </form>
 </ion-content>

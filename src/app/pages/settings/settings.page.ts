@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@capacitor/storage';
-import { ThemeService } from 'src/app/services/utils/theme.service';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 const COLOR_THEME = 'color-theme';
 @Component({
   selector: 'app-settings',
@@ -9,20 +9,24 @@ const COLOR_THEME = 'color-theme';
 })
 export class SettingsPage implements OnInit {
   ischecked;
-  constructor(private themeService: ThemeService) {
-    this.ischecked=this.themeService.ischecked;
+  ischecked2;
+  defaultLang;
+  constructor(private utils: UtilsService) {
+    this.ischecked=this.utils.ischecked;
+
+    this.defaultLang=this.utils.defaultLang;
+    console.log(this.defaultLang);
   }
 
   ngOnInit() {}
   onToggleColorTheme(event) {
-    this.themeService.onToggleColorTheme(event);
+    this.utils.onToggleColorTheme(event);
     console.log(event);
-    // if (event.detail.checked) {
-    //   document.body.setAttribute('color-theme', 'dark');
-    //   Storage.set({ key: COLOR_THEME, value: 'true' });
-    // } else {
-    //   document.body.setAttribute('color-theme', 'light');
-    //   Storage.set({ key: COLOR_THEME, value: 'false' });
-    // }
+  }
+  onToggleLanguages(event) {
+    this.utils.onToggleLanguages(event);
+  }
+  radioGroupChange(event){
+    this.utils.onToggleLanguages(event);
   }
 }

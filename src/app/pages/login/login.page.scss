@@ -1,38 +1,43 @@
-ion-content {
-  // --padding-top: 40%;
-  // --padding-start: 10%;
-  // --padding-end: 10%;
-  // --background: url('https://images.unsplash.com/photo-1536431311719-398b6704d4cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80') 0 0/100% 100% no-repeat;
-}
-
-// .input-group {
-//   background: #fff;
-//   border-radius: 5px;
-//   overflow: hidden;
-//   margin-bottom: 2px;
-// }
-
 .errors {
   font-size: small;
-  // color: #fff;
-  // background: var(--ion-color-danger);
-  // padding-left: 15px;
+// color: #fff;
   padding-top: 2px;
   padding-bottom: 2px;
   margin-bottom: 15px;
 }
-.loginForm{
+.loginForm {
   position: absolute;
   top: 30%;
   width: 90%;
 }
-// .ng-valid[required], .ng-valid.required  {
-//   border-left: 3px solid #42A948; /* green */
-// }
-
-// .ng-invalid:not(form)  {
-//   border-left: 3px solid #a94442; /* red */
-// }
+ion-input{
+  font-size: 25px;
+}
+.my-input{
+  border: none;
+    background: repeating-linear-gradient(90deg, dimgrey 0, dimgrey 2ch, transparent 0, transparent 2.5ch) 0 100%/100% 2px no-repeat;
+    color: dimgrey;
+    font: 4ch consolas, monospace;
+    letter-spacing: 1.5ch;
+    --padding-start: 10px;
+    margin-left: 1ch;
+}
+.my-input:focus {
+  outline: none;
+  color: dodgerblue;
+}
+.my-input-2 {
+  padding-left: 15px;
+  letter-spacing: 42px;
+  border: 0;
+  background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+  background-position: bottom;
+  background-size: 50px 1px;
+  background-repeat: repeat-x;
+  background-position-x: 35px;
+  width: 220px;
+  outline : none;
+}
 
 .alert div {
   background-color: #fed3d3;
@@ -40,12 +45,30 @@ ion-content {
   padding: 1rem;
   margin-bottom: 1rem;
 }
-.code-inputs ion-input{
-  display:inline-block;
-  width:40px;
-  height:40px;
+.code-inputs ion-input {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
   // margin:10px;
-  border-radius: 15%;
+  border: 0px;
+  border-bottom: 1px solid lightgray;
+  border-radius: 0;
   // --background:#e1e1e1;
-  --padding-start:35%;
-  }
+ 
+  --padding-start: 35%;
+}
+.nextBtn{
+  height: 50px;
+  width: 35%;
+  --border-radius: 30px;
+  font-size: 1.1rem;
+  --background: var(--ion-color-btn);
+  margin-top: 5%;
+   font-size: 24px;
+  // font-weight: bold;
+  
+}
+h2{
+  font-weight:bold;
+  font-size: 24px;
+}

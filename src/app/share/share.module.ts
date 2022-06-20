@@ -3,10 +3,14 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { MapComponent } from '../components/map/map.component';
+import { InputCodeComponent } from '../components/input-code/input-code.component';
+
+
 
 
 const content = [
-  MapComponent
+  MapComponent,
+  InputCodeComponent,
 ];
 
 @NgModule({

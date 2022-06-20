@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
-
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +22,7 @@ export class LoginPage implements OnInit {
     private router: Router,
     private loadingController: LoadingController,
     private apiUserServer: UserLoginService,
+    private utils: UtilsService
   ) {}
   get phone() {
     return this.credentials.get('phone');
@@ -30,16 +31,15 @@ export class LoginPage implements OnInit {
     return this.credentials.get('phone');
   }
   ngOnInit() {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.phoneInput.nativeElement.setFocus();
-    },150);
+    }, 150);
     this.textForm = false;
     this.credentials = new FormGroup({
       phone: new FormControl(null, [
         Validators.required,
         Validators.minLength(4),
       ]),
-      // password: new FormControl(null),
     });
     this.textCredentials = new FormGroup({
       text1: new FormControl(null, [
@@ -70,60 +70,53 @@ export class LoginPage implements OnInit {
     });
   }
   async getSms() {
-    const loading = await this.loadingController.create();
-    await loading.present();
+    const loader = this.utils.showLoader();
     this.apiUserServer.getSms(this.credentials.value).subscribe(
       async (res) => {
-        await loading.dismiss();
+        this.utils.dismissLoader(loader);
         this.textForm = true;
-        setTimeout(()=>{
+        setTimeout(() => {
           this.smsInput.nativeElement.setFocus();
-        },150);
+        }, 150);
       },
       async (res) => {
-        await loading.dismiss();
-        const alert = await this.alertController.create({
-          header: 'Login failed',
-          message: res.error.error.errorMessage['en-us'],
-          buttons: ['OK'],
-        });
-        await alert.present();
+        this.onHttpErorr(res, '', loader);
       }
     );
   }
+
   async getToken() {
-    const loading = await this.loadingController.create();
-    await loading.present();
+    const loader = this.utils.showLoader();
     const credentials = {
       phone: this.credentials.value,
       text: Object.values(this.textCredentials.value).join(''),
     };
     this.apiUserServer.getToken(credentials).subscribe(
-      async (res) => {
-        await loading.dismiss();
+      async () => {
+        this.utils.dismissLoader(loader);
         this.router.navigateByUrl('/menu', { replaceUrl: true });
         console.log(this.apiUserServer.isAuthenticated);
       },
       async (res) => {
-        await loading.dismiss();
-        const alert = await this.alertController.create({
-          header: 'Login failed',
-          message: res.error.error.errorMessage['en-us'],
-          buttons: ['OK'],
-        });
-        await alert.present();
+        this.onHttpErorr(res, '', loader);
       }
     );
   }
-  otpController(event,next,prev){
-  if(event.target.value.length < 1 && prev){
-    prev.setFocus();
+  otpController(event, next, prev) {
+    console.log(event.path[1].id);
+    if (event.target.value.length < 1 && prev) {
+      prev.setFocus();
+    } else if (next && event.target.value.length > 0) {
+      next.setFocus();
+    } else {
+      return 0;
+    }
   }
-  else if(next && event.target.value.length>0){
-    next.setFocus();
+  async onHttpErorr(e, header, loader) {
+    this.utils.dismissLoader(loader);
+    this.utils.showalert(e, header);
   }
-  else {
-   return 0;
-  } ;
-}
+  back() {
+    this.textForm = false;
+  }
 }

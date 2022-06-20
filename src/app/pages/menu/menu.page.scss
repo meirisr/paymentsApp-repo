@@ -1,12 +1,13 @@
+ion-content{
+// color:#ffff
+}
+// ion-icon{
+//   color: #fff;
+// }
 .my-custom-menu {
   --width: 500px;
 }
- .menu-content {
-  
-}
-// ion-menu{
-//   --width: 90vw
-// }
+
 ion-toolbar{
   height: 90px;
 }
@@ -14,7 +15,7 @@ ion-toolbar{
   background: url('../../../assets/images/Group\ 2660.png') 0 0/100% 100% no-repeat;
 }
 .nemu-text{
-  //  margin-top: 15vh;
+
    color: #fff; ;
 }
 section {

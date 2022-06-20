@@ -1,17 +1,78 @@
-// ion-content {
-//   --background: url('../../../assets/images/Group\ 2660.png') 0 0/100% 100% no-repeat;
-// }
 
-ion-slides {
-  height: 100%;
-  --bullet-background-active: #fff;
-  --bullet-background: #000;
+
+.slide-body-header{
+  margin-top: 20%;
 }
-// .introSvg{
-//   border: solid 2px #fff;
-//   padding: 5%;
-//   border-radius: 10px;
-//   height: 40vh;
-//   width: 80vw;
-//   background-color: rgba(0,0,0,.2);
-// }
+.slide-body-header h1{
+  font-size: 49px
+  // font-weight: bold;
+  
+}
+.slide-body-header p{
+  font-size:19px;
+  font-weight: 500;
+  
+}
+.icon{
+  background-color: #EFEFEF;
+  width: 38px;
+  height: 38px;
+}
+.slide-body{
+  margin-top: 35%;
+}
+.slide-body ion-label{
+  font-size: 1.3rem;
+}
+.slide-body ion-item-group{
+  margin-top: 20%;
+}
+.footer{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+}
+.footer ion-title{
+  padding-left: 0px;
+  color: #00E1E1;
+    
+}
+ ion-button{
+  padding-left: 0px;
+  // color: #00E1E1;
+  
+  
+  margin-left: 5%;
+  margin-bottom: 5%;
+    
+}
+.nextBtn{
+  height: 50px;
+  width: 45%;
+  --border-radius: 30px ;
+  --background: var(--ion-color-btn);
+  font-size: 24px;
+  font-weight: bold;
+  
+  
+}
+.icon-circle{
+  width: 50px;
+  height: 50px;
+  padding-top: 5px;
+  font-size: 30px;
+  border-radius: 50%;
+  background: #EFEFEF;
+  text-align: center;
+}
+ion-item{
+  margin: 10px 0;
+}
+
+.icon-list{
+  text-align: center;
+}
+.white-text{
+  color: #fff;
+}

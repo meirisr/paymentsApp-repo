@@ -84,9 +84,16 @@ export class UtilsService {
   async showalert(e, header) {
     const alert = await this.alertController.create({
       header: 'Login failed',
-      message: e.error.error.errorMessage['en-us'],
+      message: e?.error?.error?.errorMessage
+        ? e?.error?.error?.errorMessage['en-us']
+        : e?.error?.errorMessage
+        ? e?.error?.errorMessage['en-us']
+        : 'Due to networking error the request could not be fulfilled. Please retry in a few seconds',
       buttons: ['OK'],
     });
     await alert.present();
+  }
+  setStorege(k: string, v: string): Promise<any> {
+    return Storage.set({ key: k, value: v });
   }
 }

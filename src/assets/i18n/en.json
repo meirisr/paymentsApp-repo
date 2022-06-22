@@ -17,10 +17,16 @@
     "menu":{
       "settings":"Settings",
       "userDetails":"User Details",
+      "creditCardDetails":"Credit Card Details",
       "scan":"Scan",
       "map":"Map" 
+
+    },
+    "userDetais":{
+      "updated":"Updated"
     }
   },
-  "dir":"ltr"
+  "dir":"ltr",
+  "side":"start"
   
 }

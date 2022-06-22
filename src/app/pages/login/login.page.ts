@@ -1,9 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+
+
 
 @Component({
   selector: 'app-login',
@@ -11,6 +13,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+
   @ViewChild('phoneInput', { read: ElementRef }) phoneInput: ElementRef;
   @ViewChild('otp1', { read: ElementRef }) smsInput: ElementRef;
   public textForm: boolean;
@@ -80,6 +83,7 @@ export class LoginPage implements OnInit {
         }, 150);
       },
       async (res) => {
+        console.log(res);
         this.onHttpErorr(res, '', loader);
       }
     );
@@ -103,7 +107,9 @@ export class LoginPage implements OnInit {
     );
   }
   otpController(event, next, prev) {
-    console.log(event.path[1].id);
+    if(this.textCredentials.valid){
+           this.getToken();
+         }
     if (event.target.value.length < 1 && prev) {
       prev.setFocus();
     } else if (next && event.target.value.length > 0) {

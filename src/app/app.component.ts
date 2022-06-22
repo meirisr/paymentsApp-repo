@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { UtilsService } from './services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
+import { UserLoginService } from './services/api/user-login.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit {
     private location: Location,
     private httpClient: HttpClient,
     private utils: UtilsService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private apiUserServer: UserLoginService
   ) {
     translate.setDefaultLang('en');
     translate.use('he');

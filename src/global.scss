@@ -33,13 +33,14 @@
 @import '~swiper/scss/zoom';
 @import '~@ionic/angular/css/ionic-swiper';
 ion-content {
+  
   // --ion-background-color: transparent radial-gradient(closest-side at 26% 129%, #00928C 0%, #00BDB6 1%, #007CC5 100%) 0% 0% no-repeat padding-box;
   // --ion-text-color: #ffffff;
 }
- body,h1{
+ body{
   //  font-family: var(--ion-font-family);
   //  font-weight:var(--ion-font-weight);
-  
+  // direction: rtl;
    
 
 }
@@ -55,7 +56,7 @@ form{
 }
 
 form .input-group{
-  margin-top: 5vh;
+  margin-top: 3vh;
 }
 form ion-input.sc-ion-input-md-h{
   border: 1px solid lightgray;

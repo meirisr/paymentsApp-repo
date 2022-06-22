@@ -1,20 +1,24 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="primary">
     <ion-title>{{'' | translate}}</ion-title>
   </ion-toolbar>
-</ion-header>
- 
-<ion-content *ngIf="!textForm">
-  <form class="loginForm" (ngSubmit)="getSms()" [formGroup]="credentials">
-    <div  >
-      <!-- <ion-item> -->
+</ion-header> -->
+<ion-content>
+<div style="margin-top:10%; text-align: center;">
+  <h1>הרשמה חד פעמית</h1>
+<ion-row style="margin-top:10%;" dir="{{'dir' |translate}}">
+  
+  <ion-col style="text-align: -webkit-center;" [ngStyle]="{'color': !textForm ? 'var(--ion-color-btn)' : '#000' }"> <div  class="icon-circle">1</div>קוד לנייד</ion-col>
+  <ion-col style="text-align: -webkit-center;" [ngStyle]="{'color': textForm ? 'var(--ion-color-btn)' : '#000' }"> <div  class="icon-circle">2</div>פרטים אישיים</ion-col>
+  <ion-col style="text-align: -webkit-center;"> <div class="icon-circle">3</div>פרטי אשראי</ion-col>
+</ion-row>
+</div>
+<div *ngIf="!textForm">
+  <form class="loginForm" (ngSubmit)="getSms()" [formGroup]="credentials" >
+    <div>
        <ion-label position="stacked" class="" dir="{{'dir' |translate}}"><h2>{{'pages.login.phoneInputText' |translate}}</h2></ion-label>
         <ion-input #phoneInput  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" formControlName="phone"  required></ion-input>
-      <!-- </ion-item>  -->
-        
-        <!-- <ion-input class="my-input" maxlength='6'  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" placeholder=" Enter phone number"   required></ion-input> -->
     </div>
-    
       <div class="help-block" *ngIf="(phone.dirty || phone.touched) && phone.errors">
         <div text-center *ngIf="phone.errors?.required" class="errors ion-text-center" >
           phone number is required.
@@ -24,18 +28,18 @@
         </div>
       </div>
       
-    <ion-button class="mt-4 " type="submit" class="nextBtn" [disabled]="credentials.invalid">{{'pages.login.nextBtn'| translate}}</ion-button>
+    <ion-button expand="block" class="mt-4 " type="submit" class="nextBtn" [disabled]="credentials.invalid">{{'pages.login.nextBtn'| translate}}</ion-button>
   
   </form>
-</ion-content>
-<ion-content *ngIf="textForm">
+<!-- </ion-content> -->
+</div>
+<div *ngIf="textForm">
   <form class="loginForm" (ngSubmit)="getToken()" [formGroup]="textCredentials">
     <div class="code-header">
       <ion-text class="ion-text-center ">
         <h1>קוד אימות</h1>
         <p>קוד אימות תקף ל5 דק' הקרובות</p>
       </ion-text>
-      
     </div>
     <div class="input-group code-inputs" style="justify-content: center;">
       <ion-row text-center>
@@ -64,27 +68,17 @@
          </ion-input>
         </ion-col>
       </ion-row>
-        <!-- <ion-input  type="text" placeholder="Please enter code number" id="text" formControlName="text" required></ion-input> -->
     </div>
-    
-      <div class="help-block" *ngIf="(text.dirty || text.touched) && text.errors">
-        <ion-text center *ngIf="text.errors?.required" class="errors ion-text-center">
-          text number is required.
-        </ion-text>
-        <div *ngIf="text.errors?.minlength" class="errors ion-text-center">
-          text number must be at least 4 characters long.
-        </div>
-      </div>
       <ion-text (click)="getSms()" class="ion-text-center" ><h2>שלח קוד שוב</h2></ion-text>
-    <div style="display: flex;
-    justify-content: space-between;
-    margin-top: 15%;">
+    <div style="margin-top: 5%;">
       <ion-button type="submit" expand="block" class="nextBtn" [disabled]="textCredentials.invalid">{{'pages.login.nextBtn'| translate}}</ion-button>
-      <ion-text  (click)="back()"><h2 class="ion-text-end">חזור</h2></ion-text>
-      <!-- <div></div> -->
+      <ion-text  (click)="back()" class="ion-text-center"><p>חזור</p></ion-text>
     </div>
-   
-
-
   </form>
+  </div>
 </ion-content>
+<!-- <ion-footer>
+  <ion-toolbar>
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer> -->

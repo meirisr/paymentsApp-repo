@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
@@ -14,7 +13,6 @@ export class UserDetailsPage implements OnInit {
   public userDetails: FormGroup;
   constructor(
     private alertController: AlertController,
-    private router: Router,
     private loadingController: LoadingController,
     private apiUserServer: UserLoginService
   ) {}
@@ -33,9 +31,7 @@ export class UserDetailsPage implements OnInit {
       lastName: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required]),
     });
-    from(this.apiUserServer.getUserDetails()).subscribe(async (res) => {
       this.getuserInfo();
-    },async (res) => {});
   }
 
 

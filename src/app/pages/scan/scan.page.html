@@ -1,7 +1,7 @@
 <ion-header>
 <ion-toolbar>
   <!-- <ion-title class="ion-text-center"> סריקה</ion-title> -->
-  <ion-buttons slot="start">
+  <ion-buttons slot="end">
     <ion-back-button defaultHref="menu"></ion-back-button>
   </ion-buttons>
 </ion-toolbar>
@@ -14,8 +14,17 @@
       </div>
     </ion-col>
   </ion-row>
-
+  <div class="scan-body-header" [hidden]="!scanActive">
+    <ion-text class="ion-text-center ">
+      <h1>תשלום באוטובוס</h1>
+      <h2>
+        QR סריקת קוד
+      </h2>
+      <p>המדבקות נמצאות על הדלתות או ליד הנהג</p>
+    </ion-text>
+  </div>
   <ion-row [hidden]="!scanActive" >
+    
     <div class="ocrloader">
       <p>QR סרוק/י קוד</p>
       <em></em>

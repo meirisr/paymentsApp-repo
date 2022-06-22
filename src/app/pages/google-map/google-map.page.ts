@@ -84,16 +84,21 @@ export class GoogleMapPage implements OnInit, AfterViewInit {
 
   printCurrentPosition = async () => {
     if (Capacitor.isNativePlatform()) {
-      await Geolocation.requestPermissions().then(async () => {
-        const coordinates = await Geolocation.getCurrentPosition();
+      await Geolocation.requestPermissions().then(
+        async () => {
+          const coordinates = await Geolocation.getCurrentPosition();
 
-        const latLng = new google.maps.LatLng(
-          coordinates.coords.latitude,
-          coordinates.coords.longitude
-        );
-        await this.addMarker(latLng);
-        this.center = latLng.toJSON();
-      });
+          const latLng = new google.maps.LatLng(
+            coordinates.coords.latitude,
+            coordinates.coords.longitude
+          );
+          await this.addMarker(latLng);
+          this.center = latLng.toJSON();
+        },
+        async () => {
+          console.log('jjjj');
+        }
+      );
     } else {
       navigator.geolocation.getCurrentPosition((position) => {
         const latLng = new google.maps.LatLng(

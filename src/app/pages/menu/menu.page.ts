@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
+import { filter, map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-menu',
@@ -23,10 +24,27 @@ export class MenuPage implements OnInit {
   //       scale:2,
   //     },
   //   };
-  constructor(private router: Router) {
+  constructor(private router: Router, private apiUserServer: UserLoginService) {
     document.querySelector('body').classList.remove('scanBg');
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.apiUserServer.getUserDetails();
+    this.apiUserServer.getCreditCardInfo();
+    // this.apiUserServer.getUserDetails().then(()=>{
+    //   this.apiUserServer.isUserHasDetails.pipe(
+    //     filter((val) => val !== null),
+    //     take(1),
+    //     map((isUserHasDetails) =>{return isUserHasDetails;}))
+    //   .subscribe((e)=>{
+    //     if(e){
+    //      return false;
+    //     }
+    //     else{
+    //       this.router.navigateByUrl('/user-details', { replaceUrl: true });
+    //     }
+    //   });
+    // });
+  }
 
   settings() {
     this.router.navigate(['/settings']);
@@ -37,8 +55,12 @@ export class MenuPage implements OnInit {
   map() {
     this.router.navigate(['/google-map']);
   }
-  userDetails() {
-    this.router.navigate(['/user-details']);
+
+  userProfile() {
+    this.router.navigate(['/user-profile']);
+  }
+  creditCardDetails() {
+    this.router.navigate(['/credit-card-details']);
   }
   toggleDarkTheme(matchesMode) {
     this.prefersDark = matchesMode;

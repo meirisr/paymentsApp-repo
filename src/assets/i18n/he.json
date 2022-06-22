@@ -17,11 +17,16 @@
       "menu":{
         "settings":"הגדרות",
         "userDetails":"פרטי משתמש ",
+        "creditCardDetails":"פרטי כרטיס אשראי",
         "scan":"סריקה",
         "map":"מפה" 
+      },
+      "userDetais":{
+        "updated":"ערוך"
       }
     },
-    "dir":"rtl"
+    "dir":"rtl",
+    "side":"end"
 
   }
   

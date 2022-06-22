@@ -32,7 +32,7 @@ const routes: Routes = [
     path: 'menu',
     loadChildren: () =>
       import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
-      canLoad: [AuthGuard],
+    canLoad: [AuthGuard, IntroGuard],
     // canLoad: [IntroIntroGuardGuard],
     // children:[
 
@@ -43,13 +43,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/settings/settings.module').then(
         (m) => m.SettingsPageModule
-      ),canLoad: [AuthGuard]
+      ),
+    canLoad: [AuthGuard],
   },
   {
     path: 'intro',
     loadChildren: () =>
       import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
-      canLoad: [AutoLoginGuard]
+    canLoad: [AutoLoginGuard],
   },
   {
     path: 'login',
@@ -71,8 +72,22 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/user-details/user-details.module').then(
         (m) => m.UserDetailsPageModule
-      ),canLoad: [AuthGuard]
-
+      ),
+    canLoad: [AuthGuard],
+  },
+  {
+    path: 'credit-card-details',
+    loadChildren: () =>
+      import('./pages/credit-card-details/credit-card-details.module').then(
+        (m) => m.CreditCardDetailsPageModule
+      ),
+  },
+  {
+    path: 'user-profile',
+    loadChildren: () =>
+      import('./pages/user-profile/user-profile.module').then(
+        (m) => m.UserProfilePageModule
+      ),
   },
   {
     path: '**',

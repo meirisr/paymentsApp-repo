@@ -1,40 +1,84 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Devdactic App</ion-title>
+    <ion-title>{{'' | translate}}</ion-title>
   </ion-toolbar>
-</ion-header>
- 
+</ion-header> -->
 <ion-content>
- 
-  <form class="loginForm" (ngSubmit)="login()" [formGroup]="credentials">
-    <div class="input-group">
-      <ion-item>
-        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
-      </ion-item>
-      <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
-        <span *ngIf="email.errors?.required">Email is required</span>
-        <span *ngIf="email.errors?.email">Email is invalid</span>
-      </div>
-      <ion-item>
-        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
-      </ion-item>
-      <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
-        <span *ngIf="password.errors?.required">Password is required</span>
-        <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
-      </div>
+<div style="margin-top:10%; text-align: center;">
+  <h1>הרשמה חד פעמית</h1>
+<ion-row style="margin-top:10%;" dir="{{'dir' |translate}}">
+  
+  <ion-col style="text-align: -webkit-center;" [ngStyle]="{'color': !textForm ? 'var(--ion-color-btn)' : '#000' }"> <div  class="icon-circle">1</div>קוד לנייד</ion-col>
+  <ion-col style="text-align: -webkit-center;" [ngStyle]="{'color': textForm ? 'var(--ion-color-btn)' : '#000' }"> <div  class="icon-circle">2</div>פרטים אישיים</ion-col>
+  <ion-col style="text-align: -webkit-center;"> <div class="icon-circle">3</div>פרטי אשראי</ion-col>
+</ion-row>
+</div>
+<div *ngIf="!textForm">
+  <form class="loginForm" (ngSubmit)="getSms()" [formGroup]="credentials" >
+    <div>
+       <ion-label position="stacked" class="" dir="{{'dir' |translate}}"><h2>{{'pages.login.phoneInputText' |translate}}</h2></ion-label>
+        <ion-input #phoneInput  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" formControlName="phone"  required></ion-input>
     </div>
- 
-    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
-    <ion-button type="button" expand="block" color="light" fill="clear">Not yet a member? Sign up!
-    </ion-button>
- 
-    <ion-button type="button" expand="block" color="tertiary">
-      <ion-icon name="logo-google" slot="start"></ion-icon>
-      Sign in with Google
-    </ion-button>
-    <ion-button type="button" expand="block" color="tertiary">
-      <ion-icon name="logo-apple" slot="start"></ion-icon>
-      Sign in with Apple
-    </ion-button>
+      <div class="help-block" *ngIf="(phone.dirty || phone.touched) && phone.errors">
+        <div text-center *ngIf="phone.errors?.required" class="errors ion-text-center" >
+          phone number is required.
+        </div>
+        <div *ngIf="phone.errors?.minlength" class="errors ion-text-center">
+          phone number must be at least 4 characters long.
+        </div>
+      </div>
+      
+    <ion-button expand="block" class="mt-4 " type="submit" class="nextBtn" [disabled]="credentials.invalid">{{'pages.login.nextBtn'| translate}}</ion-button>
+  
   </form>
+<!-- </ion-content> -->
+</div>
+<div *ngIf="textForm">
+  <form class="loginForm" (ngSubmit)="getToken()" [formGroup]="textCredentials">
+    <div class="code-header">
+      <ion-text class="ion-text-center ">
+        <h1>קוד אימות</h1>
+        <p>קוד אימות תקף ל5 דק' הקרובות</p>
+      </ion-text>
+    </div>
+    <div class="input-group code-inputs" style="justify-content: center;">
+      <ion-row text-center>
+        <ion-col size="2">
+         <ion-input   #otp1 type="text" inputmode="numeric" maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text1" (keyup)="otpController($event,otp2,'')">
+         </ion-input>
+        </ion-col>
+      <ion-col size="2">
+         <ion-input #otp2 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');" formControlName="text2" (keyup)="otpController($event,otp3,otp1)">
+         </ion-input>
+        </ion-col>
+      <ion-col size="2">
+         <ion-input  #otp3 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text3" (keyup)="otpController($event,otp4,otp2)">
+         </ion-input>
+        </ion-col>
+      <ion-col size="2">
+         <ion-input #otp4 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text4" (keyup)="otpController($event,otp5,otp3)">
+         </ion-input>
+        </ion-col>
+      <ion-col size="2">
+         <ion-input #otp5 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text5" (keyup)="otpController($event,otp6,otp4)">
+         </ion-input>
+        </ion-col>
+        <ion-col size="2">
+         <ion-input #otp6  type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');" formControlName="text6" (keyup)="otpController($event,'',otp5)">
+         </ion-input>
+        </ion-col>
+      </ion-row>
+    </div>
+      <ion-text (click)="getSms()" class="ion-text-center" ><h2>שלח קוד שוב</h2></ion-text>
+    <div style="margin-top: 5%;">
+      <ion-button type="submit" expand="block" class="nextBtn" [disabled]="textCredentials.invalid">{{'pages.login.nextBtn'| translate}}</ion-button>
+      <ion-text  (click)="back()" class="ion-text-center"><p>חזור</p></ion-text>
+    </div>
+  </form>
+  </div>
 </ion-content>
+<!-- <ion-footer>
+  <ion-toolbar>
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer> -->

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center"> </ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="menu"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid >
+  <ion-row>
+    <ion-col size="12">
+      <ion-item>
+        <ion-label>Dark Mode</ion-label>
+        <ion-toggle (ionChange)="onToggleColorTheme($event)" [checked]="ischecked"></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <!-- <ion-col size="12">
+      <ion-item>
+        <ion-label>Swith To English</ion-label>
+        <ion-toggle (ionChange)="onToggleLanguages($event)" [checked]="ischecked2"></ion-toggle>
+      </ion-item>
+    </ion-col> -->
+  </ion-row>
+  <ion-list>
+  <ion-radio-group [value]="defaultLang"  (ionChange)="radioGroupChange($event)">
+    <ion-list-header>
+      <ion-label>Languages</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>English</ion-label>
+      <ion-radio slot="start" color="success" value="en"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Hebrew</ion-label>
+      <ion-radio slot="start" color="tertiary" value="he"></ion-radio>
+    </ion-item>
+
+   
+  </ion-radio-group>
+</ion-list>
+</ion-grid>
+</ion-content>

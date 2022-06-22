@@ -1,0 +1,32 @@
+{
+  "pages":{
+    "intro":{
+      "header":"Welcome",
+      "title":"",
+      "registration":"One-time registration",
+      "scan":"Scan",
+      "travel":"And travel",
+      "nextBtn":"Let Start"
+    },
+    "login":{
+"phoneInputText":"Enter Phone Number",
+"nextBtn":"Next",
+"backBtn":"Back",
+"resendSms":"Resend code"
+    },
+    "menu":{
+      "settings":"Settings",
+      "userDetails":"User Details",
+      "creditCardDetails":"Credit Card Details",
+      "scan":"Scan",
+      "map":"Map" 
+
+    },
+    "userDetais":{
+      "updated":"Updated"
+    }
+  },
+  "dir":"ltr",
+  "side":"start"
+  
+}

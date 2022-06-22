@@ -22,7 +22,7 @@
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
-  top: 15%;
+  top: 25%;
   backface-visibility: hidden;
 
   
@@ -72,6 +72,9 @@
 .alert-col{
   border: solid 1px orange;
   margin-top: 25vh;
+}
+.scan-body-header {
+  color: #fff;
 }
 
 

@@ -7,14 +7,14 @@ import { IntroGuard } from './guards/intro.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login', //login
+    redirectTo: 'intro', //login
     pathMatch: 'full',
   },
   {
     path: 'home',
     loadChildren: () =>
       import('./home/home.module').then((m) => m.HomePageModule),
-    canLoad: [AuthGuard],
+    // canLoad: [AuthGuard],
   },
   {
     path: 'scan',
@@ -26,34 +26,38 @@ const routes: Routes = [
     path: 'camera',
     loadChildren: () =>
       import('./pages/camera/camera.module').then((m) => m.CameraPageModule),
-    canLoad: [AuthGuard],
-  },
-  {
-    path: 'map',
-    loadChildren: () =>
-      import('./pages/map/map.module').then((m) => m.MapPageModule),
-    canLoad: [AuthGuard],
+    // canLoad: [AuthGuard],
   },
   {
     path: 'menu',
     loadChildren: () =>
       import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
-      canLoad: [AuthGuard],
+    canLoad: [AuthGuard, IntroGuard],
+    // canLoad: [IntroIntroGuardGuard],
     // children:[
 
     // ]
   },
   {
+    path: 'settings',
+    loadChildren: () =>
+      import('./pages/settings/settings.module').then(
+        (m) => m.SettingsPageModule
+      ),
+    canLoad: [AuthGuard],
+  },
+  {
     path: 'intro',
     loadChildren: () =>
       import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
-    canLoad: [AuthGuard],
+    canLoad: [AutoLoginGuard],
   },
   {
     path: 'login',
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
-    // canLoad: [IntroGuard, AutoLoginGuard],
+    //  canLoad: [IntroGuard, AutoLoginGuard],
+    canLoad: [AutoLoginGuard],
   },
   {
     path: 'google-map',
@@ -63,7 +67,28 @@ const routes: Routes = [
       ),
     canLoad: [AuthGuard],
   },
-
+  {
+    path: 'user-details',
+    loadChildren: () =>
+      import('./pages/user-details/user-details.module').then(
+        (m) => m.UserDetailsPageModule
+      ),
+    canLoad: [AuthGuard],
+  },
+  {
+    path: 'credit-card-details',
+    loadChildren: () =>
+      import('./pages/credit-card-details/credit-card-details.module').then(
+        (m) => m.CreditCardDetailsPageModule
+      ),
+  },
+  {
+    path: 'user-profile',
+    loadChildren: () =>
+      import('./pages/user-profile/user-profile.module').then(
+        (m) => m.UserProfilePageModule
+      ),
+  },
   {
     path: '**',
     redirectTo: 'login',

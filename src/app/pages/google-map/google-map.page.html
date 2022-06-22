@@ -2,14 +2,14 @@
  
   <ion-toolbar>
     <ion-title class="ion-text-center"> </ion-title>
-    <ion-buttons slot="start">
+    <ion-buttons slot="end">
       <ion-back-button defaultHref="menu"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
- <div *ngIf="apiLoaded">
+ <!-- <div *ngIf="apiLoaded"> -->
   <!-- <ion-row class="scanner-buttons" >
     <ion-col class="ion-no-padding">
   <ion-button   expand="full" (click)="printCurrentPosition()">Show Position</ion-button>
@@ -21,16 +21,17 @@
 </ion-col>
 </ion-row> -->
     <google-map  #map id="map" height="90vh"
-    width="100vw"  [center]="center"
-    [zoom]="zoom"
+    width="100vw"  [options]="mapOptions"
+    [center]="center"
     (mapClick)="moveMap($event)">
     <map-traffic-layer [autoRefresh]="false"></map-traffic-layer>
     <map-transit-layer></map-transit-layer>
-    <map-marker *ngFor="let markerPosition of markerPositions"
-    [position]="markerPosition"
+    <map-marker *ngFor="let marker of markerPositions"
+    [position]="marker"
     [options]="markerOptions" (mapClick)="markerClick($event)"></map-marker>
+    <map-polyline #polyline id="polyline" [path]="vertices.path"></map-polyline>
   </google-map>
-  </div>
+  <!-- </div> -->
    
   <!-- <div>Latitude: {{center?.lat}}</div>
   <div>Longitude: {{center?.lng}}</div> -->

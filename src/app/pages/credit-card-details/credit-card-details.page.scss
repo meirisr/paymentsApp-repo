@@ -1,0 +1,29 @@
+ion-modal {
+  --width: 290px;
+  --height: 382px;
+  --border-radius: 8px;
+  --background:rgda(44,39,45,0.2)
+  &::part(cotent){
+    backgruond-filter:blur(6px)
+  }
+}
+ion-content{
+  --backgruond:transparent;
+  padding-top: 25vh;
+}
+
+ion-modal ion-datetime {
+  height: 382px;
+}
+ion-datetime {
+  height: auto;
+  width: auto;
+
+  // max-width: 350px;
+}
+.datetime-time .time-body{
+  display: none ;
+}
+ion-input{
+  --padding-end:10px;
+}

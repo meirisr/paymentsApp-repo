@@ -26,7 +26,7 @@ export class AuthenticationService {
       this.isAuthenticated.next(false);//false
     }
   }
-  login(credentials: { email; password }): Observable<any> {
+  login(credentials: {phone}): Observable<any> {
     return this.http.post(`https://reqres.in/api/login`, credentials).pipe(
       map((data: any) => data.token),
       switchMap((token) => from(Storage.set({ key: TOKEN_KEY, value: token }))),

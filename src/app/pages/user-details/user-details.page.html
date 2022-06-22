@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center"> </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="menu"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content dir="{{'dir'|translate}}">
+ 
+  <form class="user-details-Form" [formGroup]="userDetails" (ngSubmit)="updateUserInfo()">
+    <h1>פרטים אישיים</h1>
+ <div class="input-group">
+    <ion-input  type="text" placeholder="First Name" id="firstName" formControlName="firstName" required ></ion-input>
+    </div>
+  
+    <div class="input-group">
+        <ion-input  type="text" placeholder="Last Name" id="lastName" formControlName="lastName" required></ion-input>
+    </div>
+ <div class="input-group">
+        <ion-input  type="email" placeholder=" Email" id="email" formControlName="email" required email></ion-input>
+    </div>
+    <div class="input-group" dir="ltr">
+    <ion-button type="submit" expand="block">{{'pages.userDetais.updated'|translate}}</ion-button>
+    </div>
+  </form>
+</ion-content>

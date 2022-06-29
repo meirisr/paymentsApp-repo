@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { StorageService } from '../storage.service';
 
 const PHONE_NUM = 'my-phone';
 const TOKEN_KEY = 'my-token';
@@ -21,7 +22,7 @@ const CARD_DETAILS = 'card-details';
   providedIn: 'root',
 })
 export class UserLoginService {
-  userDetailsB: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  didSendSms: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
   );
@@ -36,7 +37,7 @@ export class UserLoginService {
   token = '';
   constructor(
     private http: HttpClient,
-    private alertController: AlertController,
+    private storageService: StorageService,
     public toastController: ToastController,
     private utils: UtilsService
   ) {
@@ -97,21 +98,24 @@ export class UserLoginService {
         this.loadToken();
       });
   }
-  getSms(credentials: { phone }): Observable<any> {
+  getSms(credentials: { phone: string }): Observable<any> {
     return this.http
       .post(`${environment.serverUrl}/phone-auth/send-code`, null, {
         headers: new HttpHeaders({ station: HEADER_HOTELS }),
         params: new HttpParams().set('phone', credentials.phone),
       })
-      .pipe(tap(() => this.utils.setStorege(PHONE_NUM, credentials.phone)));
+      .pipe(tap(() => {
+        this.storageService.setUserPhoneNumber(credentials.phone);
+        this.utils.setStorege(PHONE_NUM, credentials.phone);
+      }));
   }
 
-  getToken(credentials: { phone; text }): Observable<any> {
+  getToken(credentials: { phone: string ; text: string }): Observable<any> {
     return this.http
       .post(`${environment.serverUrl}/phone-auth/verify-code`, null, {
         headers: new HttpHeaders({ station: HEADER_HOTELS }),
         params: new HttpParams()
-          .set('phone', credentials.phone.phone)
+          .set('phone', credentials.phone)
           .set('code', credentials.text),
       })
       .pipe(

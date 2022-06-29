@@ -1,5 +1,5 @@
 {
-  "name": "barcodeScan",
+  "name": "fleetPay",
   "integrations": {
     "capacitor": {}
   },

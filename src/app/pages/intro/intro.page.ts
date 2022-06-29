@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild ,AfterViewInit} from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { INTRO_KEY } from 'src/app/guards/intro.guard';
 import { Router } from '@angular/router';
 import { Storage } from '@capacitor/storage';
+import { SplashScreen } from '@capacitor/splash-screen';
 import SwiperCore, {
   Autoplay,
   Keyboard,
@@ -19,7 +20,7 @@ SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
   templateUrl: './intro.page.html',
   styleUrls: ['./intro.page.scss'],
 })
-export class IntroPage implements OnInit {
+export class IntroPage implements OnInit,AfterViewInit {
   @ViewChild(IonSlides) slides: IonSlides;
   prefersDark;
   translaetPath;
@@ -31,6 +32,12 @@ export class IntroPage implements OnInit {
   ) { }
 
   ngOnInit() {}
+  ngAfterViewInit(): void {
+    this.hideSplashScreen();
+  }
+  async hideSplashScreen(){
+    await SplashScreen.hide();
+   }
   next() {
     this.translate.use('he');
     // this.slides.slideNext();

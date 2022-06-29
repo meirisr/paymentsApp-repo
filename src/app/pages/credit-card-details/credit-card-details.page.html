@@ -7,15 +7,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content dir="{{'dir'|translate}}">
-  <form
+<ion-content >
+  <!-- <app-login-steps-navbar [creditCardForm]="creditCardForm"></app-login-steps-navbar> -->
+  <app-credit-card [cardNum]="cardNum" [cardDate]="cardDate" [userName]="userName" [cvsNum]="cvsNum" [flipClass]="flipClass"></app-credit-card>
+ 
+  <form dir="{{'dir'|translate}}"
     class="user-details-Form"
     [formGroup]="cardDetails"
     (ngSubmit)="updateCreditCard()"
+    (keyup.enter)="updateCreditCard()"
   >
     <h1>פרטי אשראי</h1>
     <div class="input-group">
-      <ion-input
+      <ion-input (keyup)="cardNumKeyUp($event)"
         placeholder="מספר אשראי"
         type="tel"
         inputmode="numeric"
@@ -26,24 +30,27 @@
       ></ion-input>
     </div>
 
+   
     <div class="input-group">
-      <ion-input
+      <ion-input 
+        placeholder="תוקף"
+        type="text"
+        [value]="date"
+        id="open-date-modal"
+        formControlName="date"
+        required
+      ></ion-input>
+    </div>
+    <div class="input-group">
+      <ion-input  (ionFocus)="cvSInputFocus()"  (ionBlur)="cvSInputUnFocus()" (keyup)="cardCvsKeyUp($event)"
         placeholder="CVS"
         type="tel"
         inputmode="numeric"
         oninput="this.value=this.value.replace(/[^0-9]/g,'');"
         id="csvNum"
         formControlName="csvNum"
-        required
-      ></ion-input>
-    </div>
-    <div class="input-group">
-      <ion-input
-        placeholder="תוקף"
-        type="text"
-        [value]="date"
-        id="open-date-modal"
-        formControlName="date"
+        maxlength="3"
+        minlength="3"
         required
       ></ion-input>
     </div>
@@ -57,7 +64,19 @@
         oninput="this.value=this.value.replace(/[^0-9]/g,'');"
         required
       ></ion-input>
-    </div>
+      </div>
+     
+    <div class="input-group">
+      <ion-input (keyup)="userNameKeyUp($event)"
+        placeholder="שם בעל הכרטיס"
+        type="text"
+        id="userName"
+        formControlName="userName"
+        required
+      ></ion-input>
+      </div>
+     
+  
 
     <ion-modal
       trigger="open-date-modal"
@@ -72,7 +91,7 @@
             #dateTime
             displayFormat="MM/YYYY"
             showDefaultTimeLabel="false"
-            [presentation]="'month-year'"
+            [presentation]="'date'"
             (ionChange)="dataChange(dateTime.value)"
           >
             <ion-buttons slot="buttons">
@@ -85,8 +104,8 @@
     </ion-modal>
 
     <div class="input-group" dir="ltr">
-      <ion-button type="submit" expand="block"
-        >{{'pages.userDetais.updated'|translate}}</ion-button
+      <ion-button type="submit" expand="block" [disabled]="cardDetails.invalid"
+        >{{'pages.userDetais.updated'|translate}} </ion-button
       >
     </div>
   </form>

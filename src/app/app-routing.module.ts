@@ -11,42 +11,6 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'home',
-    loadChildren: () =>
-      import('./home/home.module').then((m) => m.HomePageModule),
-    // canLoad: [AuthGuard],
-  },
-  {
-    path: 'scan',
-    loadChildren: () =>
-      import('./pages/scan/scan.module').then((m) => m.ScanPageModule),
-    canLoad: [AuthGuard],
-  },
-  {
-    path: 'camera',
-    loadChildren: () =>
-      import('./pages/camera/camera.module').then((m) => m.CameraPageModule),
-    // canLoad: [AuthGuard],
-  },
-  {
-    path: 'menu',
-    loadChildren: () =>
-      import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
-    canLoad: [AuthGuard, IntroGuard],
-    // canLoad: [IntroIntroGuardGuard],
-    // children:[
-
-    // ]
-  },
-  {
-    path: 'settings',
-    loadChildren: () =>
-      import('./pages/settings/settings.module').then(
-        (m) => m.SettingsPageModule
-      ),
-    canLoad: [AuthGuard],
-  },
-  {
     path: 'intro',
     loadChildren: () =>
       import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
@@ -59,34 +23,34 @@ const routes: Routes = [
     //  canLoad: [IntroGuard, AutoLoginGuard],
     canLoad: [AutoLoginGuard],
   },
+
   {
-    path: 'google-map',
+    path: 'menu',
     loadChildren: () =>
-      import('./pages/google-map/google-map.module').then(
-        (m) => m.GoogleMapPageModule
-      ),
+      import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
+    canLoad: [AuthGuard, IntroGuard],
+    // canLoad: [IntroIntroGuardGuard],
+    // children:[
+
+    // ]
+  },
+  {
+    path: 'scan',
+    loadChildren: () =>
+      import('./pages/scan/scan.module').then((m) => m.ScanPageModule),
     canLoad: [AuthGuard],
   },
   {
-    path: 'user-details',
+    path: 'payment',
     loadChildren: () =>
-      import('./pages/user-details/user-details.module').then(
-        (m) => m.UserDetailsPageModule
-      ),
+      import('./pages/payment/payment.module').then((m) => m.PaymentPageModule),
     canLoad: [AuthGuard],
   },
   {
-    path: 'credit-card-details',
+    path: 'travel-route-tracking',
     loadChildren: () =>
-      import('./pages/credit-card-details/credit-card-details.module').then(
-        (m) => m.CreditCardDetailsPageModule
-      ),
-  },
-  {
-    path: 'user-profile',
-    loadChildren: () =>
-      import('./pages/user-profile/user-profile.module').then(
-        (m) => m.UserProfilePageModule
+      import('./pages/travel-route-tracking/travel-route-tracking.module').then(
+        (m) => m.TravelRouteTrackingPageModule
       ),
   },
   {

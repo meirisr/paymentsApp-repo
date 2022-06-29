@@ -1,0 +1,30 @@
+.my-custom-menu {
+  --width: 500px;
+}
+
+ion-content{
+  --padding-top: 5%
+}
+.nemu-img{
+  background: url('../../../assets/images/Group\ 2660.png') 0 0/100% 100% no-repeat;
+}
+.nemu-text{
+
+   color: #fff; ;
+}
+section {
+  margin-top: 5em;
+  margin-bottom: 2.5em;
+}
+
+section:not(.full-width),
+.full-width > header {
+  padding: 0 10px;
+}
+.main-list{
+  margin: 5%;
+  height: 8vh;
+    // border-right: 10px solid orange;
+    padding-top: 2%;
+    z-index: 2;
+}

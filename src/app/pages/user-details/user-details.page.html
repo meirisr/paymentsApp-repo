@@ -1,15 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="ion-text-center"> </ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="menu"></ion-back-button>
-    </ion-buttons>
+   
+      <ion-back-button defaultHref="menu" slot="start"></ion-back-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content dir="{{'dir'|translate}}">
- 
-  <form class="user-details-Form" [formGroup]="userDetails" (ngSubmit)="updateUserInfo()">
+<ion-content >
+  <form dir="{{'dir'|translate}}" class="user-details-Form" [formGroup]="userDetails" (ngSubmit)="updateUserInfo()" (keyup.enter)="updateUserInfo()">
     <h1>פרטים אישיים</h1>
  <div class="input-group">
     <ion-input  type="text" placeholder="First Name" id="firstName" formControlName="firstName" required ></ion-input>

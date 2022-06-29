@@ -1,5 +1,5 @@
 
-<ion-content fullscreen class="ion-padding ">
+<ion-content fullscreen class="ion-padding info-content">
    <!-- <ion-slides >
     <ion-slide> -->
    
@@ -67,9 +67,13 @@
        
  
 </ion-content>
-<ion-footer class="ion-no-border">
+<!-- <ion-footer class="ion-no-border">
 
   <div class="footer">
+    <app-main-btn  (click)="next()">
+      <ion-icon name="arrow-back-outline" slot="start" style="height: 30px;width: 30px;"></ion-icon>
+        <ion-label >{{'pages.intro.nextBtn'|translate}}</ion-label>
+    </app-main-btn>
       <ion-button class="nextBtn" expand="block" (click)="next()">
         <ion-icon name="arrow-back-outline" slot="start" style="height: 30px;width: 30px;"></ion-icon>
         <ion-label >{{'pages.intro.nextBtn'|translate}}</ion-label>
@@ -77,5 +81,10 @@
  
   </div>
 
-</ion-footer>
+</ion-footer> -->
 
+<ion-footer class="ion-no-border" collapse="fade">
+  <ion-toolbar>
+    <app-main-btn type="click"  (click)="next()" text="{{'pages.intro.nextBtn'|translate}}"></app-main-btn>
+  </ion-toolbar>
+</ion-footer>

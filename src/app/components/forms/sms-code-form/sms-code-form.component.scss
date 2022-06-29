@@ -1,0 +1,24 @@
+.loginForm {
+  position: absolute;
+  top: 45%;
+  width: 90%;
+}
+ion-input{
+  font-size: 25px;
+}
+h2{
+  font-weight:bold;
+  font-size: 20px;
+}
+.code-inputs ion-input {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  // margin:10px;
+  border: 0px;
+  border-bottom: 1px solid lightgray;
+  border-radius: 0;
+  // --background:#e1e1e1;
+ 
+  --padding-start: 35%;
+}

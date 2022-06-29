@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController, IonDatetime, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
-import { UserLoginService } from 'src/app/services/api/user-login.service';
+import { UserLoginService } from '../../services/api/user-login.service';
 
 @Component({
   selector: 'app-credit-card-details',
@@ -13,11 +14,18 @@ export class CreditCardDetailsPage implements OnInit {
   @ViewChild(IonDatetime)dateTime: IonDatetime;
   showPicker =false;
   date ='';
+  cardNum='';
+  cvsNum='';
+  cardDate='';
+  flipClass='';
+  userName='';
+  creditCardForm=true;
   public cardDetails: FormGroup;
   constructor(
     private alertController: AlertController,
     private loadingController: LoadingController,
-    private apiUserServer: UserLoginService
+    private apiUserServer: UserLoginService,
+    private router: Router,
   ) {}
   get firstName() {
     return this.cardDetails.get('firstName');
@@ -35,6 +43,7 @@ export class CreditCardDetailsPage implements OnInit {
       csvNum: new FormControl(null, [Validators.required,Validators.maxLength(3),Validators.minLength(3)]),
       date: new FormControl(null, [Validators.required]),
       userId: new FormControl(null, [Validators.required]),
+      userName: new FormControl(null, [Validators.required]),
     });
   }
   onWillDismiss(ev){
@@ -44,6 +53,7 @@ export class CreditCardDetailsPage implements OnInit {
     const year=value.split('-')[0];
     const month=value.split('-')[1];
     this.date=month+'/'+year;
+    this.cardDate=month+'/'+year;
   }
   close(){
    this.dateTime.cancel(true);
@@ -55,6 +65,7 @@ export class CreditCardDetailsPage implements OnInit {
     from(this.apiUserServer.updateCreditCard(this.cardDetails.value)).subscribe(
       async (res) => {
         this.getCreditCardInfo();
+
       },
       async (res) => {
         const alert = await this.alertController.create({
@@ -77,6 +88,7 @@ export class CreditCardDetailsPage implements OnInit {
         //   lastName: this.apiUserServer.userDetails.value.lastName || '',
         //   email: this.apiUserServer.userDetails.value.email || '',
         // });
+        this.router.navigateByUrl('/menu', { replaceUrl: true });
         console.log(this.apiUserServer.creditCardDetails.value);
         console.log(rs);
       },
@@ -91,4 +103,25 @@ export class CreditCardDetailsPage implements OnInit {
       }
     );
   }
+  cardNumKeyUp(e){
+console.log(e.target.value);
+this.cardNum=e.target.value;
+  }
+  cardCvsKeyUp(e){
+console.log(e.target.value);
+this.cvsNum=e.target.value;
+  }
+  userNameKeyUp(e){
+    this.userName=e.target.value;
+  }
+//   cardDateKeyUp(e){
+// console.log(e.target.value);
+// this.cardDate=e.target.value;
+//   }
+cvSInputFocus(){
+  this.flipClass='flip';
+}
+cvSInputUnFocus(){
+  this.flipClass='';
+}
 }

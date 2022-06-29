@@ -1,6 +1,6 @@
 ion-modal {
   --width: 290px;
-  --height: 382px;
+  --height: 40vh;
   --border-radius: 8px;
   --background:rgda(44,39,45,0.2)
   &::part(cotent){
@@ -13,7 +13,7 @@ ion-content{
 }
 
 ion-modal ion-datetime {
-  height: 382px;
+  // height: 382px;
 }
 ion-datetime {
   height: auto;

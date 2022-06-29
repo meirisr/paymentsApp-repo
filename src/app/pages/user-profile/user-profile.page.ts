@@ -20,10 +20,10 @@ export class UserProfilePage implements OnInit {
     this.getcardInfo();
   }
   userDetails() {
-    this.router.navigate(['/user-details']);
+    this.router.navigate(['/menu/user-details']);
   }
   cardDetails() {
-    this.router.navigate(['/credit-card-details']);
+    this.router.navigate(['/menu/credit-card-details']);
   }
   getuserInfo() {
     this.apiUserServer.userDetails.subscribe(

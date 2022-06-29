@@ -1,12 +1,25 @@
 .hideBg{
   --ion-background-color: #00000000;
+  background: rgba(0,0,0,.5);
+    -webkit-mask: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,1)) top /100% 32%, linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,1)) bottom/100% 34%, linear-gradient(to left , rgba(0,0,0,1), rgba(0,0,0,1)) left /19% 100%, linear-gradient(to right , rgba(0,0,0,1), rgba(0,0,0,1)) right /19% 100%;
+    -webkit-mask-repeat: no-repeat;
+}
+.back-btn{
+  
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 101;
+  height: 40px;
+  width: 35px;
+
 }
 
 
 .ocrloader p {
   color: #fff;
   position: absolute;
-  bottom: -28px;
+  bottom: -50px;
   left: 28%;
   font-size: 16px;
   font-weight: 600;
@@ -16,14 +29,15 @@
 }
 
 .ocrloader {
-  width: 60vw;
-  height: 225px;
+  width: 70vw;
+  height: 70vw;
   position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
-  top: 25%;
+  top: 30%;
   backface-visibility: hidden;
+ 
 
   
 }
@@ -31,14 +45,14 @@
 .ocrloader:after,
 .ocrloader em:after,
 .ocrloader em:before {
-  border-color: #025381;
+  border-color: #fff;
   content: "";
   position: absolute;
   width: 45px;
   height: 46px;
   border-style: solid;
   border-width: 0px;
-  animation: blinker 2.5s linear infinite;
+  // animation: blinker 2.5s linear infinite;
 
 }
 .ocrloader:before {
@@ -75,6 +89,14 @@
 }
 .scan-body-header {
   color: #fff;
+}
+.flashDiv{
+  text-align: center;
+    margin-top: 1vh;
+}
+.flashIcon{
+  height: 4vh;
+  width: 10vw;
 }
 
 

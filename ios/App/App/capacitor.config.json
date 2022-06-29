@@ -1,6 +1,6 @@
 {
 	"appId": "io.ionic.starter",
-	"appName": "barcodeScan",
+	"appName": "fleetPay",
 	"webDir": "www",
 	"bundledWebRuntime": false
 }

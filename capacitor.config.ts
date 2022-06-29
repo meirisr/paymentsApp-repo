@@ -2,9 +2,19 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'barcodeScan',
+  appName: 'fleetPay',
   webDir: 'www',
-  bundledWebRuntime: false
+  bundledWebRuntime: false,
+  plugins: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    SplashScreen: {
+      launchShowDuration: 5000,
+      launchAutoHide: true,
+      androidSplashResourceName: 'splash',
+      androidScaleType: 'CENTER_CROP'
+    }
+  },
+
 };
 
 export default config;

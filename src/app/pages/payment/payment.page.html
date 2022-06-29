@@ -1,0 +1,83 @@
+<!-- <ion-header>
+ 
+  <ion-toolbar class="new-background-color"> -->
+    <!-- <ion-title class="ion-text-center"> </ion-title>
+    <ion-menu-button menu="main" slot="end"></ion-menu-button> -->
+    <!-- <ion-icon name="chevron-forward-circle-outline"></ion-icon> -->
+    <!-- <ion-icon class="map-back-btn" name="chevron-forward-circle-outline" (click)="goToMenu()" slot="end"></ion-icon> -->
+  <!-- </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="no-scroll">
+  <app-map [height]="mapHight"></app-map>
+ 
+  <div #paymentBody id="paymentBody" class="payment-body" >
+    <!-- <hr #drowerBar class="drowerBar"> -->
+  <ion-grid class="body-card-1">
+    <ion-row style="direction: rtl;">
+      <ion-item text-right  lines="none">
+        <h1>תשלום</h1>
+      </ion-item>
+    </ion-row>
+    <ion-row style="direction: rtl;">
+      <ion-col size="3" >
+        <ion-item text-right  lines="none" class="item-background-color"
+        ><ion-icon name="bed" class="bedIcon"></ion-icon>
+      </ion-item>
+      </ion-col>
+      <ion-col>
+        <h4>שדה התעופה בן גוריון</h4>
+        <p>לוד</p>
+        <div class="dated"></div>
+      </ion-col>
+    </ion-row>
+    <ion-row style="direction: rtl;">
+      <ion-col size="3" ></ion-col>
+      <ion-col  >
+        <h4>מלון בראשית</h4>
+        <p>ירושלים</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <hr>
+  <!-- </div> -->
+  <ion-grid class="body-card-2">
+  <ion-row >
+   
+    <ion-col>
+      <div style="display:flex ; justify-content: space-evenly;">
+        
+        <!-- <ion-fab horizontal="end" vertical="center" slot="fixed"> -->
+          <ion-fab-button class="addBtn" color="secondary"  size="small" (click)="addPassengers()">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        
+          <h2>{{numOfPassengers}}</h2>
+          <!-- <ion-fab horizontal="end" vertical="center" slot="fixed"> -->
+            <ion-fab-button class="removeBtn"   size="small" (click)="removePassengers()">
+              <ion-icon name="remove"></ion-icon>
+            </ion-fab-button>
+            <!-- <ion-button fill="outline">yfgyutg</ion-button> -->
+          <!-- </ion-fab> -->
+       
+       
+      </div>
+    </ion-col>
+    <ion-col><h4>מס נוסעים</h4></ion-col>
+    
+  </ion-row>
+  <ion-row >
+
+    <ion-col></ion-col>
+    <ion-col ><h4> סה"כ לתשלום</h4></ion-col>
+  </ion-row>
+</ion-grid>
+</div>
+</ion-content>
+
+<ion-footer class="ion-no-border" collapse="fade">
+  <ion-toolbar>
+    <app-main-btn type="click" text="שלם" (click)="onSubmit()"></app-main-btn>
+  </ion-toolbar>
+</ion-footer>

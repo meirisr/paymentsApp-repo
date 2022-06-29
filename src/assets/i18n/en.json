@@ -24,9 +24,15 @@
     },
     "userDetais":{
       "updated":"Updated"
+    },
+    "payment":{
+
     }
+    
   },
   "dir":"ltr",
-  "side":"start"
+  "side":"start",
+  "nextBtn":"Next",
+  "backBtn":"Back"
   
 }

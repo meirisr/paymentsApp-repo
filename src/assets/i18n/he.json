@@ -26,7 +26,9 @@
       }
     },
     "dir":"rtl",
-    "side":"end"
+    "side":"end",
+    "nextBtn":"המשך",
+    "backBtn":"חזור"
 
   }
   

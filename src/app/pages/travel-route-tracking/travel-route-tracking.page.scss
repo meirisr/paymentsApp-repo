@@ -1,0 +1,59 @@
+.no-scroll {
+  --overflow: hidden;
+}
+.body-card-1{
+  justify-content: end;
+  height: 38vh;
+}
+.body-card-2{
+  text-align: end;
+  margin-right: 5%;
+  height: 20vh;
+
+
+}
+.travel-body{
+  position: fixed;
+  background-color: #fff;
+  width: 100vw;
+  // top: 75vh;
+  height: 100vh;
+  border-radius: 30px;
+ 
+}
+
+.item-background-color{
+  --ion-item-background: #50c8ff;
+  margin-right: 2%;
+  margin-top: 5%;
+  border-radius: 6%;
+  height: 40px;
+  width: 82px;
+}
+.bedIcon{
+  margin-right: 25%;
+    color: #fff;
+    margin-bottom: 10%
+}
+.dated{
+  
+  height: 4vh;
+  border-right: 3px black dashed;
+  
+}
+hr {
+  
+  border: 0;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+.drowerBar{
+  border-top: 3px solid rgba(0, 0, 0, 0.1);
+  margin: 1rem;
+  margin-left: 35vw;
+  margin-right: 35vw;
+  border-radius: 30px;
+
+}
+h4{
+  margin: 0;
+}

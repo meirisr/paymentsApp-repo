@@ -45,39 +45,3 @@ ion-input{
   padding: 1rem;
   margin-bottom: 1rem;
 }
-.code-inputs ion-input {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  // margin:10px;
-  border: 0px;
-  border-bottom: 1px solid lightgray;
-  border-radius: 0;
-  // --background:#e1e1e1;
- 
-  --padding-start: 35%;
-}
-.nextBtn{
-  height: 50px;
-  // width: 35%;
-  // --border-radius: 30px;
-  font-size: 1.1rem;
-  --background: var(--ion-color-btn);
-  margin-top: 5%;
-   font-size: 24px;
-  // font-weight: bold;
-  
-}
-h2{
-  font-weight:bold;
-  font-size: 20px;
-}
-.icon-circle{
-  width: 50px;
-  height: 50px;
-  padding-top: 5px;
-  font-size: 30px;
-  border-radius: 50%;
-  background: #EFEFEF;
-  text-align: center;
-}

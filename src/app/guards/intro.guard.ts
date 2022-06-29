@@ -30,7 +30,7 @@ export class IntroGuard implements CanLoad {
         } else {
           console.log('now intro');
           console.log(isUserHasDetails);
-          this.router.navigateByUrl('/user-details', { replaceUrl: true });
+          this.router.navigateByUrl('/menu/user-details', { replaceUrl: true });
           return false;
         }
       })

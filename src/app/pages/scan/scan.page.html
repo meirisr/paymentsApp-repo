@@ -1,9 +1,8 @@
 <ion-header>
 <ion-toolbar>
-  <!-- <ion-title class="ion-text-center"> סריקה</ion-title> -->
-  <ion-buttons slot="end">
-    <ion-back-button defaultHref="menu"></ion-back-button>
-  </ion-buttons>
+  <ion-title class="ion-text-center"> סריקה</ion-title>
+  <!-- <ion-menu-button menu="main" slot="end"></ion-menu-button> -->
+  <ion-icon class="back-btn" name="chevron-forward-circle-outline" (click)="goTomenu()" slot="end"></ion-icon>
 </ion-toolbar>
 </ion-header>
 <ion-content [class.hideBg]="scanActive">
@@ -15,7 +14,12 @@
     </ion-col>
   </ion-row>
   <div class="scan-body-header" [hidden]="!scanActive">
+    <div *ngIf="isFlashAvailable" class="flashDiv">
+      <ion-icon *ngIf="isFlashOn" class="flashIcon" name="flash-outline" ></ion-icon>
+      <ion-icon *ngIf="!isFlashOn" class="flashIcon"  name="flash-off-outline" ></ion-icon>
+    </div>
     <ion-text class="ion-text-center ">
+      
       <h1>תשלום באוטובוס</h1>
       <h2>
         QR סריקת קוד
@@ -32,7 +36,7 @@
     </div>
   </ion-row>
   <ion-row>
-    <a [attr.href]="result" class="ion-text-center" *ngIf="result && !scanActive">{{result}}</a>
+    <!-- <a [attr.href]="result" class="ion-text-center" *ngIf="result && !scanActive">{{result}}</a> -->
     <!-- <a [attr.href]="result"></a> -->
   </ion-row>
 </ion-content>

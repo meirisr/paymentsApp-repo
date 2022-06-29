@@ -1,7 +1,9 @@
 
-
+.info-content{
+  // --color:#50c8ff;
+}
 .slide-body-header{
-  margin-top: 20%;
+  // margin-top: 20%;
 }
 .slide-body-header h1{
   font-size: 49px
@@ -27,36 +29,36 @@
 .slide-body ion-item-group{
   margin-top: 20%;
 }
-.footer{
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 95%;
-}
-.footer ion-title{
-  padding-left: 0px;
-  color: #00E1E1;
+// .footer{
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   width: 95%;
+// }
+// .footer ion-title{
+//   padding-left: 0px;
+//   color: #00E1E1;
     
-}
- ion-button{
-  padding-left: 0px;
-  // color: #00E1E1;
+// }
+//  ion-button{
+//   padding-left: 0px;
+//   // color: #00E1E1;
   
   
-  margin-left: 5%;
-  margin-bottom: 5%;
+//   margin-left: 5%;
+//   margin-bottom: 5%;
     
-}
-.nextBtn{
-  height: 50px;
-  // width: 45%;
-  // --border-radius: 30px ;
-  --background: var(--ion-color-btn);
-  font-size: 24px;
-  font-weight: bold;
+// }
+// .nextBtn{
+//   height: 50px;
+//   // width: 45%;
+//   // --border-radius: 30px ;
+//   --background: var(--ion-color-btn);
+//   font-size: 24px;
+//   font-weight: bold;
   
   
-}
+// }
 .icon-circle{
   width: 50px;
   height: 50px;

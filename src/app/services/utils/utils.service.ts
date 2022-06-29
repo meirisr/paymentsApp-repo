@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { promise } from 'protractor';
 const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
 @Injectable({

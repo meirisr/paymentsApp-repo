@@ -1,0 +1,41 @@
+<form class="loginForm" (ngSubmit)="onSmsCodeFormSubmit()" [formGroup]="smsCodeForm" (keyup.enter)="onSmsCodeFormSubmit()">
+  <div class="code-header">
+    <ion-text class="ion-text-center ">
+      <h1>קוד אימות</h1>
+      <p>קוד אימות תקף ל5 דק' הקרובות</p>
+    </ion-text>
+  </div>
+  <div class="input-group code-inputs" style="justify-content: center;">
+    <ion-row text-center>
+      <ion-col size="2">
+       <ion-input   #otp1 type="text" inputmode="numeric" maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text1" (keyup)="otpController($event,otp2,'')">
+       </ion-input>
+      </ion-col>
+    <ion-col size="2">
+       <ion-input #otp2 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');" formControlName="text2" (keyup)="otpController($event,otp3,otp1)">
+       </ion-input>
+      </ion-col>
+    <ion-col size="2">
+       <ion-input  #otp3 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text3" (keyup)="otpController($event,otp4,otp2)">
+       </ion-input>
+      </ion-col>
+    <ion-col size="2">
+       <ion-input #otp4 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text4" (keyup)="otpController($event,otp5,otp3)">
+       </ion-input>
+      </ion-col>
+    <ion-col size="2">
+       <ion-input #otp5 type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');"  formControlName="text5" (keyup)="otpController($event,otp6,otp4)">
+       </ion-input>
+      </ion-col>
+      <ion-col size="2">
+       <ion-input #otp6  type="text" inputmode="numeric"  maxlength="1"  oninput="this.value=this.value.replace(/[^0-9]/g,'');" formControlName="text6" (keyup)="otpController($event,'',otp5)">
+       </ion-input>
+      </ion-col>
+    </ion-row>
+  </div>
+    <ion-text (click)="resendSms()" class="ion-text-center" ><h2>שלח קוד שוב</h2></ion-text>
+  
+    <app-main-btn type="submit" [disabled]="smsCodeForm.invalid" text="{{'pages.login.nextBtn'| translate}}"></app-main-btn>
+    <ion-text  (click)="back()" class="ion-text-center"><p>חזור</p></ion-text>
+  
+</form>

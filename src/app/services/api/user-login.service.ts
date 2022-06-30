@@ -130,15 +130,15 @@ export class UserLoginService {
   }
 
   async getUserDetails(): Promise<any> {
-    console.log('hhh');
-    const userData = JSON.parse(
-      (await Storage.get({ key: USER_DETAILS })).value
-    );
+    // const userData = JSON.parse((await Storage.get({ key: USER_DETAILS })).value
+    // );
     const token = await Storage.get({ key: TOKEN_KEY });
-    if (userData) {
-      this.userDetails.next(userData);
-      return this.isUserHasDetails.next(true);
-    } else if (token && token.value) {
+    // if (userData) {
+      // this.userDetails.next(userData);
+      // this.storageService.setUserDetails(userData);
+      // return this.isUserHasDetails.next(true);
+    // } else 
+    if (token && token.value) {
       return this.http
         .get(`${environment.serverUrl}/user/get-user-details`, {
           headers: new HttpHeaders({
@@ -147,8 +147,9 @@ export class UserLoginService {
         })
         .pipe(
           map((data: any) => {
+            this.storageService.setUserDetails(data.body);
             this.utils.setStorege(USER_DETAILS, JSON.stringify(data.body));
-            this.userDetails.next(data.body);
+            // this.userDetails.next(data.body);
             if (data.body.email && data.body.firstName && data.body.lastName) {
               return this.isUserHasDetails.next(true);
             } else {
@@ -229,8 +230,11 @@ export class UserLoginService {
           }
         )
         .pipe(
-          map(() =>
-            this.utils.setStorege(USER_DETAILS, JSON.stringify(credentials))
+          map(() =>{
+            this.utils.setStorege(USER_DETAILS, JSON.stringify(credentials));
+            this.storageService.setUserDetails(credentials);
+          }
+        
           )
         )
         .subscribe(

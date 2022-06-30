@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,28 +14,25 @@ export class UserProfilePage implements OnInit {
   email: string;
   cardNum: string;
 
-  constructor(private apiUserServer: UserLoginService,private router: Router) {}
+  constructor(private apiUserServer: UserLoginService,private router: Router,private storageService: StorageService) {}
 
   ngOnInit() {
     this.getuserInfo();
     this.getcardInfo();
   }
   userDetails() {
-    this.router.navigate(['/menu/user-details']);
+    this.router.navigate(['/user-details']);
   }
   cardDetails() {
-    this.router.navigate(['/menu/credit-card-details']);
+    this.router.navigate(['/credit-card-details']);
   }
   getuserInfo() {
-    this.apiUserServer.userDetails.subscribe(
-      async (rs) => {
-        this.firstName = this.apiUserServer.userDetails.value.firstName || '';
-        this.lastName = this.apiUserServer.userDetails.value.lastName || '';
-        this.email = this.apiUserServer.userDetails.value.email || '';
-      },
-      async (rs) => {}
-    );
-  }
+        console.log(this.storageService.userDetails)
+        this.firstName =  this.storageService.userDetails.firstName || '';
+        this.lastName =  this.storageService.userDetails.lastName || '';
+        this.email = this.storageService.userDetails.email || '';
+      }
+  
   getcardInfo() {
     this.apiUserServer. getCreditCardInfo().then(()=>{
       this.apiUserServer.creditCardDetails.subscribe(
@@ -46,4 +44,7 @@ export class UserProfilePage implements OnInit {
     });
 
   }
+  goToMenu(){
+    this.router.navigate(['/menu']);
+}
 }

@@ -1,8 +1,7 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title class="ion-text-center"> </ion-title>
-   
-      <ion-back-button defaultHref="menu" slot="start"></ion-back-button>
+    <app-back-btn (click)="goToUserProfile()"></app-back-btn>
   </ion-toolbar>
 </ion-header>
 
@@ -10,15 +9,24 @@
   <form dir="{{'dir'|translate}}" class="user-details-Form" [formGroup]="userDetails" (ngSubmit)="updateUserInfo()" (keyup.enter)="updateUserInfo()">
     <h1>פרטים אישיים</h1>
  <div class="input-group">
-    <ion-input  type="text" placeholder="First Name" id="firstName" formControlName="firstName" required ></ion-input>
-    </div>
+  <label class="fluatingLabel">
+    <ion-input class="input"  type="text"  id="firstName" formControlName="firstName" required ></ion-input>
+    <span class="labelSpan">First Name</span>
+  </label>
+  </div>
   
     <div class="input-group">
-        <ion-input  type="text" placeholder="Last Name" id="lastName" formControlName="lastName" required></ion-input>
-    </div>
+      <label class="fluatingLabel">
+        <ion-input class="input"  type="text"  id="lastName" formControlName="lastName" required></ion-input>
+        <span class="labelSpan">Last Name</span>
+      </label>
+      </div>
  <div class="input-group">
-        <ion-input  type="email" placeholder=" Email" id="email" formControlName="email" required email></ion-input>
-    </div>
+  <label class="fluatingLabel">
+        <ion-input class="input"  type="email" id="email" formControlName="email" required email></ion-input>
+        <span class="labelSpan">Email</span>
+      </label>
+      </div>
     <div class="input-group" dir="ltr">
     <ion-button type="submit" expand="block">{{'pages.userDetais.updated'|translate}}</ion-button>
     </div>

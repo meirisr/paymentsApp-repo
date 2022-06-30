@@ -22,15 +22,12 @@ export class IntroGuard implements CanLoad {
       filter((val) => val !== null), // Filter out initial Behaviour subject value
       take(1), // Otherwise the Observable doesn't complete!
       map((isUserHasDetails) => {
-        console.log('intro');
         if (isUserHasDetails) {
-          // Directly open inside area
-          console.log(isUserHasDetails);
           return true;
         } else {
           console.log('now intro');
           console.log(isUserHasDetails);
-          this.router.navigateByUrl('/menu/user-details', { replaceUrl: true });
+          this.router.navigateByUrl('/user-details', { replaceUrl: true });
           return false;
         }
       })

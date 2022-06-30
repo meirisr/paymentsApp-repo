@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage } from '@capacitor/storage';
+import { Router } from '@angular/router';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 const COLOR_THEME = 'color-theme';
 @Component({
@@ -11,7 +11,7 @@ export class SettingsPage implements OnInit {
   ischecked;
   ischecked2;
   defaultLang;
-  constructor(private utils: UtilsService) {
+  constructor(private utils: UtilsService,private router:Router) {
     this.ischecked=this.utils.ischecked;
 
     this.defaultLang=this.utils.defaultLang;
@@ -28,5 +28,8 @@ export class SettingsPage implements OnInit {
   }
   radioGroupChange(event){
     this.utils.onToggleLanguages(event);
+  }
+  goToMenu() {
+    this.router.navigate(['/menu']);
   }
 }

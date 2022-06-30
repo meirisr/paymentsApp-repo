@@ -10,6 +10,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { MainBtnComponent } from '../components/main-btn/main-btn.component';
 import { PhoneNumberFormComponent } from '../components/forms/phone-number-form/phone-number-form.component';
 import { SmsCodeFormComponent } from '../components/forms/sms-code-form/sms-code-form.component';
+import { BackBtnComponent } from '../components/back-btn/back-btn.component';
 
 
 
@@ -20,7 +21,8 @@ const content = [
   LoginStepsNavbarComponent,
   MainBtnComponent,
   PhoneNumberFormComponent,
-  SmsCodeFormComponent
+  SmsCodeFormComponent,
+  BackBtnComponent
 ];
 
 @NgModule({

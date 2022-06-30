@@ -162,7 +162,7 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
   async permissionAlert() {
     const alert = await this.alertController.create({
       header: 'Confirm permission',
-      message: `<img src="../../../assets/images/Group 2660.png">`,
+      message: `האפליקציה חייבת גישה למצלמה`,
       buttons: [
         {
           text: 'Cancel',

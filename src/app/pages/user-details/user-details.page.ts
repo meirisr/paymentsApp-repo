@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-user-details',
@@ -14,7 +16,9 @@ export class UserDetailsPage implements OnInit {
   constructor(
     private alertController: AlertController,
     private loadingController: LoadingController,
-    private apiUserServer: UserLoginService
+    private apiUserServer: UserLoginService,
+    private  storageService: StorageService,
+    private router:Router
   ) {}
   get firstName() {
     return this.userDetails.get('firstName');
@@ -31,9 +35,8 @@ export class UserDetailsPage implements OnInit {
       lastName: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required]),
     });
-      this.getuserInfo();
+    this.getuserInfo();
   }
-
 
   async updateUserInfo() {
     from(this.apiUserServer.updateUserInfo(this.userDetails.value)).subscribe(
@@ -53,25 +56,18 @@ export class UserDetailsPage implements OnInit {
   async getuserInfo() {
     const loading = await this.loadingController.create();
     await loading.present();
-    this.apiUserServer.userDetails.subscribe(
-      async (rs) => {
         await loading.dismiss();
         this.userDetails.setValue({
-          firstName: this.apiUserServer.userDetails.value.firstName || '',
-          lastName: this.apiUserServer.userDetails.value.lastName || '',
-          email: this.apiUserServer.userDetails.value.email || '',
+          firstName: this.storageService.userDetails.firstName ,
+          lastName: this.storageService.userDetails.lastName,
+          email: this.storageService.userDetails.email ,
         });
-        console.log(this.apiUserServer.userDetails.value);
-      },
-      async (rs) => {
-        await loading.dismiss();
-        const alert = await this.alertController.create({
-          header: 'Update failed',
-          message: rs.error.error.errorMessage['en-us'],
-          buttons: ['OK'],
-        });
-        await alert.present();
-      }
-    );
-  }
+        // this.goToUserProfile()
+}
+goToUserProfile(){
+    this.router.navigate(['/user-profile']);
+}
+goToMenu(){
+    this.router.navigate(['/menu']);
+}
 }

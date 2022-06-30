@@ -13,23 +13,27 @@ export class UtilsService {
   defaultLang;
 
   constructor(
-    private loadingController: LoadingController,
+    public loadingController: LoadingController,
     private alertController: AlertController,
     private translate: TranslateService
   ) {}
 
   onToggleColorTheme(event) {
+    let drowerDiv= document.getElementById('travelBody')
     if (event.detail.checked) {
       document.body.setAttribute('color-theme', 'dark');
+   
       Storage.set({ key: COLOR_THEME, value: 'true' });
       this.ischecked = 'true';
     } else {
       document.body.setAttribute('color-theme', 'light');
+     
       Storage.set({ key: COLOR_THEME, value: 'false' });
       this.ischecked = 'false';
     }
   }
   onToggleLanguages(event) {
+    
     switch (event.detail.value) {
       case 'en':
         this.translate.use('en');
@@ -54,9 +58,11 @@ export class UtilsService {
     const themeColor = await Storage.get({ key: COLOR_THEME });
     if (themeColor.value === 'true') {
       document.body.setAttribute('color-theme', 'dark');
+      // document.querySelector('#travelBody').setAttribute('color-theme', 'dark');
       this.ischecked = 'true';
     } else {
       document.body.setAttribute('color-theme', 'light');
+      // document.querySelector('#travelBody').setAttribute('color-theme', 'light');
       this.ischecked = 'false';
     }
   }
@@ -73,7 +79,11 @@ export class UtilsService {
     }
   }
   async showLoader() {
-    const loading = await this.loadingController.create();
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+      // duration: 3000,
+      spinner:null
+    });
     await loading.present();
     return loading;
   }

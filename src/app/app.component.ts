@@ -31,7 +31,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   ) {
     translate.setDefaultLang('en');
     translate.use('he');
-
+    // App.getInfo().then((info)=>console.log('info:',info))
+    App.getState().then((status)=>console.log('status:',status))
+     
     this.platform.backButton.subscribeWithPriority(10, () => {
       if (!this.routerOutlet.canGoBack()) {
         // eslint-disable-next-line @typescript-eslint/dot-notation

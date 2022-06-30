@@ -1,4 +1,4 @@
-<ion-icon class="map-back-btn" name="chevron-forward-circle-outline" (click)="goToMenu()" slot="end"></ion-icon>
+<app-back-btn (click)="goToMenu()"></app-back-btn>
 <google-map  #map id="map" [height]="height"
 width="100vw"  [options]="mapOptions"
 [center]="center"

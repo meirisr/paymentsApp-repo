@@ -1,9 +1,9 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title class="ion-text-center"> </ion-title>
     <!-- <ion-buttons slot="end"> -->
-      <ion-menu-button menu="main" slot="end"></ion-menu-button>
-      <ion-back-button defaultHref="menu" slot="start"></ion-back-button>
+      <!-- <ion-menu-button menu="main" slot="end"></ion-menu-button> -->
+      <app-back-btn (click)="goToMenu()"></app-back-btn>
     <!-- </ion-buttons> -->
   </ion-toolbar>
 </ion-header>

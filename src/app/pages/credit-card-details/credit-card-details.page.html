@@ -1,9 +1,7 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title class="ion-text-center"> </ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="menu"></ion-back-button>
-    </ion-buttons>
+    <app-back-btn (click)="goToUserProfile()"></app-back-btn>
   </ion-toolbar>
 </ion-header>
 
@@ -91,7 +89,7 @@
             #dateTime
             displayFormat="MM/YYYY"
             showDefaultTimeLabel="false"
-            [presentation]="'date'"
+            [presentation]="'month-year'"
             (ionChange)="dataChange(dateTime.value)"
           >
             <ion-buttons slot="buttons">

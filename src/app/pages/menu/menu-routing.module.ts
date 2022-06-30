@@ -30,29 +30,10 @@ const routes: Routes = [
           import('../camera/camera.module').then((m) => m.CameraPageModule),
         // canLoad: [AuthGuard],
       },
+     
 
-      {
-        path: 'user-details',
-        loadChildren: () =>
-          import('../user-details/user-details.module').then(
-            (m) => m.UserDetailsPageModule
-          ),
-        canLoad: [AuthGuard],
-      },
-      {
-        path: 'credit-card-details',
-        loadChildren: () =>
-          import('../credit-card-details/credit-card-details.module').then(
-            (m) => m.CreditCardDetailsPageModule
-          ),
-      },
-      {
-        path: 'user-profile',
-        loadChildren: () =>
-          import('../user-profile/user-profile.module').then(
-            (m) => m.UserProfilePageModule
-          ),
-      },
+      
+      
     ],
   },
 ];

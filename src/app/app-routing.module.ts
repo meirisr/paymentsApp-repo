@@ -35,6 +35,28 @@ const routes: Routes = [
     // ]
   },
   {
+    path: 'user-profile',
+    loadChildren: () =>
+      import('./pages/user-profile/user-profile.module').then(
+        (m) => m.UserProfilePageModule
+      ),
+  },
+  {
+    path: 'user-details',
+    loadChildren: () =>
+      import('./pages/user-details/user-details.module').then(
+        (m) => m.UserDetailsPageModule
+      ),
+    canLoad: [AuthGuard],
+  },
+  {
+    path: 'credit-card-details',
+    loadChildren: () =>
+      import('./pages/credit-card-details/credit-card-details.module').then(
+        (m) => m.CreditCardDetailsPageModule
+      ),
+  },
+  {
     path: 'scan',
     loadChildren: () =>
       import('./pages/scan/scan.module').then((m) => m.ScanPageModule),

@@ -124,4 +124,7 @@ cvSInputFocus(){
 cvSInputUnFocus(){
   this.flipClass='';
 }
+goToUserProfile(){
+  this.router.navigate(['/menu/user-profile']);
+}
 }

@@ -71,6 +71,14 @@ form ion-input.sc-ion-input-md-h{
 .white-text{
   color: #fff;
 }
+.my-custom-class{
+  --width: 90vw;
+    --height: 40vh;
+    --border-radius: 8px;
+}
 // .toast{
 //   height: 20vh;
 // }
+.errors{
+  color: red;
+}

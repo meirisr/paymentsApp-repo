@@ -9,6 +9,8 @@ import { Capacitor } from '@capacitor/core';
 import { AlertController, Platform } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { Location } from '@angular/common';
+import { UserLoginService } from 'src/app/services/api/user-login.service';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-scan',
@@ -26,9 +28,10 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
     private alertController: AlertController,
     private router: Router,
     private location: Location,
-
+    private apiUserServer: UserLoginService,
     private platform: Platform,
-    private openNativeSettings: OpenNativeSettings
+    private openNativeSettings: OpenNativeSettings,
+    private utils:UtilsService
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.router.navigate(['/menu']);
@@ -38,7 +41,23 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    console.log(this.result);
+  
+    // if (Capacitor.isNativePlatform()) {
+    //   this.checkLocationPermission().then((e) => {
+    //     if (e) {
+    //       BarcodeScanner.prepare();
+    //       this.startScanner();
+    //     }
+    //   });
+    //   this.scanNotAllowed = false;
+    // } else {
+    //   this.scanNotAllowed = true;
+    //   setTimeout(() => {
+    //     this.router.navigate(['/menu']);
+    //   }, 3000);
+    // }
+  }
+  ionViewDidEnter(){
     if (Capacitor.isNativePlatform()) {
       this.checkLocationPermission().then((e) => {
         if (e) {
@@ -54,13 +73,19 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
       }, 3000);
     }
   }
-
-  ngOnDestroy() {
+  ionViewWillLeave(){
     document.querySelector('body').classList.remove('scanBg');
     if (Capacitor.isNativePlatform()) {
       BarcodeScanner.stopScan();
     }
     this.scanNotAllowed = false;
+  }
+  ngOnDestroy() {
+    // document.querySelector('body').classList.remove('scanBg');
+    // if (Capacitor.isNativePlatform()) {
+    //   BarcodeScanner.stopScan();
+    // }
+    // this.scanNotAllowed = false;
   }
   async startScanner() {
     const allowed = await this.checkPermission();
@@ -75,10 +100,18 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
         this.result = result.content;
         // BarcodeScanner.stopScan();
         this.scanActive = false;
-        // this.scanActive = true;
-        setTimeout(() => {
-          this.router.navigate(['/payment']);
-        }, 10);
+        this.router.navigate(['/payment']);
+      //   this.apiUserServer.getTravel().subscribe(async () => {
+          
+      //     this.router.navigate(['/payment']);
+      //   }),
+      //  async (e) => {
+      //   18
+      //  }
+        // // this.scanActive = true;
+        // setTimeout(() => {
+       
+        // }, 10);
       }
       document.querySelector('body').classList.add('scanBg');
     }
@@ -93,7 +126,7 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
   }
   async checkLocationPermission() {
     const locationStatus = await Geolocation.requestPermissions();
-    console.log(locationStatus);
+  
     if (locationStatus.location) {
       try {
         const coordinates = await Geolocation.getCurrentPosition();
@@ -115,43 +148,17 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
             {
               text: 'Ok',
               handler: () => {
-              this.openNativeSettings.open('location');
-
+                this.openNativeSettings.open('location');
               },
             },
           ],
         });
         await alert.present();
       }
-    }
-  else {
-      // this.permissionAlert();
+    } else {
       this.location.back();
       return false;
-      //  this.permissionAlert();
-      // const c = confirm(
-      //   'If you want to grant permission for using your locaiton, enable it in the app settings.'
-      // );
-      // if (c) {
-      //   BarcodeScanner.openAppSettings();
-      // } else {
-      //   navigator['app'].exitApp();
-      // }
     }
-    // return true;
-    // .then(
-    //     async () => {
-    //       const coordinates = await Geolocation.getCurrentPosition();
-
-    //       const latLng = new google.maps.LatLng(
-    //         coordinates.coords.latitude,
-    //         coordinates.coords.longitude
-    //       );
-    //     },
-    //     async () => {
-    //       console.log('jjjj');
-    //     }
-    //   );
   }
 
   stopScanner() {
@@ -160,6 +167,7 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
     this.scanActive = false;
   }
   async permissionAlert() {
+    this.location.back();
     const alert = await this.alertController.create({
       header: 'Confirm permission',
       message: `האפליקציה חייבת גישה למצלמה`,
@@ -184,27 +192,7 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
     });
     await alert.present();
   }
-  checkisFlashAvailable() {
-    // this.flashlight.available().then((data) => {
-    //   this.isFlashAvailable = data;
-    // });
-  }
-  async switchOnFlash() {
-    // this.flashlight.switchOn().then(() => {
-    //   this.isFlashOn=true;
-    // });
-    // this.isFlashOn = await this.flashlight.switchOn();
-  }
-  async switchOffFlash() {
-    // this.isFlashOn = await this.flashlight.switchOff();
-  }
-  isSwitchedOn() {
-    //  let is this.flashlight.isSwitchedOn()
-    //     this.isFlashOn = data.value;
-  }
-  toggleFlash() {
-    // this.flashlight.toggle();
-  }
+
   goTomenu() {
     this.router.navigate(['/menu']);
   }

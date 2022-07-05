@@ -28,8 +28,8 @@ const routes: Routes = [
     path: 'menu',
     loadChildren: () =>
       import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
-    canLoad: [AuthGuard, IntroGuard],
-    // canLoad: [IntroIntroGuardGuard],
+    // canLoad: [AuthGuard, IntroGuard],
+    canLoad: [AuthGuard]
     // children:[
 
     // ]
@@ -40,6 +40,7 @@ const routes: Routes = [
       import('./pages/user-profile/user-profile.module').then(
         (m) => m.UserProfilePageModule
       ),
+      canLoad: [AuthGuard],
   },
   {
     path: 'user-details',

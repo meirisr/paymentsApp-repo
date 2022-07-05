@@ -9,38 +9,49 @@
   position: relative;
 }
 
-// input:focus::placeholder {
-//   color: transparent;
- 
-// }
+.flutingLabel {
+  width: 100%;
+  position: relative;
+}
+
 
 
 span {
   display: inline-block;
   position: absolute;
-  margin-top: -30px;
-  margin-right: 10px;
-  color: transparent;
+  margin: -30px 8px 0 8px;
   transition: all 0.1s ease-in-out;
-  z-index: 2;
 }
 
-// .flutingLabel:focus::placeholder {
-//   color: transparent;
-
-// }
-.fluatingLabel span{
+form ion-input.sc-ion-input-md-h:focus-within+span,
+form ion-input.sc-ion-input-md-h.has-value+span {
   font-size: 16px;
-  background-color: white;
-  padding: 0 4px;
+  background-color: #f9fafb;
+  padding: 0 2px;
   color: black;
-  margin: -53px 10px 0 10px;
+  z-index: 2;
+  margin: -52px 8px 0 8px;
 }
-// .flutingLabel:focus-within span,
-// .flutingLabel input:not(:placeholder-shown)+span {
-//   font-size: 14px;
-//   background-color: white;
-//   padding: 0 4px;
-//   color: black;
-//   margin: -50px 0 0 8px;
-// }
+
+ion-modal {
+  --width: 290px;
+  --height: 40vh;
+  --border-radius: 8px;
+  --background:rgda(44,39,45,0.2)
+  &::part(cotent){
+    backgruond-filter:blur(6px)
+  }
+}
+ion-modal ion-datetime {
+  // height: 382px;
+}
+ion-datetime {
+  height: auto;
+  width: auto;
+
+  // max-width: 350px;
+}
+.datetime-time .time-body{
+  display: none ;
+}
+

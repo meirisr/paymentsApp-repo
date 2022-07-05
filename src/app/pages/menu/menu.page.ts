@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
@@ -27,9 +28,11 @@ export class MenuPage implements OnInit, AfterViewInit {
   //   };
   constructor(
     private router: Router,
-    private apiUserServer: UserLoginService
+    private apiUserServer: UserLoginService,
+    private utils: UtilsService,
   ) {
     document.querySelector('body').classList.remove('scanBg');
+    // this.apiUserServer.getUserDetails().subscribe();
     // this.platform.backButton.subscribeWithPriority(10, () => {
     //   // if (!this.routerOutlet.canGoBack()) {
     //   //   // eslint-disable-next-line @typescript-eslint/dot-notation
@@ -41,28 +44,14 @@ export class MenuPage implements OnInit, AfterViewInit {
     // });
   }
   ngOnInit() {
-    this.apiUserServer.getUserDetails();
-    this.apiUserServer.getCreditCardInfo();
-    // this.apiUserServer.getUserDetails().then(()=>{
-    //   this.apiUserServer.isUserHasDetails.pipe(
-    //     filter((val) => val !== null),
-    //     take(1),
-    //     map((isUserHasDetails) =>{return isUserHasDetails;}))
-    //   .subscribe((e)=>{
-    //     if(e){
-    //      return false;
-    //     }
-    //     else{
-    //       this.router.navigateByUrl('/user-details', { replaceUrl: true });
-    //     }
-    //   });
-    // });
+    // this.apiUserServer.getUserDetails().subscribe();
+    // this.apiUserServer.getCreditCardInfo();
   }
   ngAfterViewInit(): void {
     this.hideSplashScreen();
   }
  async hideSplashScreen(){
-  await SplashScreen.hide();
+  // await SplashScreen.hide();
  }
   settings() {
     this.router.navigate(['/settings']);
@@ -71,7 +60,12 @@ export class MenuPage implements OnInit, AfterViewInit {
     this.router.navigate(['/scan']);
   }
   map() {
-    this.router.navigate(['/payment']);
+    this.router.navigate(['/payment'],);
+  }
+  logOut(){
+    this.utils.deleteStorege()
+    this.apiUserServer.isAuthenticated.next(false)
+    this.router.navigate(['/'],);
   }
 
   userProfile() {

@@ -5,11 +5,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
   <!-- <app-login-steps-navbar [creditCardForm]="creditCardForm"></app-login-steps-navbar> -->
-  <app-credit-card [cardNum]="cardNum" [cardDate]="cardDate" [userName]="userName" [cvsNum]="cvsNum" [flipClass]="flipClass"></app-credit-card>
- 
-  <form dir="{{'dir'|translate}}"
+  <app-credit-card
+    [cardNum]="cardNum"
+    [cardDate]="cardDate"
+    [userName]="userName"
+    [cvsNum]="cvsNum"
+    [flipClass]="flipClass"
+  ></app-credit-card>
+
+  <form
+    dir="{{'dir'|translate}}"
     class="user-details-Form"
     [formGroup]="cardDetails"
     (ngSubmit)="updateCreditCard()"
@@ -17,7 +24,8 @@
   >
     <h1>פרטי אשראי</h1>
     <div class="input-group">
-      <ion-input (keyup)="cardNumKeyUp($event)"
+      <ion-input
+        (keyup)="cardNumKeyUp($event)"
         placeholder="מספר אשראי"
         type="tel"
         inputmode="numeric"
@@ -28,9 +36,8 @@
       ></ion-input>
     </div>
 
-   
     <div class="input-group">
-      <ion-input 
+      <ion-input
         placeholder="תוקף"
         type="text"
         [value]="date"
@@ -40,7 +47,10 @@
       ></ion-input>
     </div>
     <div class="input-group">
-      <ion-input  (ionFocus)="cvSInputFocus()"  (ionBlur)="cvSInputUnFocus()" (keyup)="cardCvsKeyUp($event)"
+      <ion-input
+        (ionFocus)="cvSInputFocus()"
+        (ionBlur)="cvSInputUnFocus()"
+        (keyup)="cardCvsKeyUp($event)"
         placeholder="CVS"
         type="tel"
         inputmode="numeric"
@@ -62,49 +72,47 @@
         oninput="this.value=this.value.replace(/[^0-9]/g,'');"
         required
       ></ion-input>
-      </div>
-     
+    </div>
+
     <div class="input-group">
-      <ion-input (keyup)="userNameKeyUp($event)"
+      <ion-input
+        (keyup)="userNameKeyUp($event)"
         placeholder="שם בעל הכרטיס"
         type="text"
         id="userName"
         formControlName="userName"
         required
       ></ion-input>
-      </div>
-     
-  
+    </div>
 
     <ion-modal
-      trigger="open-date-modal"
-      mode="md"
-      (willDismiss)="onWillDismiss($event)"
-    >
-      <ng-template>
-        <ion-content force-overscroll="false"
-          ><ion-datetime
-            locale="he-IL"
-            size="cover"
-            #dateTime
-            displayFormat="MM/YYYY"
-            showDefaultTimeLabel="false"
-            [presentation]="'month-year'"
-            (ionChange)="dataChange(dateTime.value)"
-          >
-            <ion-buttons slot="buttons">
-              <ion-button (click)="close()">Dismiss</ion-button>
-              <ion-button (click)="select()">Select</ion-button>
-            </ion-buttons>
-          </ion-datetime>
-        </ion-content>
-      </ng-template>
-    </ion-modal>
-
+    trigger="open-date-modal"
+    mode="md"
+    (willDismiss)="onWillDismiss($event)"
+  >
+    <ng-template>
+      <ion-content force-overscroll="false"
+        ><ion-datetime
+          locale="he-IL"
+          size="cover"
+          #dateTime
+          displayFormat="MM/YYYY"
+          showDefaultTimeLabel="false"
+          [presentation]="'month-year'"
+          (ionChange)="dataChange(dateTime.value)"
+        >
+          <ion-buttons slot="buttons">
+            <ion-button (click)="close()">Dismiss</ion-button>
+            <ion-button (click)="select()">Select</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
     <div class="input-group" dir="ltr">
       <ion-button type="submit" expand="block" [disabled]="cardDetails.invalid"
-        >{{'pages.userDetais.updated'|translate}} </ion-button
-      >
+        >{{'pages.userDetais.updated'|translate}}
+      </ion-button>
     </div>
   </form>
 </ion-content>

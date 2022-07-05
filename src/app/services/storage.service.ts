@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
- interface UserDetails {
+ export interface UserDetails {
   firstName :string,
   lastName: string,
   email :string
@@ -10,12 +10,18 @@ import { Injectable } from '@angular/core';
 export class StorageService {
   userPhoneNumber: string;
   userDetails :UserDetails;
-  constructor() {}
+  creditCard4Dig: string
+ 
 
   setUserPhoneNumber(phone: string) {
     this.userPhoneNumber = phone;
   }
   setUserDetails(details: UserDetails) {
+   console.log(details);
     this.userDetails = details;
+  }
+  setCreditCard4Dig(details: string) {
+    this.creditCard4Dig = details;
+    
   }
 }

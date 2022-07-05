@@ -6,10 +6,10 @@
       "registration":"הרשמה חד פעמי",
       "scan":"סורקים קוד",
       "travel":"מתחילים נסיעה",
-      "nextBtn":"בואו נתחיל"
+      "nextBtn":"כניסה עם כרטיס אשראי"
       },
       "login":{
-        "phoneInputText":"הזן מס' טלפון",
+        "phoneInputText":"הזדהות",
         "nextBtn":"המשך",
         "backBtn":"חזור",
         "resendSms":"שלח קוד שוב"
@@ -19,7 +19,8 @@
         "userDetails":"פרטי משתמש ",
         "creditCardDetails":"פרטי כרטיס אשראי",
         "scan":"סריקה",
-        "map":"מפה" 
+        "map":"מפה" ,
+        "logOut":"יציאה"
       },
       "userDetais":{
         "updated":"ערוך"

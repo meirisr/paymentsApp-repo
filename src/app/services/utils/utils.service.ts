@@ -4,6 +4,13 @@ import { LoadingController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
+const PHONE_NUM = 'my-phone';
+const TOKEN_KEY = 'my-token';
+const REFRESH_TOKEN_KEY = 'token-refresh';
+const HEADER_HOTELS = 'hotels';
+const USER_DETAILS = 'user-details';
+const CARD_DETAILS = 'card-details';
+const userStorege=[COLOR_THEME,USER_LANGUAGE,PHONE_NUM,TOKEN_KEY,REFRESH_TOKEN_KEY,HEADER_HOTELS,USER_DETAILS,CARD_DETAILS]
 @Injectable({
   providedIn: 'root',
 })
@@ -15,7 +22,7 @@ export class UtilsService {
   constructor(
     public loadingController: LoadingController,
     private alertController: AlertController,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   onToggleColorTheme(event) {
@@ -82,7 +89,7 @@ export class UtilsService {
     const loading = await this.loadingController.create({
       message: 'Loading...',
       // duration: 3000,
-      spinner:null
+      spinner: 'bubbles'
     });
     await loading.present();
     return loading;
@@ -104,5 +111,16 @@ export class UtilsService {
   }
   setStorege(k: string, v: string): Promise<any> {
     return Storage.set({ key: k, value: v });
+  }
+  async getStorege(key:string){
+
+   return await Storage.get({ key: key });
+  }
+  deleteStorege(){
+   userStorege.forEach(storegeKey=>{
+    Storage.remove({ key: storegeKey });
+   })
+
+   
   }
 }

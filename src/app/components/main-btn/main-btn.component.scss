@@ -1,22 +1,24 @@
 .main-btn[ng-reflect-type=click]{
-  height: 50px;
-  // margin: 5%;
-  font-size: 1.1rem;
+  height: 48px;
+  // font-size: 1.1rem;
   --background: var(--ion-color-btn);
-   margin: 5%;
-   font-size: 24px;
-   width: 90vw;;
-  
+  margin-top: 5%;
+  font-size: 22px;
+  position: fixed;
+  bottom: 34px;
 }
 .main-btn[ng-reflect-type=submit]{
-  height: 50px;
-  font-size: 1.1rem;
+  height: 48px;
   --background: var(--ion-color-btn);
-   margin-top: 5%;
-   font-size: 24px;
-   width: 90vw;;
-  
+  --border-radius: 10px;
+  margin-top: 5%;
+  font-size: 18px;
+  position: fixed;
+  width: 121px;
+  bottom: 34px;
+  font-weight: normal;
 }
+
 .back-btn{
   font-size: 24px;
 }

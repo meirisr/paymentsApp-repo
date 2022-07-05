@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild ,AfterViewInit} from '@angular/core';
 import { IonSlides } from '@ionic/angular';
-import { INTRO_KEY } from 'src/app/guards/intro.guard';
 import { Router } from '@angular/router';
-import { Storage } from '@capacitor/storage';
 import { SplashScreen } from '@capacitor/splash-screen';
 import SwiperCore, {
   Autoplay,
@@ -12,6 +10,7 @@ import SwiperCore, {
   Zoom,
 } from 'swiper';
 import { TranslateService } from '@ngx-translate/core';
+import { LowerCasePipe } from '@angular/common';
 
 SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom]);
 
@@ -24,6 +23,16 @@ export class IntroPage implements OnInit,AfterViewInit {
   @ViewChild(IonSlides) slides: IonSlides;
   prefersDark;
   translaetPath;
+  searchTerm
+  
+  items=[
+    {"name":"hhhh"},
+    {"name":"ff"},
+    {"name":"hhyyyh"},
+    {"name":"ffgg"},
+    {"name":"hhyfhhbfhh"},
+  ]
+  tempitems=[...this.items];
   // slide1Body ='ברוכים הבאים';
 
   constructor(
@@ -39,19 +48,19 @@ export class IntroPage implements OnInit,AfterViewInit {
     await SplashScreen.hide();
    }
   next() {
-    this.translate.use('he');
-    // this.slides.slideNext();
+    // this.translate.use('he');
     this.router.navigate(['/login']);
-  }
-  async start() {
-    await Storage.set({ key: INTRO_KEY, value: 'true' });
-    this.router.navigate(['/scan']);
-    // this.router.navigateByUrl('/login', { replaceUrl:true });
   }
   toggleDarkTheme(matchesMode) {
     this.prefersDark = matchesMode;
   }
-  // registration() {
-  //   this.router.navigate(['/login']);
-  // }
+  handleInput(event:Event) {
+      const query = (event.target as HTMLInputElement).value.toLowerCase();
+     
+        this.tempitems=[...this.items.filter(item=>{
+         return item.name.toLowerCase().indexOf(query) > -1;
+      })]
+    
+  }
+  
 }

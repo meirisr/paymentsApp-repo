@@ -34,12 +34,12 @@ export class PhoneNumberFormComponent implements OnInit {
         }, 150);
       },
       async (res) => {
-        console.log(res);
+  
         this.apiUserServer.didSendSms.next(false);
         this.onHttpErorr(res, '', loader);
       }
     );
-    console.log(this.apiUserServer.didSendSms);
+   
   }
   async onHttpErorr(e, header, loader) {
     this.utils.dismissLoader(loader);

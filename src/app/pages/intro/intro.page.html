@@ -1,90 +1,69 @@
-
 <ion-content fullscreen class="ion-padding info-content">
-   <!-- <ion-slides >
+  <!-- <ion-slides >
     <ion-slide> -->
-   
-          <div class="slide">
-            <div class="ion-text-start slide-header" color="light">
-              <img *ngIf="prefersDark" src="../../../assets/isr-logo-whit.svg" /><img
-              *ngIf="!prefersDark"
-              src="../../../assets/isr-logo-black.svg"
-          /></div>
-          <div class="slide-body-header">
-            <ion-text class="ion-text-center ">
-              <h1>{{'pages.intro.header'|translate}}</h1>
-              <p>
-                {{'pages.intro.title'|translate}}
-              </p>
-            </ion-text>
-          </div>
-          
-           <div class="slide-body">
-            <ion-item-group>
-            <ion-item lines="none" >
-              <ion-label slot="end" class="">{{'pages.intro.registration'|translate}}</ion-label>
-              <span slot="end" class="icon-circle"><ion-icon  name="create-outline" slot="end"></ion-icon></span>
-            </ion-item>
-          </ion-item-group>
-          <ion-item-group>
-            <ion-item lines="none" >
-              <ion-label  slot="end" class="">{{'pages.intro.scan'|translate}}</ion-label>
-              <span slot="end" class="icon-circle"><ion-icon name="barcode-outline" slot="end"></ion-icon></span>
-            </ion-item>
-            <ion-item lines="none" >
-              <ion-label slot="end" class="" >{{'pages.intro.travel'|translate}}</ion-label>
-              <span slot="end" class="icon-circle"><ion-icon name="checkmark-outline" slot="end"></ion-icon></span>
-            </ion-item>
-          </ion-item-group>
 
+  <div class="slide">
+    <div class="ion-text-start slide-header" color="light">
+      <img *ngIf="prefersDark" src="../../../assets/isr-logo-whit.svg" /><img
+        *ngIf="!prefersDark"
+        src="../../../assets/isr-logo-black.svg"
+      />
+    </div>
+    <div class="slide-body-header">
+      <ion-text class="ion-text-center">
+        <h1>{{'pages.intro.header'|translate}}</h1>
+        <p>{{'pages.intro.title'|translate}}</p>
+      </ion-text>
+    </div>
 
-
-          <!-- <ion-row>
-            <ion-col size="4">
-              <div class="icon-list" >
-              
-                <span slot="end" class="icon-circle"><ion-icon  name="create-outline" slot="icon-only"></ion-icon></span>
-                  <p class="white-text">One-time registration</p>
-              </div>
-            </ion-col >
-            <ion-col size="4">
-              <div class="icon-list" >
-                
-                <span slot="end" class="icon-circle"><ion-icon name="barcode-outline" slot="icon-only"></ion-icon></span>
-                <p  class="white-text">Scan</p>
-              </div>
-            </ion-col>
-            <ion-col size="4">
-              <div class="icon-list" >
-                <span slot="center" class="icon-circle"><ion-icon name="checkmark-outline" slot="icon-only"></ion-icon></span>
-                <p slot="end" class="white-text">And travel</p>
-              </div>
-            </ion-col>
-          </ion-row> -->
-           </div>
-          </div>
-
-
+    <div class="slide-body">
+      <ion-searchbar (keyup)="handleInput($event)"></ion-searchbar>
+      <ion-list >
+        <ion-item *ngFor="let item of tempitems">
+          <ion-label>{{item.name}}</ion-label>
+        </ion-item>
        
- 
-</ion-content>
-<!-- <ion-footer class="ion-no-border">
-
-  <div class="footer">
-    <app-main-btn  (click)="next()">
-      <ion-icon name="arrow-back-outline" slot="start" style="height: 30px;width: 30px;"></ion-icon>
-        <ion-label >{{'pages.intro.nextBtn'|translate}}</ion-label>
-    </app-main-btn>
-      <ion-button class="nextBtn" expand="block" (click)="next()">
-        <ion-icon name="arrow-back-outline" slot="start" style="height: 30px;width: 30px;"></ion-icon>
-        <ion-label >{{'pages.intro.nextBtn'|translate}}</ion-label>
-      </ion-button>
- 
+      </ion-list>
+      <!-- <ion-item-group>
+        <ion-item lines="none">
+          <ion-label slot="end" class=""
+            >{{'pages.intro.registration'|translate}}</ion-label
+          >
+          <span slot="end" class="icon-circle"
+            ><ion-icon name="create-outline" slot="end"></ion-icon
+          ></span>
+        </ion-item>
+      </ion-item-group>
+      <ion-item-group>
+        <ion-item lines="none">
+          <ion-label slot="end" class=""
+            >{{'pages.intro.scan'|translate}}</ion-label
+          >
+          <span slot="end" class="icon-circle"
+            ><ion-icon name="barcode-outline" slot="end"></ion-icon
+          ></span>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label slot="end" class=""
+            >{{'pages.intro.travel'|translate}}</ion-label
+          >
+          <span slot="end" class="icon-circle"
+            ><ion-icon name="checkmark-outline" slot="end"></ion-icon
+          ></span>
+        </ion-item>
+      </ion-item-group> -->
+    </div>
   </div>
+  <ion-button class="nextBtn" expand="block" fill="outline" (click)="next()">{{'pages.intro.nextBtn'|translate}}</ion-button>
+  <!-- <app-main-btn
+  type="click"
+  (click)="next()"
+  text="{{'pages.intro.nextBtn'|translate}}"
+></app-main-btn> -->
+</ion-content>
 
-</ion-footer> -->
-
-<ion-footer class="ion-no-border" collapse="fade">
+<!-- <ion-footer class="ion-no-border" collapse="fade">
   <ion-toolbar>
-    <app-main-btn type="click"  (click)="next()" text="{{'pages.intro.nextBtn'|translate}}"></app-main-btn>
+  
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

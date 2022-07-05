@@ -19,7 +19,8 @@
       "userDetails":"User Details",
       "creditCardDetails":"Credit Card Details",
       "scan":"Scan",
-      "map":"Map" 
+      "map":"Map", 
+      "logOut":"Logout"
 
     },
     "userDetais":{

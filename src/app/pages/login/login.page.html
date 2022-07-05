@@ -1,10 +1,6 @@
-<!-- <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>{{'' | translate}}</ion-title>
-  </ion-toolbar>
-</ion-header> -->
+
 <ion-content>
-<app-login-steps-navbar [textForm]="textForm"></app-login-steps-navbar>
+<!-- <app-login-steps-navbar [textForm]="textForm"></app-login-steps-navbar> -->
 <div *ngIf="!textForm">
   <app-phone-number-form></app-phone-number-form>
 </div>
@@ -12,3 +8,4 @@
   <app-sms-code-form></app-sms-code-form>
   </div>
 </ion-content>
+

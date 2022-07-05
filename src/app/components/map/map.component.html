@@ -1,12 +1,14 @@
 <app-back-btn (click)="goToMenu()"></app-back-btn>
 <google-map  #map id="map" [height]="height"
 width="100vw"  [options]="mapOptions"
-[center]="center"
->
-<map-traffic-layer [autoRefresh]="false"></map-traffic-layer>
+[center]="center">
+<!-- <map-traffic-layer [autoRefresh]="false"></map-traffic-layer> -->
 <map-transit-layer></map-transit-layer>
-<map-marker *ngFor="let marker of markerPositions"
-[position]="marker"
+<map-marker *ngFor="let marker of markers"
+[icon]="marker.icon"
+[position]="marker.position"
 [options]="markerOptions" (mapClick)="markerClick($event)"></map-marker>
-<map-polyline #polyline id="polyline" [path]="vertices.path"></map-polyline>
+<map-polyline [options]="polylineOptions" #polyline id="polyline" [path]="path"></map-polyline>
+<!-- <map-directions-renderer *ngIf="(directionsResults$ | async) as directionsResults"
+[directions]="directionsResults"></map-directions-renderer> -->
 </google-map>

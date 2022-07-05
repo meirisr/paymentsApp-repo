@@ -1,8 +1,13 @@
 <ion-header class="ion-no-border">
-<ion-toolbar>
-  <!-- <ion-menu-button menu="main" slot="end"></ion-menu-button> -->
-  <ion-icon class="back-btn" name="chevron-forward-circle-outline" (click)="goTomenu()" slot="end"></ion-icon>
-</ion-toolbar>
+  <ion-toolbar>
+    <!-- <ion-menu-button menu="main" slot="end"></ion-menu-button> -->
+    <ion-icon
+      class="back-btn"
+      name="chevron-forward-circle-outline"
+      (click)="goTomenu()"
+      slot="end"
+    ></ion-icon>
+  </ion-toolbar>
 </ion-header>
 <ion-content [class.hideBg]="scanActive">
   <ion-row class="ion-text-center ion-padding" [hidden]="!scanNotAllowed">
@@ -14,20 +19,24 @@
   </ion-row>
   <div class="scan-body-header" [hidden]="!scanActive">
     <div *ngIf="isFlashAvailable" class="flashDiv">
-      <ion-icon *ngIf="isFlashOn" class="flashIcon" name="flash-outline" ></ion-icon>
-      <ion-icon *ngIf="!isFlashOn" class="flashIcon"  name="flash-off-outline" ></ion-icon>
+      <ion-icon
+        *ngIf="isFlashOn"
+        class="flashIcon"
+        name="flash-outline"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="!isFlashOn"
+        class="flashIcon"
+        name="flash-off-outline"
+      ></ion-icon>
     </div>
-    <ion-text class="ion-text-center ">
-      
+    <ion-text class="ion-text-center">
       <h1>תשלום באוטובוס</h1>
-      <h2>
-        QR סריקת קוד
-      </h2>
+      <h2>QR סריקת קוד</h2>
       <p>המדבקות נמצאות על הדלתות או ליד הנהג</p>
     </ion-text>
   </div>
-  <ion-row [hidden]="!scanActive" >
-    
+  <ion-row [hidden]="!scanActive">
     <div class="ocrloader">
       <p>QR סרוק/י קוד</p>
       <em></em>

@@ -5,6 +5,8 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 import { Storage } from '@capacitor/storage';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
+import { ModalController } from '@ionic/angular';
+import { LoginStepsNavbarComponent } from '../../login-steps-navbar/login-steps-navbar.component';
 const PHONE_NUM = 'my-phone';
 @Component({
   selector: 'app-sms-code-form',
@@ -18,6 +20,7 @@ export class SmsCodeFormComponent implements OnInit {
     private apiUserServer: UserLoginService,
     private utils: UtilsService,
     private storageService: StorageService,
+    private modalController: ModalController
 
   ) { }
 
@@ -59,7 +62,16 @@ export class SmsCodeFormComponent implements OnInit {
     this.apiUserServer.getToken(credentials).subscribe(
       async () => {
         this.utils.dismissLoader(loader);
-        this.router.navigateByUrl('/menu', { replaceUrl: true });
+         this.presentModal().then((modal)=>{
+          modal.present()
+      // setTimeout(()=>{
+      //   modal.dismiss({
+      //     'dismissed': true
+      //   });
+      //   this.router.navigateByUrl('/menu', { replaceUrl: true });
+      // },3000 )
+     })
+        
       },
       async (res) => {
         this.onHttpErorr(res, '', loader);
@@ -85,13 +97,12 @@ export class SmsCodeFormComponent implements OnInit {
   async resendSms() {
     const loader = this.utils.showLoader();
     this.apiUserServer.getSms({phone: this.storageService.userPhoneNumber}).subscribe(
-      async (res) => {
+      async () => {
         this.utils.dismissLoader(loader);
         setTimeout(() => {
         }, 150);
       },
       async (res) => {
-        console.log(res);
         this.apiUserServer.didSendSms.next(false);
         this.onHttpErorr(res, '', loader);
       }
@@ -99,6 +110,15 @@ export class SmsCodeFormComponent implements OnInit {
   }
   back() {
     this.apiUserServer.didSendSms.next(false);
+  }
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: LoginStepsNavbarComponent,
+      cssClass: 'my-custom-class',
+      swipeToClose: true,
+      // presentingElement: await this.modalController.getTop(), // Get the top-most ion-modal
+    });
+    return await modal;
   }
 
 }

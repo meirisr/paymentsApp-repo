@@ -8,20 +8,19 @@ const COLOR_THEME = 'color-theme';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
-  ischecked;
+  ischecked: string;
   ischecked2;
-  defaultLang;
+  defaultLang:string;
   constructor(private utils: UtilsService,private router:Router) {
     this.ischecked=this.utils.ischecked;
-
     this.defaultLang=this.utils.defaultLang;
-    console.log(this.defaultLang);
+ 
   }
 
   ngOnInit() {}
   onToggleColorTheme(event) {
     this.utils.onToggleColorTheme(event);
-    console.log(event);
+  
   }
   onToggleLanguages(event) {
     this.utils.onToggleLanguages(event);

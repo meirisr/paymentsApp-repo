@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Device } from '@capacitor/device';
 import { map, tap } from 'rxjs/operators';
-import { Storage } from '@capacitor/storage';
+import { GetResult, Storage } from '@capacitor/storage';
 import { BehaviorSubject, from, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-import { StorageService } from '../storage.service';
+import { StorageService, UserDetails } from '../storage.service';
+import { promise } from 'protractor';
 
 const PHONE_NUM = 'my-phone';
 const TOKEN_KEY = 'my-token';
@@ -20,21 +21,25 @@ const CARD_DETAILS = 'card-details';
 
 @Injectable({
   providedIn: 'root',
+  
 })
 export class UserLoginService {
+  token:GetResult;
+  jwtToken:GetResult; 
+  Coordinates=<any>[];
+
   didSendSms: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
   );
-  userDetails = new BehaviorSubject({ firstName: '', lastName: '', email: '' });
-  creditCardDetails = new BehaviorSubject('');
   isUserHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
   );
+  userDetails = new BehaviorSubject({ firstName: '', lastName: '', email: '' });
   isCardHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
   );
-  token = '';
+
   constructor(
     private http: HttpClient,
     private storageService: StorageService,
@@ -43,44 +48,47 @@ export class UserLoginService {
   ) {
     this.loadToken();
   }
-  async loadToken() {
-    const token = await Storage.get({ key: TOKEN_KEY });
-    const refreshToken = await Storage.get({ key: REFRESH_TOKEN_KEY });
+  public async loadToken() {
+     this.token = await this.utils.getStorege(TOKEN_KEY);
+    this.jwtToken = await this.utils.getStorege(REFRESH_TOKEN_KEY );
 
-    if (token && token.value && refreshToken && refreshToken.value) {
-      this.isTokenValid(token.value).subscribe(
+    if (this.token && this.token.value && this.jwtToken && this.jwtToken.value){
+      this.isTokenValid(this.token.value).subscribe(
         async (res) => {
           if (!res) {
-            this.refreshToken(refreshToken.value);
+            this.refreshToken(this.jwtToken.value).subscribe(() => {
+              this.loadToken();
+            });
           } else {
-            console.log('set token: ', token.value);
-            this.token = token.value;
             this.isAuthenticated.next(true);
-            this.getUserDetails();
+            this.getUserDetails().subscribe();
+            this.getCreditCardInfo().subscribe();
           }
         },
         async (res) => {
           console.log('res');
         }
       );
-    } else if (refreshToken && refreshToken.value) {
-      this.refreshToken(refreshToken.value);
+    } else if (this.jwtToken && this.jwtToken.value) {
+      this.refreshToken(this.jwtToken.value).subscribe(() => {
+        this.loadToken();
+      });
     } else {
       this.isAuthenticated.next(false);
     }
   }
 
-  async logDeviceInfo() {
+  public async logDeviceInfo() {
     await Device.getLanguageCode().then((language) => {
       USER_LANGUAGE = language.value.toLowerCase();
     });
   }
 
-  isTokenValid(token: string): Observable<any> {
+  public isTokenValid(token: string): Observable<any> {
     return this.http
       .get(`${environment.serverUrl}/base-auth/is-token-valid?token=${token}`)
       .pipe(
-        map((data: any) => {
+        map((data: any) =>{
           if (!data.body) {
             Storage.remove({ key: TOKEN_KEY });
           }
@@ -88,29 +96,35 @@ export class UserLoginService {
         })
       );
   }
-  refreshToken(token: string) {
-    this.http
+  public refreshToken(token: string) {
+    return this.http
       .get(
         `${environment.serverUrl}/base-auth/refresh-token?refreshToken=${token}`
-      )
-      .subscribe((data: any) => {
-        from(this.utils.setStorege(TOKEN_KEY, data.body.jwtToken));
-        this.loadToken();
-      });
+      ) .pipe(
+        tap((data:any) => {
+          this.utils.setStorege(TOKEN_KEY, data.body.jwtToken);
+        })
+      );
+     
   }
-  getSms(credentials: { phone: string }): Observable<any> {
+  public getSms(credentials: { phone: string }): Observable<any> {
     return this.http
       .post(`${environment.serverUrl}/phone-auth/send-code`, null, {
         headers: new HttpHeaders({ station: HEADER_HOTELS }),
         params: new HttpParams().set('phone', credentials.phone),
       })
-      .pipe(tap(() => {
-        this.storageService.setUserPhoneNumber(credentials.phone);
-        this.utils.setStorege(PHONE_NUM, credentials.phone);
-      }));
+      .pipe(
+        tap(() => {
+          this.storageService.setUserPhoneNumber(credentials.phone);
+          this.utils.setStorege(PHONE_NUM, credentials.phone);
+        })
+      );
   }
 
-  getToken(credentials: { phone: string ; text: string }): Observable<any> {
+  public getToken(credentials: {
+    phone: string;
+    text: string;
+  }): Observable<any> {
     return this.http
       .post(`${environment.serverUrl}/phone-auth/verify-code`, null, {
         headers: new HttpHeaders({ station: HEADER_HOTELS }),
@@ -120,36 +134,22 @@ export class UserLoginService {
       })
       .pipe(
         tap((data: any) => {
-          from(this.utils.setStorege(TOKEN_KEY, data.body.jwtToken));
-          from(
-            this.utils.setStorege(REFRESH_TOKEN_KEY, data.body.refreshToken)
-          );
+          this.utils.setStorege(TOKEN_KEY, data.body.jwtToken);
+          this.utils.setStorege(REFRESH_TOKEN_KEY, data.body.refreshToken)
           this.isAuthenticated.next(true);
         })
       );
   }
 
-  async getUserDetails(): Promise<any> {
-    // const userData = JSON.parse((await Storage.get({ key: USER_DETAILS })).value
-    // );
-    const token = await Storage.get({ key: TOKEN_KEY });
-    // if (userData) {
-      // this.userDetails.next(userData);
-      // this.storageService.setUserDetails(userData);
-      // return this.isUserHasDetails.next(true);
-    // } else 
-    if (token && token.value) {
+  public  getUserDetails():Observable<any> {
+    if (this.token && this.token.value) {
       return this.http
-        .get(`${environment.serverUrl}/user/get-user-details`, {
-          headers: new HttpHeaders({
-            authorization: `Bearer ${token.value}`,
-          }),
-        })
+        .get(`${environment.serverUrl}/user/get-user-details`)
         .pipe(
           map((data: any) => {
             this.storageService.setUserDetails(data.body);
             this.utils.setStorege(USER_DETAILS, JSON.stringify(data.body));
-            // this.userDetails.next(data.body);
+            this.userDetails.next(data.body);
             if (data.body.email && data.body.firstName && data.body.lastName) {
               return this.isUserHasDetails.next(true);
             } else {
@@ -157,37 +157,26 @@ export class UserLoginService {
             }
           })
         )
-        .subscribe(
-          async (res) => {},
-          async (res) => {
-            this.onHttpErorr(res, '');
-          }
-        );
+        
     } else {
-      // return this.isUserHasDetails.next(false);
+       this.isUserHasDetails.next(false);
     }
   }
-  async getCreditCardInfo(): Promise<any> {
-    const cardData = await Storage.get({ key: CARD_DETAILS });
-    const token = await Storage.get({ key: TOKEN_KEY });
-    if (cardData && cardData.value) {
-      this.creditCardDetails.next(cardData.value);
-      return this.isCardHasDetails.next(true);
-    } else if (token && token.value) {
+  public getCreditCardInfo():Observable<any> {
+    // const cardData = await Storage.get({ key: CARD_DETAILS });
+    // const token = await Storage.get({ key: TOKEN_KEY });
+    // if (cardData && cardData.value) {
+    //   return this.isCardHasDetails.next(true);
+    // } else 
+    if (this.token && this.token.value) {
       return this.http
         .get(
-          `${environment.serverUrl}/credit-card-payment/get-last-digits-of-credit-card`,
-          {
-            headers: new HttpHeaders({
-              authorization: `Bearer ${token.value}`,
-            }),
-          }
-        )
+          `${environment.serverUrl}/credit-card-payment/get-last-digits-of-credit-card`)
         .pipe(
           map((data: any) => {
+            this.storageService.setCreditCard4Dig(data.body);
             this.utils.setStorege(CARD_DETAILS, data.body);
-            console.log(data);
-            this.creditCardDetails.next(data.body);
+           
             return this.isCardHasDetails.next(true);
             // if (data.body.email && data.body.firstName && data.body.lastName) {
             //   return this.isUserHasDetails.next(true);
@@ -196,21 +185,11 @@ export class UserLoginService {
             // }
           })
         )
-        .subscribe(
-          async (res) => {},
-          async (res) => {
-            this.onHttpErorr(res, '');
-          }
-        );
     } else {
-      return this.isCardHasDetails.next(false);
+       this.isCardHasDetails.next(false);
     }
   }
-  async updateUserInfo(credentials: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  }): Promise<any> {
+  public async updateUserInfo(credentials: UserDetails): Promise<any> {
     const token = await Storage.get({ key: TOKEN_KEY });
     return (
       this.http
@@ -223,24 +202,20 @@ export class UserLoginService {
             email: credentials.email,
           },
           {
-            headers: new HttpHeaders({ station: 'hotels' }).append(
-              'Authorization',
-              `Bearer ${token.value}`
-            ),
+            headers: new HttpHeaders({ station: 'hotels' })
           }
         )
         .pipe(
-          map(() =>{
+          tap(() => {
             this.utils.setStorege(USER_DETAILS, JSON.stringify(credentials));
             this.storageService.setUserDetails(credentials);
-          }
-        
-          )
+          })
         )
         .subscribe(
           async (res) => {
             this.handleButtonClick();
-            this.getUserDetails();
+            this.getUserDetails().subscribe();
+            this.getCreditCardInfo().subscribe();
           },
           async (res) => {
             this.onHttpErorr(res, '');
@@ -248,7 +223,7 @@ export class UserLoginService {
         )
     );
   }
-  async updateCreditCard(credentials: {
+  public async updateCreditCard(credentials: {
     cardNum: string;
     csvNum: string;
     date: string;
@@ -266,12 +241,10 @@ export class UserLoginService {
           validUntilYear: credentials.date.split('/')[1],
         },
         {
-          headers: new HttpHeaders({ station: 'hotels' }).append(
-            'Authorization',
-            `Bearer ${token.value}`
-          ),
+          headers: new HttpHeaders({ station: 'hotels' })
         }
       )
+
       .subscribe(
         async (res) => {
           this.handleButtonClick();
@@ -282,7 +255,70 @@ export class UserLoginService {
         }
       );
   }
-  async handleButtonClick() {
+  public async paymentTranportation(credentials: {
+    phone: string;
+    text: string;
+  }): Promise<any> {
+    const token = await Storage.get({ key: TOKEN_KEY });
+    return this.http
+      .post(
+        `${environment.serverUrl}/phone-auth/verify-code`,
+        {
+          paymentAmount: 6,
+          //  currency = Currency.NIS; //לא צריך לשלוח את הפרמטר הזה כשמדובר בשקלים
+          route: '',
+          trip: '',
+          fromStop: '',
+          toStop: '',
+        },
+        {
+          headers: new HttpHeaders({ station: 'hotels' })
+        }
+      )
+      .pipe(
+        tap((data: any) => {
+          from(this.utils.setStorege(TOKEN_KEY, data.body.jwtToken));
+          from(
+            this.utils.setStorege(REFRESH_TOKEN_KEY, data.body.refreshToken)
+          );
+          this.isAuthenticated.next(true);
+        })
+      );
+  }
+  public getTravel():Observable<any>
+  {
+    console.log("fff")
+    try {
+      return this.http
+      .post(
+        `http://31.168.140.163:8090/TGServer/webresources/App/Send_App_Status`,
+       
+{
+  "data":[], // איך לך בזה צורך
+  "Source": "0", // תגדיר עם נריה מזהה של האפליקציה שלך
+  "Version": 1,// גירסת האפליקציה שלך
+  "deviceCode": "-1", // מזהה חד ערכי של המכשיר שלך
+  "isVicFixed": true,// האם המכשיר קבוע ברכב או לא (מכשיר פרטי של נהג)
+  "Vehicle": 	7552469, 
+  "TimeStamp": 111111111, // unix time
+  "curVehicleTime": -1 // unix time get from neria, can enter -1
+  }).pipe(
+        map((data: any) => {
+          data.data.drives[0].Coordinates.forEach(element => {
+            this.Coordinates.push(this.creatPathArray(element))
+          });
+        })
+      )
+    } catch (error) {
+      console.log(error)
+    }
+    
+      
+  }
+creatPathArray(obj){
+  return {lat:obj.lat,lng:obj.lon}
+}
+  public async handleButtonClick() {
     const toast = await this.toastController.create({
       color: 'success',
       duration: 2000,
@@ -292,7 +328,7 @@ export class UserLoginService {
 
     await toast.present();
   }
-  async onHttpErorr(e, header) {
+  public async onHttpErorr(e, header) {
     this.utils.showalert(e, header);
   }
 }

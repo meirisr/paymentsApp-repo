@@ -1,15 +1,16 @@
+
 <form class="loginForm" (ngSubmit)="onPhoneNumderFormSubmit()" [formGroup]="phoneNumderForm" (keyup.enter)="onPhoneNumderFormSubmit()">
   <div>
      <ion-label position="stacked" class="" dir="{{'dir' |translate}}"><h2>{{'pages.login.phoneInputText' |translate}}</h2></ion-label>
-      <ion-input #phoneInput  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" formControlName="phone"  required></ion-input>
+      <ion-input dir="{{'dir' |translate}}" #phoneInput placeholder="מספר טלפון לזיהוי"  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" formControlName="phone"  required></ion-input>
   </div>
-    <div class="help-block" *ngIf="(phoneNumderForm.get('phone').dirty || phoneNumderForm.get('phone').touched) && phoneNumderForm.get('phone').errors">
+    <!-- <div class="help-block" *ngIf="(phoneNumderForm.get('phone').dirty || phoneNumderForm.get('phone').touched) && phoneNumderForm.get('phone').errors">
       <div text-center *ngIf="phoneNumderForm.get('phone').errors?.required" class="errors ion-text-center" >
         phone number is required.
-      </div>
-      <div *ngIf="phoneNumderForm.get('phone').errors?.minlength" class="errors ion-text-center">
+      </div> -->
+      <!-- <div *ngIf="phoneNumderForm.get('phone').errors?.minlength" class="errors ion-text-center">
         phone number must be at least 4 characters long.
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
     <app-main-btn type="submit" [disabled]="phoneNumderForm.invalid" text="{{'pages.login.nextBtn'| translate}}"></app-main-btn>
     </form>

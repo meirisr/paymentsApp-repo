@@ -1,75 +1,48 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
+import { MapDirectionsService } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements AfterViewInit {
+  readonly directionsResults$: Observable<
+    google.maps.DirectionsResult | undefined
+  >;
   @Input() height;
-  lineSymbol = {
-    path: 'M -2,0 0,-2 2,0 0,2 z',
-    strokeColor: '#F00',
-    fillColor: '#F00',
-    fillOpacity: 1,
-  };
+  @Input() path = [];
   markers = [];
-  vertices = {
-    path: [
-      { lat: 13, lng: 13 },
-      { lat: -13, lng: 0 },
-      { lat: 13, lng: -13 },
-    ],
-    icons: [
-      {
-        icon: this.lineSymbol,
-        offset: '100%',
-      },
-    ],
+  markerPositions: google.maps.Marker[] = [];
+  polylineOptions: google.maps.PolylineOptions = {
+    strokeColor: '#50c8ff',
+    strokeWeight: 6,
   };
-
-  markerPositions: google.maps.LatLngLiteral[] = [
-    { lat: 13, lng: 13 },
-    { lat: -13, lng: 0 },
-    { lat: 13, lng: -13 },
-  ];
 
   mapOptions: google.maps.MapOptions = {
     disableDefaultUI: true,
-    // draggable: false,
-    // clickableIcons: false,
-    // zoom:false,
-    // panControl: true,
-    // noClear:true,
-
     zoom: 16,
   };
   center: google.maps.LatLngLiteral = { lat: 30.79476, lng: 35.18761 };
   markerOptions: google.maps.MarkerOptions = {
     draggable: false,
-    // clickable: true,
-
-    // icon: {
-    //   url: '../../../assets/isr-logo-black.svg',
-    //   scale: 2,
-    // },
-    // icon:{
-    //   url: location ? this.homeicon : this.icon,
-    //   scaledSize: { height: 35, width: 25 },
-    // }
   };
-  constructor( private router: Router,) {}
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
   ngAfterViewInit() {
     setTimeout(() => {
+      if(this.path.length<2)return;
+      this.addMarker(this.path.shift(), 'start');
+      this.addMarker(this.path.pop(), 'end');
+      this.center = this.path.shift();
       this.printCurrentPosition();
     }, 100);
   }
-
   markerClick(event) {
     return false;
   }
@@ -83,12 +56,10 @@ export class MapComponent implements OnInit, AfterViewInit {
             coordinates.coords.latitude,
             coordinates.coords.longitude
           );
-          await this.addMarker(latLng);
+          await this.addMarker(latLng.toJSON(), '');
           this.center = latLng.toJSON();
         },
-        async () => {
-          console.log('jjjj');
-        }
+        async () => {}
       );
     } else {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -96,27 +67,21 @@ export class MapComponent implements OnInit, AfterViewInit {
           position.coords.latitude,
           position.coords.longitude
         );
-        this.addMarker(latLng);
+        this.addMarker(latLng.toJSON(), '');
         this.center = latLng.toJSON();
       });
-      // await Geolocation.getCurrentPosition().then(
-      //   async (coordinates) => {
-      //     const latLng = new google.maps.LatLng(
-      //       coordinates.coords.latitude,
-      //       coordinates.coords.longitude
-      //     );
-      //     await this.addMarker(latLng);
-      //   }
-      // );
     }
   };
-  async addMarker(latLng: google.maps.LatLng) {
-    this.markerPositions.push(latLng.toJSON());
+  async addMarker(latLng, a) {
+    console.log(a);
+    // this.markerPositions.push(latLng);
     const marker = new google.maps.Marker({
-      position: latLng.toJSON(),
+      position: latLng,
+      // icon: a=='start'? this.lineSymbol: this.lineSymbol2
     });
+    this.markerPositions.push(marker);
     this.markers.push(marker);
-    console.log(this.markers);
+    console.log(this.markerPositions);
   }
   removeAllMarkers() {
     this.markerPositions = [];

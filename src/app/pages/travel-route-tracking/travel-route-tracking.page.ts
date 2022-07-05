@@ -18,17 +18,16 @@ export class TravelRouteTrackingPage implements OnInit, AfterViewInit {
   @ViewChild('travelBody') travelBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   @ViewChild('dated') datedRef: ElementRef<HTMLElement>;
-  mapHight = 694;
+  mapHight = '100vh';
   startHight = 75;
   minHight;
-  maxHight;
+
   constructor(private plt: Platform, private gestureCtrl: GestureController) {}
 
   ngOnInit() {}
   ngAfterViewInit(): void {
     this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
     this.minHight = this.plt.height();
-    this.maxHight = this.plt.height();
 
     const gesture: Gesture = this.gestureCtrl.create(
       {
@@ -53,7 +52,7 @@ export class TravelRouteTrackingPage implements OnInit, AfterViewInit {
 
     this.travelBodyRef.nativeElement.style.top =
       this.convertPXToVh(detail.currentY) + 'vh';
-    this.mapHight = top + 90;
+    // this.mapHight = top + 90;
   }
   onEnd(detail) {}
   convertPXToVh(px) {

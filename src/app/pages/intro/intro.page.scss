@@ -21,13 +21,14 @@
   height: 38px;
 }
 .slide-body{
-  margin-top: 35%;
+  // margin-top: 35%;
+  direction: rtl;
 }
 .slide-body ion-label{
   font-size: 1.3rem;
 }
 .slide-body ion-item-group{
-  margin-top: 20%;
+  // margin-top: 20%;
 }
 // .footer{
 //   position: absolute;
@@ -49,16 +50,21 @@
 //   margin-bottom: 5%;
     
 // }
-// .nextBtn{
-//   height: 50px;
-//   // width: 45%;
-//   // --border-radius: 30px ;
-//   --background: var(--ion-color-btn);
-//   font-size: 24px;
-//   font-weight: bold;
+.nextBtn{
+  // height: 50px;
+  bottom: 34px;
+  position: fixed;
+  width: 90vw;
+  height: 45px;
+  --border-color:#21CCD1;
+  --color:#3D3D3D;
+  --border-radius: 10px ;
+  // --background: var(--ion-color-btn);
+  font-size: 20px;
+  // font-weight: bold;
   
   
-// }
+}
 .icon-circle{
   width: 50px;
   height: 50px;

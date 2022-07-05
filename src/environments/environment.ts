@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  googleMapsKey:'AIzaSyAPM-nzvWv_JzQ9uxPQyA4X41s3b9luD3M',
+  googleMapsKey:'AIzaSyAfrT425Ip1V-a3BLUY9teJCGSMCfrhBtk',
   serverUrl:'https://etaxi.isrcorp.co.il:9124/taxi-mantle-main-server/v3'
 
 };

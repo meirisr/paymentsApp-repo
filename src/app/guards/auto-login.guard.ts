@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
 import { filter, map, take } from 'rxjs/operators';
 import { UserLoginService } from '../services/api/user-login.service';
 
@@ -22,7 +21,7 @@ export class AutoLoginGuard implements CanLoad {
         console.log('Found previous token, automatic login');
         if (isAuthenticated) {
           // Directly open inside area
-          console.log(isAuthenticated);
+       
           this.router.navigateByUrl('/menu', { replaceUrl: true });
         } else {
           // Simply allow access to the login

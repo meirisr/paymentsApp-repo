@@ -5,7 +5,8 @@ import { Capacitor } from '@capacitor/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+const image =
+    "../../../assets/images/bus.png";
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -16,7 +17,7 @@ export class MapComponent implements AfterViewInit {
     google.maps.DirectionsResult | undefined
   >;
   @Input() height;
-  @Input() path = [];
+  @Input() path;
   markers = [];
   markerPositions: google.maps.Marker[] = [];
   polylineOptions: google.maps.PolylineOptions = {
@@ -35,12 +36,21 @@ export class MapComponent implements AfterViewInit {
   constructor(private router: Router) {}
 
   ngAfterViewInit() {
+  
     setTimeout(() => {
-      if(this.path.length<2)return;
-      this.addMarker(this.path.shift(), 'start');
-      this.addMarker(this.path.pop(), 'end');
-      this.center = this.path.shift();
-      this.printCurrentPosition();
+      console.log(this.path)
+      if(this.path&&this.path?.length>=2){
+        // this.addMarker(this.path.shift(), 'start');
+        // this.addMarker(this.path.pop(), 'end');
+        // this.center = this.path.shift();
+        this.printCurrentPosition();
+      }
+      else{
+        this.printCurrentPosition();
+      }
+    
+     
+   
     }, 100);
   }
   markerClick(event) {
@@ -56,7 +66,7 @@ export class MapComponent implements AfterViewInit {
             coordinates.coords.latitude,
             coordinates.coords.longitude
           );
-          await this.addMarker(latLng.toJSON(), '');
+          await this.addMarker(latLng.toJSON(), 'location');
           this.center = latLng.toJSON();
         },
         async () => {}
@@ -67,7 +77,7 @@ export class MapComponent implements AfterViewInit {
           position.coords.latitude,
           position.coords.longitude
         );
-        this.addMarker(latLng.toJSON(), '');
+        this.addMarker(latLng.toJSON(), 'location');
         this.center = latLng.toJSON();
       });
     }
@@ -77,6 +87,7 @@ export class MapComponent implements AfterViewInit {
     // this.markerPositions.push(latLng);
     const marker = new google.maps.Marker({
       position: latLng,
+      icon: a =='location'?image:''
       // icon: a=='start'? this.lineSymbol: this.lineSymbol2
     });
     this.markerPositions.push(marker);

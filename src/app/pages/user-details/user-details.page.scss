@@ -2,7 +2,7 @@
   // position: absolute;
   // top: 20%;
   // width: 90%;
-  margin-top: 10vh;
+  margin-top: 8vh;
 }
 .fluatingLabel {
   width: 100%;
@@ -53,5 +53,11 @@ ion-datetime {
 }
 .datetime-time .time-body{
   display: none ;
+}
+ion-button{
+  --background: var(--ion-color-btn);
+}
+form .input-group {
+  margin-top: 4vh;
 }
 

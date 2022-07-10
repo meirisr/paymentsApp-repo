@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UserLoginService } from 'src/app/services/api/user-login.service';
 
@@ -12,10 +13,13 @@ export class LoginPage implements OnInit {
   @ViewChild('otp1', { read: ElementRef }) smsInput: ElementRef;
   public textForm: boolean;
 
-  constructor(private apiUserServer: UserLoginService) {
+  constructor(private apiUserServer: UserLoginService, private router: Router,) {
     this.apiUserServer.didSendSms.subscribe((e) => {
       this.textForm = e;
     });
   }
   ngOnInit() {}
+  goToIntro(){
+    this.router.navigate(['/intro']);
+  }
 }

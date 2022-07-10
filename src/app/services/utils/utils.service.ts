@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { UserLoginService } from '../api/user-login.service';
 const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
 const PHONE_NUM = 'my-phone';
@@ -10,7 +11,8 @@ const REFRESH_TOKEN_KEY = 'token-refresh';
 const HEADER_HOTELS = 'hotels';
 const USER_DETAILS = 'user-details';
 const CARD_DETAILS = 'card-details';
-const userStorege=[COLOR_THEME,USER_LANGUAGE,PHONE_NUM,TOKEN_KEY,REFRESH_TOKEN_KEY,HEADER_HOTELS,USER_DETAILS,CARD_DETAILS]
+const HOTEL_ID = 'my-hotel';
+const userStorege=[COLOR_THEME,USER_LANGUAGE,PHONE_NUM,TOKEN_KEY,REFRESH_TOKEN_KEY,HEADER_HOTELS,USER_DETAILS,CARD_DETAILS,HOTEL_ID ]
 @Injectable({
   providedIn: 'root',
 })
@@ -23,6 +25,7 @@ export class UtilsService {
     public loadingController: LoadingController,
     private alertController: AlertController,
     private translate: TranslateService,
+
   ) {}
 
   onToggleColorTheme(event) {

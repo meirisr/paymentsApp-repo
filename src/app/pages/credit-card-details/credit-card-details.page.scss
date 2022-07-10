@@ -27,3 +27,15 @@ ion-datetime {
 ion-input{
   --padding-end:10px;
 }
+ion-button{
+  --background: var(--ion-color-btn);
+}
+app-header-wave{
+  position: fixed;
+  top: 0;
+ 
+  opacity: 0.8;
+}
+app-header-wave{
+  width: 100%;
+}

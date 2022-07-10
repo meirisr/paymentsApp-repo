@@ -1,11 +1,16 @@
+
+
+
 <section>
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </section>
 
 <ion-menu side="end" menuId="main" contentId="main-content">
-  <!-- <ion-header> -->
-  <ion-toolbar> </ion-toolbar>
-  <!-- </ion-header> -->
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-menu-button color="light" menu="main" slot="end"></ion-menu-button>
+    </ion-toolbar>
+  </ion-header>
   <ion-content dir="{{'dir'|translate}}">
     <ion-list>
       <ion-menu-toggle autoHide="true">

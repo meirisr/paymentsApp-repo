@@ -1,11 +1,13 @@
 .main-btn[ng-reflect-type=click]{
   height: 48px;
-  // font-size: 1.1rem;
   --background: var(--ion-color-btn);
+  --border-radius: 10px;
   margin-top: 5%;
-  font-size: 22px;
+  font-size: 18px;
   position: fixed;
+  width: 90vw;
   bottom: 34px;
+  font-weight: normal;
 }
 .main-btn[ng-reflect-type=submit]{
   height: 48px;

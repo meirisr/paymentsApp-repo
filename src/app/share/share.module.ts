@@ -11,6 +11,7 @@ import { MainBtnComponent } from '../components/main-btn/main-btn.component';
 import { PhoneNumberFormComponent } from '../components/forms/phone-number-form/phone-number-form.component';
 import { SmsCodeFormComponent } from '../components/forms/sms-code-form/sms-code-form.component';
 import { BackBtnComponent } from '../components/back-btn/back-btn.component';
+import { HeaderWaveComponent } from '../components/header-wave/header-wave.component';
 
 
 
@@ -22,12 +23,13 @@ const content = [
   MainBtnComponent,
   PhoneNumberFormComponent,
   SmsCodeFormComponent,
-  BackBtnComponent
+  BackBtnComponent,
+  HeaderWaveComponent
 ];
 
 @NgModule({
   declarations: content,
   exports: [content],
-  imports: [CommonModule, IonicModule, FormsModule,ReactiveFormsModule,TranslateModule,GoogleMapsModule]
+  imports: [CommonModule, IonicModule, FormsModule,ReactiveFormsModule,TranslateModule,GoogleMapsModule,]
 })
 export class GlobalModule {}

@@ -14,7 +14,7 @@ export class PaymentPage implements AfterViewInit {
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('paymentBody') paymentBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
-  mapHight = '27vh';
+  mapHight = '25vh';
   origin = 'שדה התעופה בן גוריון';
   destination = 'מלון בראשית';
   Coordinates: [];

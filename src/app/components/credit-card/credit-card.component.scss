@@ -5,7 +5,8 @@
   box-sizing: border-box;
 }
 .my-container{
-  margin-top: 5%;
+  transform: translateY(90px);
+  margin-bottom: 15vh;
   width: 100%;
   background: #0000;
   display: flex;
@@ -19,6 +20,7 @@
   color: #fff;
   cursor: pointer;
   perspective: 1000px;
+  background-color:inherit;
 
   border: none;
 }

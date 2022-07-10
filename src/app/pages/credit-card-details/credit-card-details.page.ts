@@ -67,12 +67,12 @@ export class CreditCardDetailsPage implements OnInit {
     from(this.apiUserServer.updateCreditCard(this.cardDetails.value)).subscribe(
       async (res) => {
         this.apiUserServer.handleButtonClick();
-        from(this.apiUserServer.getCreditCardInfo()).subscribe(
-          async (res) => {},
-          async (res) => {
-            this.apiUserServer.onHttpErorr(res, '');
-          }
-        );
+        // from(this.apiUserServer.getCreditCardInfo()).subscribe(
+        //   async (res) => {},
+        //   async (res) => {
+        //     this.apiUserServer.onHttpErorr(res, '');
+        //   }
+        // );
       },
       async (res) => {
         this.apiUserServer.onHttpErorr(res, '');

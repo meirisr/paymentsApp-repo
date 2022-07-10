@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild,AfterViewInit } from '@angular/core';
-import { IonRouterOutlet, Platform } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { App } from '@capacitor/app';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
@@ -18,32 +19,25 @@ export class MenuPage implements OnInit, AfterViewInit {
     center: { lat: 31.79476, lng: 35.18761 },
     zoom: 16,
   };
-  //   markerOptions: google.maps.MarkerOptions = {
-  //     draggable: false,
-  //     clickable: true,
-  //     icon: {
-  //       url:'../../../assets/isr-logo-black.svg' ,
-  //       scale:2,
-  //     },
-  //   };
   constructor(
     private router: Router,
     private apiUserServer: UserLoginService,
     private utils: UtilsService,
+    private platform: Platform,
+    private alertController: AlertController,
   ) {
     document.querySelector('body').classList.remove('scanBg');
-    // this.apiUserServer.getUserDetails().subscribe();
+    this.apiUserServer.getUserDetails().subscribe();
+
     // this.platform.backButton.subscribeWithPriority(10, () => {
-    //   // if (!this.routerOutlet.canGoBack()) {
-    //   //   // eslint-disable-next-line @typescript-eslint/dot-notation
-    //   //   navigator['app'].exitApp();
-    //   // } else {
-    //     console.log(this.location);
-    //     this.location.back();
-    //   // }
+    //    console.log("back")
+    //   let message='האם אתה רוצה לצאת '
+    //   this.showAlert(message);
+       
     // });
   }
   ngOnInit() {
+  
     // this.apiUserServer.getUserDetails().subscribe();
     // this.apiUserServer.getCreditCardInfo();
   }
@@ -51,7 +45,6 @@ export class MenuPage implements OnInit, AfterViewInit {
     this.hideSplashScreen();
   }
  async hideSplashScreen(){
-  // await SplashScreen.hide();
  }
   settings() {
     this.router.navigate(['/settings']);
@@ -60,12 +53,13 @@ export class MenuPage implements OnInit, AfterViewInit {
     this.router.navigate(['/scan']);
   }
   map() {
-    this.router.navigate(['/payment'],);
+    this.router.navigate(['/payment']);
   }
   logOut(){
     this.utils.deleteStorege()
-    this.apiUserServer.isAuthenticated.next(false)
-    this.router.navigate(['/'],);
+    this.apiUserServer.isAuthenticated.next(false);
+
+    window.location.reload();
   }
 
   userProfile() {
@@ -76,5 +70,24 @@ export class MenuPage implements OnInit, AfterViewInit {
   }
   toggleDarkTheme(matchesMode) {
     this.prefersDark = matchesMode;
+  }
+  async showAlert(message) {
+    const alert = await this.alertController.create({
+      header: 'מיקום כבוי',
+      message: message,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            App.exitApp();
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }

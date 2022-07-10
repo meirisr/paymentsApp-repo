@@ -5,9 +5,11 @@ import { IonicModule } from '@ionic/angular';
 import { ScanPageRoutingModule } from './scan-routing.module';
 import { ScanPage } from './scan.page';
 import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
+import { GlobalModule } from 'src/app/share/share.module';
+
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, ScanPageRoutingModule],
+  imports: [CommonModule, FormsModule, IonicModule, ScanPageRoutingModule, GlobalModule],
   declarations: [ScanPage],
   providers: [OpenNativeSettings],
 })

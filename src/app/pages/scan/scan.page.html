@@ -1,16 +1,12 @@
-<ion-header class="ion-no-border">
+<!-- <ion-header class="ion-no-border">
   <ion-toolbar>
-    <!-- <ion-menu-button menu="main" slot="end"></ion-menu-button> -->
-    <ion-icon
-      class="back-btn"
-      name="chevron-forward-circle-outline"
-      (click)="goTomenu()"
-      slot="end"
-    ></ion-icon>
+    
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+<app-back-btn (click)="goTomenu()"></app-back-btn>
+    <app-header-wave></app-header-wave>
 <ion-content [class.hideBg]="scanActive">
-  <ion-row class="ion-text-center ion-padding" [hidden]="!scanNotAllowed">
+  <ion-row class="ion-text-center ion-padding alert-row" [hidden]="!scanNotAllowed">
     <ion-col class="">
       <div class="alert alert-warning" role="alert">
         Not implemented on web!
@@ -31,16 +27,16 @@
       ></ion-icon>
     </div>
     <ion-text class="ion-text-center">
-      <h1>תשלום באוטובוס</h1>
+      <h1>תשלום</h1>
       <h2>QR סריקת קוד</h2>
-      <p>המדבקות נמצאות על הדלתות או ליד הנהג</p>
+      
     </ion-text>
   </div>
   <ion-row [hidden]="!scanActive">
     <div class="ocrloader">
       <p>QR סרוק/י קוד</p>
       <em></em>
-      <span></span>
+
     </div>
   </ion-row>
   <ion-row>

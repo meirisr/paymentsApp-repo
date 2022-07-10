@@ -9,6 +9,7 @@ import { UtilsService } from './services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Network } from '@capacitor/network';
 import { App } from '@capacitor/app';
+import { UserLoginService } from './services/api/user-login.service';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,9 @@ export class AppComponent implements OnInit {
     private httpClient: HttpClient,
     private utils: UtilsService,
     private translate: TranslateService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private apiUserServer: UserLoginService
+  
   ) {
     translate.setDefaultLang('en');
     translate.use('he');
@@ -62,6 +65,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.utils.getUserTheme();
     this.utils.getUserLanguage();
+    this.apiUserServer.loadToken();
   }
   logCurrentNetworkStatus = async () => {
     const status = await Network.getStatus();

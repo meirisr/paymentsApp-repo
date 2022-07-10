@@ -10,6 +10,7 @@ import { ToastController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { StorageService, UserDetails } from '../storage.service';
 import { promise } from 'protractor';
+import { TemporaryStorageService } from '../temporary-storage.service';
 
 const PHONE_NUM = 'my-phone';
 const TOKEN_KEY = 'my-token';
@@ -21,12 +22,12 @@ const CARD_DETAILS = 'card-details';
 
 @Injectable({
   providedIn: 'root',
-  
 })
+
 export class UserLoginService {
-  token:GetResult;
-  jwtToken:GetResult; 
-  Coordinates=<any>[];
+  token: GetResult;
+  refreshToken : GetResult;
+  Coordinates = <any>[];
 
   didSendSms: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
@@ -43,34 +44,37 @@ export class UserLoginService {
   constructor(
     private http: HttpClient,
     private storageService: StorageService,
+    private tempStorageServer: TemporaryStorageService,
     public toastController: ToastController,
     private utils: UtilsService
   ) {
-    this.loadToken();
+    // this.loadToken();
   }
   public async loadToken() {
-     this.token = await this.utils.getStorege(TOKEN_KEY);
-    this.jwtToken = await this.utils.getStorege(REFRESH_TOKEN_KEY );
-
-    if (this.token && this.token.value && this.jwtToken && this.jwtToken.value){
+    this.token = await this.storageService.getToken();
+    this.refreshToken = await this.storageService.getRefreshToken();
+     
+    if (this.token.value!=null && this.refreshToken.value!=null)
+     {
       this.isTokenValid(this.token.value).subscribe(
         async (res) => {
+          console.log(res)
           if (!res) {
-            this.refreshToken(this.jwtToken.value).subscribe(() => {
+            this.tryRefreshToken(this.refreshToken.value).subscribe(() => {
               this.loadToken();
             });
           } else {
-            this.isAuthenticated.next(true);
             this.getUserDetails().subscribe();
             this.getCreditCardInfo().subscribe();
+            this.isAuthenticated.next(true);
           }
         },
         async (res) => {
           console.log('res');
         }
       );
-    } else if (this.jwtToken && this.jwtToken.value) {
-      this.refreshToken(this.jwtToken.value).subscribe(() => {
+    } else if (this.refreshToken.value) {
+      this.tryRefreshToken(this.refreshToken.value).subscribe(() => {
         this.loadToken();
       });
     } else {
@@ -88,7 +92,7 @@ export class UserLoginService {
     return this.http
       .get(`${environment.serverUrl}/base-auth/is-token-valid?token=${token}`)
       .pipe(
-        map((data: any) =>{
+        map((data: any) => {
           if (!data.body) {
             Storage.remove({ key: TOKEN_KEY });
           }
@@ -96,16 +100,18 @@ export class UserLoginService {
         })
       );
   }
-  public refreshToken(token: string) {
+  public tryRefreshToken(token: string) {
     return this.http
       .get(
         `${environment.serverUrl}/base-auth/refresh-token?refreshToken=${token}`
-      ) .pipe(
-        tap((data:any) => {
-          this.utils.setStorege(TOKEN_KEY, data.body.jwtToken);
+      )
+      .pipe(
+        tap((data: any) => {
+          this.storageService.setToken(data.body.jwtToken);
+          this.getUserDetails().subscribe();
+          this.getCreditCardInfo().subscribe();
         })
       );
-     
   }
   public getSms(credentials: { phone: string }): Observable<any> {
     return this.http
@@ -116,7 +122,7 @@ export class UserLoginService {
       .pipe(
         tap(() => {
           this.storageService.setUserPhoneNumber(credentials.phone);
-          this.utils.setStorege(PHONE_NUM, credentials.phone);
+          this.storageService.setStorege(PHONE_NUM, credentials.phone);
         })
       );
   }
@@ -134,60 +140,62 @@ export class UserLoginService {
       })
       .pipe(
         tap((data: any) => {
-          this.utils.setStorege(TOKEN_KEY, data.body.jwtToken);
-          this.utils.setStorege(REFRESH_TOKEN_KEY, data.body.refreshToken)
+          this.storageService.setRefreshToken(data.body.refreshToken);
+          this.storageService.setToken(data.body.jwtToken);
+          this.token = data.body.jwtToken;
+          this.refreshToken = data.body.refreshToken;
           this.isAuthenticated.next(true);
         })
       );
   }
 
-  public  getUserDetails():Observable<any> {
-    if (this.token && this.token.value) {
-      return this.http
-        .get(`${environment.serverUrl}/user/get-user-details`)
-        .pipe(
-          map((data: any) => {
-            this.storageService.setUserDetails(data.body);
-            this.utils.setStorege(USER_DETAILS, JSON.stringify(data.body));
-            this.userDetails.next(data.body);
-            if (data.body.email && data.body.firstName && data.body.lastName) {
-              return this.isUserHasDetails.next(true);
-            } else {
-              return this.isUserHasDetails.next(false);
-            }
-          })
-        )
-        
-    } else {
-       this.isUserHasDetails.next(false);
-    }
+  public getUserDetails(): Observable<any> {
+    if (!this.token) return;
+    return this.http.get(`${environment.serverUrl}/user/get-user-details`).pipe(
+      map((data: any) => {
+        console.log(data);
+        this.storageService.setUserDetails(data.body);
+        this.utils.setStorege(USER_DETAILS, JSON.stringify(data.body));
+        this.userDetails.next(data.body);
+        if (data.body.email && data.body.firstName && data.body.lastName) {
+          return this.isUserHasDetails.next(true);
+        } else {
+          return this.isUserHasDetails.next(false);
+        }
+      })
+    );
+    // } else {
+    //   this.isUserHasDetails.next(false);
+    // }
   }
-  public getCreditCardInfo():Observable<any> {
+  public getCreditCardInfo(): Observable<any> {
     // const cardData = await Storage.get({ key: CARD_DETAILS });
     // const token = await Storage.get({ key: TOKEN_KEY });
     // if (cardData && cardData.value) {
     //   return this.isCardHasDetails.next(true);
-    // } else 
-    if (this.token && this.token.value) {
-      return this.http
-        .get(
-          `${environment.serverUrl}/credit-card-payment/get-last-digits-of-credit-card`)
-        .pipe(
-          map((data: any) => {
-            this.storageService.setCreditCard4Dig(data.body);
-            this.utils.setStorege(CARD_DETAILS, data.body);
-           
-            return this.isCardHasDetails.next(true);
-            // if (data.body.email && data.body.firstName && data.body.lastName) {
-            //   return this.isUserHasDetails.next(true);
-            // } else {
-            //   return this.isUserHasDetails.next(false);
-            // }
-          })
-        )
-    } else {
-       this.isCardHasDetails.next(false);
-    }
+    // } else
+    // if (this.token && this.token.value) {
+    if (!this.token) return;
+    return this.http
+      .get(
+        `${environment.serverUrl}/credit-card-payment/get-last-digits-of-credit-card`
+      )
+      .pipe(
+        map((data: any) => {
+          this.storageService.setCreditCard4Dig(data.body);
+          this.utils.setStorege(CARD_DETAILS, data.body);
+
+          return this.isCardHasDetails.next(true);
+          // if (data.body.email && data.body.firstName && data.body.lastName) {
+          //   return this.isUserHasDetails.next(true);
+          // } else {
+          //   return this.isUserHasDetails.next(false);
+          // }
+        })
+      );
+    // } else {
+    //    this.isCardHasDetails.next(false);
+    // }
   }
   public async updateUserInfo(credentials: UserDetails): Promise<any> {
     const token = await Storage.get({ key: TOKEN_KEY });
@@ -202,7 +210,7 @@ export class UserLoginService {
             email: credentials.email,
           },
           {
-            headers: new HttpHeaders({ station: 'hotels' })
+            headers: new HttpHeaders({ station: 'hotels' }),
           }
         )
         .pipe(
@@ -241,7 +249,7 @@ export class UserLoginService {
           validUntilYear: credentials.date.split('/')[1],
         },
         {
-          headers: new HttpHeaders({ station: 'hotels' })
+          headers: new HttpHeaders({ station: 'hotels' }),
         }
       )
 
@@ -272,7 +280,7 @@ export class UserLoginService {
           toStop: '',
         },
         {
-          headers: new HttpHeaders({ station: 'hotels' })
+          headers: new HttpHeaders({ station: 'hotels' }),
         }
       )
       .pipe(
@@ -285,39 +293,41 @@ export class UserLoginService {
         })
       );
   }
-  public getTravel():Observable<any>
-  {
-    console.log("fff")
+
+  public getTravel(): Observable<any> {
     try {
       return this.http
-      .post(
-        `http://31.168.140.163:8090/TGServer/webresources/App/Send_App_Status`,
-       
-{
-  "data":[], // איך לך בזה צורך
-  "Source": "0", // תגדיר עם נריה מזהה של האפליקציה שלך
-  "Version": 1,// גירסת האפליקציה שלך
-  "deviceCode": "-1", // מזהה חד ערכי של המכשיר שלך
-  "isVicFixed": true,// האם המכשיר קבוע ברכב או לא (מכשיר פרטי של נהג)
-  "Vehicle": 	7552469, 
-  "TimeStamp": 111111111, // unix time
-  "curVehicleTime": -1 // unix time get from neria, can enter -1
-  }).pipe(
-        map((data: any) => {
-          data.data.drives[0].Coordinates.forEach(element => {
-            this.Coordinates.push(this.creatPathArray(element))
-          });
-        })
-      )
+        .post(
+          `http://31.168.140.163:8090/TGServer/webresources/App/Send_App_Status`,
+
+          {
+            data: [], // איך לך בזה צורך
+            Source: '0', // תגדיר עם נריה מזהה של האפליקציה שלך
+            Version: 1, // גירסת האפליקציה שלך
+            deviceCode: '-1', // מזהה חד ערכי של המכשיר שלך
+            isVicFixed: true, // האם המכשיר קבוע ברכב או לא (מכשיר פרטי של נהג)
+            Vehicle: 	7722969,
+            TimeStamp: 111111111, // unix time
+            curVehicleTime: -1, // unix time get from neria, can enter -1
+          }
+        )
+        .pipe(
+          map((data: any) => {
+            if (data.data.drives.length < 1) return;
+
+            data.data.drives[0].Coordinates.forEach((element) => {
+              this.Coordinates.push(this.creatPathArray(element));
+            });
+          })
+        );
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-    
-      
   }
-creatPathArray(obj){
-  return {lat:obj.lat,lng:obj.lon}
-}
+  creatPathArray(obj) {
+    return { lat: obj.lat, lng: obj.lon };
+  }
+
   public async handleButtonClick() {
     const toast = await this.toastController.create({
       color: 'success',

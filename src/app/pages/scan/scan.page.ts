@@ -12,6 +12,8 @@ import { Location } from '@angular/common';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
+
+const HOTEL_ID = 'my-hotel';
 @Component({
   selector: 'app-scan',
   templateUrl: './scan.page.html',
@@ -31,14 +33,31 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
     private apiUserServer: UserLoginService,
     private platform: Platform,
     private openNativeSettings: OpenNativeSettings,
-    private utils:UtilsService
+    private utils:UtilsService,
+    
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.router.navigate(['/menu']);
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (Capacitor.isNativePlatform()) {
+      this.checkLocationPermission().then((e) => {
+        if (e) {
+          BarcodeScanner.prepare();
+          this.startScanner();
+        }
+      });
+      this.scanNotAllowed = false;
+    } else {
+      this.scanNotAllowed = true;
+      setTimeout(() => {
+        this.router.navigate(['/menu']);
+      }, 3000);
+    }
+
+  }
 
   ngAfterViewInit() {
   
@@ -57,21 +76,8 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
     //   }, 3000);
     // }
   }
-  ionViewDidEnter(){
-    if (Capacitor.isNativePlatform()) {
-      this.checkLocationPermission().then((e) => {
-        if (e) {
-          BarcodeScanner.prepare();
-          this.startScanner();
-        }
-      });
-      this.scanNotAllowed = false;
-    } else {
-      this.scanNotAllowed = true;
-      setTimeout(() => {
-        this.router.navigate(['/menu']);
-      }, 3000);
-    }
+  ionViewWillEnter(){
+
   }
   ionViewWillLeave(){
     document.querySelector('body').classList.remove('scanBg');
@@ -100,7 +106,17 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
         this.result = result.content;
         // BarcodeScanner.stopScan();
         this.scanActive = false;
-        this.router.navigate(['/payment']);
+        let hotelId=(await this.utils.getStorege(HOTEL_ID)).value=='null'
+        if(hotelId){
+          this.router.navigate(['/payment']);
+        }
+        else{
+          this.router.navigate(['/travel-route-tracking']);
+        }
+    
+     
+       
+        
       //   this.apiUserServer.getTravel().subscribe(async () => {
           
       //     this.router.navigate(['/payment']);
@@ -141,9 +157,6 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
             {
               text: 'Cancel',
               role: 'cancel',
-              handler: () => {
-                // this.location.back();
-              },
             },
             {
               text: 'Ok',
@@ -196,4 +209,6 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
   goTomenu() {
     this.router.navigate(['/menu']);
   }
+
+  
 }

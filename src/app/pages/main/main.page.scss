@@ -28,3 +28,15 @@ section:not(.full-width),
     padding-top: 2%;
     z-index: 2;
 }
+ion-menu-button{
+  position: absolute;
+    z-index: 3;
+    right: 0;
+    top: 20px;
+}
+ion-card-header{
+  text-align: center;
+}
+.card-container{
+  margin: 20vh 20vw;
+}

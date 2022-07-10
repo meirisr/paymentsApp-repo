@@ -18,8 +18,8 @@ export class HeaderInterceptor implements HttpInterceptor {
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
      this.utils.getStorege(TOKEN_KEY).then((val)=>{
       this.token=val.value
-     });
-     console.log("Interceptor")
+     })
+ 
      if(httpRequest.url==`http://31.168.140.163:8090/TGServer/webresources/App/Send_App_Status`){
       return next.handle(httpRequest);
      }

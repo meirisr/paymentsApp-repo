@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title class="ion-text-center"> </ion-title>
+    <app-header-wave ></app-header-wave>
     <app-back-btn (click)="goToUserProfile()"></app-back-btn>
   </ion-toolbar>
 </ion-header>
@@ -51,7 +51,7 @@
           oninput="this.value=this.value.replace(/[^0-9]/g,'');"
           id="userId"
           formControlName="userId"
-          required
+          
         ></ion-input>
         <span class="labelSpan">תעודת זהות</span>
       </label>

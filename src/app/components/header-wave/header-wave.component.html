@@ -1,0 +1,6 @@
+<img *ngIf="big; else loggedOut" src="../../../assets/header-wave-big.svg" /><img>
+<div class="text-div"><h2>{{text}}</h2></div>
+<ng-template #loggedOut>
+  <img src="../../../assets/header-wave.svg"/><img>
+  <div class="text-div"><h2>{{text}}</h2></div>
+</ng-template>

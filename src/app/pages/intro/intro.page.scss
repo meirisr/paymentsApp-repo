@@ -1,4 +1,9 @@
-
+ion-header{
+  margin-bottom: 15px;
+}
+ion-footer{
+  margin-top: 15px;
+}
 .info-content{
   // --color:#50c8ff;
 }
@@ -27,7 +32,8 @@
 .slide-body ion-label{
   font-size: 1.3rem;
 }
-.slide-body ion-item-group{
+.slide-body{
+  overflow: hidden;
   // margin-top: 20%;
 }
 // .footer{
@@ -51,10 +57,7 @@
     
 // }
 .nextBtn{
-  // height: 50px;
-  bottom: 34px;
-  position: fixed;
-  width: 90vw;
+  margin: 0px 15px 30px;
   height: 45px;
   --border-color:#21CCD1;
   --color:#3D3D3D;
@@ -83,4 +86,11 @@ ion-item{
 }
 .white-text{
   color: #fff;
+}
+.searchInputRap{
+  padding: 0px 15px;
+}
+.searchInput{
+  border: 1px solid #D8D8D8;
+  border-radius: 10px;
 }

@@ -51,10 +51,13 @@ export class UserDetailsPage implements OnInit {
     this.userDetails = new FormGroup({
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
-      userId: new FormControl(null, [Validators.required]),
+      userId: new FormControl(null, []),
       userDate: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required ,Validators.email]),
     });
+   
+  }
+  ionViewWillEnter(){
     this.getuserInfo();
   }
 

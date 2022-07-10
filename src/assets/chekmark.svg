@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="92" height="92" viewBox="0 0 92 92">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Union_8" data-name="Union 8" d="M0,46A46,46,0,1,1,46,92,46,46,0,0,1,0,46Zm6.69,0A39.309,39.309,0,1,0,46,6.691,39.353,39.353,0,0,0,6.69,46ZM35.143,66.094,21.7,52.652a.951.951,0,0,1,0-1.363l4.272-4.273a.956.956,0,0,1,.672-.289.944.944,0,0,1,.671.289L37.971,57.672l29.279-29.5a.873.873,0,0,1,.672-.287.9.9,0,0,1,.672.287l4.227,4.344a1.024,1.024,0,0,1,.02,1.369L40.758,66.141h-.025a4.451,4.451,0,0,1-2.781,1.322A4.243,4.243,0,0,1,35.143,66.094Z" transform="translate(139.998 262.998)" fill="#21ccd1"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <circle id="Ellipse_278" data-name="Ellipse 278" cx="46" cy="46" r="46" transform="translate(-0.002 -0.003)" fill="#21ccd1" opacity="0.79"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_1386" data-name="Mask Group 1386" transform="translate(-139.998 -262.998)" clip-path="url(#clip-path)">
+    <g id="Mask_Group_1385" data-name="Mask Group 1385" transform="translate(140 263)" clip-path="url(#clip-path-2)">
+      <path id="Path_412" data-name="Path 412" d="M-6.373-69.645l160.352,3.071c2.271,0,0,1.983,0,4.219,0,107.483,40.974,116.8,38.7,116.8,0,0-29.246,15.291-75.623,14.31S51.944,57.358,24.391,46.124s-35.383.808-35.383-1.428L-6.373-62.355C-6.373-64.591-8.644-69.645-6.373-69.645Z" transform="translate(-11.286 46.419)" fill="#21ccd1"/>
+    </g>
+  </g>
+</svg>

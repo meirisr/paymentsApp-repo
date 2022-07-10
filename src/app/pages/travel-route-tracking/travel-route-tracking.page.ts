@@ -5,15 +5,17 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { PopupModalComponent } from '../../components/popup-modal/popup-modal.component';
 import { Gesture, GestureController, Platform } from '@ionic/angular';
+import { UserLoginService } from 'src/app/services/api/user-login.service';
 
 @Component({
   selector: 'app-travel-route-tracking',
   templateUrl: './travel-route-tracking.page.html',
   styleUrls: ['./travel-route-tracking.page.scss'],
 })
-export class TravelRouteTrackingPage implements OnInit, AfterViewInit {
+export class TravelRouteTrackingPage implements OnInit{
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('travelBody') travelBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
@@ -21,14 +23,24 @@ export class TravelRouteTrackingPage implements OnInit, AfterViewInit {
   mapHight = '100vh';
   startHight = 75;
   minHight;
+  Coordinates: [];
 
-  constructor(private plt: Platform, private gestureCtrl: GestureController) {}
+  constructor(private plt: Platform, private gestureCtrl: GestureController,private apiUserServer:UserLoginService,private modalController: ModalController) {
 
-  ngOnInit() {}
-  ngAfterViewInit(): void {
+  }
+
+  ngOnInit() {
+    this.presentModal()
+  }
+  ionViewWillEnter(){
+
+    this.Coordinates = this.apiUserServer.Coordinates;
+  }
+  ionViewDidEnter(): void {
     this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
     this.minHight = this.plt.height();
-
+   
+   
     const gesture: Gesture = this.gestureCtrl.create(
       {
         el: this.travelBodyRef.nativeElement,
@@ -60,5 +72,25 @@ export class TravelRouteTrackingPage implements OnInit, AfterViewInit {
   }
   convertVhTopx(vh) {
     return (vh * document.documentElement.clientWidth) / 100;
+  }
+ 
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: PopupModalComponent,
+      cssClass: 'my-custom-class',
+      swipeToClose: true,
+      componentProps: { 
+        header:'נסיעה טובה',
+        typy:'login-success'
+       
+      }
+    });
+    modal.present()
+    setTimeout(()=>{
+    modal.dismiss({
+      'dismissed': true
+    });
+  },3000 )
+  
   }
 }

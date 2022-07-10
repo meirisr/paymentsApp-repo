@@ -1,5 +1,10 @@
-
+<ion-header class="ion-no-border">
+  <app-back-btn (click)="goToIntro()"></app-back-btn>
+  <app-header-wave [big]="true" text="ברוכים הבאים"></app-header-wave>
+<!-- </ion-toolbar> -->
+</ion-header>
 <ion-content>
+  
 <!-- <app-login-steps-navbar [textForm]="textForm"></app-login-steps-navbar> -->
 <div *ngIf="!textForm">
   <app-phone-number-form></app-phone-number-form>

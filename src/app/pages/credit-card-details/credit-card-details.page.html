@@ -1,19 +1,20 @@
-<ion-header class="ion-no-border">
+<!-- <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title class="ion-text-center"> </ion-title>
-    <app-back-btn (click)="goToUserProfile()"></app-back-btn>
+   
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
+  <app-header-wave [big]="true"></app-header-wave>
+  <app-back-btn (click)="goToUserProfile()"></app-back-btn>
   <!-- <app-login-steps-navbar [creditCardForm]="creditCardForm"></app-login-steps-navbar> -->
   <app-credit-card
-    [cardNum]="cardNum"
-    [cardDate]="cardDate"
-    [userName]="userName"
-    [cvsNum]="cvsNum"
-    [flipClass]="flipClass"
-  ></app-credit-card>
+  [cardNum]="cardNum"
+  [cardDate]="cardDate"
+  [userName]="userName"
+  [cvsNum]="cvsNum"
+  [flipClass]="flipClass"
+></app-credit-card>
 
   <form
     dir="{{'dir'|translate}}"
@@ -111,8 +112,15 @@
   </ion-modal>
     <div class="input-group" dir="ltr">
       <ion-button type="submit" expand="block" [disabled]="cardDetails.invalid"
+      >{{'pages.userDetais.updated'|translate}}
+    </ion-button>
+      <!-- <app-main-btn type="submit" text="{{'pages.userDetais.updated'|translate}}"></app-main-btn> -->
+      <!-- <ion-button type="submit" expand="block" [disabled]="cardDetails.invalid"
         >{{'pages.userDetais.updated'|translate}}
-      </ion-button>
+      </ion-button> -->
     </div>
   </form>
 </ion-content>
+<ion-footer>
+  
+</ion-footer>

@@ -35,7 +35,7 @@
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
-  top: 30%;
+  top: 31%;
   backface-visibility: hidden;
  
 
@@ -89,6 +89,7 @@
 }
 .scan-body-header {
   color: #fff;
+  margin-top: 20vh;
 }
 .flashDiv{
   text-align: center;
@@ -106,4 +107,13 @@
   }
   50% { opacity: 0.5; }
   100% { opacity: 0; }
+}
+app-header-wave{
+  position: absolute;
+  top: 0;
+  z-index: 78;
+  width: 100%;
+}
+.alert-row{
+  margin-top: 20vh;
 }

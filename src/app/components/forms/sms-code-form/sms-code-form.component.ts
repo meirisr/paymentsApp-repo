@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserLoginService } from 'src/app/services/api/user-login.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-import { Storage } from '@capacitor/storage';
+
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { ModalController } from '@ionic/angular';
-import { LoginStepsNavbarComponent } from '../../login-steps-navbar/login-steps-navbar.component';
+import { PopupModalComponent } from '../../popup-modal/popup-modal.component';
 const PHONE_NUM = 'my-phone';
+const HOTEL_ID = 'my-hotel';
+
 @Component({
   selector: 'app-sms-code-form',
   templateUrl: './sms-code-form.component.html',
@@ -53,28 +55,29 @@ export class SmsCodeFormComponent implements OnInit {
     });
   }
   async onSmsCodeFormSubmit() {
-    const loader = this.utils.showLoader();
+    // const loader = this.utils.showLoader();
     const credentials = {
       phone:this.storageService.userPhoneNumber,
       text: Object.values(this.smsCodeForm.value).join(''),
     };
       console.log(this.storageService.userPhoneNumber);
     this.apiUserServer.getToken(credentials).subscribe(
-      async () => {
-        this.utils.dismissLoader(loader);
+      async (data) => {
+        
          this.presentModal().then((modal)=>{
           modal.present()
-      // setTimeout(()=>{
-      //   modal.dismiss({
-      //     'dismissed': true
-      //   });
-      //   this.router.navigateByUrl('/menu', { replaceUrl: true });
-      // },3000 )
+      setTimeout(()=>{
+        modal.dismiss({
+          'dismissed': true
+        });
+        this.router.navigateByUrl('/menu', { replaceUrl: true });
+        this.apiUserServer.loadToken();
+      },3000 )
      })
         
       },
       async (res) => {
-        this.onHttpErorr(res, '', loader);
+        this.onHttpErorr(res, '', false);
       }
     );
   }
@@ -91,10 +94,14 @@ export class SmsCodeFormComponent implements OnInit {
     }
   }
   async onHttpErorr(e, header, loader) {
-    this.utils.dismissLoader(loader);
+    if(loader){
+      this.utils.dismissLoader(loader);
+    }
+    
     this.utils.showalert(e, header);
   }
   async resendSms() {
+    this.smsCodeForm.reset()
     const loader = this.utils.showLoader();
     this.apiUserServer.getSms({phone: this.storageService.userPhoneNumber}).subscribe(
       async () => {
@@ -112,10 +119,18 @@ export class SmsCodeFormComponent implements OnInit {
     this.apiUserServer.didSendSms.next(false);
   }
   async presentModal() {
+    const hotel= (await this.utils.getStorege(HOTEL_ID)).value
     const modal = await this.modalController.create({
-      component: LoginStepsNavbarComponent,
+      component: PopupModalComponent,
       cssClass: 'my-custom-class',
       swipeToClose: true,
+      componentProps: { 
+        header:'ברוכים הבאים',
+        text: hotel=='null' ? '':`הינך רשום ב${hotel}` ,
+        typy:'login-success'
+       
+      }
+    
       // presentingElement: await this.modalController.getTop(), // Get the top-most ion-modal
     });
     return await modal;

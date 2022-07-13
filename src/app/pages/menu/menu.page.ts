@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild,AfterViewInit } from '@angular/core';
-import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
-import { Location } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
+import { AlertController, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
+
 import { Router } from '@angular/router';
-import { UserLoginService } from 'src/app/services/api/user-login.service';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { UtilsService } from 'src/app/services/utils/utils.service';
+
 import { App } from '@capacitor/app';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { StorageService } from 'src/app/services/storage.service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
 })
-export class MenuPage implements OnInit, AfterViewInit {
+export class MenuPage {
   @ViewChild(IonRouterOutlet, { static: true }) routerOutlet: IonRouterOutlet;
   prefersDark;
   userDetalis: object;
@@ -21,52 +21,47 @@ export class MenuPage implements OnInit, AfterViewInit {
   };
   constructor(
     private router: Router,
-    private apiUserServer: UserLoginService,
-    private utils: UtilsService,
-    private platform: Platform,
+    private authenticationService: AuthenticationService,
+    private storageService: StorageService,
     private alertController: AlertController,
+    private nav: NavController,
+    private platform: Platform,
   ) {
-    document.querySelector('body').classList.remove('scanBg');
-    this.apiUserServer.getUserDetails().subscribe();
-
-    // this.platform.backButton.subscribeWithPriority(10, () => {
-    //    console.log("back")
-    //   let message='האם אתה רוצה לצאת '
-    //   this.showAlert(message);
-       
+    // this.platform.backButton.subscribeWithPriority(0, () => {
+    //   App.exitApp();
     // });
+    document.querySelector('body').classList.remove('scanBg');
   }
-  ngOnInit() {
-  
-    // this.apiUserServer.getUserDetails().subscribe();
-    // this.apiUserServer.getCreditCardInfo();
-  }
+
   ngAfterViewInit(): void {
     this.hideSplashScreen();
   }
- async hideSplashScreen(){
- }
+  async hideSplashScreen() {}
   settings() {
-    this.router.navigate(['/settings']);
+    this.nav.navigateForward('/settings', { animationDirection: 'forward', animated: true })
+    // this.router.navigate(['/settings']);
   }
   scan() {
-    this.router.navigate(['/scan']);
+    this.nav.navigateForward('/scan', { animationDirection: 'forward', animated: true })
   }
   map() {
-    this.router.navigate(['/payment']);
+    this.nav.navigateForward('/travel-route-tracking', { animationDirection: 'forward', animated: true })
+    // this.router.navigate(['/payment']);
   }
-  logOut(){
-    this.utils.deleteStorege()
-    this.apiUserServer.isAuthenticated.next(false);
-
-    window.location.reload();
+  logOut() {
+     this.nav.navigateBack('/intro',{ replaceUrl: true ,animationDirection: 'back', animated: true });
+    // this.storageService.deleteStorege();
+    // this.authenticationService.isAuthenticated.next(false);
+    // window.location.reload();
   }
 
   userProfile() {
-    this.router.navigate(['/user-profile']);
+    this.nav.navigateForward('/user-profile', { animationDirection: 'forward', animated: true })
+    // this.router.navigate(['/user-profile']);
   }
   creditCardDetails() {
-    this.router.navigate(['/credit-card-details']);
+    this.nav.navigateForward('/credit-card-details', { animationDirection: 'forward', animated: true })
+    // this.router.navigate(['/credit-card-details']);
   }
   toggleDarkTheme(matchesMode) {
     this.prefersDark = matchesMode;

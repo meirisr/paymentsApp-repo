@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -25,60 +25,50 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 // global.scss
-@import '~swiper/scss';
-@import '~swiper/scss/autoplay';
-@import '~swiper/scss/keyboard';
-@import '~swiper/scss/pagination';
-@import '~swiper/scss/scrollbar';
-@import '~swiper/scss/zoom';
-@import '~@ionic/angular/css/ionic-swiper';
-ion-content {
-  
-  // --ion-background-color: transparent radial-gradient(closest-side at 26% 129%, #00928C 0%, #00BDB6 1%, #007CC5 100%) 0% 0% no-repeat padding-box;
-  // --ion-text-color: #ffffff;
-}
- body{
-  //  font-family: var(--ion-font-family);
-  //  font-weight:var(--ion-font-weight);
-  // direction: rtl;
-   
+@import "~swiper/scss";
+@import "~swiper/scss/autoplay";
+@import "~swiper/scss/keyboard";
+@import "~swiper/scss/pagination";
+@import "~swiper/scss/scrollbar";
+@import "~swiper/scss/zoom";
+@import "~@ionic/angular/css/ionic-swiper";
 
-}
-
-.md body.scanBg{
+.md body.scanBg {
   --ion-background-color: #00000000;
-  // color: #fff;
 }
 
-form{
-    margin-left: 5vw;
-    margin-right: 5vw;
+form {
+  margin-left: 5vw;
+  margin-right: 5vw;
 }
 
-form .input-group{
+form .input-group {
   margin-top: 2vh;
 }
-form ion-input.sc-ion-input-md-h{
+form ion-input.sc-ion-input-md-h {
   border: 1px solid lightgray;
   border-radius: 10px;
-  // margin-top: 5%;
-  
 }
 
-.ion-text-center{
+.ion-text-center {
   text-align: center;
 }
-.white-text{
+.white-text {
   color: #fff;
 }
-.my-custom-class{
+.my-custom-class {
   --width: 90vw;
-    --height: 40vh;
-    --border-radius: 8px;
+  --height: 40vh;
+  --border-radius: 8px;
 }
-// .toast{
-//   height: 20vh;
-// }
-.errors{
+
+.errors {
   color: red;
 }
+// .my-custom-class{
+//   // --background: aqua;
+// }
+// .my-custom-class .popImg{
+//   content:url(./assets/chekmark.svg);
+ 
+// }

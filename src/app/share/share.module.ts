@@ -12,8 +12,13 @@ import { PhoneNumberFormComponent } from '../components/forms/phone-number-form/
 import { SmsCodeFormComponent } from '../components/forms/sms-code-form/sms-code-form.component';
 import { BackBtnComponent } from '../components/back-btn/back-btn.component';
 import { HeaderWaveComponent } from '../components/header-wave/header-wave.component';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
 
 
+export function playerFactory() {
+  return player;
+}
 
 
 const content = [
@@ -30,6 +35,6 @@ const content = [
 @NgModule({
   declarations: content,
   exports: [content],
-  imports: [CommonModule, IonicModule, FormsModule,ReactiveFormsModule,TranslateModule,GoogleMapsModule,]
+  imports: [CommonModule, IonicModule, FormsModule,ReactiveFormsModule,TranslateModule,GoogleMapsModule,LottieModule.forRoot({ player: playerFactory })]
 })
 export class GlobalModule {}

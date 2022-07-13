@@ -7,21 +7,23 @@ import { IntroGuard } from './guards/intro.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'intro', //login
+    redirectTo: 'login', //login
     pathMatch: 'full',
   },
-  {
-    path: 'intro',
-    loadChildren: () =>
-      import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
-    canLoad: [AutoLoginGuard],
-  },
+  
   {
     path: 'login',
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
     //  canLoad: [IntroGuard, AutoLoginGuard],
     canLoad: [AutoLoginGuard],
+  },
+  {
+    path: 'intro',
+    loadChildren: () =>
+      import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
+    // canLoad: [AutoLoginGuard],
+    canLoad: [AuthGuard]
   },
 
   {

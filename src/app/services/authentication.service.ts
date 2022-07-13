@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap, switchMap } from 'rxjs/operators';
-import { Storage } from '@capacitor/storage';
-import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { GetResult, Storage } from '@capacitor/storage';
+import { environment } from '../../environments/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { StorageService } from './storage.service';
+import { LoginService } from './login.service';
 const TOKEN_KEY = 'my-token';
 
 @Injectable({
@@ -12,32 +15,78 @@ export class AuthenticationService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
   );
-  token = '';
-  constructor(private http: HttpClient) {
-    this.loadToken();
-  }
-  async loadToken() {
-    const token = await Storage.get({ key: TOKEN_KEY });
-    if (token && token.value) {
-    
-      this.token = token.value;
-      this.isAuthenticated.next(true);
+  private token: GetResult;
+  private refreshToken: GetResult;
+
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService,
+    private loginService: LoginService
+  ) {}
+  public async loadToken() {
+    this.token = await this.storageService.getToken();
+    this.refreshToken = await this.storageService.getRefreshToken();
+
+    if (this.token.value != null && this.refreshToken.value != null) {
+      this.isTokenValid(this.token.value).subscribe(
+        async (res) => {
+          if (res) {
+            this.loginService.getUserDetails().subscribe((data) => {
+              console.log(data),
+                (err) => {
+                  console.log(err);
+                };
+            });
+            this.loginService.getCreditCardInfo().subscribe((data) => {
+              (err) => {
+                console.log(err);
+              };
+            });
+
+            this.isAuthenticated.next(true);
+          } else {
+            this.loadToken();
+          }
+        },
+        async (err) => {
+          console.log(err);
+        }
+      );
+    } else if (this.refreshToken.value) {
+      this.tryRefreshToken(this.refreshToken.value).subscribe((data) => {
+        if (data.body.responseType == 'VALID') {
+          this.storageService.setToken(data.body.jwtToken);
+          this.loadToken();
+        }
+      });
     } else {
-      this.isAuthenticated.next(false);//false
+      this.isAuthenticated.next(false);
     }
   }
-  login(credentials: {phone}): Observable<any> {
-    return this.http.post(`https://reqres.in/api/login`, credentials).pipe(
-      map((data: any) => data.token),
-      switchMap((token) => from(Storage.set({ key: TOKEN_KEY, value: token }))),
-      tap((_) => {
-        this.isAuthenticated.next(true);
-      })
-    );
+  public isTokenValid(refreshToken: string): Observable<any> {
+    return this.http
+      .get(
+        `${environment.serverUrl}/base-auth/is-token-valid?token=${refreshToken}`
+      )
+      .pipe(
+        map((data: any) => {
+          if (!data.body) {
+            Storage.remove({ key: TOKEN_KEY });
+          }
+          return data.body;
+        })
+      );
   }
 
-  logout(): Promise<void> {
-    this.isAuthenticated.next(false);
-    return Storage.remove({ key: TOKEN_KEY });
+  public tryRefreshToken(refreshToken: string) {
+    return this.http
+      .get(
+        `${environment.serverUrl}/base-auth/refresh-token?refreshToken=${refreshToken}`
+      )
+      .pipe(
+        tap((data: any) => {
+          this.storageService.setToken(data.body.jwtToken);
+        })
+      );
   }
 }

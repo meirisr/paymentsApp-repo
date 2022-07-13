@@ -9,7 +9,9 @@ import { UtilsService } from './services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Network } from '@capacitor/network';
 import { App } from '@capacitor/app';
-import { UserLoginService } from './services/api/user-login.service';
+import { AuthenticationService } from './services/authentication.service';
+import { Router } from '@angular/router';
+import { Navigation } from 'swiper';
 
 @Component({
   selector: 'app-root',
@@ -26,19 +28,17 @@ export class AppComponent implements OnInit {
     private utils: UtilsService,
     private translate: TranslateService,
     private alertController: AlertController,
-    private apiUserServer: UserLoginService
-  
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) {
     translate.setDefaultLang('en');
     translate.use('he');
     App.getState().then((status) => console.log('status:', status));
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      if (!this.routerOutlet.canGoBack()) {
-        // eslint-disable-next-line @typescript-eslint/dot-notation
-        navigator['app'].exitApp();
-      } else {
-        this.location.back();
-      }
+    this.platform.backButton.subscribeWithPriority(0, () => {
+    console.log(this.router.url)
+      if (!this.routerOutlet.canGoBack()||this.router.url=='/menu') {
+        router.navigate['app'].exitApp() 
+      } 
     });
     const key = environment.googleMapsKey;
     this.httpClient
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.utils.getUserTheme();
     this.utils.getUserLanguage();
-    this.apiUserServer.loadToken();
+    this.authenticationService.loadToken();
   }
   logCurrentNetworkStatus = async () => {
     const status = await Network.getStatus();

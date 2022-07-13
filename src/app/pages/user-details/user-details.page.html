@@ -11,13 +11,12 @@
     class="user-details-Form"
     [formGroup]="userDetails"
     (ngSubmit)="updateUserInfo()"
-    (keyup.enter)="updateUserInfo()"
+   
   >
     <h1>פרטים אישיים</h1>
     <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
-       
           class="input"
           type="text"
           id="firstName"
@@ -89,13 +88,19 @@
         
       </div>
     </div>
-   
-    <div class="input-group" dir="ltr">
-      <ion-button type="submit" expand="block" [disabled]="userDetails.invalid" 
-        >{{'pages.userDetais.updated'|translate}}</ion-button
-      >
-    </div>
+    <!-- <ion-footer> -->
+      <div class="input-group" dir="ltr">
+        <ion-button class="saveSubmit"  type="submit" expand="block" [disabled]="userDetails.invalid" 
+          >{{'pages.userDetais.updated'|translate}}</ion-button
+        >
+      </div>
+    
+    <!-- </ion-footer> -->
   </form>
+  
+</ion-content>
+
+
 
   <ion-modal
     trigger="user-date-modal"
@@ -117,4 +122,4 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-</ion-content>
+

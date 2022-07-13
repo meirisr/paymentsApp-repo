@@ -1,7 +1,7 @@
 <ion-content class="no-scroll">
   <app-header-wave text="נסיעה פעילה"></app-header-wave>
-  <app-map [height]="mapHight" [path]="Coordinates"></app-map>
-  <div #travelBody id="travelBody" class="travel-body">
+  <app-map [height]="mapHight" [path]="coordinates" [nearesStationth]="nearestStation"></app-map>
+  <div  #travelBody id="travelBody" class="travel-body">
     <hr #drowerBar class="drowerBar" />
     <ion-grid class="body-card-1">
       <ion-row style="direction: rtl">
@@ -11,8 +11,8 @@
           </ion-item>
         </ion-col>
         <ion-col>
-          <h4>שדה התעופה בן גוריון</h4>
-          <ion-label>לוד</ion-label>
+          <h4>{{origin?.stationName||''}}</h4>
+          <ion-label>{{origin?.stationCityName||''}}</ion-label>
           <div #dated class="dated" id="dated"></div>
         </ion-col>
       </ion-row>
@@ -20,8 +20,8 @@
         <ion-row style="direction: rtl">
           <ion-col size="3"></ion-col>
           <ion-col>
-            <h4>מלון בראשית</h4>
-            <ion-label>ירושלים</ion-label>
+            <h4>{{destination?.stationName||''}}</h4>
+            <ion-label>{{destination?.stationCityName||''}}</ion-label>
           </ion-col>
         </ion-row>
       </div>

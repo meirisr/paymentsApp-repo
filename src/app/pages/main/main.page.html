@@ -5,32 +5,14 @@
   </ion-toolbar>
 </ion-header>
 <ion-content dir="{{'dir'|translate}}">
-  
-  <!-- <ion-text class="ion-text-center"><h1>בחירת אמצעי תחבורה</h1></ion-text> -->
   <div class="card-container ion-activatable" (click)="onClick()">
-    <ion-card >
-   
+    <ion-card>
       <ion-card-header>
         <img src="../../../assets/scan.svg" />
         <ion-card-title> סרוק QR </ion-card-title>
         <ion-card-subtitle>לתחילת נסיעה</ion-card-subtitle>
-       
       </ion-card-header>
     </ion-card>
     <ion-ripple-effect></ion-ripple-effect>
   </div>
-  
-  <!-- <ion-list>
-    <ion-item
-      #item.id
-      id="{{item.id}}"
-      lines="none"
-      class="shadow-sm main-list"
-      *ngFor="let item of transportationOptions"
-      [ngStyle]="{'border-right':'10px solid'+item.color}"
-      (click)="item.callback()"
-    >
-      <ion-label><h1>{{item.title}}</h1></ion-label>
-    </ion-item>
-  </ion-list> -->
 </ion-content>

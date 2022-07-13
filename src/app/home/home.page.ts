@@ -12,7 +12,7 @@ import { AuthenticationService } from './../services/authentication.service';
 export class HomePage {
   constructor(private authService: AuthenticationService, private router: Router) {}
   async logout() {
-    await this.authService.logout();
-    this.router.navigateByUrl('/', { replaceUrl: true });
+    // await this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

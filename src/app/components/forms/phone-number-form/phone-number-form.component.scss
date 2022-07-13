@@ -12,3 +12,29 @@ h2{
   margin-bottom: 15px;
   margin-right: 10px;
 }
+.fluatingLabel {
+  width: 100%;
+  position: relative;
+}
+
+.flutingLabel {
+  width: 100%;
+  position: relative;
+}
+span {
+  display: inline-block;
+  position: absolute;
+  margin: -32px 8px 0 8px;
+  transition: all 0.1s ease-in-out;
+}
+
+form ion-input.sc-ion-input-md-h:focus-within+span,
+form ion-input.sc-ion-input-md-h.has-value+span {
+  font-size: 16px;
+  background-color: #f9fafb;
+  padding: 0 2px;
+  color: black;
+  z-index: 2;
+  margin: -56px 8px 0 8px;
+}
+

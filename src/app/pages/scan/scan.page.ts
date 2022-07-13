@@ -6,42 +6,50 @@ import {
   SupportedFormat,
 } from '@capacitor-community/barcode-scanner';
 import { Capacitor } from '@capacitor/core';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { Location } from '@angular/common';
-import { UserLoginService } from 'src/app/services/api/user-login.service';
+import { LoginService } from 'src/app/services/login.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
-
 const HOTEL_ID = 'my-hotel';
+let loader;
 @Component({
   selector: 'app-scan',
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
 })
-export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
+export class ScanPage implements OnInit {
   isFlashAvailable = false;
   isFlashOn = false;
   scanActive = false;
   scanNotAllowed = false;
   result = null;
   element;
+  userLocation={
+    latitude:0,
+    longitude:0
+  }
   constructor(
     private alertController: AlertController,
-    private router: Router,
+    private utils: UtilsService,
     private location: Location,
-    private apiUserServer: UserLoginService,
-    private platform: Platform,
     private openNativeSettings: OpenNativeSettings,
-    private utils:UtilsService,
-    
+    private storageService: StorageService,
+    private nav: NavController,
+    private travelProcessService: TravelProcessService,
+    private platform: Platform,
   ) {
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      this.router.navigate(['/menu']);
-    });
+    // this.platform.backButton.subscribeWithPriority(10, () => {
+    //   this.nav.navigateBack('/menu',{ replaceUrl: true  });
+    // });
   }
 
   ngOnInit() {
+   loader =this.utils.showLoader();
+    console.log("onInit")
     if (Capacitor.isNativePlatform()) {
       this.checkLocationPermission().then((e) => {
         if (e) {
@@ -53,33 +61,13 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.scanNotAllowed = true;
       setTimeout(() => {
-        this.router.navigate(['/menu']);
+        this.nav.navigateBack('/menu',{ replaceUrl: true });
       }, 3000);
     }
-
   }
 
-  ngAfterViewInit() {
-  
-    // if (Capacitor.isNativePlatform()) {
-    //   this.checkLocationPermission().then((e) => {
-    //     if (e) {
-    //       BarcodeScanner.prepare();
-    //       this.startScanner();
-    //     }
-    //   });
-    //   this.scanNotAllowed = false;
-    // } else {
-    //   this.scanNotAllowed = true;
-    //   setTimeout(() => {
-    //     this.router.navigate(['/menu']);
-    //   }, 3000);
-    // }
-  }
-  ionViewWillEnter(){
-
-  }
-  ionViewWillLeave(){
+  ionViewWillLeave() {
+    this.utils.dismissLoader(loader);
     document.querySelector('body').classList.remove('scanBg');
     if (Capacitor.isNativePlatform()) {
       BarcodeScanner.stopScan();
@@ -87,15 +75,15 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
     this.scanNotAllowed = false;
   }
   ngOnDestroy() {
-    // document.querySelector('body').classList.remove('scanBg');
-    // if (Capacitor.isNativePlatform()) {
-    //   BarcodeScanner.stopScan();
-    // }
-    // this.scanNotAllowed = false;
+    document.querySelector('body').classList.remove('scanBg');
+    
   }
   async startScanner() {
     const allowed = await this.checkPermission();
     if (allowed) {
+   
+      document.querySelector('body').classList.add('scanBg');
+      this.utils.dismissLoader(loader);
       this.scanActive = true;
       this.result = null;
       BarcodeScanner.hideBackground();
@@ -104,32 +92,30 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
       });
       if (result.hasContent) {
         this.result = result.content;
-        // BarcodeScanner.stopScan();
         this.scanActive = false;
-        let hotelId=(await this.utils.getStorege(HOTEL_ID)).value=='null'
-        if(hotelId){
-          this.router.navigate(['/payment']);
-        }
-        else{
-          this.router.navigate(['/travel-route-tracking']);
-        }
-    
-     
-       
+        this.travelProcessService.getTravel(this.userLocation,	44985002).subscribe(async(data)=>{
+          console.log(data)
+          // if (data.data.statusCode) return;
+          let hotelId = !!(await this.storageService.getStorege(HOTEL_ID))
+          if (hotelId) {
+            this.nav.navigateForward('/payment', { animationDirection: 'forward', animated: true })
+           
+  
+          } else {
+            this.nav.navigateForward('/travel-route-tracking', { animationDirection: 'forward', animated: true })
+           await this.utils.presentModal('נסיעה טובה','');
+         
+          }
+        },
+        async(err)=>{
+          console.log(err)
+          setTimeout(() => {
+            this.nav.navigateBack('/menu',{ replaceUrl: true });
+          }, 3000);
+        })
         
-      //   this.apiUserServer.getTravel().subscribe(async () => {
-          
-      //     this.router.navigate(['/payment']);
-      //   }),
-      //  async (e) => {
-      //   18
-      //  }
-        // // this.scanActive = true;
-        // setTimeout(() => {
-       
-        // }, 10);
       }
-      document.querySelector('body').classList.add('scanBg');
+      
     }
   }
   async checkPermission() {
@@ -142,11 +128,13 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
   }
   async checkLocationPermission() {
     const locationStatus = await Geolocation.requestPermissions();
-  
+
     if (locationStatus.location) {
       try {
         const coordinates = await Geolocation.getCurrentPosition();
-        console.log(coordinates.coords.latitude, coordinates.coords.longitude);
+        this.userLocation.latitude=coordinates.coords.latitude;
+        this.userLocation.longitude=coordinates.coords.longitude
+        
         return true;
       } catch (error) {
         this.location.back();
@@ -207,8 +195,6 @@ export class ScanPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goTomenu() {
-    this.router.navigate(['/menu']);
+    this.nav.navigateBack('/menu',{ replaceUrl: true ,animationDirection: 'back', animated: true });
   }
-
-  
 }

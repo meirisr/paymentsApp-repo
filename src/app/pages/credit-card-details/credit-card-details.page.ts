@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonDatetime } from '@ionic/angular';
+import { IonDatetime, NavController } from '@ionic/angular';
 import { from } from 'rxjs';
-import { UserLoginService } from '../../services/api/user-login.service';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-credit-card-details',
@@ -21,10 +21,9 @@ export class CreditCardDetailsPage implements OnInit {
   userName = '';
   creditCardForm = true;
   public cardDetails: FormGroup;
-  constructor(
-    private apiUserServer: UserLoginService,
-    private router: Router
-  ) {}
+  constructor(private logInServer: LoginService, private router: Router,private nav: NavController) {
+    
+  }
   get firstName() {
     return this.cardDetails.get('firstName');
   }
@@ -64,37 +63,22 @@ export class CreditCardDetailsPage implements OnInit {
     this.dateTime.confirm(true);
   }
   async updateCreditCard() {
-    from(this.apiUserServer.updateCreditCard(this.cardDetails.value)).subscribe(
-      async (res) => {
-        this.apiUserServer.handleButtonClick();
-        // from(this.apiUserServer.getCreditCardInfo()).subscribe(
-        //   async (res) => {},
-        //   async (res) => {
-        //     this.apiUserServer.onHttpErorr(res, '');
-        //   }
-        // );
-      },
-      async (res) => {
-        this.apiUserServer.onHttpErorr(res, '');
+    this.logInServer.updateCreditCard(this.cardDetails.value).then(
+      async()=>{
+        this.goToUserProfile()
       }
-    );
+    )
   }
 
   cardNumKeyUp(e) {
-   
     this.cardNum = e.target.value;
   }
   cardCvsKeyUp(e) {
-   
     this.cvsNum = e.target.value;
   }
   userNameKeyUp(e) {
     this.userName = e.target.value;
   }
-  //   cardDateKeyUp(e){
-  // console.log(e.target.value);
-  // this.cardDate=e.target.value;
-  //   }
   cvSInputFocus() {
     this.flipClass = 'flip';
   }
@@ -102,6 +86,7 @@ export class CreditCardDetailsPage implements OnInit {
     this.flipClass = '';
   }
   goToUserProfile() {
-    this.router.navigate(['/user-profile']);
+    this.nav.navigateBack('/intro',{ replaceUrl: true ,animationDirection: 'back', animated: true });
+    // this.router.navigate(['/user-profile']);
   }
 }

@@ -1,25 +1,29 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
-import { UserLoginService } from 'src/app/services/api/user-login.service';
+import {LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements  OnDestroy{
   @ViewChild('phoneInput', { read: ElementRef }) phoneInput: ElementRef;
   @ViewChild('otp1', { read: ElementRef }) smsInput: ElementRef;
   public textForm: boolean;
 
-  constructor(private apiUserServer: UserLoginService, private router: Router,) {
-    this.apiUserServer.didSendSms.subscribe((e) => {
+  constructor(private logInServer: LoginService, private router: Router,private nav: NavController) {
+    this.logInServer.didSendSms.subscribe((e) => {
       this.textForm = e;
     });
   }
-  ngOnInit() {}
+  ngOnDestroy() {
+    this.textForm =false;
+  }
   goToIntro(){
-    this.router.navigate(['/intro']);
+    this.nav.navigateBack('/intro',{ replaceUrl: true ,animationDirection: 'back', animated: true });
+    // this.router.navigate(['/intro']);
   }
 }

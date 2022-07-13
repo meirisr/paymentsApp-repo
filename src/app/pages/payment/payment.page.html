@@ -1,14 +1,6 @@
-<!-- <ion-header class="ion-no-border">
-  <ion-toolbar>
-    <app-header-wave text="ברוכים הבאים"></app-header-wave>
-
-  </ion-toolbar>
-</ion-header> -->
-<ion-content >
-  
-  <app-map [height]="mapHight" [path]="Coordinates"></app-map>
-  <div #paymentBody id="paymentBody" class="payment-body">
-    <!-- <hr #drowerBar class="drowerBar"> -->
+<ion-content>
+  <app-map [height]="mapHight" [path]="coordinates" [nearesStationth]="nearestStation"></app-map>
+  <div *ngIf="coordinates.length>1" #paymentBody id="paymentBody" class="payment-body">
     <ion-grid class="body-card-1">
       <ion-row style="direction: rtl">
         <ion-item text-right lines="none">
@@ -22,27 +14,24 @@
           </ion-item>
         </ion-col>
         <ion-col>
-          <h4>{{origin}}</h4>
-          <p>לוד</p>
+          <h4>{{origin?.stationName||''}}</h4>
+          <p>{{origin?.stationCityName||''}}</p>
           <div class="dated"></div>
         </ion-col>
       </ion-row>
       <ion-row style="direction: rtl">
         <ion-col size="3"></ion-col>
         <ion-col>
-          <h4>{{destination}}</h4>
-          <p>ירושלים</p>
+          <h4>{{destination?.stationName||''}}</h4>
+          <p>{{destination?.stationCityName||''}}</p>
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <hr />
-    <!-- </div> -->
+<hr>
     <ion-grid class="body-card-2">
       <ion-row>
         <ion-col>
           <div style="display: flex; justify-content: space-evenly">
-            <!-- <ion-fab horizontal="end" vertical="center" slot="fixed"> -->
             <ion-fab-button
               class="addBtn"
               color="secondary"
@@ -52,8 +41,8 @@
               <ion-icon name="add"></ion-icon>
             </ion-fab-button>
 
-            <h2 style="margin-top: 13px;">{{numOfPassengers}}</h2>
-            <!-- <ion-fab horizontal="end" vertical="center" slot="fixed"> -->
+            <h2 style="margin-top: 13px">{{numOfPassengers}}</h2>
+
             <ion-fab-button
               class="removeBtn"
               size="small"
@@ -61,8 +50,6 @@
             >
               <ion-icon name="remove"></ion-icon>
             </ion-fab-button>
-            <!-- <ion-button fill="outline">yfgyutg</ion-button> -->
-            <!-- </ion-fab> -->
           </div>
         </ion-col>
         <ion-col><h4>מס נוסעים</h4></ion-col>
@@ -72,12 +59,17 @@
         <ion-col><h4>סה"כ לתשלום</h4></ion-col>
       </ion-row>
     </ion-grid>
-    <div style="margin-left: 20px">
-      <app-main-btn type="click" text="שלם" (click)="onSubmit()"></app-main-btn>
-    </div>
   </div>
+    <div style="margin-left: 20px">
+      <app-main-btn style="position: fixed;
+      bottom: 34px;" type="click" text="שלם" (click)="onSubmit()"></app-main-btn>
+    </div>
+  
 </ion-content>
+<ion-footer>
+  
+</ion-footer>
 
-<div style="margin-left: 20px">
+<!-- <div style="margin-left: 20px">
   <app-main-btn type="click" text="שלם" (click)="onSubmit()"></app-main-btn>
-</div>
+</div> -->

@@ -4,9 +4,9 @@
   --border-radius: 10px;
   margin-top: 5%;
   font-size: 18px;
-  position: fixed;
+  
   width: 90vw;
-  bottom: 34px;
+ 
   font-weight: normal;
 }
 .main-btn[ng-reflect-type=submit]{
@@ -15,10 +15,13 @@
   --border-radius: 10px;
   margin-top: 5%;
   font-size: 18px;
-  position: fixed;
+ 
   width: 121px;
-  bottom: 34px;
+  
   font-weight: normal;
+}
+.main-btn[sms]{
+  position:static;
 }
 
 .back-btn{

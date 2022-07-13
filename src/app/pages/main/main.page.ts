@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { App } from '@capacitor/app';
-import { Platform } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
+import { StorageService } from 'src/app/services/storage.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 const HOTEL_ID = 'my-hotel';
 
@@ -11,65 +12,30 @@ const HOTEL_ID = 'my-hotel';
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class MainPage  {
-  headerText:string;
-  // transportationOptions = [
-  //   {
-  //     title: 'אוטובוס',
-  //     color: '#ffca22',
-  //     id: 1,
-  //     callback:()=>this.onClick(1)
-  //   },
-  //   {
-  //     title: 'רכבת קלה',
-  //     color: '#29c467',
-  //     id: 2,
-  //     callback:()=>this.onClick(2)
-  //   },
-  //   {
-  //     title: 'רכבת ישראל',
-  //     color: '#cf3c4f',
-  //     id: 3,
-  //     callback:()=>this.onClick(3)
-  //   },
-  //   {
-  //     title: 'רכבלית',
-  //     color: '#50c8ff',
-  //     id: 4,
-  //     callback:()=>this.onClick(4)
-  //   },
-  //   {
-  //     title: 'מטרונית',
-  //     color: '#fd7e14',
-  //     id: 5,
-  //     callback:()=>this.onClick(5)
-  //   },
-  //   {
-  //     title: 'הסעות בתי מלון',
-  //     color: '#d63384',
-  //     id: 6,
-  //     callback:()=> {
-  //       this.router.navigate(['/scan']);
-  //     }
-  //   },
-  // ];
+export class MainPage {
+  headerText: string;
 
-  constructor( private router: Router,private utils:UtilsService,   private platform: Platform,) {
-    this.platform.backButton.subscribeWithPriority(10, () => {
-     App.exitApp();
-       
-    });
+  constructor(
+    private router: Router,
+    private storageService: StorageService,
+    private platform: Platform,
+    private nav: NavController
+  ) {
+    // this.platform.backButton.subscribeWithPriority(10, () => {
+    //   App.exitApp();
+    // });
   }
 
   ionViewWillEnter() {
-    this.getHotel()
+    this.getHotel();
   }
-  onClick(){
-    this.router.navigate(['/scan']);
+  onClick() {
+    // this.router.navigate(['/scan']);
+    this.nav.navigateForward('/scan', { animationDirection: 'forward', animated: true })
   }
- async getHotel(){
-  const hotel= (await this.utils.getStorege(HOTEL_ID)).value
-  console.log(hotel)
-  this.headerText= hotel=='null' ?'': hotel;
+  async getHotel() {
+    const hotel = (await this.storageService.getStorege(HOTEL_ID)).value;
+    console.log(hotel);
+    this.headerText = hotel == 'null' ? '' : hotel;
   }
 }

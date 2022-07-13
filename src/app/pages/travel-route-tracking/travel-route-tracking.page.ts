@@ -1,21 +1,18 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-} from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ModalController, NavController } from '@ionic/angular';
 import { PopupModalComponent } from '../../components/popup-modal/popup-modal.component';
 import { Gesture, GestureController, Platform } from '@ionic/angular';
-import { UserLoginService } from 'src/app/services/api/user-login.service';
+import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
+import { TravelProcessService } from 'src/app/services/travel-process.service';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-travel-route-tracking',
   templateUrl: './travel-route-tracking.page.html',
   styleUrls: ['./travel-route-tracking.page.scss'],
 })
-export class TravelRouteTrackingPage implements OnInit{
+export class TravelRouteTrackingPage implements OnInit {
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('travelBody') travelBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
@@ -23,35 +20,76 @@ export class TravelRouteTrackingPage implements OnInit{
   mapHight = '100vh';
   startHight = 75;
   minHight;
-  Coordinates: [];
+  coordinates: []=[];
+  origin;
+  destination;
+  nearestStation={
+    lat:0,
+    lng:0
+  }
 
-  constructor(private plt: Platform, private gestureCtrl: GestureController,private apiUserServer:UserLoginService,private modalController: ModalController) {
-
+  
+  constructor(
+    private plt: Platform,
+    private gestureCtrl: GestureController,
+    private logInServer: LoginService,
+    private modalController: ModalController,
+    private router: Router,
+    private platform: Platform,
+    private nav: NavController,
+    private travelProcessService: TravelProcessService
+  ) {
+    // this.platform.backButton.subscribeWithPriority(10, () => {
+    //   this.nav.navigateBack('/menu', { replaceUrl: true });
+    // });
   }
 
   ngOnInit() {
-    this.presentModal()
+    // from(this.travelProcessService.paymentTranportation()).subscribe(async(data)=>{
+    //   console.log(data)
+    // })
   }
-  ionViewWillEnter(){
+  ngAfterViewInit(): void {
+    this.coordinates = this.travelProcessService.Coordinates;
+    this.origin=this.travelProcessService?.firstStation;
+    this.destination=this.travelProcessService?.lastStation;
+    this.nearestStation.lat=this.travelProcessService?.nearestStation?.stationLocation?.lat
+    this.nearestStation.lng=this.travelProcessService?.nearestStation?.stationLocation?.lnt
+    
+    // if (this.logInServer.Coordinates.length < 1) {
+      // this.logInServer.getTravel().subscribe(async () => {
+      //   this.coordinates = this.logInServer.Coordinates;
+      //   this.origin=this.logInServer.firstStation;
+      //   this.destination=this.logInServer.lastStation;
+      // }),
+      //   async (err) => {
+      //     console.log(err);
+      //   };
+    // }else{
+    //   this.coordinates = this.logInServer.Coordinates;
+    //   this.origin=this.logInServer.firstStation;
+    //   this.destination=this.logInServer.lastStation;
+    // }
+  }
 
-    this.Coordinates = this.apiUserServer.Coordinates;
-  }
   ionViewDidEnter(): void {
-    this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
-    this.minHight = this.plt.height();
+    if(this.coordinates.length>1){
+      this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
+      this.minHight = this.plt.height();
+  
+      const gesture: Gesture = this.gestureCtrl.create(
+        {
+          el: this.travelBodyRef.nativeElement,
+          threshold: 0,
+          gestureName: 'my-gesture',
+          onMove: (ev) => this.onMove(ev),
+          onEnd: (ev) => this.onEnd(ev),
+        },
+        true
+      );
+      gesture.enable();
+    }
    
-   
-    const gesture: Gesture = this.gestureCtrl.create(
-      {
-        el: this.travelBodyRef.nativeElement,
-        threshold: 0,
-        gestureName: 'my-gesture',
-        onMove: (ev) => this.onMove(ev),
-        onEnd: (ev) => this.onEnd(ev),
-      },
-      true
-    );
-    gesture.enable();
   }
   onMove(detail) {
     const position = document.getElementById('travelBody');
@@ -64,7 +102,6 @@ export class TravelRouteTrackingPage implements OnInit{
 
     this.travelBodyRef.nativeElement.style.top =
       this.convertPXToVh(detail.currentY) + 'vh';
-    // this.mapHight = top + 90;
   }
   onEnd(detail) {}
   convertPXToVh(px) {
@@ -73,24 +110,6 @@ export class TravelRouteTrackingPage implements OnInit{
   convertVhTopx(vh) {
     return (vh * document.documentElement.clientWidth) / 100;
   }
- 
-  async presentModal() {
-    const modal = await this.modalController.create({
-      component: PopupModalComponent,
-      cssClass: 'my-custom-class',
-      swipeToClose: true,
-      componentProps: { 
-        header:'נסיעה טובה',
-        typy:'login-success'
-       
-      }
-    });
-    modal.present()
-    setTimeout(()=>{
-    modal.dismiss({
-      'dismissed': true
-    });
-  },3000 )
-  
-  }
+
+
 }

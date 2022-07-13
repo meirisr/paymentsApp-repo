@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { UserLoginService } from 'src/app/services/api/user-login.service';
+
+import { LoginService } from 'src/app/services/login.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 @Component({
   selector: 'app-phone-number-form',
@@ -9,9 +9,10 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
   styleUrls: ['./phone-number-form.component.scss'],
 })
 export class PhoneNumberFormComponent implements OnInit {
+  @ViewChild('phoneInput') phoneInputRef: ElementRef<any>;
   public phoneNumderForm: FormGroup;
   constructor(
-    private apiUserServer: UserLoginService,
+    private logInServer: LoginService,
     private utils: UtilsService
   ) {}
 
@@ -23,26 +24,28 @@ export class PhoneNumberFormComponent implements OnInit {
       ]),
     });
   }
+  ionViewDidEnter(){
+   this.phoneInputRef.nativeElement.setFocus();
+  }
   async onPhoneNumderFormSubmit() {
     const loader = this.utils.showLoader();
-    this.apiUserServer.getSms(this.phoneNumderForm.value).subscribe(
+    this.logInServer.sendVerificationCode(this.phoneNumderForm.value).subscribe(
       async (res) => {
         this.utils.dismissLoader(loader);
-        this.apiUserServer.didSendSms.next(true);
+        this.logInServer.didSendSms.next(true);
         setTimeout(() => {
-          // this.smsInput.nativeElement.setFocus();
+          
         }, 150);
       },
       async (res) => {
-  
-        this.apiUserServer.didSendSms.next(false);
-        this.onHttpErorr(res, '', loader);
+        this.utils.dismissLoader(loader);
+        this.logInServer.didSendSms.next(false);
+        this.onHttpErorr(res, '');
       }
     );
    
   }
-  async onHttpErorr(e, header, loader) {
-    this.utils.dismissLoader(loader);
+  async onHttpErorr(e, header) {
     this.utils.showalert(e, header);
   }
 }

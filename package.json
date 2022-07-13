@@ -47,6 +47,8 @@
     "cordova-open-native-settings": "^1.5.5",
     "cordova-plugin-sms-retriever-manager": "^1.0.3",
     "cordova-plugin-x-toast": "^2.7.3",
+    "lottie-web": "^5.9.6",
+    "ngx-lottie": "^8.2.0",
     "rxjs": "~6.6.0",
     "swiper": "^8.2.4",
     "tslib": "^2.2.0",

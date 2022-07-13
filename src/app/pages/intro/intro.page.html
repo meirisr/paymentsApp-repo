@@ -1,50 +1,37 @@
-
-<ion-header  dir="{{'dir'|translate}}" class="ion-no-border">
-  <!-- <ion-toolbar> -->
-  <app-header-wave text="הרשמה חד-פעמית"></app-header-wave>
-<!-- </ion-toolbar> -->
-<div class="searchInputRap">
-  <ion-input class="searchInput"  (keyup)="handleInput($event)" placeholder="חיפוש"></ion-input>
-</div>
+<ion-header dir="{{'dir'|translate}}" class="ion-no-border">
+  <app-header-wave text="אפשרויות כניסה"></app-header-wave>
+  <app-back-btn (click)="goToLogin()"></app-back-btn>
+  <div class="searchInputRap">
+    <ion-input
+      class="searchInput"
+      (keyup)="handleInput($event)"
+      placeholder="חיפוש"
+    ></ion-input>
+  </div>
 </ion-header>
 
-<ion-content  dir="{{'dir'|translate}}"  class="ion-padding info-content">
-  <!-- <ion-slides >
-    <ion-slide> -->
-     
+<ion-content dir="{{'dir'|translate}}" class="ion-padding info-content">
   <div class="slide">
-    <!-- <div class="ion-text-start slide-header" color="light">
-      <img *ngIf="prefersDark" src="../../../assets/isr-logo-whit.svg" /><img
-        *ngIf="!prefersDark"
-        src="../../../assets/isr-logo-black.svg"
-      />
-    </div>
-    <div class="slide-body-header">
-      <ion-text class="ion-text-center">
-        <h1>{{'pages.intro.header'|translate}}</h1>
-        <p>{{'pages.intro.title'|translate}}</p>
-      </ion-text>
-    </div> -->
-    
     <div class="slide-body">
-      
       <ion-row>
         <ion-col size="12">
-      <ion-list >
-        <ion-item *ngFor="let item of tempitems" id="{{item.id}}" (click)="onClickHotel(item.id)">
-          <ion-label>{{item.name}}</ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-col>
-    </ion-row>
+          <ion-list>
+            <ion-item
+              *ngFor="let item of tempitems"
+              id={{item.id}}
+              (click)="onClickHotel(item)"
+            >
+              <ion-label>{{item.name}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
     </div>
   </div>
-  
-  
 </ion-content>
 
 <ion-footer class="ion-no-border" collapse="fade">
-  <!-- <ion-toolbar> -->
-    <ion-button class="nextBtn" expand="block" fill="outline" (click)="next()">{{'pages.intro.nextBtn'|translate}}</ion-button>
-  <!-- </ion-toolbar> -->
+  <ion-button class="nextBtn" expand="block" fill="outline" (click)="next()"
+    >{{'pages.intro.nextBtn'|translate}}</ion-button
+  >
 </ion-footer>

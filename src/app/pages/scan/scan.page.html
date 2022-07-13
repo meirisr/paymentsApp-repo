@@ -1,10 +1,6 @@
-<!-- <ion-header class="ion-no-border">
-  <ion-toolbar>
-    
-  </ion-toolbar>
-</ion-header> -->
+
 <app-back-btn (click)="goTomenu()"></app-back-btn>
-    <app-header-wave></app-header-wave>
+  
 <ion-content [class.hideBg]="scanActive">
   <ion-row class="ion-text-center ion-padding alert-row" [hidden]="!scanNotAllowed">
     <ion-col class="">
@@ -40,7 +36,6 @@
     </div>
   </ion-row>
   <ion-row>
-    <!-- <a [attr.href]="result" class="ion-text-center" *ngIf="result && !scanActive">{{result}}</a> -->
-    <!-- <a [attr.href]="result"></a> -->
+   
   </ion-row>
 </ion-content>

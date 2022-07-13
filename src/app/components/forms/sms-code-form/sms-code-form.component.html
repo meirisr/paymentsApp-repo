@@ -1,4 +1,4 @@
-<form class="loginForm" (ngSubmit)="onSmsCodeFormSubmit()" [formGroup]="smsCodeForm" (keyup.enter)="onSmsCodeFormSubmit()">
+<form class="loginForm" (ngSubmit)="onSmsCodeFormSubmit()" [formGroup]="smsCodeForm" >
   <div class="code-header">
     <ion-text class="ion-text-center ">
       <h1>קוד אימות</h1>
@@ -34,8 +34,9 @@
     </ion-row>
   </div>
     <ion-text (click)="resendSms()" class="ion-text-center" ><h2>שלח קוד שוב</h2></ion-text>
-  
-    <app-main-btn type="submit" [disabled]="smsCodeForm.invalid" text="{{'pages.login.nextBtn'| translate}}"></app-main-btn>
     <ion-text  (click)="back()" class="ion-text-center"><p>חזור</p></ion-text>
+    <app-main-btn 
+    type="submit" sms [disabled]="smsCodeForm.invalid" text="{{'pages.login.nextBtn'| translate}}"></app-main-btn>
+   
   
 </form>

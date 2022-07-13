@@ -1,16 +1,24 @@
 
-<form class="loginForm" (ngSubmit)="onPhoneNumderFormSubmit()" [formGroup]="phoneNumderForm" (keyup.enter)="onPhoneNumderFormSubmit()">
+<form class="loginForm" (ngSubmit)="onPhoneNumderFormSubmit()" [formGroup]="phoneNumderForm" >
   <div>
      <ion-label position="stacked" class="" dir="{{'dir' |translate}}"><h2>{{'pages.login.phoneInputText' |translate}}</h2></ion-label>
-      <ion-input dir="{{'dir' |translate}}" #phoneInput placeholder="מספר טלפון לזיהוי"  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" formControlName="phone"  required></ion-input>
+      <!-- <ion-input dir="{{'dir' |translate}}" #phoneInput placeholder="מספר טלפון לזיהוי"  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" formControlName="phone"  required></ion-input> -->
+
+      <label class="fluatingLabel" dir="{{'dir' |translate}}">
+        <ion-input #phoneInput
+        dir="ltr"
+        autofocus="true"
+          class="input"
+          type="tel"
+          inputmode="numeric"
+          id="firstName"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" 
+          formControlName="phone"  
+        ></ion-input>
+        <span class="labelSpan">מספר טלפון לזיהוי</span>
+      </label>
   </div>
-    <!-- <div class="help-block" *ngIf="(phoneNumderForm.get('phone').dirty || phoneNumderForm.get('phone').touched) && phoneNumderForm.get('phone').errors">
-      <div text-center *ngIf="phoneNumderForm.get('phone').errors?.required" class="errors ion-text-center" >
-        phone number is required.
-      </div> -->
-      <!-- <div *ngIf="phoneNumderForm.get('phone').errors?.minlength" class="errors ion-text-center">
-        phone number must be at least 4 characters long.
-      </div> -->
-    <!-- </div> -->
-    <app-main-btn type="submit" [disabled]="phoneNumderForm.invalid" text="{{'pages.login.nextBtn'| translate}}"></app-main-btn>
+   
+    <app-main-btn style="position: fixed;
+    bottom: 34px;" type="submit" [disabled]="phoneNumderForm.invalid" text="{{'pages.login.nextBtn'| translate}}"></app-main-btn>
     </form>

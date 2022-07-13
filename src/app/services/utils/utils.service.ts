@@ -1,18 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { UserLoginService } from '../api/user-login.service';
+import { PopupModalComponent } from 'src/app/components/popup-modal/popup-modal.component';
 const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
-const PHONE_NUM = 'my-phone';
-const TOKEN_KEY = 'my-token';
-const REFRESH_TOKEN_KEY = 'token-refresh';
-const HEADER_HOTELS = 'hotels';
-const USER_DETAILS = 'user-details';
-const CARD_DETAILS = 'card-details';
-const HOTEL_ID = 'my-hotel';
-const userStorege=[COLOR_THEME,USER_LANGUAGE,PHONE_NUM,TOKEN_KEY,REFRESH_TOKEN_KEY,HEADER_HOTELS,USER_DETAILS,CARD_DETAILS,HOTEL_ID ]
+
 @Injectable({
   providedIn: 'root',
 })
@@ -25,25 +18,24 @@ export class UtilsService {
     public loadingController: LoadingController,
     private alertController: AlertController,
     private translate: TranslateService,
-
+    private modalController: ModalController,
   ) {}
 
   onToggleColorTheme(event) {
-    let drowerDiv= document.getElementById('travelBody')
+    let drowerDiv = document.getElementById('travelBody');
     if (event.detail.checked) {
       document.body.setAttribute('color-theme', 'dark');
-   
+
       Storage.set({ key: COLOR_THEME, value: 'true' });
       this.ischecked = 'true';
     } else {
       document.body.setAttribute('color-theme', 'light');
-     
+
       Storage.set({ key: COLOR_THEME, value: 'false' });
       this.ischecked = 'false';
     }
   }
   onToggleLanguages(event) {
-    
     switch (event.detail.value) {
       case 'en':
         this.translate.use('en');
@@ -68,11 +60,11 @@ export class UtilsService {
     const themeColor = await Storage.get({ key: COLOR_THEME });
     if (themeColor.value === 'true') {
       document.body.setAttribute('color-theme', 'dark');
-      // document.querySelector('#travelBody').setAttribute('color-theme', 'dark');
+
       this.ischecked = 'true';
     } else {
       document.body.setAttribute('color-theme', 'light');
-      // document.querySelector('#travelBody').setAttribute('color-theme', 'light');
+
       this.ischecked = 'false';
     }
   }
@@ -90,9 +82,10 @@ export class UtilsService {
   }
   async showLoader() {
     const loading = await this.loadingController.create({
-      message: 'Loading...',
+      // message: 'Loading...',
       // duration: 3000,
-      spinner: 'bubbles'
+      spinner: 'bubbles',
+      cssClass: 'loader'
     });
     await loading.present();
     return loading;
@@ -101,29 +94,38 @@ export class UtilsService {
     loader.then((e) => e.dismiss());
   }
   async showalert(e, header) {
+    const userLang = await Storage.get({ key: USER_LANGUAGE });
+    let language= userLang.value=='en'?'en-us':'he-il'
+    
     const alert = await this.alertController.create({
       header: 'Login failed',
       message: e?.error?.error?.errorMessage
-        ? e?.error?.error?.errorMessage['en-us']
+        ? e?.error?.error?.errorMessage[language]
         : e?.error?.errorMessage
-        ? e?.error?.errorMessage['en-us']
+        ? e?.error?.errorMessage[language]
         : 'Due to networking error the request could not be fulfilled. Please retry in a few seconds',
       buttons: ['OK'],
     });
     await alert.present();
   }
-  setStorege(k: string, v: string): Promise<any> {
-    return Storage.set({ key: k, value: v });
-  }
-  async getStorege(key:string){
 
-   return await Storage.get({ key: key });
-  }
-  deleteStorege(){
-   userStorege.forEach(storegeKey=>{
-    Storage.remove({ key: storegeKey });
-   })
 
-   
+  async presentModal(header,text) {
+    const modal = await this.modalController.create({
+      component: PopupModalComponent,
+      cssClass: 'my-custom-class',
+      swipeToClose: true,
+      componentProps: {
+        header:header,
+        typy: 'login-success',
+        text:text
+      },
+    });
+    modal.present();
+    setTimeout(() => {
+      modal.dismiss({
+        dismissed: true,
+      });
+    }, 3000);
   }
 }

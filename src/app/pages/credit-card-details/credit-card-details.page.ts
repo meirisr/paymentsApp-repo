@@ -21,9 +21,11 @@ export class CreditCardDetailsPage implements OnInit {
   userName = '';
   creditCardForm = true;
   public cardDetails: FormGroup;
-  constructor(private logInServer: LoginService, private router: Router,private nav: NavController) {
-    
-  }
+  constructor(
+    private logInServer: LoginService,
+    private router: Router,
+    private nav: NavController
+  ) {}
   get firstName() {
     return this.cardDetails.get('firstName');
   }
@@ -63,11 +65,9 @@ export class CreditCardDetailsPage implements OnInit {
     this.dateTime.confirm(true);
   }
   async updateCreditCard() {
-    this.logInServer.updateCreditCard(this.cardDetails.value).then(
-      async()=>{
-        this.goToUserProfile()
-      }
-    )
+    this.logInServer.updateCreditCard(this.cardDetails.value).then(async () => {
+      this.goToUserProfile();
+    });
   }
 
   cardNumKeyUp(e) {
@@ -86,7 +86,7 @@ export class CreditCardDetailsPage implements OnInit {
     this.flipClass = '';
   }
   goToUserProfile() {
-    this.nav.navigateBack('/intro',{ replaceUrl: true ,animationDirection: 'back', animated: true });
+    this.router.navigate(['/intro']);
     // this.router.navigate(['/user-profile']);
   }
 }

@@ -30,6 +30,6 @@ export class SettingsPage implements OnInit {
     this.utils.onToggleLanguages(event);
   }
   goToMenu() {
-    this.nav.navigateBack('/menu',{ replaceUrl: true });
+    this.router.navigate(['/menu']);
   }
 }

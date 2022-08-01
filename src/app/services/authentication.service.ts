@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
-import { GetResult, Storage } from '@capacitor/storage';
+import { GetResult } from '@capacitor/storage';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { LoginService } from './login.service';
 const TOKEN_KEY = 'my-token';
-
+const HOTEL_ID = 'my-hotel';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,6 +17,7 @@ export class AuthenticationService {
   );
   private token: GetResult;
   private refreshToken: GetResult;
+  private hotelId: GetResult;
 
   constructor(
     private http: HttpClient,
@@ -26,22 +27,40 @@ export class AuthenticationService {
   public async loadToken() {
     this.token = await this.storageService.getToken();
     this.refreshToken = await this.storageService.getRefreshToken();
+    this.hotelId = await this.storageService.getHotelId();
 
     if (this.token.value != null && this.refreshToken.value != null) {
       this.isTokenValid(this.token.value).subscribe(
         async (res) => {
           if (res) {
-            this.loginService.getUserDetails().subscribe((data) => {
-              console.log(data),
-                (err) => {
-                  console.log(err);
-                };
-            });
-            this.loginService.getCreditCardInfo().subscribe((data) => {
+            this.loginService.getUserDetails().subscribe(
+              (data) => {
+                console.log(data);
+              },
               (err) => {
                 console.log(err);
-              };
-            });
+              }
+            );
+            this.loginService.getCreditCardInfo().subscribe(
+              (data) => {
+                console.log(data);
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+            if (this.hotelId.value != null) {
+              this.loginService
+                .isUserPermitToOrganization(this.hotelId)
+                .subscribe(
+                  (data) => {
+                    console.log(data);
+                  },
+                  (err) => {
+                    console.log(err);
+                  }
+                );
+            }
 
             this.isAuthenticated.next(true);
           } else {
@@ -71,7 +90,8 @@ export class AuthenticationService {
       .pipe(
         map((data: any) => {
           if (!data.body) {
-            Storage.remove({ key: TOKEN_KEY });
+            this.storageService.deleteStorege(TOKEN_KEY);
+            this.storageService.deleteStorege(HOTEL_ID);
           }
           return data.body;
         })

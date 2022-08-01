@@ -122,10 +122,11 @@ export class UtilsService {
       },
     });
     modal.present();
-    setTimeout(() => {
-      modal.dismiss({
-        dismissed: true,
-      });
-    }, 3000);
+
+    // setTimeout(() => {
+    //   modal.dismiss({
+    //     dismissed: true,
+    //   });
+    // }, 3000);
   }
 }

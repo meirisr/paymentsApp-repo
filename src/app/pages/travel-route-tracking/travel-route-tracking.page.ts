@@ -5,7 +5,7 @@ import { Gesture, GestureController, Platform } from '@ionic/angular';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
-import { from } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-travel-route-tracking',
@@ -13,22 +13,23 @@ import { from } from 'rxjs';
   styleUrls: ['./travel-route-tracking.page.scss'],
 })
 export class TravelRouteTrackingPage implements OnInit {
+  private subscriptions: Subscription[] = [];
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('travelBody') travelBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   @ViewChild('dated') datedRef: ElementRef<HTMLElement>;
   mapHight = '100vh';
   startHight = 75;
+  maxHight = 20;
   minHight;
-  coordinates: []=[];
+  allStations: any[] = [];
   origin;
   destination;
-  nearestStation={
-    lat:0,
-    lng:0
-  }
+  nearestStation = {
+    lat: 0,
+    lng: 0,
+  };
 
-  
   constructor(
     private plt: Platform,
     private gestureCtrl: GestureController,
@@ -44,66 +45,59 @@ export class TravelRouteTrackingPage implements OnInit {
     // });
   }
 
-  ngOnInit() {
-    // from(this.travelProcessService.paymentTranportation()).subscribe(async(data)=>{
-    //   console.log(data)
-    // })
-  }
+  ngOnInit() {}
   ngAfterViewInit(): void {
-    this.coordinates = this.travelProcessService.Coordinates;
-    this.origin=this.travelProcessService?.firstStation;
-    this.destination=this.travelProcessService?.lastStation;
-    this.nearestStation.lat=this.travelProcessService?.nearestStation?.stationLocation?.lat
-    this.nearestStation.lng=this.travelProcessService?.nearestStation?.stationLocation?.lnt
-    
-    // if (this.logInServer.Coordinates.length < 1) {
-      // this.logInServer.getTravel().subscribe(async () => {
-      //   this.coordinates = this.logInServer.Coordinates;
-      //   this.origin=this.logInServer.firstStation;
-      //   this.destination=this.logInServer.lastStation;
-      // }),
-      //   async (err) => {
-      //     console.log(err);
-      //   };
-    // }else{
-    //   this.coordinates = this.logInServer.Coordinates;
-    //   this.origin=this.logInServer.firstStation;
-    //   this.destination=this.logInServer.lastStation;
-    // }
+    let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
+      async (data) => {
+        if (!data) return;
+        this.origin = data.firstStation;
+        this.destination = data.lastStation;
+        this.allStations = data.stationArray;
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+    this.subscriptions.push(routeInfoSubscription);
   }
 
   ionViewDidEnter(): void {
-    if(this.coordinates.length>1){
-      this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
-      this.minHight = this.plt.height();
-  
-      const gesture: Gesture = this.gestureCtrl.create(
-        {
-          el: this.travelBodyRef.nativeElement,
-          threshold: 0,
-          gestureName: 'my-gesture',
-          onMove: (ev) => this.onMove(ev),
-          onEnd: (ev) => this.onEnd(ev),
-        },
-        true
-      );
-      gesture.enable();
-    }
-   
+    this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
+    this.minHight = this.plt.height();
+
+    const gesture: Gesture = this.gestureCtrl.create(
+      {
+        el: this.travelBodyRef.nativeElement,
+        threshold: 0,
+        gestureName: 'my-gesture',
+        onMove: (ev) => this.onMove(ev),
+        onEnd: (ev) => this.onEnd(ev),
+      },
+      true
+    );
+    gesture.enable();
   }
   onMove(detail) {
-    const position = document.getElementById('travelBody');
+    console.log(detail);
+    const position = document.getElementById('body-card-1');
 
-    const top = position.getBoundingClientRect().top;
-
-    if (detail.currentY > this.minHight - 40 || detail.currentY < 40) {
+    if (detail.currentY > this.minHight - 40 || detail.currentY < 70) {
       return;
     }
 
-    this.travelBodyRef.nativeElement.style.top =
-      this.convertPXToVh(detail.currentY) + 'vh';
+    if (!position.scrollTop && detail.deltaY > 0) {
+      this.travelBodyRef.nativeElement.style.top = 93 + 'vh';
+      // this.convertPXToVh(detail.currentY-10) + 'vh';
+    }
   }
   onEnd(detail) {}
+  onClick() {
+    const position = document.getElementById('drowerBar');
+    const top = position.getBoundingClientRect().top;
+    console.log(this.convertPXToVh(top));
+    this.travelBodyRef.nativeElement.style.top =
+      this.convertPXToVh(top) > 60 ? 10 + 'vh' : 93 + 'vh';
+  }
   convertPXToVh(px) {
     return 100 * (px / document.documentElement.clientHeight);
   }
@@ -111,5 +105,7 @@ export class TravelRouteTrackingPage implements OnInit {
     return (vh * document.documentElement.clientWidth) / 100;
   }
 
-
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
 }

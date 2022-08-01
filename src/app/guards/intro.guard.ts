@@ -10,23 +10,18 @@ export const INTRO_KEY = 'intro-seen';
   providedIn: 'root',
 })
 export class IntroGuard implements CanLoad {
-  constructor(
-    private logInServer: LoginService,
-    private router: Router
-  ) {}
+  constructor(private logInServer: LoginService, private router: Router) {}
 
   canLoad(): Observable<boolean> {
-    this.logInServer.getUserDetails().subscribe()
-    this.logInServer.getCreditCardInfo().subscribe();
-    return this.logInServer.isUserHasDetails.pipe(
+    return this.logInServer.isUserPermitToOrg.pipe(
       filter((val) => val !== null), // Filter out initial Behaviour subject value
       take(1), // Otherwise the Observable doesn't complete!
-      map((isUserHasDetails) => {
-        if (isUserHasDetails) {
+      map((isUserPermitToOrg) => {
+        if (isUserPermitToOrg) {
+          this.router.navigate(['/menu']);
           return true;
         } else {
-          this.router.navigate(['/user-details']);
-          return false;
+          return true;
         }
       })
     );

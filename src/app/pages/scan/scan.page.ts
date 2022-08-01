@@ -13,6 +13,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { AlertService } from 'src/app/services/utils/alert.service';
 
 const HOTEL_ID = 'my-hotel';
 let loader;
@@ -22,34 +23,31 @@ let loader;
   styleUrls: ['./scan.page.scss'],
 })
 export class ScanPage implements OnInit {
-  isFlashAvailable = false;
+  isFlashAvailable = true;
   isFlashOn = false;
   scanActive = false;
   scanNotAllowed = false;
   result = null;
   element;
-  userLocation={
-    latitude:0,
-    longitude:0
-  }
+  userLocation = {
+    latitude: 0,
+    longitude: 0,
+  };
   constructor(
     private alertController: AlertController,
     private utils: UtilsService,
     private location: Location,
     private openNativeSettings: OpenNativeSettings,
     private storageService: StorageService,
-    private nav: NavController,
+    private router: Router,
     private travelProcessService: TravelProcessService,
     private platform: Platform,
-  ) {
-    // this.platform.backButton.subscribeWithPriority(10, () => {
-    //   this.nav.navigateBack('/menu',{ replaceUrl: true  });
-    // });
-  }
+    private alertService: AlertService
+  ) {}
 
   ngOnInit() {
-   loader =this.utils.showLoader();
-    console.log("onInit")
+    loader = this.utils.showLoader();
+    console.log('onInit');
     if (Capacitor.isNativePlatform()) {
       this.checkLocationPermission().then((e) => {
         if (e) {
@@ -61,61 +59,57 @@ export class ScanPage implements OnInit {
     } else {
       this.scanNotAllowed = true;
       setTimeout(() => {
-        this.nav.navigateBack('/menu',{ replaceUrl: true });
+        this.router.navigate(['/menu']);
       }, 3000);
     }
   }
 
   ionViewWillLeave() {
     this.utils.dismissLoader(loader);
-    document.querySelector('body').classList.remove('scanBg');
+
     if (Capacitor.isNativePlatform()) {
       BarcodeScanner.stopScan();
     }
     this.scanNotAllowed = false;
   }
-  ngOnDestroy() {
-    document.querySelector('body').classList.remove('scanBg');
-    
-  }
+  ngOnDestroy() {}
   async startScanner() {
     const allowed = await this.checkPermission();
     if (allowed) {
-   
-      document.querySelector('body').classList.add('scanBg');
       this.utils.dismissLoader(loader);
       this.scanActive = true;
       this.result = null;
       BarcodeScanner.hideBackground();
       const result = await BarcodeScanner.startScan({
-        targetedFormats: [SupportedFormat.QR_CODE],
+        // targetedFormats: [SupportedFormat.QR_CODE],
       });
       if (result.hasContent) {
         this.result = result.content;
-        this.scanActive = false;
-        this.travelProcessService.getTravel(this.userLocation,	44985002).subscribe(async(data)=>{
-          console.log(data)
-          // if (data.data.statusCode) return;
-          let hotelId = !!(await this.storageService.getStorege(HOTEL_ID))
-          if (hotelId) {
-            this.nav.navigateForward('/payment', { animationDirection: 'forward', animated: true })
-           
-  
-          } else {
-            this.nav.navigateForward('/travel-route-tracking', { animationDirection: 'forward', animated: true })
-           await this.utils.presentModal('נסיעה טובה','');
-         
-          }
-        },
-        async(err)=>{
-          console.log(err)
-          setTimeout(() => {
-            this.nav.navigateBack('/menu',{ replaceUrl: true });
-          }, 3000);
-        })
-        
+        console.log(result);
+        this.stopScanner();
+        this.travelProcessService
+          .getTravelDetails(this.userLocation, 7552469)
+          .subscribe(
+            async (data) => {
+              console.log(data);
+              // if (data.data.statusCode) return;
+              let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
+              if (hotelId) {
+                this.router.navigate(['/payment']);
+                console.log('scan');
+              } else {
+                this.router.navigate(['/travel-route-tracking']);
+                await this.utils.presentModal('נסיעה טובה', '');
+              }
+            },
+            async (err) => {
+              console.log(err);
+              setTimeout(() => {
+                this.router.navigate(['/menu']);
+              }, 3000);
+            }
+          );
       }
-      
     }
   }
   async checkPermission() {
@@ -123,7 +117,7 @@ export class ScanPage implements OnInit {
     if (status.granted) {
       return true;
     } else if (status.denied) {
-      this.permissionAlert();
+      this.permissionAlert('cameraDeteails');
     }
   }
   async checkLocationPermission() {
@@ -132,29 +126,12 @@ export class ScanPage implements OnInit {
     if (locationStatus.location) {
       try {
         const coordinates = await Geolocation.getCurrentPosition();
-        this.userLocation.latitude=coordinates.coords.latitude;
-        this.userLocation.longitude=coordinates.coords.longitude
-        
+        this.userLocation.latitude = coordinates.coords.latitude;
+        this.userLocation.longitude = coordinates.coords.longitude;
+
         return true;
       } catch (error) {
-        this.location.back();
-        const alert = await this.alertController.create({
-          header: 'מיקום כבוי',
-          message: 'האפליקציה חייבת גישה למיקום ',
-          buttons: [
-            {
-              text: 'Cancel',
-              role: 'cancel',
-            },
-            {
-              text: 'Ok',
-              handler: () => {
-                this.openNativeSettings.open('location');
-              },
-            },
-          ],
-        });
-        await alert.present();
+        this.permissionAlert('locationDeteails');
       }
     } else {
       this.location.back();
@@ -167,34 +144,33 @@ export class ScanPage implements OnInit {
     BarcodeScanner.stopScan();
     this.scanActive = false;
   }
-  async permissionAlert() {
+  toggleFlash() {
+    BarcodeScanner.toggleTorch();
+    this.isFlashOn = !this.isFlashOn;
+  }
+
+  permissionAlert(type: string) {
     this.location.back();
-    const alert = await this.alertController.create({
-      header: 'Confirm permission',
-      message: `האפליקציה חייבת גישה למצלמה`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            this.location.back();
-          },
+    const alertDeteails = {
+      cameraDeteails: {
+        header: 'מצלמה כבויה',
+        message: `האפליקציה חייבת גישה למצלמה`,
+        okHandler: () => {
+          BarcodeScanner.openAppSettings();
         },
-        {
-          text: 'Ok',
-          handler: () => {
-            BarcodeScanner.openAppSettings().then((res) => {
-              this.startScanner();
-              console.log(res);
-            });
-          },
+      },
+      locationDeteails: {
+        header: 'מיקום כבוי',
+        message: 'האפליקציה חייבת גישה למיקום ',
+        okHandler: () => {
+          this.openNativeSettings.open('location');
         },
-      ],
-    });
-    await alert.present();
+      },
+    };
+    this.alertService.cameraPermissionAlert(alertDeteails[type]);
   }
 
   goTomenu() {
-    this.nav.navigateBack('/menu',{ replaceUrl: true ,animationDirection: 'back', animated: true });
+    this.router.navigate(['/menu']);
   }
 }

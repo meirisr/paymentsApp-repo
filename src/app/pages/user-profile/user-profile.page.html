@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <app-header-wave ></app-header-wave>
+    <app-header-wave></app-header-wave>
     <app-back-btn (click)="goToMenu()"></app-back-btn>
   </ion-toolbar>
 </ion-header>
@@ -9,7 +9,10 @@
   <ion-list>
     <ion-list-header>
       <ion-label>פרטים</ion-label>
-      <ion-button fill="outline" size="small" (click)="userDetails()">ערוך</ion-button></ion-list-header>
+      <ion-button fill="outline" size="small" (click)="goToUserDetails()"
+        >ערוך</ion-button
+      ></ion-list-header
+    >
 
     <ion-item>
       <ion-label>
@@ -27,19 +30,22 @@
     </ion-item>
     <ion-item>
       <ion-label>
-        <h3>מייל </h3>
+        <h3>מייל</h3>
         <p>{{email}}</p>
       </ion-label>
     </ion-item>
 
     <ion-list-header>
       <ion-label>פרטי אשראי</ion-label>
-      <ion-button fill="outline" size="small" (click)="cardDetails()">ערוך</ion-button></ion-list-header>
-      <ion-item>
-        <ion-icon name="card-outline" slot="start"></ion-icon>
-        <ion-label>
-          <p>{{cardNum}}</p>
-        </ion-label>
-      </ion-item>
+      <ion-button fill="outline" size="small" (click)="cardDetails()"
+        >ערוך</ion-button
+      ></ion-list-header
+    >
+    <ion-item>
+      <ion-icon name="card-outline" slot="start"></ion-icon>
+      <ion-label>
+        <p>{{cardNum}}</p>
+      </ion-label>
+    </ion-item>
   </ion-list>
 </ion-content>

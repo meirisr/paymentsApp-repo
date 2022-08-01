@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild,AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
@@ -16,8 +16,8 @@ const HOTEL_ID = 'my-hotel';
   templateUrl: './sms-code-form.component.html',
   styleUrls: ['./sms-code-form.component.scss'],
 })
-export class SmsCodeFormComponent implements OnInit {
-  @ViewChild('otp1') codeInputRef: ElementRef<any>;
+export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
+  @ViewChild('otp1')codeInputRef:ElementRef<HTMLInputElement>;
   public smsCodeForm: FormGroup;
   constructor(
     private router: Router,
@@ -30,6 +30,7 @@ export class SmsCodeFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    
     this.smsCodeForm = new FormGroup({
       text1: new FormControl(null, [
         Validators.required,
@@ -57,8 +58,9 @@ export class SmsCodeFormComponent implements OnInit {
       ]),
     });
   }
-  ionViewDidEnter() {
-    this.codeInputRef.nativeElement.setFocus();
+  ngAfterViewInit() {
+    // console.log( this.codeInputRef.nativeElement)
+    // this.codeInputRef.nativeElement.focus();
   }
   async onSmsCodeFormSubmit() {
     let loader=this.utils.showLoader();
@@ -71,7 +73,7 @@ export class SmsCodeFormComponent implements OnInit {
         this.utils.dismissLoader(loader);
        await this.authenticationService.loadToken().then(()=>{
         setTimeout(() => {
-          this.nav.navigateForward('/intro');
+          this.router.navigate(['/intro']);
         },200);
        });
           
@@ -84,11 +86,13 @@ export class SmsCodeFormComponent implements OnInit {
     );
   }
   otpController(event, next, prev) {
+    console.log(event.target.value)
     if (this.smsCodeForm.valid) {
       this.onSmsCodeFormSubmit();
     }
     if (event.target.value.length < 1 && prev) {
       prev.setFocus();
+      prev.value='';
     } else if (next && event.target.value.length > 0) {
       next.setFocus();
     } else {
@@ -96,7 +100,6 @@ export class SmsCodeFormComponent implements OnInit {
     }
   }
   async onHttpErorr(e, header) {
-   
     this.utils.showalert(e, header);
   }
   async resendSms() {

@@ -31,7 +31,7 @@ export class MainPage {
   }
   onClick() {
     // this.router.navigate(['/scan']);
-    this.nav.navigateForward('/scan', { animationDirection: 'forward', animated: true })
+    this.router.navigate(['/scan']);
   }
   async getHotel() {
     const hotel = (await this.storageService.getStorege(HOTEL_ID)).value;

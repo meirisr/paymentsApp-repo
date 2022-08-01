@@ -16,9 +16,6 @@ const HEADER_HOTELS = 'hotels';
   providedIn: 'root',
 })
 export class LoginService {
-  
-
-
   didSendSms: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isUserHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
@@ -39,26 +36,29 @@ export class LoginService {
   ) {}
 
   public getAllOrganizations(): Observable<any> {
-    return this.http
-      .get(`${environment.serverUrl}/user/get-organization-per-station`,{
-        headers: new HttpHeaders({ station: HEADER_HOTELS })
-      })
+    return this.http.get(
+      `${environment.serverUrl}/user/get-organization-per-station`,
+      {
+        headers: new HttpHeaders({ station: HEADER_HOTELS }),
+      }
+    );
   }
   public isUserPermitToOrganization(orgId): Observable<any> {
     return this.http
-      .get(`${environment.serverUrl}/user/is-permit-to-organization`,{
-        headers: new HttpHeaders({ organizationId: orgId })
-      }).pipe(
+      .get(`${environment.serverUrl}/user/is-permit-to-organization`, {
+        headers: new HttpHeaders({ organizationId: orgId }),
+      })
+      .pipe(
         map((data: any) => {
           if (data.body) {
             this.storageService.setHotelId(orgId);
-             this.isUserPermitToOrg.next(true);
+            this.isUserPermitToOrg.next(true);
           } else {
-             this.isUserPermitToOrg.next(false);
+            this.isUserPermitToOrg.next(false);
           }
           return data.body;
         })
-        )
+      );
   }
 
   public async logDeviceInfo() {
@@ -160,7 +160,7 @@ export class LoginService {
     date: string;
     userId: string;
   }): Promise<any> {
-     this.http
+    this.http
       .post(
         `${environment.serverUrl}/credit-card-payment/register-wallet`,
         {
@@ -180,12 +180,11 @@ export class LoginService {
           this.handleButtonClick();
         },
         async (res) => {
-          console.log(res)
+          console.log(res);
           this.onHttpErorr(res, '');
         }
       );
   }
-  
 
   public async handleButtonClick() {
     const toast = await this.toastController.create({

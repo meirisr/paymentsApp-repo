@@ -13,9 +13,7 @@ export class AuthGuard implements CanLoad {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
-  ) {
-    // this.getCreditCardInfo().subscribe()
-  }
+  ){}
   canLoad(): Observable<boolean> {
     return this.authenticationService.isAuthenticated.pipe(
       filter((val) => val !== null), // Filter out initial Behaviour subject value

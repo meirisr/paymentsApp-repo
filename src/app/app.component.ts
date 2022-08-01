@@ -12,6 +12,7 @@ import { App } from '@capacitor/app';
 import { AuthenticationService } from './services/authentication.service';
 import { Router } from '@angular/router';
 import { Navigation } from 'swiper';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -28,13 +29,14 @@ export class AppComponent implements OnInit {
     private utils: UtilsService,
     private translate: TranslateService,
     private alertController: AlertController,
+    private storageService: StorageService,
     private authenticationService: AuthenticationService,
     private router: Router
   ) {
     translate.setDefaultLang('en');
     translate.use('he');
     App.getState().then((status) => console.log('status:', status));
-    this.platform.backButton.subscribeWithPriority(0, () => {
+    this.platform.backButton.subscribeWithPriority(10, () => {
     console.log(this.router.url)
       if (!this.routerOutlet.canGoBack()||this.router.url=='/menu') {
         router.navigate['app'].exitApp() 
@@ -66,6 +68,7 @@ export class AppComponent implements OnInit {
     this.utils.getUserTheme();
     this.utils.getUserLanguage();
     this.authenticationService.loadToken();
+     
   }
   logCurrentNetworkStatus = async () => {
     const status = await Network.getStatus();

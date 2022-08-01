@@ -1,11 +1,16 @@
 
 <app-back-btn (click)="goToMenu()"></app-back-btn>
-<div #map id="map" [style.height]="height"
-width="100vw"(dragstart)="onDragStart($event)"
-(drag)="onDrag($event)" 
-(dragover)="onDrag($event)" 
-(drop)="onDragEnd($event)"
-(dragend)="onDragEnd($event)"> 
-(mapMousemove)="move()">
-
-</div>
+<google-map #map id="map" [height]="height"
+[options]="mapOptions"
+[center]="mapOptions.center"
+[zoom]="mapOptions.zoom"
+width="100vw"   (mapClick)="moveMap($event)"
+(mapMousemove)="move($event)">
+<map-marker *ngFor="let watchmarker of watchmarkers"
+[position]="watchmarker"
+[options]="watchmarkerOptions"></map-marker>
+<map-marker *ngFor="let marker of markers"
+[position]="marker"
+[options]="markerOptions"></map-marker>
+<map-polyline [path]="path" [options]="polylineOptions"></map-polyline>
+</google-map>

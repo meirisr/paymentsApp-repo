@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { from, Subject } from 'rxjs';
+import { from, Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 
@@ -13,21 +13,21 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
   styleUrls: ['./payment.page.scss'],
 })
 export class PaymentPage implements AfterViewInit {
+  private subscriptions: Subscription[] = [];
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('paymentBody') paymentBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   mapHight = '25vh';
-  origin ;
-  destination ;
-  nearestStation={
-    lat:0,
-    lng:0
-  }
-  coordinates: []=[];
+  origin;
+  destination;
+  nearestStation = {
+    lat: 0,
+    lng: 0,
+  };
+  coordinates: [] = [];
   unsubscribe = new Subject<void>();
   apiLoaded = false;
   numOfPassengers = 1;
-  
 
   constructor(
     private router: Router,
@@ -36,41 +36,25 @@ export class PaymentPage implements AfterViewInit {
     private utils: UtilsService,
     private travelProcessService: TravelProcessService
   ) {
-    // this.platform.backButton.subscribeWithPriority(10, () => {
-    //   this.router.navigate(['/menu']);
-    // });
-    
+    this.platform.backButton.subscribeWithPriority(0, () => {
+      this.router.navigate(['/menu']);
+    });
   }
 
   ngAfterViewInit(): void {
-    // let userLocation={
-    //   latitude:0,
-    //   longitude:0
-    // }
-    // this.travelProcessService.getTravel(userLocation).subscribe(async(data)=>{
-    //   console.log(data)
-    // },
-    // async(err)=>{
-    //   console.log(err)
-    //   setTimeout(() => {
-    //     this.nav.navigateBack('/menu',{ replaceUrl: true });
-    //   }, 3000);
-    // })
-    
-    // this.logInServer.getTravel().subscribe(async () => {
-      this.coordinates = this.travelProcessService.Coordinates;
-      this.origin=this.travelProcessService.firstStation;
-      this.destination=this.travelProcessService.lastStation;
-      console.log(this.travelProcessService.nearestStation)
-      this.nearestStation.lat=this.travelProcessService?.nearestStation?.stationLocation?.lat
-      this.nearestStation.lng=this.travelProcessService?.nearestStation?.stationLocation?.lon
-      
-     
-    // }),
-    // async(err)=>{
-    //   console.log(err)
-    // };
-
+    console.log('pay');
+    let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
+      async (data) => {
+        if (!data) return;
+        console.log(data);
+        this.origin = data.firstStation;
+        this.destination = data.lastStation;
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+    this.subscriptions.push(routeInfoSubscription);
   }
   onMove(detail) {
     const position = document.getElementById('paymentBody');
@@ -102,21 +86,26 @@ export class PaymentPage implements AfterViewInit {
     }
   }
   async onSubmit() {
-    let loader=this.utils.showLoader();
-    from(this.travelProcessService.paymentTranportation()).subscribe(async(data)=>{
-      this.utils.dismissLoader(loader)
-     if(data.querySuccessful){
-      this.nav.navigateForward('/travel-route-tracking', { animationDirection: 'forward', animated: true })
-      await this.utils.presentModal('נסיעה טובה','החיוב בוצע בהצלחה');
-     }else{
-      await this.utils.presentModal('שגיאה','המערכת לא הצליחה לבצע חיוב');
-     }
-    },
-    err=>{
-      this.utils.dismissLoader(loader)
-      console.log(err)
-    })
-   
+    let loader = this.utils.showLoader();
+    from(this.travelProcessService.paymentTranportation()).subscribe(
+      async (data) => {
+        this.utils.dismissLoader(loader);
+        if (data.querySuccessful) {
+          this.router.navigate(['/travel-route-tracking']);
+          await this.utils.presentModal('נסיעה טובה', 'החיוב בוצע בהצלחה');
+        } else {
+          await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב');
+        }
+      },
+      (err) => {
+        this.utils.dismissLoader(loader);
+        console.log(err);
+      }
+    );
+
     // this.router.navigate(['/travel-route-tracking']);
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

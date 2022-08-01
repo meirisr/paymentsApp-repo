@@ -1,7 +1,7 @@
 <ion-content>
   <app-map [height]="mapHight" [path]="coordinates" [nearesStationth]="nearestStation"></app-map>
-  <div *ngIf="coordinates.length>1" #paymentBody id="paymentBody" class="payment-body">
-    <ion-grid class="body-card-1">
+  <div  #paymentBody id="paymentBody" class="payment-body">
+    <ion-grid *ngIf="origin" class="body-card-1">
       <ion-row style="direction: rtl">
         <ion-item text-right lines="none">
           <h1>תשלום</h1>

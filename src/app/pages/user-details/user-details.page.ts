@@ -39,27 +39,24 @@ export class UserDetailsPage implements OnInit {
     return this.userDetails.get('email');
   }
   ngOnInit() {
-
     this.userDetails = new FormGroup({
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
       userId: new FormControl(null, []),
       userDate: new FormControl(null, [Validators.required]),
-      email: new FormControl(null, [Validators.required ,Validators.email]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
     });
-   
   }
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.getuserInfo();
   }
 
   async updateUserInfo() {
     from(this.logInServer.updateUserInfo(this.userDetails.value)).subscribe(
       async (res) => {
-        this.getuserInfo().then(()=>{
-          this.goToUserProfile()
-        })
-        
+        this.getuserInfo().then(() => {
+          this.goToUserProfile();
+        });
       },
       async (res) => {
         const alert = await this.alertController.create({
@@ -72,8 +69,12 @@ export class UserDetailsPage implements OnInit {
     );
   }
   async getuserInfo() {
-    let userDetails=JSON.parse(await (await (await this.storageService.getUserDetails()).value))
-   
+    let userDetails = JSON.parse(
+      await await (
+        await this.storageService.getUserDetails()
+      ).value
+    );
+
     this.userDetails.setValue({
       firstName: userDetails.firstName,
       lastName: userDetails.lastName,
@@ -81,16 +82,15 @@ export class UserDetailsPage implements OnInit {
       userDate: 'DD/MM/YY',
       email: userDetails.email,
     });
-   
   }
   goToUserProfile() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.nav.navigateBack('/user-profile',{ replaceUrl: true ,animationDirection: 'back', animated: true });
+    this.router.navigate(['/user-profile']);
     // this.router.navigate(['/user-profile']);
   }
   goToMenu() {
-    this.nav.navigateBack('/menu',{ replaceUrl: true  });
+    this.router.navigate(['/menu']);
   }
   onWillDismiss(ev) {
     this.dateTime.confirm(true);

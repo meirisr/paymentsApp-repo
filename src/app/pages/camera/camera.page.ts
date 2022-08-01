@@ -7,10 +7,9 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 })
 export class CameraPage implements OnInit {
   imageUrl;
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   takePicture = async () => {
     const image = await Camera.getPhoto({
       quality: 90,

@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <app-header-wave ></app-header-wave>
+    <app-header-wave></app-header-wave>
     <app-back-btn (click)="goToUserProfile()"></app-back-btn>
   </ion-toolbar>
 </ion-header>
@@ -11,7 +11,6 @@
     class="user-details-Form"
     [formGroup]="userDetails"
     (ngSubmit)="updateUserInfo()"
-   
   >
     <h1>פרטים אישיים</h1>
     <div class="input-group">
@@ -30,7 +29,6 @@
     <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
- 
           class="input"
           type="text"
           id="lastName"
@@ -43,14 +41,12 @@
     <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
-     
           class="input"
           type="tel"
           inputmode="numeric"
           oninput="this.value=this.value.replace(/[^0-9]/g,'');"
           id="userId"
           formControlName="userId"
-          
         ></ion-input>
         <span class="labelSpan">תעודת זהות</span>
       </label>
@@ -81,45 +77,48 @@
         ></ion-input>
         <span class="labelSpan">מייל ליצירת קשר</span>
       </label>
-      <div class="help-block" *ngIf="(userDetails.get('email').dirty || userDetails.get('email').touched) && userDetails.get('email').errors">
-        <div text-center *ngIf="userDetails.get('email').errors?.email" class="errors ion-text-center" >
+      <div
+        class="help-block"
+        *ngIf="(userDetails.get('email').dirty || userDetails.get('email').touched) && userDetails.get('email').errors"
+      >
+        <div
+          text-center
+          *ngIf="userDetails.get('email').errors?.email"
+          class="errors ion-text-center"
+        >
           please enter a valid email address
         </div>
-        
       </div>
     </div>
-    <!-- <ion-footer> -->
-      <div class="input-group" dir="ltr">
-        <ion-button class="saveSubmit"  type="submit" expand="block" [disabled]="userDetails.invalid" 
-          >{{'pages.userDetais.updated'|translate}}</ion-button
-        >
-      </div>
-    
-    <!-- </ion-footer> -->
+    <div class="input-group" dir="ltr">
+      <ion-button
+        class="saveSubmit"
+        type="submit"
+        expand="block"
+        [disabled]="userDetails.invalid"
+        >{{'pages.userDetais.updated'|translate}}</ion-button
+      >
+    </div>
   </form>
-  
 </ion-content>
 
-
-
-  <ion-modal
-    trigger="user-date-modal"
-    mode="md"
-    (willDismiss)="onWillDismiss($event)"
-  >
-    <ng-template>
-      <ion-content force-overscroll="false"
-        ><ion-datetime
-          locale="he-IL"
-          size="cover"
-          #dateTime
-          displayFormat="DD/MM/YYYY"
-          showDefaultTimeLabel="false"
-          [presentation]="'date'"
-          (ionChange)="dataChange(dateTime.value)"
-        >
-        </ion-datetime>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-
+<ion-modal
+  trigger="user-date-modal"
+  mode="md"
+  (willDismiss)="onWillDismiss($event)"
+>
+  <ng-template>
+    <ion-content force-overscroll="false"
+      ><ion-datetime
+        locale="he-IL"
+        size="cover"
+        #dateTime
+        displayFormat="DD/MM/YYYY"
+        showDefaultTimeLabel="false"
+        [presentation]="'date'"
+        (ionChange)="dataChange(dateTime.value)"
+      >
+      </ion-datetime>
+    </ion-content>
+  </ng-template>
+</ion-modal>

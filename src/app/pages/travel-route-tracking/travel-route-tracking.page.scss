@@ -3,21 +3,16 @@
 }
 .body-card-1{
   justify-content: end;
-  height: 38vh;
+  height: 85%;
+  overflow-y: auto;
 }
-.body-card-2{
-  text-align: end;
-  margin-right: 5%;
-  height: 20vh;
- 
 
-
-}
 .travel-body{
   position: fixed;
   background-color: #fff;
   width: 100vw;
-  // top: 75vh;
+  transition: 0.5s;
+  top: 75vh;
   height: 100vh;
   border-radius: 30px;
  
@@ -47,12 +42,17 @@ hr {
   border: 0;
   border-top: 0.5px solid rgba(0, 0, 0, 0.1);
 }
+#drowerBar{
+  height: 10%;
+  padding-top:4% ;
+}
 .drowerBar{
-  border-top: 3px solid rgba(0, 0, 0, 0.1);
+  border-top: 5px solid rgba(0, 0, 0, 0.1);
   margin: 1rem;
   margin-left: 35vw;
   margin-right: 35vw;
   border-radius: 30px;
+  margin-top: 0;
 
 }
 h4{

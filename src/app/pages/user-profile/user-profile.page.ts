@@ -9,44 +9,47 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./user-profile.page.scss'],
 })
 export class UserProfilePage implements OnInit {
+  userDetails:any;
   firstName: string;
   lastName: string;
   email: string;
   cardNum: string;
 
-  constructor(private router: Router, private storageService: StorageService,private nav: NavController) {}
+  constructor(
+    private router: Router,
+    private storageService: StorageService,
+    private nav: NavController
+  ) {}
 
-  ionViewillEnter() {
-   
-  }
+  
   ionViewDidEnter() {
     this.getuserInfo();
     this.getcardInfo();
   }
-  ngOnInit() {}
-  ngAfterViewInit(): void {}
-  userDetails() {
-    this.nav.navigateForward('/user-details', { animationDirection: 'forward', animated: true })
-    // this.router.navigate(['/user-details']);
+  ngOnInit() {
+  
+  }
+
+  goToUserDetails() {
+    this.router.navigate(['/user-details']);
   }
   cardDetails() {
-    this.nav.navigateForward('/credit-card-details', { animationDirection: 'forward', animated: true })
-    // this.router.navigate(['/credit-card-details']);
+    this.router.navigate(['/credit-card-details']);
   }
   async getuserInfo() {
-    let userDetails = JSON.parse(
-       (
-        await this.storageService.getUserDetails()
-      ).value
+     this.userDetails = JSON.parse(
+      (await this.storageService.getUserDetails()).value
     );
     this.firstName =
-      this.storageService?.userDetails?.firstName ||
-      userDetails?.firstName ||
+      // this.storageService?.userDetails?.firstName ||
+      this.userDetails?.firstName ||
       '';
     this.lastName =
-      this.storageService?.userDetails?.lastName || userDetails?.lastName || '';
+      // this.storageService?.userDetails?.lastName || 
+       this.userDetails?.lastName || '';
     this.email =
-      this.storageService?.userDetails?.email || userDetails?.email || '';
+      // this.storageService?.userDetails?.email ||  
+      this.userDetails?.email || '';
   }
 
   async getcardInfo() {
@@ -56,6 +59,6 @@ export class UserProfilePage implements OnInit {
     this.cardNum = creditCardDetails != null ? '****' + creditCardDetails : '';
   }
   goToMenu() {
-    this.nav.navigateBack('/menu',{ replaceUrl: true  });
+    this.router.navigate(['/menu']);
   }
 }

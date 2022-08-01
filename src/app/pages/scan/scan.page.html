@@ -12,14 +12,16 @@
   <div class="scan-body-header" [hidden]="!scanActive">
     <div *ngIf="isFlashAvailable" class="flashDiv">
       <ion-icon
-        *ngIf="isFlashOn"
-        class="flashIcon"
-        name="flash-outline"
-      ></ion-icon>
-      <ion-icon
         *ngIf="!isFlashOn"
         class="flashIcon"
+        name="flash-outline"
+        (click)="toggleFlash()"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="isFlashOn"
+        class="flashIcon"
         name="flash-off-outline"
+        (click)="toggleFlash()"
       ></ion-icon>
     </div>
     <ion-text class="ion-text-center">
@@ -34,8 +36,5 @@
       <em></em>
 
     </div>
-  </ion-row>
-  <ion-row>
-   
   </ion-row>
 </ion-content>

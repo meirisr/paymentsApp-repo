@@ -1,11 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
-
+import {
+  AlertController,
+  IonRouterOutlet,
+  NavController,
+  Platform,
+} from '@ionic/angular';
+import { GetResult, Storage } from '@capacitor/storage';
 import { Router } from '@angular/router';
 
 import { App } from '@capacitor/app';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StorageService } from 'src/app/services/storage.service';
+
+const HOTEL_ID = 'my-hotel';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
@@ -25,7 +32,7 @@ export class MenuPage {
     private storageService: StorageService,
     private alertController: AlertController,
     private nav: NavController,
-    private platform: Platform,
+    private platform: Platform
   ) {
     // this.platform.backButton.subscribeWithPriority(0, () => {
     //   App.exitApp();
@@ -38,29 +45,30 @@ export class MenuPage {
   }
   async hideSplashScreen() {}
   settings() {
-    this.nav.navigateForward('/settings', { animationDirection: 'forward', animated: true })
+    this.router.navigate(['/settings']);
     // this.router.navigate(['/settings']);
   }
   scan() {
-    this.nav.navigateForward('/scan', { animationDirection: 'forward', animated: true })
+    this.router.navigate(['/scan']);
   }
   map() {
-    this.nav.navigateForward('/travel-route-tracking', { animationDirection: 'forward', animated: true })
+    this.router.navigate(['/travel-route-tracking']);
     // this.router.navigate(['/payment']);
   }
   logOut() {
-     this.nav.navigateBack('/intro',{ replaceUrl: true ,animationDirection: 'back', animated: true });
+    Storage.remove({ key: HOTEL_ID });
+    this.router.navigate(['/intro']);
     // this.storageService.deleteStorege();
     // this.authenticationService.isAuthenticated.next(false);
     // window.location.reload();
   }
 
   userProfile() {
-    this.nav.navigateForward('/user-profile', { animationDirection: 'forward', animated: true })
+    this.router.navigate(['/user-profile']);
     // this.router.navigate(['/user-profile']);
   }
   creditCardDetails() {
-    this.nav.navigateForward('/credit-card-details', { animationDirection: 'forward', animated: true })
+    this.router.navigate(['/credit-card-details']);
     // this.router.navigate(['/credit-card-details']);
   }
   toggleDarkTheme(matchesMode) {

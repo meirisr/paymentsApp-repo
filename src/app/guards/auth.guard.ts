@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { UtilsService } from '../services/utils/utils.service';
 import { AuthenticationService } from '../services/authentication.service';
+import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,8 @@ import { AuthenticationService } from '../services/authentication.service';
 export class AuthGuard implements CanLoad {
   constructor(
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    public navCtrl: NavController
   ){}
   canLoad(): Observable<boolean> {
     return this.authenticationService.isAuthenticated.pipe(
@@ -22,7 +24,8 @@ export class AuthGuard implements CanLoad {
         if (isAuthenticated) {
           return true;
         } else {
-          this.router.navigate(['/login']);
+          this.navCtrl.navigateRoot(['login'],{replaceUrl:true})
+          // this.router.navigate(['/login']);
           return false;
         }
       })

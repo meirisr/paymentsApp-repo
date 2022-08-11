@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular';
+import { IonRouterOutlet, NavController, Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -16,6 +16,7 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnDestroy {
+ 
   @ViewChild('phoneInput', { read: ElementRef }) phoneInput: ElementRef;
   @ViewChild('otp1', { read: ElementRef }) smsInput: ElementRef;
   public textForm: boolean;
@@ -23,12 +24,16 @@ export class LoginPage implements OnDestroy {
   constructor(
     private logInServer: LoginService,
     private router: Router,
-    private nav: NavController,
-    private platform: Platform
+    private routerOutlet: IonRouterOutlet,
+    private platform: Platform,
+    public navCtrl: NavController
   ) {
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      App.exitApp();
-    });
+    // this.platform.backButton.subscribeWithPriority(-1, () => {
+    //   if (!this.routerOutlet.canGoBack()) {
+    //     App.exitApp();
+    //   }
+    // });
+  
 
     this.logInServer.didSendSms.subscribe((e) => {
       this.textForm = e;
@@ -38,6 +43,7 @@ export class LoginPage implements OnDestroy {
     this.textForm = false;
   }
   goToIntro() {
-    this.router.navigate(['/intro']);
+    this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
+    // this.router.navigate(['/intro']);
   }
 }

@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import {
   AlertController,
   IonDatetime,
+  IonRouterOutlet,
   ModalController,
   NavController,
+  Platform,
 } from '@ionic/angular';
 import { from } from 'rxjs';
 import { LoginStepsNavbarComponent } from 'src/app/components/login-steps-navbar/login-steps-navbar.component';
@@ -27,8 +29,15 @@ export class UserDetailsPage implements OnInit {
     private storageService: StorageService,
     private router: Router,
     private modalController: ModalController,
-    private nav: NavController
-  ) {}
+    private platform: Platform,
+    private routerOutlet: IonRouterOutlet,
+    public navCtrl: NavController
+  ) {
+    this.platform.backButton.subscribeWithPriority(0, () => {
+      this.navCtrl.navigateRoot(['user-profile'],{replaceUrl:true})
+      // this.router.navigate(['/user-profile']);
+    });
+  }
   get firstName() {
     return this.userDetails.get('firstName');
   }
@@ -86,13 +95,21 @@ export class UserDetailsPage implements OnInit {
   goToUserProfile() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/user-profile']);
+    this.navCtrl.navigateRoot(['user-profile'],{replaceUrl:true})
+    // this.router.navigate(['/user-profile']);
     // this.router.navigate(['/user-profile']);
   }
   goToMenu() {
-    this.router.navigate(['/menu']);
+    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+    // this.router.navigate(['/menu']);
   }
   onWillDismiss(ev) {
+    this.dateTime.confirm(true);
+  }
+  close() {
+    this.dateTime.cancel(true);
+  }
+  select() {
     this.dateTime.confirm(true);
   }
   dataChange(value) {

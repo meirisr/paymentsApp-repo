@@ -55,7 +55,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.2.3",
+    "@angular-devkit/build-angular": "^13.3.9",
     "@angular-eslint/builder": "~13.0.1",
     "@angular-eslint/eslint-plugin": "~13.0.1",
     "@angular-eslint/eslint-plugin-template": "~13.0.1",
@@ -64,7 +64,7 @@
     "@angular/compiler": "~13.2.2",
     "@angular/compiler-cli": "~13.2.2",
     "@angular/language-service": "~13.2.2",
-    "@capacitor/cli": "3.5.1",
+    "@capacitor/cli": "^4.0.0",
     "@ionic/angular-toolkit": "^6.0.0",
     "@ionic/cli": "6.20.1",
     "@types/jasmine": "~3.6.0",

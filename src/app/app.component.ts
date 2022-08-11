@@ -36,12 +36,12 @@ export class AppComponent implements OnInit {
     translate.setDefaultLang('en');
     translate.use('he');
     App.getState().then((status) => console.log('status:', status));
-    this.platform.backButton.subscribeWithPriority(10, () => {
-    console.log(this.router.url)
-      if (!this.routerOutlet.canGoBack()||this.router.url=='/menu') {
-        router.navigate['app'].exitApp() 
-      } 
-    });
+    
+    // this.platform.backButton.subscribeWithPriority(-1, () => {
+    //   if (!this.routerOutlet.canGoBack()||this.router.url=='/menu') {
+    //     App.exitApp();
+    //   } 
+    // });
     const key = environment.googleMapsKey;
     this.httpClient
       .jsonp(

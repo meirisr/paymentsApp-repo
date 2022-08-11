@@ -19,7 +19,7 @@ const HOTEL_ID = 'my-hotel';
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage {
-  @ViewChild(IonRouterOutlet, { static: true }) routerOutlet: IonRouterOutlet;
+ 
   prefersDark;
   userDetalis: object;
   mapOptions: google.maps.MapOptions = {
@@ -31,12 +31,16 @@ export class MenuPage {
     private authenticationService: AuthenticationService,
     private storageService: StorageService,
     private alertController: AlertController,
-    private nav: NavController,
-    private platform: Platform
+    private routerOutlet: IonRouterOutlet,
+    private platform: Platform,
+    public navCtrl: NavController
   ) {
-    // this.platform.backButton.subscribeWithPriority(0, () => {
-    //   App.exitApp();
+    // this.platform.backButton.subscribeWithPriority(-1, () => {
+      
+    //     App.exitApp();
+   
     // });
+  
     document.querySelector('body').classList.remove('scanBg');
   }
 
@@ -45,30 +49,36 @@ export class MenuPage {
   }
   async hideSplashScreen() {}
   settings() {
-    this.router.navigate(['/settings']);
+    // this.router.navigate(['/settings']);
+    this.navCtrl.navigateRoot(['settings'],{replaceUrl:true})
     // this.router.navigate(['/settings']);
   }
   scan() {
-    this.router.navigate(['/scan']);
+    // this.router.navigate(['/scan']);
+    this.navCtrl.navigateRoot(['scan'],{replaceUrl:true})
   }
   map() {
-    this.router.navigate(['/travel-route-tracking']);
+    // this.router.navigate(['/travel-route-tracking']);
+    this.navCtrl.navigateRoot(['travel-route-tracking'],{replaceUrl:true})
     // this.router.navigate(['/payment']);
   }
   logOut() {
     Storage.remove({ key: HOTEL_ID });
-    this.router.navigate(['/intro']);
+    // this.router.navigate(['/intro']);
+    this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
     // this.storageService.deleteStorege();
     // this.authenticationService.isAuthenticated.next(false);
     // window.location.reload();
   }
 
   userProfile() {
-    this.router.navigate(['/user-profile']);
+    // this.router.navigate(['/user-profile']);
+    this.navCtrl.navigateRoot(['user-profile'],{replaceUrl:true})
     // this.router.navigate(['/user-profile']);
   }
   creditCardDetails() {
-    this.router.navigate(['/credit-card-details']);
+    // this.router.navigate(['/credit-card-details']);
+    this.navCtrl.navigateRoot(['credit-card-details'],{replaceUrl:true})
     // this.router.navigate(['/credit-card-details']);
   }
   toggleDarkTheme(matchesMode) {

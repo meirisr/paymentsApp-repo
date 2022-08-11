@@ -32,12 +32,13 @@ export class PaymentPage implements AfterViewInit {
   constructor(
     private router: Router,
     private platform: Platform,
-    private nav: NavController,
+    private navCtrl: NavController,
     private utils: UtilsService,
     private travelProcessService: TravelProcessService
   ) {
     this.platform.backButton.subscribeWithPriority(0, () => {
-      this.router.navigate(['/menu']);
+      // this.router.navigate(['/menu']);
+      this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
     });
   }
 
@@ -91,7 +92,8 @@ export class PaymentPage implements AfterViewInit {
       async (data) => {
         this.utils.dismissLoader(loader);
         if (data.querySuccessful) {
-          this.router.navigate(['/travel-route-tracking']);
+          this.navCtrl.navigateRoot(['travel-route-tracking'],{replaceUrl:true})
+          // this.router.navigate(['/travel-route-tracking']);
           await this.utils.presentModal('נסיעה טובה', 'החיוב בוצע בהצלחה');
         } else {
           await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב');

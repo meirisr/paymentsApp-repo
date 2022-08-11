@@ -26,7 +26,7 @@ export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
     private storageService: StorageService,
     private modalController: ModalController,
     private authenticationService: AuthenticationService,
-    private nav: NavController
+    public navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -73,7 +73,8 @@ export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
         this.utils.dismissLoader(loader);
        await this.authenticationService.loadToken().then(()=>{
         setTimeout(() => {
-          this.router.navigate(['/intro']);
+          this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
+          // this.router.navigate(['/intro']);
         },200);
        });
           

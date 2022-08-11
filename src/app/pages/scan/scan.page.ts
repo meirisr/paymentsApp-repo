@@ -42,12 +42,12 @@ export class ScanPage implements OnInit {
     private router: Router,
     private travelProcessService: TravelProcessService,
     private platform: Platform,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public navCtrl: NavController
   ) {}
 
   ngOnInit() {
     loader = this.utils.showLoader();
-    console.log('onInit');
     if (Capacitor.isNativePlatform()) {
       this.checkLocationPermission().then((e) => {
         if (e) {
@@ -59,7 +59,8 @@ export class ScanPage implements OnInit {
     } else {
       this.scanNotAllowed = true;
       setTimeout(() => {
-        this.router.navigate(['/menu']);
+        this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+        // this.router.navigate(['/menu']);
       }, 3000);
     }
   }
@@ -81,7 +82,7 @@ export class ScanPage implements OnInit {
       this.result = null;
       BarcodeScanner.hideBackground();
       const result = await BarcodeScanner.startScan({
-        // targetedFormats: [SupportedFormat.QR_CODE],
+        targetedFormats: [SupportedFormat.QR_CODE],
       });
       if (result.hasContent) {
         this.result = result.content;
@@ -95,17 +96,20 @@ export class ScanPage implements OnInit {
               // if (data.data.statusCode) return;
               let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
               if (hotelId) {
-                this.router.navigate(['/payment']);
-                console.log('scan');
+                // this.router.navigate(['/payment']);
+                this.navCtrl.navigateRoot(['payment'],{replaceUrl:true})
+              
               } else {
-                this.router.navigate(['/travel-route-tracking']);
+                this.navCtrl.navigateRoot(['travel-route-tracking'],{replaceUrl:true})
+                // this.router.navigate(['/travel-route-tracking']);
                 await this.utils.presentModal('נסיעה טובה', '');
               }
             },
             async (err) => {
               console.log(err);
               setTimeout(() => {
-                this.router.navigate(['/menu']);
+                this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+                // this.router.navigate(['/menu']);
               }, 3000);
             }
           );
@@ -171,6 +175,7 @@ export class ScanPage implements OnInit {
   }
 
   goTomenu() {
-    this.router.navigate(['/menu']);
+    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+    // this.router.navigate(['/menu']);
   }
 }

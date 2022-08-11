@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { LoginService } from '../services/login.service';
@@ -10,7 +11,7 @@ export const INTRO_KEY = 'intro-seen';
   providedIn: 'root',
 })
 export class IntroGuard implements CanLoad {
-  constructor(private logInServer: LoginService, private router: Router) {}
+  constructor(private logInServer: LoginService, private router: Router,    public navCtrl: NavController) {}
 
   canLoad(): Observable<boolean> {
     return this.logInServer.isUserPermitToOrg.pipe(
@@ -18,7 +19,8 @@ export class IntroGuard implements CanLoad {
       take(1), // Otherwise the Observable doesn't complete!
       map((isUserPermitToOrg) => {
         if (isUserPermitToOrg) {
-          this.router.navigate(['/menu']);
+          this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+          // this.router.navigate(['/menu']);
           return true;
         } else {
           return true;

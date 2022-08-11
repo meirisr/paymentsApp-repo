@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonDatetime, NavController } from '@ionic/angular';
-import { from } from 'rxjs';
+import { IonDatetime, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
+import { App } from '@capacitor/app';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -24,8 +24,17 @@ export class CreditCardDetailsPage implements OnInit {
   constructor(
     private logInServer: LoginService,
     private router: Router,
-    private nav: NavController
-  ) {}
+    private platform: Platform,
+    private routerOutlet: IonRouterOutlet,
+    public navCtrl: NavController
+  ) {
+
+    this.platform.backButton.subscribeWithPriority(0, () => {
+      this.routerOutlet.pop()
+      this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
+      // this.router.navigate(['/intro']);
+    });
+  }
   get firstName() {
     return this.cardDetails.get('firstName');
   }
@@ -86,7 +95,8 @@ export class CreditCardDetailsPage implements OnInit {
     this.flipClass = '';
   }
   goToUserProfile() {
-    this.router.navigate(['/intro']);
+    // this.router.navigate(['/intro'])
+    this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
     // this.router.navigate(['/user-profile']);
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { IonRouterOutlet, NavController, Platform } from '@ionic/angular';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./user-profile.page.scss'],
 })
 export class UserProfilePage implements OnInit {
-  userDetails:any;
+  userDetails: any;
   firstName: string;
   lastName: string;
   email: string;
@@ -18,37 +18,45 @@ export class UserProfilePage implements OnInit {
   constructor(
     private router: Router,
     private storageService: StorageService,
-    private nav: NavController
-  ) {}
+    private platform: Platform,
+    private routerOutlet: IonRouterOutlet,
+    public navCtrl: NavController
 
-  
+    
+  ) {
+    this.platform.backButton.subscribeWithPriority (0, () => {
+    // this.routerOutlet.pop()
+    //   this.router.navigate(['/menu']);
+    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+    });
+  }
+
   ionViewDidEnter() {
-    this.getuserInfo();
+    this.getUserInfo();
     this.getcardInfo();
   }
-  ngOnInit() {
-  
-  }
+  ngOnInit() {}
 
   goToUserDetails() {
-    this.router.navigate(['/user-details']);
+    this.navCtrl.navigateRoot(['user-details'],{replaceUrl:true})
+    // this.router.navigate(['/user-details']);
   }
   cardDetails() {
-    this.router.navigate(['/credit-card-details']);
+    this.navCtrl.navigateRoot(['credit-card-details'],{replaceUrl:true})
+    // this.router.navigate(['/credit-card-details']);
   }
-  async getuserInfo() {
-     this.userDetails = JSON.parse(
+  async getUserInfo() {
+    this.userDetails = await JSON.parse(
       (await this.storageService.getUserDetails()).value
     );
     this.firstName =
       // this.storageService?.userDetails?.firstName ||
-      this.userDetails?.firstName ||
-      '';
+      this.userDetails?.firstName || '';
     this.lastName =
-      // this.storageService?.userDetails?.lastName || 
-       this.userDetails?.lastName || '';
+      // this.storageService?.userDetails?.lastName ||
+      this.userDetails?.lastName || '';
     this.email =
-      // this.storageService?.userDetails?.email ||  
+      // this.storageService?.userDetails?.email ||
       this.userDetails?.email || '';
   }
 
@@ -59,6 +67,7 @@ export class UserProfilePage implements OnInit {
     this.cardNum = creditCardDetails != null ? '****' + creditCardDetails : '';
   }
   goToMenu() {
-    this.router.navigate(['/menu']);
+    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+    // this.router.navigate(['/menu']);
   }
 }

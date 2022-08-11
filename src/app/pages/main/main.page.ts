@@ -19,7 +19,7 @@ export class MainPage {
     private router: Router,
     private storageService: StorageService,
     private platform: Platform,
-    private nav: NavController
+    private navCtrl: NavController
   ) {
     // this.platform.backButton.subscribeWithPriority(10, () => {
     //   App.exitApp();
@@ -31,7 +31,8 @@ export class MainPage {
   }
   onClick() {
     // this.router.navigate(['/scan']);
-    this.router.navigate(['/scan']);
+    this.navCtrl.navigateRoot(['scan'],{replaceUrl:true})
+    // this.router.navigate(['/scan']);
   }
   async getHotel() {
     const hotel = (await this.storageService.getStorege(HOTEL_ID)).value;

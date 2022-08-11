@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LoginService } from './login.service';
+import { NavigateHlperService } from './navigate-hlper.service';
 
-describe('UserLoginService', () => {
-  let service: LoginService;
+describe('NavigateHlperService', () => {
+  let service: NavigateHlperService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LoginService);
+    service = TestBed.inject(NavigateHlperService);
   });
 
   it('should be created', () => {

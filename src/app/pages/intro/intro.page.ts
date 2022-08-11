@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, NavController, Platform } from '@ionic/angular';
+import { IonRouterOutlet, IonSlides, NavController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { App } from '@capacitor/app';
@@ -17,9 +17,10 @@ const HOTEL_ID = 'my-hotel';
   styleUrls: ['./intro.page.scss'],
 })
 export class IntroPage implements OnInit {
-  prefersDark;
-  translaetPath;
-  searchTerm;
+
+  // prefersDark;
+  // translaetPath;
+  // searchTerm;
   items: any[] = [];
   tempitems: any[] = [];
   // slide1Body ='ברוכים הבאים';
@@ -30,13 +31,17 @@ export class IntroPage implements OnInit {
     private authenticationService: AuthenticationService,
     private logInServer: LoginService,
     private storageService: StorageService,
-    private nav: NavController,
+    private routerOutlet: IonRouterOutlet,
     private utils: UtilsService,
-    private platform: Platform
+    private platform: Platform,
+    public navCtrl: NavController
   ) {
-    // this.platform.backButton.subscribeWithPriority(10, () => {
-    //   App.exitApp();
+    // this.platform.backButton.subscribeWithPriority(-1, () => {
+    //   if (!this.routerOutlet.canGoBack()) {
+    //     App.exitApp();
+    //   }
     // });
+  
   }
   ngOnInit(): void {
     // let loader=this.utils.showLoader();
@@ -54,18 +59,19 @@ export class IntroPage implements OnInit {
   async next() {
     if (this.logInServer.isCardHasDetails.value) {
       this.utils.presentModal('ברוכים הבאים', '');
-      this.router.navigate(['/menu']);
+      // this.router.navigate(['/menu']);
+      this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
     } else {
       this.utils.presentModal('', 'עליך להכניס פרטי אשראי');
-      this.router.navigate(['/credit-card-details']);
+      this.navCtrl.navigateRoot(['credit-card-details'],{replaceUrl:true})
+      // this.router.navigate(['/credit-card-details']);
     }
   }
-  toggleDarkTheme(matchesMode) {
-    this.prefersDark = matchesMode;
-  }
+  // toggleDarkTheme(matchesMode) {
+  //   this.prefersDark = matchesMode;
+  // }
   handleInput(event: Event) {
     const query = (event.target as HTMLInputElement).value.toLowerCase();
-
     this.tempitems = [
       ...this.items.filter((item) => {
         return item.name.toLowerCase().indexOf(query) > -1;
@@ -83,7 +89,8 @@ export class IntroPage implements OnInit {
             'ברוכים הבאים',
             `הנך רשום ב ${item.id}`
           );
-          this.router.navigate(['/menu']);
+          // this.router.navigate(['/menu']);
+          this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
         } else {
           await this.utils.presentModal('לא נמצא', 'עליך להכנס עם כרטיס אשראי');
         }

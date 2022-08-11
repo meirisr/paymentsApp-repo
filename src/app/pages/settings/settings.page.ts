@@ -12,7 +12,7 @@ export class SettingsPage implements OnInit {
   ischecked: string;
   ischecked2;
   defaultLang:string;
-  constructor(private utils: UtilsService,private router:Router,private nav: NavController) {
+  constructor(private utils: UtilsService,private router:Router,private navCtrl: NavController) {
     this.ischecked=this.utils.ischecked;
     this.defaultLang=this.utils.defaultLang;
  
@@ -30,6 +30,7 @@ export class SettingsPage implements OnInit {
     this.utils.onToggleLanguages(event);
   }
   goToMenu() {
-    this.router.navigate(['/menu']);
+    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+    // this.router.navigate(['/menu']);
   }
 }

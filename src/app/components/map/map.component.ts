@@ -47,7 +47,7 @@ export class MapComponent implements AfterViewInit {
   watchmarkerOptions: google.maps.MarkerOptions = {};
   constructor(
     private router: Router,
-    private nav: NavController,
+    private navCtrl: NavController,
     private travelProcessService: TravelProcessService,
     private ngZone: NgZone
   ) {}
@@ -229,7 +229,8 @@ export class MapComponent implements AfterViewInit {
   }
 
   goToMenu() {
-    this.router.navigate(['/menu']);
+    // this.router.navigate(['/menu']);
+    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
   }
 
   fitToMarkers(markers) {

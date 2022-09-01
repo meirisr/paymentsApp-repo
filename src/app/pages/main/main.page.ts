@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-
-import { Router } from '@angular/router';
 import { App } from '@capacitor/app';
 import { NavController, Platform } from '@ionic/angular';
 import { StorageService } from 'src/app/services/storage.service';
-import { UtilsService } from 'src/app/services/utils/utils.service';
 const HOTEL_ID = 'my-hotel';
 
 @Component({
@@ -16,25 +13,22 @@ export class MainPage {
   headerText: string;
 
   constructor(
-    private router: Router,
     private storageService: StorageService,
     private platform: Platform,
     private navCtrl: NavController
   ) {
-    // this.platform.backButton.subscribeWithPriority(10, () => {
-    //   App.exitApp();
-    // });
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      App.exitApp();
+    });
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.getHotel();
   }
-  onClick() {
-    // this.router.navigate(['/scan']);
-    this.navCtrl.navigateRoot(['scan'],{replaceUrl:true})
-    // this.router.navigate(['/scan']);
+  onClick(): void {
+    this.navCtrl.navigateRoot(['scan'], { replaceUrl: true });
   }
-  async getHotel() {
+  async getHotel(): Promise<void> {
     const hotel = (await this.storageService.getStorege(HOTEL_ID)).value;
     console.log(hotel);
     this.headerText = hotel == 'null' ? '' : hotel;

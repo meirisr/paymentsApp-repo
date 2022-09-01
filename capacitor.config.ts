@@ -9,9 +9,9 @@ const config: CapacitorConfig = {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     SplashScreen: {
       launchShowDuration: 5000,
-      launchAutoHide: true,
-      androidSplashResourceName: 'splash',
-      androidScaleType: 'CENTER_CROP'
+      launchAutoHide: false,
+      // androidSplashResourceName: 'splash',
+      // androidScaleType: 'CENTER_CROP'
     }
   },
 

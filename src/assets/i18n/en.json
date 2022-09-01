@@ -34,6 +34,7 @@
   "dir":"ltr",
   "side":"start",
   "nextBtn":"Next",
-  "backBtn":"Back"
+  "backBtn":"Back",
+  "map":"en"
   
 }

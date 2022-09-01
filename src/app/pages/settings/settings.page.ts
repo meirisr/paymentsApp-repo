@@ -31,6 +31,5 @@ export class SettingsPage implements OnInit {
   }
   goToMenu() {
     this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
-    // this.router.navigate(['/menu']);
   }
 }

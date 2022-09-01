@@ -11,7 +11,7 @@ import { Network } from '@capacitor/network';
 import { App } from '@capacitor/app';
 import { AuthenticationService } from './services/authentication.service';
 import { Router } from '@angular/router';
-import { Navigation } from 'swiper';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { StorageService } from './services/storage.service';
 
 @Component({
@@ -36,25 +36,13 @@ export class AppComponent implements OnInit {
     translate.setDefaultLang('en');
     translate.use('he');
     App.getState().then((status) => console.log('status:', status));
-    
+    this.hideSplashScreen()
     // this.platform.backButton.subscribeWithPriority(-1, () => {
     //   if (!this.routerOutlet.canGoBack()||this.router.url=='/menu') {
     //     App.exitApp();
     //   } 
     // });
-    const key = environment.googleMapsKey;
-    this.httpClient
-      .jsonp(
-        `https://maps.googleapis.com/maps/api/js?key=${key}&language=en`,
-        'callback'
-      )
-      .pipe(
-        map(() => true),
-        catchError(() => of(false))
-      )
-      .subscribe((result) => {
-        this.apiLoaded = result;
-      });
+    
     Network.addListener('networkStatusChange', (status) => {
       console.log('Network status changed', status);
       if (!status.connected) {
@@ -66,9 +54,19 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.utils.getUserTheme();
-    this.utils.getUserLanguage();
+    this.utils.getUserLanguage()
+    this.utils.loadGoogleMap();
     this.authenticationService.loadToken();
      
+  }
+ hideSplashScreen=() => {
+    this.platform.ready().then(async () => {
+      setTimeout(() => {
+        SplashScreen.hide({
+          fadeOutDuration: 500
+        })
+      }, 0)
+    })
   }
   logCurrentNetworkStatus = async () => {
     const status = await Network.getStatus();

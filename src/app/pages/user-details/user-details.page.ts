@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import {
   AlertController,
   IonDatetime,
-  IonRouterOutlet,
   ModalController,
   NavController,
   Platform,
@@ -21,7 +20,7 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class UserDetailsPage implements OnInit {
   @ViewChild(IonDatetime) dateTime: IonDatetime;
-  date = '';
+  date: string = '';
   public userDetails: FormGroup;
   constructor(
     private alertController: AlertController,
@@ -30,12 +29,10 @@ export class UserDetailsPage implements OnInit {
     private router: Router,
     private modalController: ModalController,
     private platform: Platform,
-    private routerOutlet: IonRouterOutlet,
     public navCtrl: NavController
   ) {
     this.platform.backButton.subscribeWithPriority(0, () => {
-      this.navCtrl.navigateRoot(['user-profile'],{replaceUrl:true})
-      // this.router.navigate(['/user-profile']);
+      this.navCtrl.navigateRoot(['user-profile'], { replaceUrl: true });
     });
   }
   get firstName() {
@@ -56,13 +53,13 @@ export class UserDetailsPage implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
     });
   }
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.getuserInfo();
   }
 
-  async updateUserInfo() {
+  async updateUserInfo(): Promise<void> {
     from(this.logInServer.updateUserInfo(this.userDetails.value)).subscribe(
-      async (res) => {
+      async () => {
         this.getuserInfo().then(() => {
           this.goToUserProfile();
         });
@@ -77,11 +74,9 @@ export class UserDetailsPage implements OnInit {
       }
     );
   }
-  async getuserInfo() {
+  async getuserInfo(): Promise<void> {
     let userDetails = JSON.parse(
-      await await (
-        await this.storageService.getUserDetails()
-      ).value
+      (await this.storageService.getUserDetails()).value
     );
 
     this.userDetails.setValue({
@@ -92,33 +87,30 @@ export class UserDetailsPage implements OnInit {
       email: userDetails.email,
     });
   }
-  goToUserProfile() {
+  goToUserProfile(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.navCtrl.navigateRoot(['user-profile'],{replaceUrl:true})
-    // this.router.navigate(['/user-profile']);
-    // this.router.navigate(['/user-profile']);
+    this.navCtrl.navigateRoot(['user-profile'], { replaceUrl: true });
   }
-  goToMenu() {
-    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
-    // this.router.navigate(['/menu']);
+  goToMenu(): void {
+    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
   }
-  onWillDismiss(ev) {
+  onWillDismiss(): void {
     this.dateTime.confirm(true);
   }
-  close() {
+  close(): void {
     this.dateTime.cancel(true);
   }
-  select() {
+  select(): void {
     this.dateTime.confirm(true);
   }
-  dataChange(value) {
+  dataChange(value: string) {
     const year = value.split('-')[0];
     const month = value.split('-')[1];
     const day = value.split('-')[2].split('T')[0];
     this.date = day + '/' + month + '/' + year;
   }
-  async presentModal() {
+  async presentModal(): Promise<HTMLIonModalElement> {
     const modal = await this.modalController.create({
       component: LoginStepsNavbarComponent,
       cssClass: 'my-custom-class',

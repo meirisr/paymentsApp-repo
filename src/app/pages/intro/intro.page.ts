@@ -1,12 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonRouterOutlet, IonSlides, NavController, Platform } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core';
+import { NavController, Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
 import { StorageService } from 'src/app/services/storage.service';
 import { LoginService } from 'src/app/services/login.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-import { filter, map, take } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 const HOTEL_ID = 'my-hotel';
@@ -17,54 +14,38 @@ const HOTEL_ID = 'my-hotel';
   styleUrls: ['./intro.page.scss'],
 })
 export class IntroPage implements OnInit {
-
-  // prefersDark;
-  // translaetPath;
-  // searchTerm;
   items: any[] = [];
   tempitems: any[] = [];
-  // slide1Body ='ברוכים הבאים';
 
   constructor(
-    private router: Router,
-    private translate: TranslateService,
     private authenticationService: AuthenticationService,
     private logInServer: LoginService,
     private storageService: StorageService,
-    private routerOutlet: IonRouterOutlet,
     private utils: UtilsService,
     private platform: Platform,
     public navCtrl: NavController
   ) {
-    // this.platform.backButton.subscribeWithPriority(-1, () => {
-    //   if (!this.routerOutlet.canGoBack()) {
-    //     App.exitApp();
-    //   }
-    // });
-  
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      App.exitApp();
+    });
   }
   ngOnInit(): void {
-    // let loader=this.utils.showLoader();
     this.logInServer.getAllOrganizations().subscribe(async (data) => {
-      // this.utils.dismissLoader(loader)
       this.items.push(this.creatHotelObj(data.body));
       this.tempitems = [...this.items];
       console.log(data.body),
-        async (err) => {
-          // this.utils.dismissLoader(loader)
+        async (err: Error) => {
           console.log(err);
         };
     });
   }
-  async next() {
+  async next(): Promise<void> {
     if (this.logInServer.isCardHasDetails.value) {
       this.utils.presentModal('ברוכים הבאים', '');
-      // this.router.navigate(['/menu']);
-      this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+      this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
     } else {
       this.utils.presentModal('', 'עליך להכניס פרטי אשראי');
-      this.navCtrl.navigateRoot(['credit-card-details'],{replaceUrl:true})
-      // this.router.navigate(['/credit-card-details']);
+      this.navCtrl.navigateRoot(['credit-card-details'], { replaceUrl: true });
     }
   }
   // toggleDarkTheme(matchesMode) {
@@ -78,7 +59,7 @@ export class IntroPage implements OnInit {
       }),
     ];
   }
-  async onClickHotel(item) {
+  async onClickHotel(item: { id: string }): Promise<void> {
     let loader = this.utils.showLoader();
     this.logInServer
       .isUserPermitToOrganization(item.id)
@@ -89,14 +70,13 @@ export class IntroPage implements OnInit {
             'ברוכים הבאים',
             `הנך רשום ב ${item.id}`
           );
-          // this.router.navigate(['/menu']);
-          this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+          this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
         } else {
           await this.utils.presentModal('לא נמצא', 'עליך להכנס עם כרטיס אשראי');
         }
         console.log(data);
       });
-    (err) => {
+    (err: Error) => {
       this.utils.dismissLoader(loader);
       console.log(err);
     };
@@ -104,10 +84,10 @@ export class IntroPage implements OnInit {
     // this.nav.navigateForward('/menu', { animationDirection: 'forward', animated: true })
   }
 
-  creatHotelObj(data) {
+  creatHotelObj(data: { name: string; id: string }) {
     return { name: Object.values(data)[0], id: Object.keys(data)[0] };
   }
-  goToLogin() {
+  goToLogin(): void {
     this.storageService.deleteAllStorege();
     this.authenticationService.isAuthenticated.next(false);
     window.location.reload();

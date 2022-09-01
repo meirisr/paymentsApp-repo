@@ -1,11 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
-import { PopupModalComponent } from '../../components/popup-modal/popup-modal.component';
 import { Gesture, GestureController, Platform } from '@ionic/angular';
-import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
-import { from, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-travel-route-tracking',
@@ -18,10 +14,10 @@ export class TravelRouteTrackingPage implements OnInit {
   @ViewChild('travelBody') travelBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   @ViewChild('dated') datedRef: ElementRef<HTMLElement>;
-  mapHight = '100vh';
-  startHight = 75;
-  maxHight = 20;
-  minHight;
+  mapHight: string = '100vh';
+  startHight: number = 75;
+  maxHight: number = 20;
+  minHight: number;
   allStations: any[] = [];
   origin;
   destination;
@@ -33,11 +29,6 @@ export class TravelRouteTrackingPage implements OnInit {
   constructor(
     private plt: Platform,
     private gestureCtrl: GestureController,
-    private logInServer: LoginService,
-    private modalController: ModalController,
-    private router: Router,
-    private platform: Platform,
-    private nav: NavController,
     private travelProcessService: TravelProcessService
   ) {
     // this.platform.backButton.subscribeWithPriority(10, () => {
@@ -87,25 +78,24 @@ export class TravelRouteTrackingPage implements OnInit {
 
     if (!position.scrollTop && detail.deltaY > 0) {
       this.travelBodyRef.nativeElement.style.top = 93 + 'vh';
-      // this.convertPXToVh(detail.currentY-10) + 'vh';
     }
   }
   onEnd(detail) {}
-  onClick() {
+  onClick(): void {
     const position = document.getElementById('drowerBar');
     const top = position.getBoundingClientRect().top;
     console.log(this.convertPXToVh(top));
     this.travelBodyRef.nativeElement.style.top =
       this.convertPXToVh(top) > 60 ? 10 + 'vh' : 93 + 'vh';
   }
-  convertPXToVh(px) {
+  convertPXToVh(px: number): number {
     return 100 * (px / document.documentElement.clientHeight);
   }
-  convertVhTopx(vh) {
+  convertVhTopx(vh: number): number {
     return (vh * document.documentElement.clientWidth) / 100;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

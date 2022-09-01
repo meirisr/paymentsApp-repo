@@ -1,53 +1,46 @@
-import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
-import { Router } from '@angular/router';
 import {
   BarcodeScanner,
   SupportedFormat,
 } from '@capacitor-community/barcode-scanner';
 import { Capacitor } from '@capacitor/core';
-import { AlertController, NavController, Platform } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { Location } from '@angular/common';
-import { LoginService } from 'src/app/services/login.service';
+
 import { StorageService } from 'src/app/services/storage.service';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AlertService } from 'src/app/services/utils/alert.service';
 
 const HOTEL_ID = 'my-hotel';
-let loader;
 @Component({
   selector: 'app-scan',
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
 })
 export class ScanPage implements OnInit {
-  isFlashAvailable = true;
-  isFlashOn = false;
-  scanActive = false;
-  scanNotAllowed = false;
+  isFlashAvailable: boolean = true;
+  isFlashOn: boolean = false;
+  scanActive: boolean = false;
+  scanNotAllowed: boolean = false;
   result = null;
-  element;
   userLocation = {
     latitude: 0,
     longitude: 0,
   };
   constructor(
-    private alertController: AlertController,
     private utils: UtilsService,
     private location: Location,
     private openNativeSettings: OpenNativeSettings,
     private storageService: StorageService,
-    private router: Router,
     private travelProcessService: TravelProcessService,
-    private platform: Platform,
     private alertService: AlertService,
     public navCtrl: NavController
   ) {}
 
   ngOnInit() {
-    loader = this.utils.showLoader();
     if (Capacitor.isNativePlatform()) {
       this.checkLocationPermission().then((e) => {
         if (e) {
@@ -59,25 +52,21 @@ export class ScanPage implements OnInit {
     } else {
       this.scanNotAllowed = true;
       setTimeout(() => {
-        this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
-        // this.router.navigate(['/menu']);
+        this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
       }, 3000);
     }
   }
 
   ionViewWillLeave() {
-    this.utils.dismissLoader(loader);
-
     if (Capacitor.isNativePlatform()) {
       BarcodeScanner.stopScan();
     }
     this.scanNotAllowed = false;
   }
-  ngOnDestroy() {}
-  async startScanner() {
+
+  async startScanner(): Promise<void> {
     const allowed = await this.checkPermission();
     if (allowed) {
-      this.utils.dismissLoader(loader);
       this.scanActive = true;
       this.result = null;
       BarcodeScanner.hideBackground();
@@ -89,34 +78,33 @@ export class ScanPage implements OnInit {
         console.log(result);
         this.stopScanner();
         this.travelProcessService
-          .getTravelDetails(this.userLocation, 7552469)
+          .getTravelDetails(this.userLocation, 	7703969)
           .subscribe(
             async (data) => {
               console.log(data);
-              // if (data.data.statusCode) return;
+
               let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
               if (hotelId) {
-                // this.router.navigate(['/payment']);
-                this.navCtrl.navigateRoot(['payment'],{replaceUrl:true})
-              
+                this.navCtrl.navigateRoot(['payment'], { replaceUrl: true });
               } else {
-                this.navCtrl.navigateRoot(['travel-route-tracking'],{replaceUrl:true})
-                // this.router.navigate(['/travel-route-tracking']);
+                this.navCtrl.navigateRoot(['travel-route-tracking'], {
+                  replaceUrl: true,
+                });
+
                 await this.utils.presentModal('נסיעה טובה', '');
               }
             },
             async (err) => {
               console.log(err);
               setTimeout(() => {
-                this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
-                // this.router.navigate(['/menu']);
+                this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
               }, 3000);
             }
           );
       }
     }
   }
-  async checkPermission() {
+  async checkPermission(): Promise<boolean> {
     const status = await BarcodeScanner.checkPermission({ force: true });
     if (status.granted) {
       return true;
@@ -124,7 +112,7 @@ export class ScanPage implements OnInit {
       this.permissionAlert('cameraDeteails');
     }
   }
-  async checkLocationPermission() {
+  async checkLocationPermission(): Promise<boolean> {
     const locationStatus = await Geolocation.requestPermissions();
 
     if (locationStatus.location) {
@@ -143,17 +131,17 @@ export class ScanPage implements OnInit {
     }
   }
 
-  stopScanner() {
+  stopScanner(): void {
     BarcodeScanner.showBackground();
     BarcodeScanner.stopScan();
     this.scanActive = false;
   }
-  toggleFlash() {
+  toggleFlash(): void {
     BarcodeScanner.toggleTorch();
     this.isFlashOn = !this.isFlashOn;
   }
 
-  permissionAlert(type: string) {
+  permissionAlert(type: string): void {
     this.location.back();
     const alertDeteails = {
       cameraDeteails: {
@@ -173,9 +161,7 @@ export class ScanPage implements OnInit {
     };
     this.alertService.cameraPermissionAlert(alertDeteails[type]);
   }
-
-  goTomenu() {
-    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
-    // this.router.navigate(['/menu']);
+  goTomenu(): void {
+    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
   }
 }

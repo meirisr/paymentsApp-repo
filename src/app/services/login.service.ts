@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Device } from '@capacitor/device';
 import { map, tap } from 'rxjs/operators';
-import { Storage } from '@capacitor/storage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ToastController } from '@ionic/angular';
@@ -43,7 +41,7 @@ export class LoginService {
       }
     );
   }
-  public isUserPermitToOrganization(orgId): Observable<any> {
+  public isUserPermitToOrganization(orgId: string): Observable<any> {
     return this.http
       .get(`${environment.serverUrl}/user/is-permit-to-organization`, {
         headers: new HttpHeaders({ organizationId: orgId }),
@@ -61,11 +59,6 @@ export class LoginService {
       );
   }
 
-  public async logDeviceInfo() {
-    // await Device.getLanguageCode().then((language) => {
-    //   USER_LANGUAGE = language.value.toLowerCase();
-    // });
-  }
   public sendVerificationCode(credentials: { phone: string }): Observable<any> {
     return this.http
       .post(`${environment.serverUrl}/phone-auth/send-code`, null, {
@@ -83,7 +76,7 @@ export class LoginService {
   public getToken(credentials: {
     phone: string;
     text: string;
-  }): Observable<any> {
+  }): Observable<void> {
     return this.http
       .post(`${environment.serverUrl}/phone-auth/verify-code`, null, {
         headers: new HttpHeaders({ station: HEADER_HOTELS }),
@@ -104,9 +97,9 @@ export class LoginService {
       map((data: any) => {
         if (data.body.email && data.body.firstName && data.body.lastName) {
           this.storageService.setUserDetails(data.body);
-          return this.isUserHasDetails.next(true);
+           this.isUserHasDetails.next(true);
         } else {
-          return this.isUserHasDetails.next(false);
+           this.isUserHasDetails.next(false);
         }
       })
     );
@@ -127,8 +120,8 @@ export class LoginService {
         })
       );
   }
-  public async updateUserInfo(credentials: UserDetails): Promise<any> {
-    return this.http
+  public async updateUserInfo(credentials: UserDetails): Promise<void> {
+    this.http
       .post(
         `${environment.serverUrl}/user/update-details`,
         {
@@ -140,13 +133,11 @@ export class LoginService {
           headers: new HttpHeaders({ station: 'hotels' }),
         }
       )
-      .pipe(
-        tap(() => {
-          this.storageService.setUserDetails(credentials);
-        })
-      )
+      .pipe(tap(() => {}))
       .subscribe(
-        async (res) => {
+        async () => {
+          this.storageService.setUserDetails(credentials);
+          this.userDetails.next(credentials);
           this.handleButtonClick();
         },
         async (res) => {
@@ -159,7 +150,7 @@ export class LoginService {
     csvNum: string;
     date: string;
     userId: string;
-  }): Promise<any> {
+  }): Promise<void> {
     this.http
       .post(
         `${environment.serverUrl}/credit-card-payment/register-wallet`,
@@ -175,7 +166,7 @@ export class LoginService {
         }
       )
       .subscribe(
-        async (res) => {
+        async () => {
           this.getCreditCardInfo();
           this.handleButtonClick();
         },
@@ -186,14 +177,13 @@ export class LoginService {
       );
   }
 
-  public async handleButtonClick() {
+  public async handleButtonClick(): Promise<void> {
     const toast = await this.toastController.create({
       color: 'success',
       duration: 2000,
       position: 'bottom',
       message: 'Successfully updated',
     });
-
     await toast.present();
   }
   public async onHttpErorr(e, header) {

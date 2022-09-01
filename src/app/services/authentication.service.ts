@@ -34,16 +34,20 @@ export class AuthenticationService {
         async (res) => {
           if (res) {
             this.loginService.getUserDetails().subscribe(
-              (data) => {
-                console.log(data);
+              () => {
+                this.loginService.isUserHasDetails.subscribe(
+                  (v)=>console.log(v)
+                )
               },
               (err) => {
                 console.log(err);
               }
             );
             this.loginService.getCreditCardInfo().subscribe(
-              (data) => {
-                console.log(data);
+              () => {
+                this.loginService.isUserHasDetails.subscribe(
+                  (v)=>console.log(v)
+                )
               },
               (err) => {
                 console.log(err);
@@ -51,7 +55,7 @@ export class AuthenticationService {
             );
             if (this.hotelId.value != null) {
               this.loginService
-                .isUserPermitToOrganization(this.hotelId)
+                .isUserPermitToOrganization(this.hotelId.value)
                 .subscribe(
                   (data) => {
                     console.log(data);

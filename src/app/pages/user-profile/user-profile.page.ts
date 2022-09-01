@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonRouterOutlet, NavController, Platform } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { NavController, Platform } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { LoginService } from 'src/app/services/login.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './user-profile.page.html',
   styleUrls: ['./user-profile.page.scss'],
 })
-export class UserProfilePage implements OnInit {
+export class UserProfilePage {
+  private subscriptions: Subscription[] = [];
   userDetails: any;
   firstName: string;
   lastName: string;
@@ -16,58 +18,58 @@ export class UserProfilePage implements OnInit {
   cardNum: string;
 
   constructor(
-    private router: Router,
     private storageService: StorageService,
     private platform: Platform,
-    private routerOutlet: IonRouterOutlet,
-    public navCtrl: NavController
-
-    
+    public navCtrl: NavController,
+    private logInServer: LoginService
   ) {
-    this.platform.backButton.subscribeWithPriority (0, () => {
-    // this.routerOutlet.pop()
-    //   this.router.navigate(['/menu']);
-    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+    this.platform.backButton.subscribeWithPriority(0, () => {
+      this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
     });
   }
-
-  ionViewDidEnter() {
+  ionViewWillEnter(): void {
     this.getUserInfo();
+  }
+  ionViewDidEnter(): void {
     this.getcardInfo();
   }
-  ngOnInit() {}
 
-  goToUserDetails() {
-    this.navCtrl.navigateRoot(['user-details'],{replaceUrl:true})
-    // this.router.navigate(['/user-details']);
+  goToUserDetails(): void {
+    this.navCtrl.navigateRoot(['user-details'], { replaceUrl: true });
   }
-  cardDetails() {
-    this.navCtrl.navigateRoot(['credit-card-details'],{replaceUrl:true})
-    // this.router.navigate(['/credit-card-details']);
+  cardDetails(): void {
+    this.navCtrl.navigateRoot(['credit-card-details'], { replaceUrl: true });
   }
-  async getUserInfo() {
-    this.userDetails = await JSON.parse(
+  async getUserInfo(): Promise<void> {
+    let userDetailsSubscription = this.logInServer.userDetails.subscribe(
+      (data) => {
+        this.firstName = data?.firstName || '';
+        this.lastName = data?.lastName || '';
+        this.email = data?.email || '';
+      }
+    );
+    this.subscriptions.push(userDetailsSubscription);
+    this.userDetails = JSON.parse(
       (await this.storageService.getUserDetails()).value
     );
-    this.firstName =
-      // this.storageService?.userDetails?.firstName ||
-      this.userDetails?.firstName || '';
-    this.lastName =
-      // this.storageService?.userDetails?.lastName ||
-      this.userDetails?.lastName || '';
-    this.email =
-      // this.storageService?.userDetails?.email ||
-      this.userDetails?.email || '';
+    this.storageService.userDetails;
+
+    this.firstName = this.userDetails?.firstName || '';
+    this.lastName = this.userDetails?.lastName || '';
+    this.email = this.userDetails?.email || '';
   }
 
-  async getcardInfo() {
+  async getcardInfo(): Promise<void> {
     let creditCardDetails = await (
       await this.storageService.getCreditCard4Dig()
     ).value;
     this.cardNum = creditCardDetails != null ? '****' + creditCardDetails : '';
   }
-  goToMenu() {
-    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
-    // this.router.navigate(['/menu']);
+  goToMenu(): void {
+    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

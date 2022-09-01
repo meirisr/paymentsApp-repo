@@ -36,7 +36,7 @@ export class StorageService {
   userDetails: UserDetails;
   creditCard4Dig: string = '';
 
-  setUserPhoneNumber(phone: string) {
+  setUserPhoneNumber(phone: string):void {
     this.userPhoneNumber = phone;
   }
 
@@ -78,11 +78,11 @@ export class StorageService {
     return await Storage.get({ key: key });
   }
 
-  public deleteStorege(storageKey) {
+  public deleteStorege(storageKey:string) {
     Storage.remove({ key: storageKey });
   }
-  public deleteAllStorege() {
-    userStorege.forEach((storegeKey) => {
+  public deleteAllStorege():void {
+    userStorege.forEach((storegeKey:string) => {
       Storage.remove({ key: storegeKey });
     });
   }

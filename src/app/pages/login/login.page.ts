@@ -2,11 +2,9 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonRouterOutlet, NavController, Platform } from '@ionic/angular';
+import {NavController, Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -23,26 +21,22 @@ export class LoginPage implements OnDestroy {
 
   constructor(
     private logInServer: LoginService,
-    private router: Router,
-    private routerOutlet: IonRouterOutlet,
     private platform: Platform,
     public navCtrl: NavController
   ) {
-    // this.platform.backButton.subscribeWithPriority(-1, () => {
-    //   if (!this.routerOutlet.canGoBack()) {
-    //     App.exitApp();
-    //   }
-    // });
+    this.platform.backButton.subscribeWithPriority(-1, () => {
+      App.exitApp();
+  });
   
 
     this.logInServer.didSendSms.subscribe((e) => {
       this.textForm = e;
     });
   }
-  ngOnDestroy() {
+  ngOnDestroy():void {
     this.textForm = false;
   }
-  goToIntro() {
+  goToIntro():void {
     this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
     // this.router.navigate(['/intro']);
   }

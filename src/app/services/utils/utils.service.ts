@@ -1,8 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
-import { LoadingController, AlertController, ModalController } from '@ionic/angular';
+import {
+  LoadingController,
+  AlertController,
+  ModalController,
+} from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/components/popup-modal/popup-modal.component';
+import { environment } from 'src/environments/environment';
+import { catchError, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
 
@@ -10,15 +18,17 @@ const USER_LANGUAGE = 'user-language';
   providedIn: 'root',
 })
 export class UtilsService {
-  ischecked = 'false';
+  ischecked: string = 'false';
+  apiLoaded: boolean = false;
 
-  defaultLang;
+  defaultLang: string;
 
   constructor(
+    private httpClient: HttpClient,
     public loadingController: LoadingController,
     private alertController: AlertController,
     private translate: TranslateService,
-    private modalController: ModalController,
+    private modalController: ModalController
   ) {}
 
   onToggleColorTheme(event) {
@@ -35,7 +45,7 @@ export class UtilsService {
       this.ischecked = 'false';
     }
   }
-  onToggleLanguages(event) {
+  onToggleLanguages(event): void {
     switch (event.detail.value) {
       case 'en':
         this.translate.use('en');
@@ -56,7 +66,7 @@ export class UtilsService {
         break;
     }
   }
-  async getUserTheme() {
+  async getUserTheme(): Promise<void> {
     const themeColor = await Storage.get({ key: COLOR_THEME });
     if (themeColor.value === 'true') {
       document.body.setAttribute('color-theme', 'dark');
@@ -68,24 +78,39 @@ export class UtilsService {
       this.ischecked = 'false';
     }
   }
-  async getUserLanguage() {
+  async getUserLanguage(): Promise<string> {
     const userLang = await Storage.get({ key: USER_LANGUAGE });
     if (userLang.value === 'en') {
       this.translate.use('en');
-
       this.defaultLang = 'en';
+      return 'en';
     } else {
       this.translate.use('he');
-
       this.defaultLang = 'he';
+      return 'he';
     }
+  }
+  async loadGoogleMap(): Promise<void> {
+    const key = environment.googleMapsKey;
+    this.httpClient
+      .jsonp(
+        `https://maps.googleapis.com/maps/api/js?key=${key}&language=en`,
+        'callback'
+      )
+      .pipe(
+        map(() => true),
+        catchError(() => of(false))
+      )
+      .subscribe((result) => {
+        this.apiLoaded = result;
+      });
   }
   async showLoader() {
     const loading = await this.loadingController.create({
       // message: 'Loading...',
       // duration: 3000,
       spinner: 'bubbles',
-      cssClass: 'loader'
+      cssClass: 'loader',
     });
     await loading.present();
     return loading;
@@ -93,10 +118,10 @@ export class UtilsService {
   async dismissLoader(loader) {
     loader.then((e) => e.dismiss());
   }
-  async showalert(e, header) {
+  async showalert(e, header: string): Promise<void> {
     const userLang = await Storage.get({ key: USER_LANGUAGE });
-    let language= userLang.value=='en'?'en-us':'he-il'
-    
+    let language = userLang.value == 'en' ? 'en-us' : 'he-il';
+
     const alert = await this.alertController.create({
       header: 'Login failed',
       message: e?.error?.error?.errorMessage
@@ -109,16 +134,15 @@ export class UtilsService {
     await alert.present();
   }
 
-
-  async presentModal(header,text) {
+  async presentModal(header: string, text: string): Promise<void> {
     const modal = await this.modalController.create({
       component: PopupModalComponent,
       cssClass: 'my-custom-class',
       swipeToClose: true,
       componentProps: {
-        header:header,
+        header: header,
         typy: 'login-success',
-        text:text
+        text: text,
       },
     });
     modal.present();

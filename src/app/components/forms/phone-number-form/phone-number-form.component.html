@@ -1,7 +1,8 @@
 
 <form class="loginForm" (ngSubmit)="onPhoneNumderFormSubmit()" [formGroup]="phoneNumderForm" >
   <div>
-     <ion-label position="stacked" class="" dir="{{'dir' |translate}}"><h2>{{'pages.login.phoneInputText' |translate}}</h2></ion-label>
+     <ion-label position="stacked" class="" style="color: #fff;" dir="{{'dir' |translate}}"><h2>{{'pages.login.phoneInputText' |translate}}</h2></ion-label>
+     <ion-text  style="float:right; color: #fff;;">מס' טלפון לזיהוי</ion-text>
       <!-- <ion-input dir="{{'dir' |translate}}" #phoneInput placeholder="מספר טלפון לזיהוי"  autofocus="true" type="tel" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" formControlName="phone"  required></ion-input> -->
 
       <label class="fluatingLabel" dir="{{'dir' |translate}}">
@@ -12,14 +13,14 @@
           type="tel"
           inputmode="numeric"
           id="firstName"
-          maxlength="9"
+          maxlength="10"
           oninput="this.value=this.value.replace(/[^0-9]/g,'');" id="phone" 
           formControlName="phone"  
         ></ion-input>
-        <span class="labelSpan">מספר טלפון לזיהוי</span>
+        <span class="labelSpan">מספר טלפון </span>
       </label>
   </div>
    
-    <app-main-btn style="position: fixed;
-    bottom: 34px;" type="submit" [disabled]="phoneNumderForm.invalid" text="{{'pages.login.nextBtn'| translate}}"></app-main-btn>
+    <app-main-btn style="margin-top: 5vh;
+    padding: 0px 25vw;" type="submit" [disabled]="phoneNumderForm.invalid" text="{{'pages.login.nextBtn'| translate}}"></app-main-btn>
     </form>

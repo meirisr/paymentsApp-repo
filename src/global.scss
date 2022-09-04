@@ -32,22 +32,25 @@
 @import "~swiper/scss/scrollbar";
 @import "~swiper/scss/zoom";
 @import "~@ionic/angular/css/ionic-swiper";
-
+.md body{
+  --ion-background-color: #091D31;
+   --ion-color: #fff;
+}
 .md body.scanBg {
   --ion-background-color: #00000000;
 }
 
 form {
-  margin-left: 5vw;
-  margin-right: 5vw;
+  // margin-left: 5vw;
+  // margin-right: 5vw;
 }
 
 form .input-group {
   margin-top: 3vh;
 }
 form ion-input.sc-ion-input-md-h {
-  border: 1px solid lightgray;
-  border-radius: 10px;
+  border-bottom: 3px solid lightgray;
+  // border-radius: 10px;
 }
 
 .ion-text-center {

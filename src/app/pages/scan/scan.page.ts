@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
-import {
-  BarcodeScanner,
-  SupportedFormat,
-} from '@capacitor-community/barcode-scanner';
+import {BarcodeScanner,SupportedFormat} from '@capacitor-community/barcode-scanner';
 import { Capacitor } from '@capacitor/core';
 import { NavController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { Location } from '@angular/common';
-
 import { StorageService } from 'src/app/services/storage.service';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
@@ -64,7 +60,7 @@ export class ScanPage implements OnInit {
     this.scanNotAllowed = false;
   }
 
-  async startScanner(): Promise<void> {
+  async startScanner():Promise<void> {
     const allowed = await this.checkPermission();
     if (allowed) {
       this.scanActive = true;
@@ -77,10 +73,12 @@ export class ScanPage implements OnInit {
         this.result = result.content;
         console.log(result);
         this.stopScanner();
+        let loader = this.utils.showLoader();
         this.travelProcessService
-          .getTravelDetails(this.userLocation, 	7703969)
+          .getTravelDetails(this.userLocation, 7703969)
           .subscribe(
             async (data) => {
+              this.utils.dismissLoader(loader);
               console.log(data);
 
               let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
@@ -95,10 +93,11 @@ export class ScanPage implements OnInit {
               }
             },
             async (err) => {
+              this.utils.dismissLoader(loader);
               console.log(err);
               setTimeout(() => {
                 this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
-              }, 3000);
+              }, 1000);
             }
           );
       }

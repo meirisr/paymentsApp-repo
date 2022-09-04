@@ -1,18 +1,11 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Platform, IonRouterOutlet, AlertController } from '@ionic/angular';
-import { Location } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { UtilsService } from './services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Network } from '@capacitor/network';
 import { App } from '@capacitor/app';
 import { AuthenticationService } from './services/authentication.service';
-import { Router } from '@angular/router';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -24,25 +17,21 @@ export class AppComponent implements OnInit {
   apiLoaded = false;
   constructor(
     private platform: Platform,
-    private location: Location,
-    private httpClient: HttpClient,
     private utils: UtilsService,
     private translate: TranslateService,
     private alertController: AlertController,
-    private storageService: StorageService,
-    private authenticationService: AuthenticationService,
-    private router: Router
+    private authenticationService: AuthenticationService
   ) {
     translate.setDefaultLang('en');
     translate.use('he');
     App.getState().then((status) => console.log('status:', status));
-    this.hideSplashScreen()
+    this.hideSplashScreen();
     // this.platform.backButton.subscribeWithPriority(-1, () => {
     //   if (!this.routerOutlet.canGoBack()||this.router.url=='/menu') {
     //     App.exitApp();
-    //   } 
+    //   }
     // });
-    
+
     Network.addListener('networkStatusChange', (status) => {
       console.log('Network status changed', status);
       if (!status.connected) {
@@ -54,20 +43,19 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.utils.getUserTheme();
-    this.utils.getUserLanguage()
+    this.utils.getUserLanguage();
     this.utils.loadGoogleMap();
     this.authenticationService.loadToken();
-     
   }
- hideSplashScreen=() => {
+  hideSplashScreen = () => {
     this.platform.ready().then(async () => {
       setTimeout(() => {
         SplashScreen.hide({
-          fadeOutDuration: 500
-        })
-      }, 0)
-    })
-  }
+          fadeOutDuration: 500,
+        });
+      }, 0);
+    });
+  };
   logCurrentNetworkStatus = async () => {
     const status = await Network.getStatus();
     console.log('Network status:', status);

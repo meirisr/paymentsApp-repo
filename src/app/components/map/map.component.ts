@@ -1,26 +1,16 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  NgZone,
-  ViewChild,
-} from '@angular/core';
+import {AfterViewInit,Component,Input,NgZone,ViewChild} from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
-import { MapDirectionsService } from '@angular/google-maps';
 import { Capacitor } from '@capacitor/core';
-import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-
 import { NavController } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 
-const image = '../../../assets/images/bus.png';
+const image: string = '../../../assets/images/bus.png';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements AfterViewInit {
   private subscriptions: Subscription[] = [];
@@ -46,7 +36,6 @@ export class MapComponent implements AfterViewInit {
   markerOptions: google.maps.MarkerOptions = {};
   watchmarkerOptions: google.maps.MarkerOptions = {};
   constructor(
-    private router: Router,
     private navCtrl: NavController,
     private travelProcessService: TravelProcessService,
     private ngZone: NgZone
@@ -111,7 +100,7 @@ export class MapComponent implements AfterViewInit {
     console.log('SSSS');
     this.printCurrentPosition();
   }
-  markerClick(event) {
+  markerClick() {
     return false;
   }
 
@@ -126,26 +115,23 @@ export class MapComponent implements AfterViewInit {
   printCurrentPosition = async () => {
     let latLng;
     if (Capacitor.isNativePlatform()) {
-      await Geolocation.requestPermissions().then(
-        async () => {
-          this.watch = Geolocation.watchPosition({}, (position, err) => {
-            this.ngZone.run(() => {
-              latLng = new google.maps.LatLng(
-                position.coords.latitude,
-                position.coords.longitude
-              );
-            });
-            this.removeWatcharkers();
-            this.addWatchMarker(latLng.toJSON());
-            //     let watchMarker= this.addMarker(latLng.toJSON(), 'location');
-            //     this.markers.push(latLng.toJSON());
-
-            //  console.log( this.markers)
-            //  this.map.panTo(latLng.toJSON());
+      await Geolocation.requestPermissions().then(async () => {
+        this.watch = Geolocation.watchPosition({}, (position, err) => {
+          this.ngZone.run(() => {
+            latLng = new google.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            );
           });
-        },
-        async () => {}
-      );
+          this.removeWatcharkers();
+          this.addWatchMarker(latLng.toJSON());
+          //     let watchMarker= this.addMarker(latLng.toJSON(), 'location');
+          //     this.markers.push(latLng.toJSON());
+
+          //  console.log( this.markers)
+          //  this.map.panTo(latLng.toJSON());
+        });
+      });
     } else {
       // async () => {
       this.watch = Geolocation.watchPosition({}, (position, err) => {
@@ -229,8 +215,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   goToMenu() {
-    // this.router.navigate(['/menu']);
-    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
   }
 
   fitToMarkers(markers) {
@@ -256,7 +241,7 @@ export class MapComponent implements AfterViewInit {
 
     this.mapRef.fitBounds(this.bounds);
   }
-  fixLocation(location) {
+  fixLocation(location: { latitude: number; longitude: number }) {
     if (location) return { lat: location.latitude, lng: location.longitude };
   }
 

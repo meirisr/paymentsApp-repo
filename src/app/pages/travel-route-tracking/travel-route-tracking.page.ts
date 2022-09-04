@@ -19,9 +19,9 @@ export class TravelRouteTrackingPage implements OnInit {
   maxHight: number = 20;
   minHight: number;
   allStations: any[] = [];
-  origin;
-  destination;
-  nearestStation = {
+  origin:string;
+  destination:string;
+  nearestStation:{lat:number,lng:number}= {
     lat: 0,
     lng: 0,
   };

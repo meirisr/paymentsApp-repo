@@ -20,7 +20,8 @@ export class PhoneNumberFormComponent implements OnInit {
     this.phoneNumderForm = new FormGroup({
       phone: new FormControl(null, [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(9),
+        Validators.maxLength(9),
       ]),
     });
   }

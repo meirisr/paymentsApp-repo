@@ -95,8 +95,9 @@ export class PaymentPage implements AfterViewInit {
           await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב');
         }
       },
-      (err) => {
+      async(err) => {
         this.utils.dismissLoader(loader);
+        await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב');
         console.log(err);
       }
     );

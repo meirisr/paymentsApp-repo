@@ -7,10 +7,14 @@
 
 <ion-menu side="end" menuId="main" contentId="main-content">
   <ion-header class="ion-no-border">
-    <ion-toolbar>
-      <ion-menu-button  menu="main" slot="end"></ion-menu-button>
+  <div class="toolbar-container">
+    <ion-menu-button  menu="main" slot="end">
+      <ion-img src="../../../assets/menu-btn.svg"></ion-img>
+    </ion-menu-button>
+  </div>
+  
       <!-- color="light" -->
-    </ion-toolbar>
+  
   </ion-header>
   <ion-content dir="{{'dir'|translate}}">
     <ion-list>

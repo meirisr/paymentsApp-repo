@@ -2,8 +2,12 @@
   <!-- <app-header-wave text="נסיעה פעילה"></app-header-wave> -->
   <app-map [height]="mapHight"></app-map>
   <div #travelBody id="travelBody" class="travel-body">
+    <div>
+      <!-- <div class="half-circle"></div> -->
+    </div>
+    
     <div #drowerBar id="drowerBar" (click)="onClick()">
-      <hr class="drowerBar" />
+      <ion-img class="arrow-img" src="../../../assets/arrow-down.svg"></ion-img>
     </div>
 
     <ion-grid class="body-card-1" id="body-card-1">

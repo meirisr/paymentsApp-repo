@@ -1,17 +1,20 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
+  <div class="toolbar-container">
     <app-header-wave [big]="true" [text]="headerText"></app-header-wave>
-    <ion-menu-button  menu="main" slot="end"></ion-menu-button>
-    <!-- color="light" -->
-  </ion-toolbar>
+    
+      <ion-menu-button  menu="main" slot="end">
+        <ion-img src="../../../assets/menu-btn.svg"></ion-img>
+      </ion-menu-button>
+    </div>
+ 
 </ion-header>
 <ion-content dir="{{'dir'|translate}}">
   <div class="card-container ion-activatable" (click)="onClick()">
     <ion-card>
       <ion-card-header>
         <img src="../../../assets/scan.svg" />
-        <ion-card-title> סרוק QR </ion-card-title>
-        <ion-card-subtitle>לתחילת נסיעה</ion-card-subtitle>
+        <ion-card-title>התחל נסיעה</ion-card-title>
+        <!-- <ion-card-subtitle></ion-card-subtitle> -->
       </ion-card-header>
     </ion-card>
     <ion-ripple-effect></ion-ripple-effect>

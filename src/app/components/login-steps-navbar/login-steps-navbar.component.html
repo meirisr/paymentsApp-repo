@@ -1,9 +1,9 @@
 <!-- <ion-row> -->
-  <div style="margin-top:10%; text-align: center;">
-    <h1> הרשמה/ התחברות</h1>
-  <ion-row style="margin-top:10%;" dir="{{'dir' | translate}}">
-    <ion-col style="text-align: -webkit-center;" [ngStyle]="{'color': !textForm && !creditCardForm ? 'var(--ion-color-btn)' : '#000' }"> <div  class="icon-circle">1</div>קוד לנייד</ion-col>
-    <ion-col style="text-align: -webkit-center;" [ngStyle]="{'color': textForm && !creditCardForm ? 'var(--ion-color-btn)' : '#000' }"> <div  class="icon-circle">2</div>פרטים אישיים</ion-col>
-    <ion-col style="text-align: -webkit-center;" [ngStyle]="{'color': creditCardForm ? 'var(--ion-color-btn)' : '#000' }"> <div class="icon-circle">3</div>פרטי אשראי</ion-col>
+  <!-- <div style="margin-top:10%; text-align: center;"> -->
+    <!-- <h1> הרשמה/ התחברות</h1> -->
+  <ion-row style="margin-top:55%; width: 25vw;" dir="{{'dir' | translate}}">
+    <ion-col > <div  class="icon-circle" style="text-align: -webkit-center;" [ngClass]="{'icon-circle-active': !textForm && !creditCardForm }"></div> </ion-col>
+    <ion-col > <div  class="icon-circle" style="text-align: -webkit-center;" [ngClass]="{'icon-circle-active': textForm && !creditCardForm  }"></div> </ion-col>
+    <ion-col > <div class="icon-circle" style="text-align: -webkit-center;" [ngClass]="{'icon-circle-active': creditCardForm  }"></div> </ion-col>
   </ion-row>
-  </div>
+  <!-- </div> -->

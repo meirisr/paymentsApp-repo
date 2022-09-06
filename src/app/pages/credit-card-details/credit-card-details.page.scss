@@ -1,18 +1,19 @@
-.card-details-Form{
+.card-details-Form {
   margin-top: 8vh;
+  margin-left: 10vw;
+  margin-right: 10vw;
 }
 
 ion-modal {
   --width: 290px;
   --height: 40vh;
   --border-radius: 8px;
-  --background:rgda(44,39,45,0.2)
-  &::part(cotent){
-    backgruond-filter:blur(6px)
+  --background:rgda(44, 39, 45, 0.2) &::part(cotent) {
+    backgruond-filter: blur(6px);
   }
 }
-ion-content{
-  --backgruond:transparent;
+ion-content {
+  --backgruond: transparent;
   padding-top: 25vh;
 }
 
@@ -25,24 +26,24 @@ ion-datetime {
 
   // max-width: 350px;
 }
-.datetime-time .time-body{
-  display: none ;
+.datetime-time .time-body {
+  display: none;
 }
-ion-input{
-  --padding-end:10px;
+ion-input {
+  --padding-end: 10px;
 }
-ion-button{
+ion-button {
   --background: var(--ion-color-btn);
 }
-app-header-wave{
+app-header-wave {
   position: fixed;
   top: 0;
- 
+
   opacity: 0.8;
 }
-app-header-wave{
+app-header-wave {
   width: 100%;
 }
-.saveSubmit{
+.saveSubmit {
   width: 100%;
 }

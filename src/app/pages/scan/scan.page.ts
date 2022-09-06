@@ -63,6 +63,7 @@ export class ScanPage implements OnInit {
   async startScanner():Promise<void> {
     const allowed = await this.checkPermission();
     if (allowed) {
+      document.querySelector('body').classList.add('scanBg')
       this.scanActive = true;
       this.result = null;
       BarcodeScanner.hideBackground();

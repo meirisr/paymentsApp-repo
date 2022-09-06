@@ -32,11 +32,23 @@ ion-menu-button{
   position: absolute;
     z-index: 3;
     right: 0;
-    top: 20px;
+    top: 25px;
 }
 ion-card-header{
   text-align: center;
+  padding-top: 25%;
 }
 .card-container{
-  margin: 20vh 20vw;
+  display: flex;
+  justify-content: center;
+
+}
+.card-container ion-card{
+  border-radius: 60%;
+  background: #FFB300;
+  height: 200px;
+    width: 200px;
+}
+ion-card-title{
+  color: #000 !important;
 }

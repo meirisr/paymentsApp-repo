@@ -1,5 +1,12 @@
-ion-content{
-// color:#ffff
+ion-menu-button{
+position: absolute;
+top: 25px;
+right: 0;
+}
+
+.toolbar-container{
+  height:75px !important ;
+  margin-bottom: 5vh !important;
 }
 // ion-icon{
 //   color: #fff;

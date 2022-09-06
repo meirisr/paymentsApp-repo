@@ -1,7 +1,7 @@
 .loginForm {
   position: absolute;
-  top:10vh;
-  padding: 0 7vw;
+  top:25vh;
+  // padding: 0 7vw;
   width: 100vw;
 }
 ion-input{
@@ -14,11 +14,12 @@ h2{
   // margin-right: 10px;
 }
 .fluatingLabel {
-  width: 100%;
+  width: 60vw;
   position: relative;
-  padding: 0 10vw;
+  // padding: 0 10vw;
   margin-top: 10vh;
   color: white;
+  // padding-left: 18vw;
 }
 
 .flutingLabel {
@@ -40,5 +41,13 @@ form ion-input.sc-ion-input-md-h.has-value+span {
   color: #fff;
   z-index: 2;
   margin: -56px 8px 0 8px;
+}
+.text-container{
+  padding-right:7vw ;
+}
+.input-container{
+  display: flex;
+    justify-content: center;
+    width: 100vw;
 }
 

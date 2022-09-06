@@ -15,7 +15,8 @@
 }
 
 .payment-body{
-  height: 62vh
+  height: 62vh;
+background:#091d31;
 }
 
 .item-background-color{
@@ -42,14 +43,12 @@ hr {
   border: 0;
   border-top: 0.5px solid rgba(0, 0, 0, 0.1);
 }
-.drowerBar{
-  border-top: 3px solid rgba(0, 0, 0, 0.1);
-  margin: 1rem;
-  margin-left: 35vw;
-  margin-right: 35vw;
-  border-radius: 30px;
-
+#drowerBar{
+  position: absolute;
+  bottom: 15px;
+  left: 48%;
 }
+
 
 .removeBtn{
   color: var(--color);

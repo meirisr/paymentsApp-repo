@@ -9,12 +9,24 @@
 
 .travel-body{
   position: fixed;
-  background-color: #fff;
-  width: 100vw;
-  transition: 0.5s;
-  top: 75vh;
-  height: 100vh;
-  border-radius: 30px;
+  // background-color: #091d31;
+  // width: 100vw;
+  // transition: 0.5s;
+  top: 10vh;
+  height: 22vh;
+  width: 90vw;
+  // border-radius: 30px;
+  // height:350px;
+  overflow:hidden;
+  // position:relative;
+  margin:0 auto;
+  margin-left: 5vw;
+  // border-top-left-radius:20px;
+  // border-top-right-radius:20px;
+  z-index:1;
+  border-radius: 20px;
+  display: flex;
+    justify-content: center;
  
 }
 
@@ -42,19 +54,26 @@ hr {
   border: 0;
   border-top: 0.5px solid rgba(0, 0, 0, 0.1);
 }
+.arrow-img{
+  width: 20px;
+}
 #drowerBar{
-  height: 10%;
-  padding-top:4% ;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  height: 2vh;
+  display: flex;
+  justify-content: center;
 }
-.drowerBar{
-  border-top: 5px solid rgba(0, 0, 0, 0.1);
-  margin: 1rem;
-  margin-left: 35vw;
-  margin-right: 35vw;
-  border-radius: 30px;
-  margin-top: 0;
+// .drowerBar{
+//   border-top: 5px solid rgba(0, 0, 0, 0.1);
+//   margin: 1rem;
+//   margin-left: 35vw;
+//   margin-right: 35vw;
+//   border-radius: 30px;
+//   margin-top: 0;
 
-}
+// }
 h4{
   margin: 0;
 }
@@ -65,3 +84,29 @@ app-header-wave{
   width: 100%;
 
 }
+// .half-circle{
+//   width: 40px;
+//     height: 30px;
+//     background: #fff;
+//     border-radius: 0 0 150px 150px;
+// }
+.travel-body:before,div:after{
+  content:'';
+  position:absolute;    
+}
+.travel-body:before{   
+  top: -132px;
+  // left: 138px;
+  width: 80px;
+  height: 148px;
+  border-radius: 63%;
+  box-shadow: 0px 0px 0px 10000px #091d31;
+  opacity: 0.8;
+  z-index: -1;
+
+}
+// .travel-body:after{
+//   top:0;left:0;
+//   width:100%; height:100%;
+//   box-shadow: inset 0px -300px 600px -300px #fff;
+// }

@@ -1,8 +1,11 @@
 <form class="loginForm" (ngSubmit)="onSmsCodeFormSubmit()" [formGroup]="smsCodeForm" >
   <div class="code-header">
-    <ion-text class="ion-text-center ">
-      <h1>קוד אימות</h1>
-      <p>קוד אימות תקף ל5 דק' הקרובות</p>
+    <ion-text class="ion-text-right ">
+      <div style="margin-right:7vw;">
+        <h1>קוד אימות</h1>
+        <p>קוד אימות תקף ל5 דק' הקרובות</p>
+      </div>
+     
     </ion-text>
   </div>
   <div class="input-group code-inputs" style="justify-content: center;">
@@ -37,6 +40,9 @@
     <ion-text  (click)="back()" class="ion-text-center"><p>חזור</p></ion-text>
     <app-main-btn style="width:100vw ;"
     type="submit" sms [disabled]="smsCodeForm.invalid" text="{{'pages.login.nextBtn'| translate}}"></app-main-btn>
-   
+    <div style="display: flex;
+     justify-content:center;">
+      <app-login-steps-navbar [textForm]="true"></app-login-steps-navbar>
+     </div>
   
 </form>

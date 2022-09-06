@@ -27,7 +27,12 @@
   border-radius: 20px;
   display: flex;
     justify-content: center;
+    transition: height 300ms;
+
  
+}
+.isOpen{
+  height: 80vh;
 }
 
 .item-background-color{
@@ -56,6 +61,7 @@ hr {
 }
 .arrow-img{
   width: 20px;
+  content: url(../../../assets/arrow-down.svg);
 }
 #drowerBar{
   position: absolute;

@@ -16,7 +16,7 @@ export class TravelRouteTrackingPage implements OnInit {
   @ViewChild('dated') datedRef: ElementRef<HTMLElement>;
   mapHight: string = '100vh';
   startHight: number = 10;
-  maxHight: number = 20;
+  maxHight: number = 22;
   minHight: number;
   allStations: any[] = [];
   origin:string;
@@ -54,7 +54,7 @@ export class TravelRouteTrackingPage implements OnInit {
 
   ionViewDidEnter(): void {
     this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
-    this.travelBodyRef.nativeElement.style.height = 22 + 'vh';
+    // this.travelBodyRef.nativeElement.style.height = 22 + 'vh';
     this.minHight = this.plt.height();
 
     const gesture: Gesture = this.gestureCtrl.create(
@@ -62,8 +62,8 @@ export class TravelRouteTrackingPage implements OnInit {
         el: this.travelBodyRef.nativeElement,
         threshold: 0,
         gestureName: 'my-gesture',
-        onMove: (ev) => this.onMove(ev),
-        onEnd: (ev) => this.onEnd(ev),
+        // onMove: (ev) => this.onMove(ev),
+        // onEnd: (ev) => this.onEnd(ev),
       },
       true
     );
@@ -85,10 +85,10 @@ export class TravelRouteTrackingPage implements OnInit {
   onClick(): void {
     const position = document.getElementById('drowerBar');
     const top = position.getBoundingClientRect().top;
-    const height=this.travelBodyRef.nativeElement.style.height;
-    this.travelBodyRef.nativeElement.style.height =
-    height=='22vh' ? 80 + 'vh' : 22 + 'vh';
-    console.log(height);
+
+   
+     this.travelBodyRef.nativeElement.classList.toggle('isOpen')
+   
     // this.travelBodyRef.nativeElement.style.height =
     //   this.convertPXToVh(top) > 60 ? 10 + 'vh' : 93 + 'vh';
   }

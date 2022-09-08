@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AlertService } from 'src/app/services/utils/alert.service';
+import { Subscription } from 'rxjs';
 
 const HOTEL_ID = 'my-hotel';
 @Component({
@@ -17,6 +18,7 @@ const HOTEL_ID = 'my-hotel';
   styleUrls: ['./scan.page.scss'],
 })
 export class ScanPage implements OnInit {
+  private subscriptions: Subscription[] = [];
   isFlashAvailable: boolean = true;
   isFlashOn: boolean = false;
   scanActive: boolean = false;
@@ -75,8 +77,8 @@ export class ScanPage implements OnInit {
         console.log(result);
         this.stopScanner();
         let loader = this.utils.showLoader();
-        this.travelProcessService
-          .getTravelDetails(this.userLocation, 7703969)
+      const TravelDetails$= this.travelProcessService
+          .getTravelDetails(this.userLocation, 7782069)
           .subscribe(
             async (data) => {
               this.utils.dismissLoader(loader);
@@ -96,11 +98,13 @@ export class ScanPage implements OnInit {
             async (err) => {
               this.utils.dismissLoader(loader);
               console.log(err);
+              await this.utils.presentModal('שגיעה', 'לא היה ניתן למצוא מסלול');
               setTimeout(() => {
                 this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
               }, 1000);
             }
           );
+          this.subscriptions.push(TravelDetails$)
       }
     }
   }
@@ -163,5 +167,9 @@ export class ScanPage implements OnInit {
   }
   goTomenu(): void {
     this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+  }
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    
   }
 }

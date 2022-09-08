@@ -46,6 +46,9 @@ form .input-group {
 form ion-input.sc-ion-input-md-h {
   border-bottom: 2px solid lightgray;
 }
+form ion-input.sc-ion-input-md-h:hover{
+  border-bottom: 2px solid #FFB300;
+}
 
 .ion-text-center {
   text-align: center;

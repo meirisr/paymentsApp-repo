@@ -4,8 +4,10 @@ import { Capacitor } from '@capacitor/core';
 import { Observable, Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
-const image: string = '../../../assets/images/bus.png';
+const BusImage: string = '../../../assets/images/bus.png';
+const circleImage: string = '../../../assets/empty-circle.svg';
 
 @Component({
   selector: 'app-map',
@@ -22,7 +24,7 @@ export class MapComponent implements AfterViewInit {
   @Input() height: string;
   @Input() path: [];
   @Input() nearesStationth;
-
+  googleApiLoaded:boolean=false;
   public lat: any;
   public lng: any;
   watch: any;
@@ -48,7 +50,7 @@ export class MapComponent implements AfterViewInit {
       },
       {
         elementType: "labels.text.fill",
-        stylers: [{ color: "#83d7ee" }],
+        stylers: [{ color: "#9e9e9e" }],
       },
       {
         elementType: "labels.text.stroke",
@@ -87,7 +89,7 @@ export class MapComponent implements AfterViewInit {
       {
         featureType: "road.arterial",
         elementType: "labels.text.fill",
-        stylers: [{ color: "#83d7ee" }],
+        stylers: [{ color: "#9e9e9e" }],
       },
       {
         featureType: "road.highway",
@@ -97,12 +99,12 @@ export class MapComponent implements AfterViewInit {
       {
         featureType: "road.highway",
         elementType: "labels.text.fill",
-        stylers: [{ color: "#FFB300" }],
+        stylers: [{ color: "#9e9e9e" }],
       },
       {
         featureType: "road.local",
         elementType: "labels.text.fill",
-        stylers: [{ color: "#83d7ee" }],
+        stylers: [{ color: "#9e9e9e" }],
       },
       {
         featureType: "transit.line",
@@ -128,9 +130,15 @@ export class MapComponent implements AfterViewInit {
   }
   constructor(
     private navCtrl: NavController,
+    private utils: UtilsService,
     private travelProcessService: TravelProcessService,
     private ngZone: NgZone
-  ) {}
+  ) {
+    const loadgoogleApi=this.utils.apiLoaded.subscribe((res)=>{
+      this.googleApiLoaded=res;
+    })
+    this.subscriptions.push(loadgoogleApi)
+  }
 
   ngAfterViewInit() {
     this.initMap();
@@ -149,12 +157,16 @@ export class MapComponent implements AfterViewInit {
     };
     this.watchmarkerOptions = {
       draggable: false,
-      icon: image,
+      icon: circleImage,
+    };
+    this.markerOptions = {
+      draggable: false,
+      icon: BusImage,
     };
 
     this.polylineOptions = {
-      strokeColor: '#50c8ff',
-      strokeWeight: 6,
+      strokeColor: '#191919',
+      strokeWeight: 10,
       strokeOpacity: 1.0,
     };
     console.log(this.mapRef);
@@ -163,7 +175,6 @@ export class MapComponent implements AfterViewInit {
       let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
         async (data) => {
           if (!data) return;
-
           this.path = data.Coordinates;
           this.nearesStationth = this.fixLocation(
             data.nearestStation?.stationLocation

@@ -14,7 +14,7 @@ export class PaymentPage implements AfterViewInit {
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('paymentBody') paymentBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
-  mapHight: string = '25vh';
+  mapHight: string = '100vh';
   origin;
   destination;
   nearestStation = {

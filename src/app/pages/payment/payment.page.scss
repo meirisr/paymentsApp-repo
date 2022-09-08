@@ -4,20 +4,59 @@
 }
 .body-card-1{
   justify-content: end;
-  height: 60%;
+  // height: 60%;
 }
 .body-card-2{
   text-align: end;
-  margin-right: 5%;
-  margin-top: 5%;
+  // margin-right: 5%;
+  // margin-top: 5%;
 
 
 }
 
 .payment-body{
-  height: 62vh;
-background:#091d31;
+  position: fixed;
+  top: 7vh;
+  height: 42vh;
+  width: 90vw;
+  overflow: hidden;
+  margin-left: 5vw;
+  z-index: 1;
+  /* display: flex; */
+  border-radius: 10px;
+  transition: height 300ms;
+  
 }
+.payment-body:before,
+div:after {
+  content:"";
+  position: absolute;
+}
+.payment-body:before {
+  top: -132px;
+  width: 80px;
+  height: 148px;
+
+  border-radius: 63%;
+  box-shadow: 0px 0px 0px 10000px #091d31;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+}
+// .payment-body:before,
+// div:after {
+//   content:"";
+//   position: absolute;
+// }
+// .payment-body:before {
+//   top: -132px;
+//   width: 80px;
+//   height: 148px;
+//   border-radius: 63%;
+//   box-shadow: 0px 0px 0px 10000px #091d31;
+//   // opacity: 0.8;
+//   z-index: -1;
+// }
 
 .item-background-color{
   --ion-item-background: #50c8ff;
@@ -42,6 +81,7 @@ hr {
   
   border: 0;
   border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+  margin:0 5%;
 }
 #drowerBar{
   position: absolute;
@@ -64,4 +104,9 @@ hr {
     --background-activated-opacity: 0;
     --background-focused-opacity: 0.12;
     --background-hover-opacity: 0.04;
+}
+.footer-container {
+  position: absolute;
+  bottom: 3vh;
+  display: flex;
 }

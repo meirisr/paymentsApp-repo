@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { PopupModalComponent } from 'src/app/components/popup-modal/popup-modal.component';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
@@ -19,7 +19,7 @@ const USER_LANGUAGE = 'user-language';
 })
 export class UtilsService {
   ischecked: string = 'false';
-  apiLoaded: boolean = false;
+  apiLoaded: BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
 
   defaultLang: string;
 
@@ -102,7 +102,7 @@ export class UtilsService {
         catchError(() => of(false))
       )
       .subscribe((result) => {
-        this.apiLoaded = result;
+        this.apiLoaded.next(true)
       });
   }
   async showLoader() {

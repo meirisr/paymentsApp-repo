@@ -41,7 +41,7 @@ export class IntroPage implements OnInit {
   }
   async next(): Promise<void> {
     if (this.logInServer.isCardHasDetails.value) {
-      this.utils.presentModal('ברוכים הבאים', '');
+      // this.utils.presentModal('ברוכים הבאים', '');
       this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
     } else {
       this.utils.presentModal('', 'עליך להכניס פרטי אשראי');

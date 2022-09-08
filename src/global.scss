@@ -63,6 +63,14 @@ ion-text {
   --width: 90vw;
   --height: 40vh;
   --border-radius: 8px;
+  border: 1px solid #FFB300;
+  border-radius: 10px;
+  background-color:#091d31;
+}
+app-popup-modal.ion-page{
+  // border: 1px solid #FFB300;
+    border-radius: 10px;
+    background-color: #091d31;
 }
 
 .errors {

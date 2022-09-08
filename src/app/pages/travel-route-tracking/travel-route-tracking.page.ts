@@ -14,15 +14,15 @@ export class TravelRouteTrackingPage implements OnInit {
   @ViewChild('travelBody') travelBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   @ViewChild('dated') datedRef: ElementRef<HTMLElement>;
-  isShow:boolean=true;
+  isShow: boolean = true;
   mapHight: string = '100vh';
   startHight: number = 8;
   maxHight: number = 22;
   minHight: number;
   allStations: any[] = [];
-  origin:string;
-  destination:string;
-  nearestStation:{lat:number,lng:number}= {
+  origin: string;
+  destination: string;
+  nearestStation: { lat: number; lng: number } = {
     lat: 0,
     lng: 0,
   };
@@ -70,47 +70,43 @@ export class TravelRouteTrackingPage implements OnInit {
     gesture.enable();
   }
   onMove(detail) {
-    const position = document.getElementById('body-card-1');
-    if(detail.deltaY>0){
-      this.travelBodyRef.nativeElement.classList.add('OpenBig')
-      position.scrollTop=0;
-    }else{
-      // this.travelBodyRef.nativeElement.classList.remove('OpenBig')
+    if (detail.deltaY > 0) {
+      this.travelBodyRef.nativeElement.classList.add('OpenBig');
+
+      // if(!position.scrollTop && detail.deltaY>0){
+      //   this.travelBodyRef.nativeElement.classList.add('OpenBig')
+      // }else{
+      //   this.travelBodyRef.nativeElement.classList.remove('OpenBig')
+      // }
+      // const position = document.getElementById('body-card-1');
+
+      // if (detail.currentY > this.minHight - 40 || detail.currentY < 70) {
+      //   return;
+      // }
+
+      // if (!position.scrollTop && detail.deltaY > 0) {
+      //   this.travelBodyRef.nativeElement.style.top = 93 + 'vh';
+      // }
     }
-    // if(!position.scrollTop && detail.deltaY>0){
-    //   this.travelBodyRef.nativeElement.classList.add('OpenBig')
-    // }else{
-    //   this.travelBodyRef.nativeElement.classList.remove('OpenBig')
-    // }
-    // const position = document.getElementById('body-card-1');
-
-    // if (detail.currentY > this.minHight - 40 || detail.currentY < 70) {
-    //   return;
-    // }
-
-    // if (!position.scrollTop && detail.deltaY > 0) {
-    //   this.travelBodyRef.nativeElement.style.top = 93 + 'vh';
-    // }
   }
   onEnd(detail) {}
-  
-  
+
   onClick(): void {
     // const position = document.getElementById('drowerBar');
     // const top = position.getBoundingClientRect().top;
-    
-     this.travelBodyRef.nativeElement.classList.toggle('OpenBig')
-     const position = document.getElementById('body-card-1');
-     position.scrollTop=0;
-   
+
+    this.travelBodyRef.nativeElement.classList.toggle('OpenBig');
+    const position = document.getElementById('body-card-1');
+    position.scrollTop = 0;
+
     // this.travelBodyRef.nativeElement.style.height =
     //   this.convertPXToVh(top) > 60 ? 10 + 'vh' : 93 + 'vh';
   }
-  showHideTravelBody(){
-    this.isShow=!this.isShow;
-    this.travelBodyRef.nativeElement.classList.toggle('close')
+  showHideTravelBody() {
+    this.isShow = !this.isShow;
+    this.travelBodyRef.nativeElement.classList.toggle('close');
     const position = document.getElementById('body-card-1');
-    position.scrollTop=0
+    position.scrollTop = 0;
     // this.showHideIconRef.nativeElement.classList.toggle('show')
   }
 

@@ -148,9 +148,9 @@ export class UtilsService {
     modal.present();
 
     setTimeout(() => {
-      modal.dismiss({
-        dismissed: true,
-      });
+      // modal.dismiss({
+      //   dismissed: true,
+      // });
     }, 2000);
   }
 }

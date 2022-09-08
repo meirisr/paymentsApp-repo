@@ -20,19 +20,42 @@
     </ion-item>
 
     <ion-grid class="body-card-1" id="body-card-1">
-      
-      <ion-item class="item-background" *ngFor="let station of allStations" style="direction: rtl">
-        <ion-avatar slot="start">
+       <div *ngFor="let station of allStations" >
+
+    
+      <ion-item class="item-background"  style="direction: rtl">
+        <div slot="start" >
           <img
             class="travel-info-icons"
             src="../../../assets/empty-circle.svg"
           />
-        </ion-avatar>
+         
+        </div>
           <ion-label>
-            <h2>{{station.stationName}}</h2>
-            <h3>{{station.stationCityName||''}}</h3>
+              {{station.stationName}} 
+              {{station.stationCityName||''}}
           </ion-label>
       </ion-item>
+      <div class="item-background" style="display: flex;
+      justify-content: end;
+      padding-right: 5%;">
+        <div slot="start" style="display:grid;">
+        <img
+        class="travel-info-icons-small"
+        src="../../../assets/empty-circle.svg"
+      />
+        <img
+        class="travel-info-icons-small"
+        src="../../../assets/empty-circle.svg"
+      />
+      <img
+        class="travel-info-icons-small"
+        src="../../../assets/empty-circle.svg"
+      />
+    </div>
+      </div>
+    </div>
+    
       <!-- / -->
       <!-- <ion-row *ngFor="let station of allStations" style="direction: rtl">
         <ion-col>

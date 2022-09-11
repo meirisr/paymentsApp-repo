@@ -83,7 +83,7 @@ export class ScanPage implements OnInit {
         let loader = this.utils.showLoader();
         let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
         const TravelDetails$ = this.travelProcessService
-          .getTravelDetails(this.userLocation, 7726869)
+          .getTravelDetails(this.userLocation, 	7769969)
           .subscribe(
             async (data) => {
               this.utils.dismissLoader(loader);

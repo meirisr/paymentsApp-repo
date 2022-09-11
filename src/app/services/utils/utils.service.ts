@@ -12,6 +12,7 @@ import { catchError, map } from 'rxjs/operators';
 import { BehaviorSubject, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TravelProcessService } from '../travel-process.service';
+import { StorageService } from '../storage.service';
 const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
 const ROUTE_DETAILS = 'route-details';
@@ -31,6 +32,7 @@ export class UtilsService {
     private alertController: AlertController,
     private translate: TranslateService,
     private modalController: ModalController,
+    private storageService: StorageService,
     private travelProcessService: TravelProcessService,
   ) {}
 
@@ -94,9 +96,11 @@ export class UtilsService {
     }
   }
   async loadRoute(){
-    const routeData = await Storage.get({ key: ROUTE_DETAILS });
-    if(routeData.value){
-     this.travelProcessService.routeInfo.next(routeData.value);
+    const routeData = JSON.parse(
+      (await this.storageService.getRuteDetails()).value
+    );
+    if(routeData){
+     this.travelProcessService.routeInfo.next(routeData);
     }else{
 
       this.travelProcessService.routeInfo.next(false);

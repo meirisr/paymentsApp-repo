@@ -1,5 +1,9 @@
 
 <app-back-btn (click)="goToMenu()"></app-back-btn>
+<div *ngIf="googleApiLoaded">
+
+
+
 <google-map #map id="map" [height]="height"
 [options]="mapOptions"
 [center]="mapOptions.center"
@@ -14,3 +18,4 @@ width="100vw"   (mapClick)="moveMap($event)"
 [options]="markerOptions"></map-marker>
 <map-polyline [path]="path" [options]="polylineOptions"></map-polyline>
 </google-map>
+</div>

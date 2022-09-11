@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class TravelProcessService {
   firstStation: any;
   lastStation: any;
   nearestStation: any;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private storageService: StorageService,) {}
 
   public paymentTranportation(): Observable<any> {
     return this.http
@@ -70,21 +71,23 @@ export class TravelProcessService {
               this.routeInfo.next(false);
               return false;
             } 
-            this.routeInfo.next({
-              Coordinates: data?.data?.drive?.Coordinates.map((element) => {
-                return this.creatPathArray(element);
-              }),
-              stationArray: data.data.drive.stationArray,
-              firstStation:
-                data.data.drive.firstStation.stationIndex !== -1
-                  ? data.data.drive.firstStation
-                  : null,
-              lastStation:
-                data.data.drive.lastStation.stationIndex !== -1
-                  ? data.data.drive.lastStation
-                  : null,
-              nearestStation: data.data.nearestStationOnRoute,
-            });
+            const routeData={ Coordinates: data?.data?.drive?.Coordinates.map((element) => {
+              return this.creatPathArray(element);
+            }),
+            stationArray: data.data.drive.stationArray,
+            firstStation: data.data.drive.firstStation.stationIndex !== -1
+                ? data.data.drive.firstStation
+                : null,
+            lastStation: data.data.drive.lastStation.stationIndex !== -1
+                ? data.data.drive.lastStation
+                : null,
+            nearestStation: data.data.nearestStationOnRoute,
+          }
+            this.routeInfo.next(
+              routeData
+             );
+             this.storageService.setRouteDetails(routeData);
+          
             return data;
           })
         );

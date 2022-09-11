@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Gesture, GestureController, NavController, Platform } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { Subscription } from 'rxjs';
+import { StorageService } from 'src/app/services/storage.service';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-travel-route-tracking',
@@ -33,7 +35,9 @@ export class TravelRouteTrackingPage implements OnInit {
     private plt: Platform,
     private gestureCtrl: GestureController,
     public navCtrl: NavController,
-    private travelProcessService: TravelProcessService
+    private storageService: StorageService,
+    private travelProcessService: TravelProcessService,
+    
   ) {
     // this.platform.backButton.subscribeWithPriority(10, () => {
     //   this.nav.navigateBack('/menu', { replaceUrl: true });
@@ -113,6 +117,7 @@ export class TravelRouteTrackingPage implements OnInit {
   }
   onEndTrip(){
     this.travelProcessService.routeInfo.next(false);
+    this.storageService.deleteRouteDetails();
     this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
   }
   showHideTravelBody() {

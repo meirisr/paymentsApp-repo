@@ -11,8 +11,10 @@ import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { BehaviorSubject, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { TravelProcessService } from '../travel-process.service';
 const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
+const ROUTE_DETAILS = 'route-details';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +30,8 @@ export class UtilsService {
     public loadingController: LoadingController,
     private alertController: AlertController,
     private translate: TranslateService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private travelProcessService: TravelProcessService,
   ) {}
 
   onToggleColorTheme(event) {
@@ -89,6 +92,25 @@ export class UtilsService {
       this.defaultLang = 'he';
       return 'he';
     }
+  }
+  async loadRoute(){
+    const routeData = await Storage.get({ key: ROUTE_DETAILS });
+    if(routeData.value){
+     this.travelProcessService.routeInfo.next(routeData.value);
+    }else{
+
+      this.travelProcessService.routeInfo.next(false);
+    }
+    console.log(routeData)
+    // if (userLang.value === 'en') {
+    //   this.translate.use('en');
+    //   this.defaultLang = 'en';
+    //   return 'en';
+    // } else {
+    //   this.translate.use('he');
+    //   this.defaultLang = 'he';
+    //   return 'he';
+    // }
   }
   async loadGoogleMap(): Promise<void> {
     const key = environment.googleMapsKey;

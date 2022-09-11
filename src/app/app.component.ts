@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
     this.utils.getUserTheme();
     this.utils.getUserLanguage();
     this.utils.loadGoogleMap();
+    this.utils.loadRoute();
     this.authenticationService.loadToken();
   }
   hideSplashScreen = () => {

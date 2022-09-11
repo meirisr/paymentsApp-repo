@@ -9,6 +9,7 @@ const TOKEN_KEY = 'my-token';
 const REFRESH_TOKEN_KEY = 'token-refresh';
 const HEADER_HOTELS = 'hotels';
 const USER_DETAILS = 'user-details';
+const ROUTE_DETAILS = 'route-details';
 const CARD_DETAILS = 'card-details';
 const HOTEL_ID = 'my-hotel';
 const userStorege = [
@@ -21,6 +22,7 @@ const userStorege = [
   USER_DETAILS,
   CARD_DETAILS,
   HOTEL_ID,
+  ROUTE_DETAILS
 ];
 
 export interface UserDetails {
@@ -57,6 +59,9 @@ export class StorageService {
   public setHotelId = (details: string): void => {
     this.setStorege(HOTEL_ID, details);
   };
+  public setRouteDetails = (details): void => {
+    this.setStorege(ROUTE_DETAILS,JSON.stringify(details));
+  };
 
   public getToken = (): Promise<GetResult> => this.getStorege(TOKEN_KEY);
 
@@ -65,11 +70,14 @@ export class StorageService {
 
   public getUserDetails = (): Promise<GetResult> =>
     this.getStorege(USER_DETAILS);
+  public getRuteDetails = (): Promise<GetResult> =>
+    this.getStorege(ROUTE_DETAILS);
   public getCreditCard4Dig = (): Promise<GetResult> =>
     this.getStorege(CARD_DETAILS);
   public getHotelId = (): Promise<GetResult> => this.getStorege(HOTEL_ID);
 
   public deleteToken = (): void => this.deleteAllStorege();
+  public deleteRouteDetails = (): void => {Storage.remove({ key: ROUTE_DETAILS });}
 
   public setStorege(k: string, v: string): Promise<any> {
     return Storage.set({ key: k, value: v });

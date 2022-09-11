@@ -166,7 +166,7 @@ export class MapComponent implements AfterViewInit {
 
     this.polylineOptions = {
       strokeColor: '#191919',
-      strokeWeight: 10,
+      strokeWeight: 6,
       strokeOpacity: 1.0,
     };
     console.log(this.mapRef);

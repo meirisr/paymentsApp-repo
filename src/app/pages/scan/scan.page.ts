@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
-import {BarcodeScanner,SupportedFormat} from '@capacitor-community/barcode-scanner';
+import {
+  BarcodeScanner,
+  SupportedFormat,
+} from '@capacitor-community/barcode-scanner';
 import { Capacitor } from '@capacitor/core';
 import { NavController } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
@@ -62,10 +65,10 @@ export class ScanPage implements OnInit {
     this.scanNotAllowed = false;
   }
 
-  async startScanner():Promise<void> {
+  async startScanner(): Promise<void> {
     const allowed = await this.checkPermission();
     if (allowed) {
-      document.querySelector('body').classList.add('scanBg')
+      document.querySelector('body').classList.add('scanBg');
       this.scanActive = true;
       this.result = null;
       BarcodeScanner.hideBackground();
@@ -76,20 +79,23 @@ export class ScanPage implements OnInit {
         this.result = result.content;
         console.log(result);
         this.stopScanner();
+        document.querySelector('body').classList.remove('scanBg');
         let loader = this.utils.showLoader();
         let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
-        const TravelDetails$= this.travelProcessService
-          .getTravelDetails(this.userLocation, 	7726869)
+        const TravelDetails$ = this.travelProcessService
+          .getTravelDetails(this.userLocation, 7726869)
           .subscribe(
             async (data) => {
               this.utils.dismissLoader(loader);
               console.log(data);
-              if(!data){
+              if (!data) {
                 this.utils.dismissLoader(loader);
-                await this.utils.presentModal('שגיעה', 'לא היה ניתן למצוא מסלול');
-                  this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
-              }
-              else{
+                await this.utils.presentModal(
+                  'שגיעה',
+                  'לא היה ניתן למצוא מסלול'
+                );
+                this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+              } else {
                 this.navCtrl.navigateRoot(['travel-route-tracking'], {
                   replaceUrl: true,
                 });
@@ -98,9 +104,9 @@ export class ScanPage implements OnInit {
               }
               // if (hotelId) {
               //   this.navCtrl.navigateRoot(['payment'], { replaceUrl: true });
-              // } 
+              // }
               // else {
-              
+
               // }
             },
             async (err) => {
@@ -112,8 +118,7 @@ export class ScanPage implements OnInit {
               }, 1000);
             }
           );
-          this.subscriptions.push(TravelDetails$)
-          
+        this.subscriptions.push(TravelDetails$);
       }
     }
   }
@@ -179,6 +184,5 @@ export class ScanPage implements OnInit {
   }
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-    
   }
 }

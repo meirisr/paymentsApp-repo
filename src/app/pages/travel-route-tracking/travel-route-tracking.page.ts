@@ -15,6 +15,7 @@ export class TravelRouteTrackingPage implements OnInit {
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   @ViewChild('dated') datedRef: ElementRef<HTMLElement>;
   isShow: boolean = true;
+  noData:boolean=false;
   mapHight: string = '100vh';
   startHight: number = 8;
   maxHight: number = 22;
@@ -39,11 +40,17 @@ export class TravelRouteTrackingPage implements OnInit {
     // });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.noData=false;
+  }
   ngAfterViewInit(): void {
     let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
       async (data) => {
-        if (!data) return;
+        console.log(data)
+        if (!data){
+         this.noData=true;
+          return;
+        }
         this.origin = data.firstStation;
         this.destination = data.lastStation;
         this.allStations = data.stationArray;

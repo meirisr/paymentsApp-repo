@@ -14,8 +14,9 @@ const HOTEL_ID = 'my-hotel';
   styleUrls: ['./intro.page.scss'],
 })
 export class IntroPage implements OnInit {
-  items: any[] = [];
+  items: any[] = [{id:'333',name:'meir'}];
   tempitems: any[] = [];
+  selectedHotel:{id:string,name:string}={id:'' , name:''};
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -39,7 +40,7 @@ export class IntroPage implements OnInit {
         };
     });
   }
-  async next(): Promise<void> {
+  async onCreditCardClick(): Promise<void> {
     if (this.logInServer.isCardHasDetails.value) {
       // this.utils.presentModal('ברוכים הבאים', '');
       this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
@@ -59,27 +60,30 @@ export class IntroPage implements OnInit {
       }),
     ];
   }
-  async onClickHotel(item: { id: string }): Promise<void> {
-    let loader = this.utils.showLoader();
+  async onSelectHotel(): Promise<void>{
+    const hotelId= this.selectedHotel.id;
+    const hotelName= this.selectedHotel.name;
     this.logInServer
-      .isUserPermitToOrganization(item.id)
-      .subscribe(async (data) => {
-        this.utils.dismissLoader(loader);
-        if (data) {
-          await this.utils.presentModal(
-            'ברוכים הבאים',
-            `הנך רשום ב ${item.id}`
-          );
-          this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
-        } else {
-          await this.utils.presentModal('לא נמצא', 'עליך להכנס עם כרטיס אשראי');
-        }
-        console.log(data);
-      });
-    (err: Error) => {
-      this.utils.dismissLoader(loader);
-      console.log(err);
-    };
+    .isUserPermitToOrganization(hotelId)
+    .subscribe(async (data) => {
+      if (data) {
+        await this.utils.presentModal(
+          'ברוכים הבאים',
+          `הנך רשום ב ${hotelName}`
+        );
+        this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+      } else {
+        await this.utils.presentModal('לא נמצא', 'עליך להכנס עם כרטיס אשראי');
+      }
+    });
+  (err: Error) => {
+    console.log(err);
+  };
+  }
+  async onClickHotel(event: Event, item:{id:string,name:string}): Promise<void> {
+    const element= (event.target as HTMLElement )
+    this.selectedHotel=item;
+  
     // await this.utils.presentModal('ברוכים הבאים',`הנך רשום ב ${item.id}`);
     // this.nav.navigateForward('/menu', { animationDirection: 'forward', animated: true })
   }

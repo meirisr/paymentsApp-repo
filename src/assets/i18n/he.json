@@ -6,7 +6,8 @@
       "registration":"הרשמה חד פעמי",
       "scan":"סורקים קוד",
       "travel":"מתחילים נסיעה",
-      "nextBtn":"כניסה עם כרטיס אשראי"
+      "nextBtn":"אישור",
+      "creditCard":"הרשמה עצמאית - תשלום פרטי"
       },
       "login":{
         "phoneInputText":"התחברות",

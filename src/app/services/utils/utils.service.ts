@@ -94,7 +94,7 @@ export class UtilsService {
     const key = environment.googleMapsKey;
     this.httpClient
       .jsonp(
-        `https://maps.googleapis.com/maps/api/js?key=${key}&language=en`,
+        `https://maps.googleapis.com/maps/api/js?key=${key}&language=he`,
         'callback'
       )
       .pipe(
@@ -107,7 +107,7 @@ export class UtilsService {
   }
   async showLoader() {
     const loading = await this.loadingController.create({
-      // message: 'Loading...',
+      message: 'Loading...',
       // duration: 3000,
       spinner: 'bubbles',
       cssClass: 'loader',
@@ -148,9 +148,9 @@ export class UtilsService {
     modal.present();
 
     setTimeout(() => {
-      // modal.dismiss({
-      //   dismissed: true,
-      // });
+      modal.dismiss({
+        dismissed: true,
+      });
     }, 2000);
   }
 }

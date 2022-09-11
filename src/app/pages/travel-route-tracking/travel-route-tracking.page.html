@@ -1,6 +1,6 @@
 <ion-content class="no-scroll">
   <!-- <app-header-wave text="נסיעה פעילה"></app-header-wave> -->
-  <app-map [height]="mapHight"></app-map>
+  <app-map [height]="mapHight"  [path]="coordinates" [nearesStationth]="nearestStation"></app-map>
   <div class="open-travelBody">
      <ion-fab slot="fixed">
     <ion-fab-button size="small" color="Opacity"><ion-icon [class.show]="isShow" name="add-outline" (click)="showHideTravelBody()"></ion-icon></ion-fab-button>
@@ -75,5 +75,6 @@
     style="width: 100vw"
     type="click"
     text="סיום נסיעה"
+    (click)="onEndTrip()"
   ></app-main-btn>
 </div>

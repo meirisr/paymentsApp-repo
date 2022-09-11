@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Gesture, GestureController, Platform } from '@ionic/angular';
+import { Gesture, GestureController, NavController, Platform } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { Subscription } from 'rxjs';
 
@@ -19,6 +19,7 @@ export class TravelRouteTrackingPage implements OnInit {
   startHight: number = 8;
   maxHight: number = 22;
   minHight: number;
+  coordinates: [] = [];
   allStations: any[] = [];
   origin: string;
   destination: string;
@@ -30,6 +31,7 @@ export class TravelRouteTrackingPage implements OnInit {
   constructor(
     private plt: Platform,
     private gestureCtrl: GestureController,
+    public navCtrl: NavController,
     private travelProcessService: TravelProcessService
   ) {
     // this.platform.backButton.subscribeWithPriority(10, () => {
@@ -101,6 +103,10 @@ export class TravelRouteTrackingPage implements OnInit {
 
     // this.travelBodyRef.nativeElement.style.height =
     //   this.convertPXToVh(top) > 60 ? 10 + 'vh' : 93 + 'vh';
+  }
+  onEndTrip(){
+    this.travelProcessService.routeInfo.next(false);
+    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
   }
   showHideTravelBody() {
     this.isShow = !this.isShow;

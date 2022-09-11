@@ -6,7 +6,8 @@
       "registration":"One-time registration",
       "scan":"Scan",
       "travel":"And travel",
-      "nextBtn":"Let Start"
+      "nextBtn":"Confirmation",
+      "creditCard":"Private payment"
     },
     "login":{
 "phoneInputText":"Enter Phone Number",

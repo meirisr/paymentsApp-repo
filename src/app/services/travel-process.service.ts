@@ -57,14 +57,18 @@ export class TravelProcessService {
         )
         .pipe(
           map((data: any) => {
-            console.log(data);
+            // console.log(data);
             if (data.status != 'Success') {
               this.routeInfo.next(false);
-              return;
+              return false;
             }
             if(!!!data.data.drive){
               this.routeInfo.next(false);
-              return;
+              return false;
+            } 
+            if(!data.data.drive.Coordinates.length){
+              this.routeInfo.next(false);
+              return false;
             } 
             this.routeInfo.next({
               Coordinates: data?.data?.drive?.Coordinates.map((element) => {
@@ -81,6 +85,7 @@ export class TravelProcessService {
                   : null,
               nearestStation: data.data.nearestStationOnRoute,
             });
+            return data;
           })
         );
     } catch (error) {

@@ -77,23 +77,31 @@ export class ScanPage implements OnInit {
         console.log(result);
         this.stopScanner();
         let loader = this.utils.showLoader();
-      const TravelDetails$= this.travelProcessService
-          .getTravelDetails(this.userLocation, 7782069)
+        let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
+        const TravelDetails$= this.travelProcessService
+          .getTravelDetails(this.userLocation, 	7726869)
           .subscribe(
             async (data) => {
               this.utils.dismissLoader(loader);
               console.log(data);
-
-              let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
-              if (hotelId) {
-                this.navCtrl.navigateRoot(['payment'], { replaceUrl: true });
-              } else {
+              if(!data){
+                this.utils.dismissLoader(loader);
+                await this.utils.presentModal('שגיעה', 'לא היה ניתן למצוא מסלול');
+                  this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+              }
+              else{
                 this.navCtrl.navigateRoot(['travel-route-tracking'], {
                   replaceUrl: true,
                 });
 
                 await this.utils.presentModal('נסיעה טובה', '');
               }
+              // if (hotelId) {
+              //   this.navCtrl.navigateRoot(['payment'], { replaceUrl: true });
+              // } 
+              // else {
+              
+              // }
             },
             async (err) => {
               this.utils.dismissLoader(loader);
@@ -105,6 +113,7 @@ export class ScanPage implements OnInit {
             }
           );
           this.subscriptions.push(TravelDetails$)
+          
       }
     }
   }

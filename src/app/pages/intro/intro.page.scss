@@ -60,7 +60,10 @@ ion-footer{
   margin: 0px 15px 30px;
   height: 45px;
   --border-color:var(--ion-color-btn);
+  // --border-color:none;
+  // --border-width: 0px !important;
   --color:#fff;
+  //  border: none;
   --border-radius: 10px ;
   // font-size: 20px;
   
@@ -76,7 +79,7 @@ ion-footer{
   text-align: center;
 }
 ion-item{
-  margin: 10px 0;
+  margin: 2vh 0;
 }
 
 .icon-list{
@@ -89,7 +92,22 @@ ion-item{
   padding: 0px 15px;
 }
 .searchInput{
-  border: 1px solid #D8D8D8;
-  border-radius: 10px;
+  margin-top: 5vh;
+  border-bottom: 1px solid #D8D8D8;
+  /* border-radius: 10px; */
   color: #fff;
+
+}
+.searchInput:hover{
+  border-bottom: 1px solid #FFB300;
+}
+.selected{
+  border: 1px solid #FFB300;
+  border-radius: 6px ;
+}
+
+.searchInputRap ion-icon[name="search-outline"]{
+  position: absolute;
+    bottom: 0;
+    left: 5vw;
 }

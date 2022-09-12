@@ -24,16 +24,24 @@
       "logOut":"Logout"
 
     },
+    "main":{
+      "start-trip":"Start Trip" 
+   },
     "userDetais":{
       "updated":"save Changes"
     },
     "payment":{
 
+    },
+    "scan":{
+      "scan":"Scan QR"
     }
     
   },
   "dir":"ltr",
   "side":"start",
+  "search-icon-side":"icon-right",
+  "menu-btn-side":"menu-btn-left",
   "nextBtn":"Next",
   "backBtn":"Back",
   "map":"en"

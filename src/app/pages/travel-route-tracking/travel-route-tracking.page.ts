@@ -17,6 +17,7 @@ export class TravelRouteTrackingPage implements OnInit {
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   @ViewChild('dated') datedRef: ElementRef<HTMLElement>;
   isShow: boolean = true;
+  hideItems: boolean=true;
   noData:boolean=false;
   mapHight: string = '100vh';
   startHight: number = 8;
@@ -39,9 +40,9 @@ export class TravelRouteTrackingPage implements OnInit {
     private travelProcessService: TravelProcessService,
     
   ) {
-    // this.platform.backButton.subscribeWithPriority(10, () => {
-    //   this.nav.navigateBack('/menu', { replaceUrl: true });
-    // });
+    this.plt.backButton.subscribeWithPriority(10, () => {
+      this.navCtrl.navigateBack('/menu', { replaceUrl: true });
+    });
   }
 
   ngOnInit() {
@@ -85,13 +86,14 @@ export class TravelRouteTrackingPage implements OnInit {
   onMove(detail) {
     if (detail.deltaY > 0) {
       this.travelBodyRef.nativeElement.classList.add('OpenBig');
-
+      this.hideItems=false;
+      
       // if(!position.scrollTop && detail.deltaY>0){
       //   this.travelBodyRef.nativeElement.classList.add('OpenBig')
       // }else{
       //   this.travelBodyRef.nativeElement.classList.remove('OpenBig')
       // }
-      // const position = document.getElementById('body-card-1');
+     
 
       // if (detail.currentY > this.minHight - 40 || detail.currentY < 70) {
       //   return;
@@ -107,8 +109,8 @@ export class TravelRouteTrackingPage implements OnInit {
   onClick(): void {
     // const position = document.getElementById('drowerBar');
     // const top = position.getBoundingClientRect().top;
-
     this.travelBodyRef.nativeElement.classList.toggle('OpenBig');
+    this.hideItems=!this.hideItems;
     const position = document.getElementById('body-card-1');
     position.scrollTop = 0;
 

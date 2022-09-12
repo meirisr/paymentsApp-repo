@@ -34,6 +34,12 @@ form ion-input.sc-ion-input-md-h.has-value+span {
   z-index: 2;
   margin: -52px 8px 0 8px;
 }
+form ion-input.sc-ion-input-md-h {
+  border-bottom: 1px solid lightgray;
+}
+form ion-input.sc-ion-input-md-h:hover{
+  border-bottom: 1px solid #FFB300;
+}
 
 ion-modal {
   --width: 340px;

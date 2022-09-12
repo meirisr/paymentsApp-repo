@@ -21,8 +21,8 @@ export class MenuPage {
     private platform: Platform,
     public navCtrl: NavController
   ) {
-    this.platform.backButton.subscribeWithPriority(-1, () => {
-      App.exitApp();
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      navigator['app'].exitApp()
     });
 
     document.querySelector('body').classList.remove('scanBg');

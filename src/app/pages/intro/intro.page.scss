@@ -109,5 +109,11 @@ ion-item{
 .searchInputRap ion-icon[name="search-outline"]{
   position: absolute;
     bottom: 0;
-    left: 5vw;
+    // left: 5vw;
+}
+.icon-left{
+  left:5vw;
+}
+.icon-right{
+  right: 5vw;
 }

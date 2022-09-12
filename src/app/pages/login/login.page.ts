@@ -24,8 +24,8 @@ export class LoginPage implements OnDestroy {
     private platform: Platform,
     public navCtrl: NavController
   ) {
-    this.platform.backButton.subscribeWithPriority(-1, () => {
-      App.exitApp();
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      navigator['app'].exitApp();
   });
   
 

@@ -23,11 +23,19 @@
         "map":"מפה" ,
         "logOut":"יציאה"
       },
+      "main":{
+         "start-trip":"התחל נסיעה"
+      },
       "userDetais":{
         "updated":"שמור שינויים"
+      },
+      "scan":{
+        "scan":"QR סרוק/י קוד"
       }
     },
     "dir":"rtl",
+    "search-icon-side":"icon-left",
+    "menu-btn-side":"menu-btn-right",
     "side":"end",
     "nextBtn":"המשך",
     "backBtn":"חזור",

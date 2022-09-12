@@ -5,7 +5,7 @@ import {
   SupportedFormat,
 } from '@capacitor-community/barcode-scanner';
 import { Capacitor } from '@capacitor/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { Location } from '@angular/common';
 import { StorageService } from 'src/app/services/storage.service';
@@ -32,6 +32,7 @@ export class ScanPage implements OnInit {
     longitude: 0,
   };
   constructor(
+    private plt: Platform,
     private utils: UtilsService,
     private location: Location,
     private openNativeSettings: OpenNativeSettings,
@@ -39,7 +40,11 @@ export class ScanPage implements OnInit {
     private travelProcessService: TravelProcessService,
     private alertService: AlertService,
     public navCtrl: NavController
-  ) {}
+  ) {
+    this.plt.backButton.subscribeWithPriority(10, () => {
+      this.navCtrl.navigateBack('/menu', { replaceUrl: true });
+    });
+  }
 
   ngOnInit() {
     if (Capacitor.isNativePlatform()) {
@@ -53,7 +58,7 @@ export class ScanPage implements OnInit {
     } else {
       this.scanNotAllowed = true;
       setTimeout(() => {
-        this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+        this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
       }, 3000);
     }
   }
@@ -83,7 +88,7 @@ export class ScanPage implements OnInit {
         let loader = this.utils.showLoader();
         let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
         const TravelDetails$ = this.travelProcessService
-          .getTravelDetails(this.userLocation, 	7769969)
+          .getTravelDetails(this.userLocation, 7716969)
           .subscribe(
             async (data) => {
               this.utils.dismissLoader(loader);

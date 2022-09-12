@@ -43,8 +43,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.utils.getUserTheme();
-    this.utils.getUserLanguage();
-    this.utils.loadGoogleMap();
+    this.utils.getUserLanguage().then(()=>{
+      if(!this.apiLoaded){
+        this.utils.loadGoogleMap();
+      }
+
+    });
+  
     this.utils.loadRoute();
     this.authenticationService.loadToken();
   }

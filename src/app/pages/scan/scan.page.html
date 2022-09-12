@@ -24,15 +24,15 @@
         (click)="toggleFlash()"
       ></ion-icon>
     </div>
-    <ion-text class="ion-text-center">
+    <!-- <ion-text class="ion-text-center">
       <h1>תשלום</h1>
       <h2>QR סריקת קוד</h2>
       
-    </ion-text>
+    </ion-text> -->
   </div>
   <ion-row [hidden]="!scanActive">
     <div class="ocrloader">
-      <p>QR סרוק/י קוד</p>
+      <p>{{'pages.scan.scan'|translate}}</p>
       <em></em>
 
     </div>

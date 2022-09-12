@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@capacitor/storage';
+import { GetResult, Storage } from '@capacitor/storage';
 import {
   LoadingController,
   AlertController,
@@ -23,7 +23,7 @@ const ROUTE_DETAILS = 'route-details';
 export class UtilsService {
   ischecked: string = 'false';
   apiLoaded: BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
-
+  userLang:GetResult;
   defaultLang: string;
 
   constructor(
@@ -55,12 +55,14 @@ export class UtilsService {
       case 'en':
         this.translate.use('en');
         Storage.set({ key: USER_LANGUAGE, value: 'en' });
+        this.userLang.value='en';
 
         this.defaultLang = 'en';
         break;
       case 'he':
         this.translate.use('he');
         Storage.set({ key: USER_LANGUAGE, value: 'he' });
+        this.userLang.value='he';
 
         this.defaultLang = 'he';
         break;
@@ -68,6 +70,7 @@ export class UtilsService {
         this.translate.use('he');
         Storage.set({ key: USER_LANGUAGE, value: 'he' });
         this.defaultLang = 'he';
+        this.userLang.value='he';
         break;
     }
   }
@@ -84,8 +87,8 @@ export class UtilsService {
     }
   }
   async getUserLanguage(): Promise<string> {
-    const userLang = await Storage.get({ key: USER_LANGUAGE });
-    if (userLang.value === 'en') {
+     this.userLang = await Storage.get({ key: USER_LANGUAGE });
+    if (this.userLang.value === 'en') {
       this.translate.use('en');
       this.defaultLang = 'en';
       return 'en';
@@ -120,7 +123,7 @@ export class UtilsService {
     const key = environment.googleMapsKey;
     this.httpClient
       .jsonp(
-        `https://maps.googleapis.com/maps/api/js?key=${key}&language=he`,
+        `https://maps.googleapis.com/maps/api/js?key=${key}&language=${this.userLang.value}`,
         'callback'
       )
       .pipe(
@@ -128,7 +131,11 @@ export class UtilsService {
         catchError(() => of(false))
       )
       .subscribe((result) => {
-        this.apiLoaded.next(true)
+        this.apiLoaded.next(true);
+      }
+      ,()=>{
+        this.apiLoaded.next(false);
+        this.loadGoogleMap();
       });
   }
   async showLoader() {

@@ -26,8 +26,8 @@ export class IntroPage implements OnInit {
     private platform: Platform,
     public navCtrl: NavController
   ) {
-    this.platform.backButton.subscribeWithPriority(-1, () => {
-      App.exitApp();
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      navigator['app'].exitApp();
     });
   }
   ngOnInit(): void {

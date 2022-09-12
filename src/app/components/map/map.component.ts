@@ -1,4 +1,10 @@
-import {AfterViewInit,Component,Input,NgZone,ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  NgZone,
+  ViewChild,
+} from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
 import { Observable, Subscription } from 'rxjs';
@@ -7,12 +13,12 @@ import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 const BusImage: string = '../../../assets/images/bus.png';
-const circleImage: string = '../../../assets/empty-circle.svg';
+const circleImage: string = '../../../assets/location.svg';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements AfterViewInit {
   private subscriptions: Subscription[] = [];
@@ -24,11 +30,11 @@ export class MapComponent implements AfterViewInit {
   @Input() height: string;
   @Input() path: [];
   @Input() nearesStationth;
-  googleApiLoaded:boolean=false;
+  googleApiLoaded: boolean = false;
   public lat: any;
   public lng: any;
   watch: any;
-  bounds = new google.maps.LatLngBounds();
+  bounds;
   watchMarker = null;
   markers = [];
   watchmarkers = [];
@@ -41,103 +47,103 @@ export class MapComponent implements AfterViewInit {
     default: [],
     silver: [
       {
-        elementType: "geometry",
-        stylers: [{ color: "#f5f5f5" }],
+        elementType: 'geometry',
+        stylers: [{ color: '#f5f5f5' }],
       },
       {
-        elementType: "labels.icon",
-        stylers: [{ visibility: "off" }],
+        elementType: 'labels.icon',
+        stylers: [{ visibility: 'off' }],
       },
       {
-        elementType: "labels.text.fill",
-        stylers: [{ color: "#9e9e9e" }],
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#9e9e9e' }],
       },
       {
-        elementType: "labels.text.stroke",
-        stylers: [{ color: "#f5f5f5" }],
+        elementType: 'labels.text.stroke',
+        stylers: [{ color: '#f5f5f5' }],
       },
       {
-        featureType: "administrative.land_parcel",
-        elementType: "labels.text.fill",
-        stylers: [{ color: "#bdbdbd" }],
+        featureType: 'administrative.land_parcel',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#bdbdbd' }],
       },
       {
-        featureType: "poi",
-        elementType: "geometry",
-        stylers: [{ color: "#eeeeee" }],
+        featureType: 'poi',
+        elementType: 'geometry',
+        stylers: [{ color: '#eeeeee' }],
       },
       {
-        featureType: "poi",
-        elementType: "labels.text.fill",
-        stylers: [{ color: "#757575" }],
+        featureType: 'poi',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#757575' }],
       },
       {
-        featureType: "poi.park",
-        elementType: "geometry",
-        stylers: [{ color: "#e5e5e5" }],
+        featureType: 'poi.park',
+        elementType: 'geometry',
+        stylers: [{ color: '#e5e5e5' }],
       },
       {
-        featureType: "poi.park",
-        elementType: "labels.text.fill",
-        stylers: [{ color: "#9e9e9e" }],
+        featureType: 'poi.park',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#9e9e9e' }],
       },
       {
-        featureType: "road",
-        elementType: "geometry",
-        stylers: [{ color: "#ffffff" }],
+        featureType: 'road',
+        elementType: 'geometry',
+        stylers: [{ color: '#ffffff' }],
       },
       {
-        featureType: "road.arterial",
-        elementType: "labels.text.fill",
-        stylers: [{ color: "#9e9e9e" }],
+        featureType: 'road.arterial',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#9e9e9e' }],
       },
       {
-        featureType: "road.highway",
-        elementType: "geometry",
-        stylers: [{ color: "#dadada" }],
+        featureType: 'road.highway',
+        elementType: 'geometry',
+        stylers: [{ color: '#dadada' }],
       },
       {
-        featureType: "road.highway",
-        elementType: "labels.text.fill",
-        stylers: [{ color: "#9e9e9e" }],
+        featureType: 'road.highway',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#9e9e9e' }],
       },
       {
-        featureType: "road.local",
-        elementType: "labels.text.fill",
-        stylers: [{ color: "#9e9e9e" }],
+        featureType: 'road.local',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#9e9e9e' }],
       },
       {
-        featureType: "transit.line",
-        elementType: "geometry",
-        stylers: [{ color: "#e5e5e5" }],
+        featureType: 'transit.line',
+        elementType: 'geometry',
+        stylers: [{ color: '#e5e5e5' }],
       },
       {
-        featureType: "transit.station",
-        elementType: "geometry",
-        stylers: [{ color: "#eeeeee" }],
+        featureType: 'transit.station',
+        elementType: 'geometry',
+        stylers: [{ color: '#eeeeee' }],
       },
       {
-        featureType: "water",
-        elementType: "geometry",
-        stylers: [{ color: "#d4f1f9" }],
+        featureType: 'water',
+        elementType: 'geometry',
+        stylers: [{ color: '#d4f1f9' }],
       },
       {
-        featureType: "water",
-        elementType: "labels.text.fill",
-        stylers: [{ color: "#9e9e9e" }],
+        featureType: 'water',
+        elementType: 'labels.text.fill',
+        stylers: [{ color: '#9e9e9e' }],
       },
     ],
-  }
+  };
   constructor(
     private navCtrl: NavController,
     private utils: UtilsService,
     private travelProcessService: TravelProcessService,
     private ngZone: NgZone
   ) {
-    const loadgoogleApi=this.utils.apiLoaded.subscribe((res)=>{
-      this.googleApiLoaded=res;
-    })
-    this.subscriptions.push(loadgoogleApi)
+    const loadgoogleApi = this.utils.apiLoaded.subscribe((res) => {
+      this.googleApiLoaded = res;
+    });
+    this.subscriptions.push(loadgoogleApi);
   }
 
   ngAfterViewInit() {
@@ -151,7 +157,7 @@ export class MapComponent implements AfterViewInit {
       disableDefaultUI: true,
       zoom: 16,
       center: { lat: 30.79476, lng: 35.18761 },
-      styles:this.styles.silver
+      styles: this.styles.silver,
       // mapTypeId:google.maps.MapTypeId.TERRAIN
       // draggable:false
     };
@@ -201,7 +207,7 @@ export class MapComponent implements AfterViewInit {
     // console.log(this.mapRef._elementRef)
     //  this.map= new google.maps.Map(this.mapRef.nativeElement,this.mapOptions)
 
-    console.log('SSSS');
+
     this.printCurrentPosition();
   }
   markerClick() {
@@ -291,7 +297,9 @@ export class MapComponent implements AfterViewInit {
   }
   addWatchMarker(latLng) {
     this.watchmarkers.push(latLng);
-    this.mapOptions.center = latLng;
+this.mapOptions.center = latLng;
+
+
     // const marker = new google.maps.Marker({
 
     //   position: latLng,
@@ -319,7 +327,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   goToMenu() {
-    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
   }
 
   fitToMarkers(markers) {
@@ -342,7 +350,7 @@ export class MapComponent implements AfterViewInit {
       this.bounds.extend(extendPoint1);
       this.bounds.extend(extendPoint2);
     }
-
+    this.mapOptions.center =this.bounds;
     this.mapRef.fitBounds(this.bounds);
   }
   fixLocation(location: { latitude: number; longitude: number }) {

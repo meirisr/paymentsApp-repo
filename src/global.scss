@@ -32,9 +32,16 @@
 @import "~swiper/scss/scrollbar";
 @import "~swiper/scss/zoom";
 @import "~@ionic/angular/css/ionic-swiper";
+
+
+ion-router-outlet{
+  border: none;
+}
 .md body {
   --ion-background-color: #091d31;
   --ion-color: #fff;
+  --ion-border-color:#091d31;
+  
 }
 .md body.scanBg {
   --ion-background-color: #091d3100;
@@ -43,12 +50,7 @@
 form .input-group {
   margin-top: 3vh;
 }
-form ion-input.sc-ion-input-md-h {
-  border-bottom: 2px solid lightgray;
-}
-form ion-input.sc-ion-input-md-h:hover{
-  border-bottom: 2px solid #FFB300;
-}
+
 
 .ion-text-center {
   text-align: center;
@@ -64,18 +66,24 @@ ion-text {
   --height: 40vh;
   --border-radius: 8px;
   // border: 1px solid #FFB300;
-  // border-radius: 10px;
+  border-radius: 10px;
   background-color:#091d31;
 }
-// app-popup-modal.ion-page{
-//   // border: 1px solid #FFB300;
-//     border-radius: 10px;
-//     background-color: #091d31;
-// }
+app-popup-modal.ion-page{
+  // border: 1px solid #FFB300;
+    border-radius: 10px;
+    background-color: #091d31;
+}
 
 .errors {
   color: red;
 }
 .alert-wrapper.sc-ion-alert-md {
   background-color: #fff;
+}
+.menu-btn-let{
+left: 0;
+}
+.menu-btn-right{
+  right: 0;
 }

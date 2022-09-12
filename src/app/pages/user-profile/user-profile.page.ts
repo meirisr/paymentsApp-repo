@@ -24,7 +24,7 @@ export class UserProfilePage {
     private logInServer: LoginService
   ) {
     this.platform.backButton.subscribeWithPriority(0, () => {
-      this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+      this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
     });
   }
   ionViewWillEnter(): void {

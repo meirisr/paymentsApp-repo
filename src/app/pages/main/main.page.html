@@ -2,7 +2,7 @@
   <div class="toolbar-container">
     <app-header-wave [big]="true" [text]="headerText"></app-header-wave>
     
-      <ion-menu-button  menu="main" slot="end">
+      <ion-menu-button  menu="main" class="{{'menu-btn-side'|translate}}">
         <ion-img src="../../../assets/menu-btn.svg"></ion-img>
       </ion-menu-button>
     </div>
@@ -13,7 +13,7 @@
     <ion-card>
       <ion-card-header>
         <img src="../../../assets/scan.svg" />
-        <ion-card-title>התחל נסיעה</ion-card-title>
+        <ion-card-title>{{'pages.main.start-trip'|translate}}</ion-card-title>
         <!-- <ion-card-subtitle></ion-card-subtitle> -->
       </ion-card-header>
     </ion-card>

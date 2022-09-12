@@ -7,6 +7,7 @@ import { ToastController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { StorageService, UserDetails } from './storage.service';
 
+
 const PHONE_NUM = 'my-phone';
 const HEADER_HOTELS = 'hotels';
 
@@ -179,10 +180,10 @@ export class LoginService {
 
   public async handleButtonClick(): Promise<void> {
     const toast = await this.toastController.create({
-      color: 'success',
-      duration: 2000,
+      color: 'light',
+      // duration: 2000,
       position: 'bottom',
-      message: 'Successfully updated',
+      message: 'הפרטים עודכנו בצלחה',
     });
     await toast.present();
   }

@@ -90,10 +90,10 @@ export class UserDetailsPage implements OnInit {
   goToUserProfile(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.navCtrl.navigateRoot(['user-profile'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/user-profile'], { replaceUrl: true });
   }
   goToMenu(): void {
-    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
   }
   onWillDismiss(): void {
     this.dateTime.confirm(true);

@@ -35,10 +35,10 @@ export class UserProfilePage {
   }
 
   goToUserDetails(): void {
-    this.navCtrl.navigateRoot(['user-details'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/user-details'], { replaceUrl: true });
   }
   cardDetails(): void {
-    this.navCtrl.navigateRoot(['credit-card-details'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/credit-card-details'], { replaceUrl: true });
   }
   async getUserInfo(): Promise<void> {
     let userDetailsSubscription = this.logInServer.userDetails.subscribe(
@@ -66,7 +66,7 @@ export class UserProfilePage {
     this.cardNum = creditCardDetails != null ? '****' + creditCardDetails : '';
   }
   goToMenu(): void {
-    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
   }
 
   ngOnDestroy(): void {

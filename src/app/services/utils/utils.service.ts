@@ -108,16 +108,6 @@ export class UtilsService {
 
       this.travelProcessService.routeInfo.next(false);
     }
-    console.log(routeData)
-    // if (userLang.value === 'en') {
-    //   this.translate.use('en');
-    //   this.defaultLang = 'en';
-    //   return 'en';
-    // } else {
-    //   this.translate.use('he');
-    //   this.defaultLang = 'he';
-    //   return 'he';
-    // }
   }
   async loadGoogleMap(): Promise<void> {
     const key = environment.googleMapsKey;
@@ -138,6 +128,7 @@ export class UtilsService {
         this.loadGoogleMap();
       });
   }
+  
   async showLoader() {
     const loading = await this.loadingController.create({
       message: 'Loading...',

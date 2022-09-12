@@ -17,7 +17,7 @@ ion-content {
 }
 
 ion-modal ion-datetime {
-  // height: 382px;
+  color: black;
 }
 ion-datetime {
   height: auto;
@@ -46,9 +46,4 @@ app-header-wave {
 .saveSubmit {
   width: 100%;
 }
-form ion-input.sc-ion-input-md-h {
-  border-bottom: 1px solid lightgray;
-}
-form ion-input.sc-ion-input-md-h:hover{
-  border-bottom: 1px solid #FFB300;
-}
+

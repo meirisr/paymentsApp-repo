@@ -43,7 +43,7 @@ form ion-input.sc-ion-input-md-h:hover{
 
 ion-modal {
   --width: 340px;
-  --height: 43vh;
+  --height: 46vh;
   --border-radius: 8px;
   --background:rgda(44,39,45,0.2)
   &::part(cotent){
@@ -52,6 +52,7 @@ ion-modal {
 }
 ion-modal ion-datetime {
   // height: 382px;
+  color: black;
 }
 ion-datetime {
   height: auto;

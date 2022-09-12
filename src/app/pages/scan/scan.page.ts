@@ -108,7 +108,7 @@ export class ScanPage implements OnInit {
                 await this.utils.presentModal('נסיעה טובה', '');
               }
               // if (hotelId) {
-              //   this.navCtrl.navigateRoot(['payment'], { replaceUrl: true });
+                // this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
               // }
               // else {
 

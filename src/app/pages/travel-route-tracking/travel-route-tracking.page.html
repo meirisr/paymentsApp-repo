@@ -6,8 +6,8 @@
      <ion-fab slot="fixed">
     <ion-fab-button size="small" color="Opacity"><ion-icon [class.show]="isShow" name="add-outline" (click)="showHideTravelBody()"></ion-icon></ion-fab-button>
   </ion-fab></div>
-  <div [class.body-card-height-open]="!hideItems" #travelBody id="travelBody" class="travel-body">
-    <ion-list-header class="item-background">
+  <div  #travelBody id="travelBody" class="travel-body" >
+    <ion-item class="item-background">
       <ion-avatar slot="end">
         <img
           class="travel-info-header-icons"
@@ -18,9 +18,9 @@
         <h2>נסיעה פעילה</h2>
       </ion-label>
       <ion-text slot="start"> </ion-text>
-    </ion-list-header>
+    </ion-item>
 
-    <ion-grid class="body-card-1" id="body-card-1">
+    <ion-grid  class="body-card-1" id="body-card-1" [class.body-card-height-open]="!hideItems">
        <div *ngFor="let station of allStations ; let last = last; let first = first;" >
    <div [class.hideItem]="(hideItems)&&!(last || first)">
 
@@ -43,7 +43,7 @@
       </ion-item>
       <div *ngIf="!last" class="item-background" style="display: flex;
       justify-content: end;
-      padding-right: 5%;height: 2vh;">
+      padding-right: 6%;height: 2vh;">
   
         <div slot="start" style="display:grid;">
         <img

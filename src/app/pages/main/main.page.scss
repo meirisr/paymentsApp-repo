@@ -2,15 +2,12 @@
   --width: 500px;
 }
 
-ion-content{
-  --padding-top: 5%
+ion-content {
+  --padding-top: 5%;
 }
-.nemu-img{
-  background: url('../../../assets/images/Group\ 2660.png') 0 0/100% 100% no-repeat;
-}
-.nemu-text{
 
-   color: #fff; ;
+.nemu-text {
+  color: #fff;
 }
 section {
   margin-top: 5em;
@@ -21,34 +18,31 @@ section:not(.full-width),
 .full-width > header {
   padding: 0 10px;
 }
-.main-list{
+.main-list {
   margin: 5%;
   height: 8vh;
-    // border-right: 10px solid orange;
-    padding-top: 2%;
-    z-index: 2;
+  padding-top: 2%;
+  z-index: 2;
 }
-ion-menu-button{
+ion-menu-button {
   position: absolute;
-    z-index: 3;
-    // right: 0;
-    top: 25px;
+  z-index: 3;
+  top: 25px;
 }
-ion-card-header{
+ion-card-header {
   text-align: center;
   padding-top: 25%;
 }
-.card-container{
+.card-container {
   display: flex;
   justify-content: center;
-
 }
-.card-container ion-card{
+.card-container ion-card {
   border-radius: 60%;
-  background: #FFB300;
+  background: #ffb300;
   height: 200px;
   width: 200px;
 }
-ion-card-title{
+ion-card-title {
   color: #000 !important;
 }

@@ -11,7 +11,6 @@
 .body-card-height-open{
   height: 90%;
 }
-
 .travel-body {
     position: fixed;
     top: 10vh;
@@ -29,7 +28,6 @@
 }
 .OpenBig {
   height: 80vh;
-  
   .arrow-down-img {
     transform: rotate(180deg);
     
@@ -38,7 +36,6 @@
 .close{
   height: 0vh;
 }
-
 
 .item-background-color {
   --ion-item-background: var(--ion-color-btn);
@@ -78,7 +75,6 @@ hr {
   background: #091d31;
 
 }
-
 h4 {
   margin: 0;
 }
@@ -100,7 +96,6 @@ div:after {
   height: 148px;
   border-radius: 63%;
   box-shadow: 0px 0px 0px 10000px #091d31;
-  // opacity: 0.8;
   z-index: -1;
 }
 
@@ -122,7 +117,6 @@ div:after {
 .travel-info-icons {
   width: 18px;
   height: auto;
-  // margin-top: 20%;
 }
 .travel-info-icons-small {
   width: 8px;

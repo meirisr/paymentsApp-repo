@@ -42,6 +42,9 @@ export class MenuPage {
   map(): void {
     this.navCtrl.navigateRoot(['travel-route-tracking'], { replaceUrl: true });
   }
+  history(): void {
+    this.navCtrl.navigateRoot(['history'], { replaceUrl: true });
+  }
   logOut(): void {
     Storage.remove({ key: HOTEL_ID });
     this.navCtrl.navigateRoot(['intro'], { replaceUrl: true });

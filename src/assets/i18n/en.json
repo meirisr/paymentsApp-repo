@@ -21,6 +21,7 @@
       "creditCardDetails":"Credit Card Details",
       "scan":"Scan",
       "map":"Map", 
+      "history":"Travel History", 
       "logOut":"Logout"
 
     },

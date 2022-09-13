@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border"  style="height: 10vh;">
+<ion-header class="ion-no-border" style="height: 10vh">
   <ion-toolbar>
     <!-- <app-header-wave></app-header-wave> -->
     <app-back-btn (click)="goToUserProfile()"></app-back-btn>
@@ -91,24 +91,17 @@
       </div>
     </div>
     <div class="input-group" dir="ltr">
-      <app-main-btn style="margin-bottom: 5vh;
-     width: 100vw;" type="submit"  [disabled]="userDetails.invalid" text="{{'pages.userDetais.updated'|translate}}"></app-main-btn>
-      <!-- <ion-button
-        class="saveSubmit"
+      <app-main-btn
+        style="margin-bottom: 5vh; width: 100vw"
         type="submit"
-        expand="block"
         [disabled]="userDetails.invalid"
-        >{{'pages.userDetais.updated'|translate}}</ion-button
-      > -->
+        text="{{'pages.userDetais.updated'|translate}}"
+      ></app-main-btn>
     </div>
   </form>
 </ion-content>
 
-<ion-modal
-  trigger="user-date-modal"
-  mode="md"
-  (willDismiss)="onWillDismiss()"
->
+<ion-modal trigger="user-date-modal" mode="md" (willDismiss)="onWillDismiss()">
   <ng-template>
     <ion-content force-overscroll="false"
       ><ion-datetime
@@ -120,10 +113,6 @@
         [presentation]="'date'"
         (ionChange)="dataChange(dateTime.value)"
       >
-      <!-- <ion-buttons slot="buttons">
-        <ion-button (click)="close()">Dismiss</ion-button>
-        <ion-button (click)="select()">Select</ion-button>
-      </ion-buttons> -->
       </ion-datetime>
     </ion-content>
   </ng-template>

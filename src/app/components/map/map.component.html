@@ -13,9 +13,12 @@ width="100vw"   (mapClick)="moveMap($event)"
 <map-marker *ngFor="let watchmarker of watchmarkers"
 [position]="watchmarker"
 [options]="watchmarkerOptions"></map-marker>
-<map-marker *ngFor="let marker of markers"
+<map-marker 
+ *ngFor="let marker of markers"
 [position]="marker"
-[options]="markerOptions"></map-marker>
+[options]="markerOptions"
+></map-marker>
 <map-polyline [path]="path" [options]="polylineOptions"></map-polyline>
+
 </google-map>
 </div>

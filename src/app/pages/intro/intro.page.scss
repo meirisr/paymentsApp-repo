@@ -4,15 +4,10 @@ ion-header{
 ion-footer{
   margin-top: 15px;
 }
-.info-content{
-  // --color:#50c8ff;
-}
-.slide-body-header{
-  // margin-top: 20%;
-}
+
 .slide-body-header h1{
   font-size: 49px
-  // font-weight: bold;
+
   
 }
 .slide-body-header p{
@@ -25,49 +20,14 @@ ion-footer{
   width: 38px;
   height: 38px;
 }
-.slide-body{
-  // margin-top: 35%;
-  direction: rtl;
-}
-.slide-body ion-label{
-  font-size: 1.3rem;
-}
-.slide-body{
-  overflow: hidden;
-  // margin-top: 20%;
-}
-// .footer{
-//   position: absolute;
-//   bottom: 0;
-//   left: 0;
-//   width: 95%;
-// }
-// .footer ion-title{
-//   padding-left: 0px;
-//   color: #00E1E1;
-    
-// }
-//  ion-button{
-//   padding-left: 0px;
-//   // color: #00E1E1;
-  
-  
-//   margin-left: 5%;
-//   margin-bottom: 5%;
-    
-// }
+
+
 .nextBtn{
   margin: 0px 15px 30px;
   height: 45px;
   --border-color:var(--ion-color-btn);
-  // --border-color:none;
-  // --border-width: 0px !important;
   --color:#fff;
-  //  border: none;
-  --border-radius: 10px ;
-  // font-size: 20px;
-  
-  
+  --border-radius: 10px; 
 }
 .icon-circle{
   width: 50px;
@@ -94,7 +54,6 @@ ion-item{
 .searchInput{
   margin-top: 5vh;
   border-bottom: 1px solid #D8D8D8;
-  /* border-radius: 10px; */
   color: #fff;
 
 }
@@ -109,7 +68,6 @@ ion-item{
 .searchInputRap ion-icon[name="search-outline"]{
   position: absolute;
     bottom: 0;
-    // left: 5vw;
 }
 .icon-left{
   left:5vw;

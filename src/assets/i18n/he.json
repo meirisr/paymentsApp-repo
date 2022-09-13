@@ -21,6 +21,7 @@
         "creditCardDetails":"פרטי כרטיס אשראי",
         "scan":"סריקה",
         "map":"מפה" ,
+        "history":"היסטורית נסיעות", 
         "logOut":"יציאה"
       },
       "main":{

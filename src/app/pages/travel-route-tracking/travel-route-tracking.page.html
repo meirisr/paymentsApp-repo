@@ -1,83 +1,96 @@
 <ion-content class="no-scroll">
   <!-- <app-header-wave text="נסיעה פעילה"></app-header-wave> -->
-  <app-map [height]="mapHight"  [path]="coordinates" [nearesStationth]="nearestStation"></app-map>
-  <div  [hidden]="noData">
-  <div class="open-travelBody">
-     <ion-fab slot="fixed">
-    <ion-fab-button size="small" color="Opacity"><ion-icon [class.show]="isShow" name="add-outline" (click)="showHideTravelBody()"></ion-icon></ion-fab-button>
-  </ion-fab></div>
-  <div  #travelBody id="travelBody" class="travel-body" >
-    <ion-item class="item-background">
-      <ion-avatar slot="end">
-        <img
-          class="travel-info-header-icons"
-          src="../../../assets/small-checkmark.svg"
-        />
-      </ion-avatar>
-      <ion-label dir="rtl">
-        <h2>נסיעה פעילה</h2>
-      </ion-label>
-      <ion-text slot="start"> </ion-text>
-    </ion-item>
-
-    <ion-grid  class="body-card-1" id="body-card-1" [class.body-card-height-open]="!hideItems">
-       <div *ngFor="let station of allStations ; let last = last; let first = first;" >
-   <div [class.hideItem]="(hideItems)&&!(last || first)">
-
-      <ion-item class="item-background"  style="direction: rtl; height: 5vh;">
-        <div slot="start" >
-          <div class="icons-container">
-            <img
-            class="travel-info-icons"
-            src="../../../assets/empty-circle.svg"
-          />
-          <!-- <ion-icon name="ellipsis-vertical-outline"></ion-icon> -->
-          </div>
-          
-        </div>
-          <ion-label>
-              {{station.stationName}} 
-              {{station.stationCityName||''}}
-              
-          </ion-label>
-      </ion-item>
-      <div *ngIf="!last" class="item-background" style="display: flex;
-      justify-content: end;
-      padding-right: 6%;height: 2vh;">
-  
-        <div slot="start" style="display:grid;">
-        <img
-        class="travel-info-icons-small"
-        src="../../../assets/empty-circle.svg"
-      />
-        <img
-        class="travel-info-icons-small"
-        src="../../../assets/empty-circle.svg"
-      />
-      <img
-        class="travel-info-icons-small"
-        src="../../../assets/empty-circle.svg"
-      />
+  <app-map
+    [height]="mapHight"
+    [path]="coordinates"
+    [nearesStationth]="nearestStation"
+  ></app-map>
+  <div [hidden]="noData">
+    <div class="open-travelBody">
+      <ion-fab slot="fixed">
+        <ion-fab-button size="small" color="Opacity"
+          ><ion-icon
+            [class.show]="isShow"
+            name="add-outline"
+            (click)="showHideTravelBody()"
+          ></ion-icon
+        ></ion-fab-button>
+      </ion-fab>
     </div>
+    <div #travelBody id="travelBody" class="travel-body">
+      <ion-item class="item-background">
+        <ion-avatar slot="end">
+          <img
+            class="travel-info-header-icons"
+            src="../../../assets/small-checkmark.svg"
+          />
+        </ion-avatar>
+        <ion-label dir="rtl">
+          <h2>נסיעה פעילה</h2>
+        </ion-label>
+        <ion-text slot="start"> </ion-text>
+      </ion-item>
+
+      <ion-grid
+        class="body-card-1"
+        id="body-card-1"
+        [class.body-card-height-open]="!hideItems"
+      >
+        <div
+          *ngFor="let station of allStations ; let last = last; let first = first;"
+        >
+          <div [class.hideItem]="(hideItems)&&!(last || first)">
+            <ion-item
+              class="item-background"
+              style="direction: rtl; height: 5vh"
+            >
+              <div slot="start">
+                <div class="icons-container">
+                  <img
+                    class="travel-info-icons"
+                    src="../../../assets/empty-circle.svg"
+                  />
+                </div>
+              </div>
+              <ion-label>
+                {{station.stationName}} {{station.stationCityName||''}}
+              </ion-label>
+            </ion-item>
+            <div
+              *ngIf="!last"
+              class="item-background"
+              style="
+                display: flex;
+                justify-content: end;
+                padding-right: 6%;
+                height: 2vh;
+              "
+            >
+              <div slot="start" style="display: grid">
+                <img
+                  class="travel-info-icons-small"
+                  src="../../../assets/empty-circle.svg"
+                />
+                <img
+                  class="travel-info-icons-small"
+                  src="../../../assets/empty-circle.svg"
+                />
+                <img
+                  class="travel-info-icons-small"
+                  src="../../../assets/empty-circle.svg"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-grid>
+      <div #drowerBar id="drowerBar" (click)="onClick()">
+        <ion-img class="arrow-down-img"></ion-img>
       </div>
     </div>
   </div>
-      <!-- / -->
-      <!-- <ion-row *ngFor="let station of allStations" style="direction: rtl">
-        <ion-col>
-          <h4>{{station.stationName}}</h4>
-          <ion-label>{{station.stationCityName||''}}</ion-label>
-          <div #dated class="dated"></div>
-        </ion-col>
-      </ion-row> -->
-    </ion-grid>
-    <div #drowerBar id="drowerBar" (click)="onClick()">
-      <ion-img class="arrow-down-img"></ion-img>
-    </div>
-  </div>
-  </div>
 </ion-content>
-<div  *ngIf="!noData"  class="footer-container">
+<div *ngIf="!noData" class="footer-container">
   <app-main-btn
     style="width: 100vw"
     type="click"

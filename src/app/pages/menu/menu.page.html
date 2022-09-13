@@ -13,7 +13,7 @@
     </ion-menu-button>
   </div>
   
-      <!-- color="light" -->
+      
   
   </ion-header>
   <ion-content dir="{{'dir'|translate}}">
@@ -43,6 +43,10 @@
         <ion-item (click)="map()" routerDirection="root">
           <ion-icon name="map-outline" slot="start"></ion-icon>
           <ion-label>{{'pages.menu.map'|translate}}</ion-label>
+        </ion-item>
+        <ion-item (click)="history()" routerDirection="root">
+          <ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
+          <ion-label>{{'pages.menu.history'|translate}}</ion-label>
         </ion-item>
         <ion-item (click)="logOut()">
           <ion-icon name="log-out-outline" slot="start"></ion-icon>

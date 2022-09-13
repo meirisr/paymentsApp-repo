@@ -13,7 +13,7 @@ ion-modal {
 }
 ion-content {
   --backgruond: transparent;
-  padding-top: 25vh;
+   padding-top: 25vh;
 }
 
 ion-modal ion-datetime {
@@ -45,5 +45,11 @@ app-header-wave {
 }
 .saveSubmit {
   width: 100%;
+}
+form ion-input.sc-ion-input-md-h {
+  border-bottom: 1px solid lightgray;
+}
+form ion-input.sc-ion-input-md-h:hover{
+  border-bottom: 1px solid #FFB300;
 }
 

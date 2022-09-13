@@ -23,10 +23,7 @@ const circleImage: string = '../../../assets/location.svg';
 export class MapComponent implements AfterViewInit {
   private subscriptions: Subscription[] = [];
 
-  @ViewChild('map') mapRef;
-  readonly directionsResults$: Observable<
-    google.maps.DirectionsResult | undefined
-  >;
+  // @ViewChild('map') mapRef;
   @Input() height: string;
   @Input() path: [];
   @Input() nearesStationth;
@@ -158,8 +155,6 @@ export class MapComponent implements AfterViewInit {
       zoom: 16,
       center: { lat: 30.79476, lng: 35.18761 },
       styles: this.styles.silver,
-      // mapTypeId:google.maps.MapTypeId.TERRAIN
-      // draggable:false
     };
     this.watchmarkerOptions = {
       draggable: false,
@@ -175,7 +170,7 @@ export class MapComponent implements AfterViewInit {
       strokeWeight: 6,
       strokeOpacity: 1.0,
     };
-    console.log(this.mapRef);
+    // console.log(this.mapRef);
 
     setTimeout(() => {
       let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
@@ -206,7 +201,6 @@ export class MapComponent implements AfterViewInit {
     }, 100);
     // console.log(this.mapRef._elementRef)
     //  this.map= new google.maps.Map(this.mapRef.nativeElement,this.mapOptions)
-
 
     this.printCurrentPosition();
   }
@@ -297,8 +291,7 @@ export class MapComponent implements AfterViewInit {
   }
   addWatchMarker(latLng) {
     this.watchmarkers.push(latLng);
-this.mapOptions.center = latLng;
-
+    this.mapOptions.center = latLng;
 
     // const marker = new google.maps.Marker({
 
@@ -350,8 +343,8 @@ this.mapOptions.center = latLng;
       this.bounds.extend(extendPoint1);
       this.bounds.extend(extendPoint2);
     }
-    this.mapOptions.center =this.bounds;
-    this.mapRef.fitBounds(this.bounds);
+    this.mapOptions.center = this.bounds;
+    console.log(this.bounds)
   }
   fixLocation(location: { latitude: number; longitude: number }) {
     if (location) return { lat: location.latitude, lng: location.longitude };

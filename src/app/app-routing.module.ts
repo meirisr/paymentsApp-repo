@@ -77,12 +77,20 @@ const routes: Routes = [
       import('./pages/travel-route-tracking/travel-route-tracking.module').then(
         (m) => m.TravelRouteTrackingPageModule
       ),
+      canLoad: [AuthGuard],
+  },
+  {
+    path: 'history',
+    loadChildren: () => import('./pages/history/history.module').then( m => m.HistoryPageModule),
+    canLoad: [AuthGuard],
   },
   {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  
+
 ];
 
 @NgModule({

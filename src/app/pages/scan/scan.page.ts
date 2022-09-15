@@ -85,65 +85,72 @@ export class ScanPage implements OnInit {
         console.log(result);
         this.stopScanner();
         document.querySelector('body').classList.remove('scanBg');
-        let loader = this.utils.showLoader();
         let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
-        const TravelDetails$ = this.travelProcessService
-          .getTravelDetails(this.userLocation, 7716969)
-          .subscribe(
-            async (data) => {
-              this.utils.dismissLoader(loader);
-              console.log(data);
-              if (!data) {
-                this.utils.dismissLoader(loader);
-                await this.utils.presentModal(
-                  'שגיעה',
-                  'לא היה ניתן למצוא מסלול'
-                );
-                this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
-              } else {
-                this.navCtrl.navigateRoot(['travel-route-tracking'], {
-                  replaceUrl: true,
-                });
+        // if (hotelId) {
+        //   this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
+        // }
+        // else {
+          this.navCtrl.navigateRoot(['/travel-route-tracking'], {replaceUrl: true,});
+        // }
+        await this.utils.presentModal('נסיעה טובה', '');
+        this.getTrip();
 
-                await this.utils.presentModal('נסיעה טובה', '');
-              }
-              // if (hotelId) {
-                // this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
-              // }
-              // else {
-
-              // }
-            },
-            async (err) => {
-              this.utils.dismissLoader(loader);
-              console.log(err);
-              await this.utils.presentModal('שגיעה', 'לא היה ניתן למצוא מסלול');
-              setTimeout(() => {
-                this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
-              }, 1000);
-            }
-          );
-        this.subscriptions.push(TravelDetails$);
+        
       }
     }
+  }
+  getTrip(){
+    const TravelDetails$ = this.travelProcessService
+          .getTravelDetails(this.userLocation, 7772569)
+          // .subscribe(
+          //   async (data) => {
+
+          //     console.log(data);
+          //     if (!data) {
+          //       await this.utils.presentModal(
+          //         'שגיעה',
+          //         'לא היה ניתן למצוא מסלול'
+          //       );
+          //       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+          //     } else {
+          //       // if (hotelId) {
+          //       //   this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
+          //       // }
+          //       // else {
+          //       //   this.navCtrl.navigateRoot(['/travel-route-tracking'], {replaceUrl: true,});
+          //       // }
+          //       // await this.utils.presentModal('נסיעה טובה', '');
+
+          //     }
+             
+          //   },
+          //   async (err) => {
+          //     // this.utils.dismissLoader(loader);
+          //     console.log(err);
+          //     await this.utils.presentModal('שגיעה', 'לא היה ניתן למצוא מסלול');
+          //     setTimeout(() => {
+          //       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+          //     }, 1000);
+          //   }
+        //   );
+        // this.subscriptions.push(TravelDetails$);
   }
   async checkPermission(): Promise<boolean> {
     const status = await BarcodeScanner.checkPermission({ force: true });
     if (status.granted) {
       return true;
     } else if (status.denied) {
+    
       this.permissionAlert('cameraDeteails');
     }
   }
   async checkLocationPermission(): Promise<boolean> {
     const locationStatus = await Geolocation.requestPermissions();
-
     if (locationStatus.location) {
       try {
         const coordinates = await Geolocation.getCurrentPosition();
         this.userLocation.latitude = coordinates.coords.latitude;
         this.userLocation.longitude = coordinates.coords.longitude;
-
         return true;
       } catch (error) {
         this.permissionAlert('locationDeteails');
@@ -173,6 +180,8 @@ export class ScanPage implements OnInit {
         okHandler: () => {
           BarcodeScanner.openAppSettings();
         },
+        cancelHandler:()=>{this.goTomenu()}
+
       },
       locationDeteails: {
         header: 'מיקום כבוי',
@@ -180,12 +189,13 @@ export class ScanPage implements OnInit {
         okHandler: () => {
           this.openNativeSettings.open('location');
         },
+        cancelHandler:()=>{this.goTomenu()}
       },
     };
     this.alertService.cameraPermissionAlert(alertDeteails[type]);
   }
   goTomenu(): void {
-    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
   }
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

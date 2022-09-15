@@ -10,34 +10,37 @@ export class NavigateHlperService {
 
 
 goToMenu=()=>{
-  this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/menu'],{replaceUrl:true})
 }
 goToIntro=()=>{
-  this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/intro'],{replaceUrl:true})
 }
 goToLogin=()=>{
-  this.navCtrl.navigateRoot(['login'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/login'],{replaceUrl:true})
 }
 goToScan=()=>{
-  this.navCtrl.navigateRoot(['scan'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/scan'],{replaceUrl:true})
 }
 goToCCDetails=()=>{
-  this.navCtrl.navigateRoot(['credit-card-details'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/credit-card-details'],{replaceUrl:true})
 }
 goToUserProfile=()=>{
-  this.navCtrl.navigateRoot(['user-profile'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/user-profile'],{replaceUrl:true})
 }
 goToUserDetails=()=>{
-  this.navCtrl.navigateRoot(['user-details'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/user-details'],{replaceUrl:true})
 }
 goToPayment=()=>{
-  this.navCtrl.navigateRoot(['payment'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/payment'],{replaceUrl:true})
 }
 goToTravelRouteTracking=()=>{
-  this.navCtrl.navigateRoot(['travel-route-tracking'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/travel-route-tracking'],{replaceUrl:true})
 }
 goToSettings=()=>{
-  this.navCtrl.navigateRoot(['menu/settings'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/settings'],{replaceUrl:true})
+}
+goToHistory=()=>{
+  this.navCtrl.navigateRoot(['/history'],{replaceUrl:true})
 }
 
 

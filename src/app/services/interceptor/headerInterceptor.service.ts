@@ -24,8 +24,10 @@ export class HeaderInterceptor implements HttpInterceptor {
     });
 
     if (
-      httpRequest.url.includes('GetDetailsByVehicle') ||
+      httpRequest.url.includes('GetDetailsByVehicle') 
+      ||
       httpRequest.url.includes('get-organization-per-station')
+
     ) {
       return next.handle(httpRequest);
     }

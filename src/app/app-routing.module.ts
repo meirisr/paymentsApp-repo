@@ -10,7 +10,7 @@ const routes: Routes = [
     redirectTo: 'login', //login
     pathMatch: 'full',
   },
-  
+
   {
     path: 'login',
     loadChildren: () =>
@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
     // canLoad: [AutoLoginGuard],
-    canLoad: [AuthGuard,IntroGuard]
+    canLoad: [AuthGuard, IntroGuard],
   },
 
   {
@@ -31,10 +31,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
     // canLoad: [AuthGuard, IntroGuard],
-    canLoad: [AuthGuard]
-    // children:[
-
-    // ]
+    canLoad: [AuthGuard],
   },
   {
     path: 'user-profile',
@@ -42,7 +39,7 @@ const routes: Routes = [
       import('./pages/user-profile/user-profile.module').then(
         (m) => m.UserProfilePageModule
       ),
-      canLoad: [AuthGuard],
+    canLoad: [AuthGuard],
   },
   {
     path: 'user-details',
@@ -77,11 +74,12 @@ const routes: Routes = [
       import('./pages/travel-route-tracking/travel-route-tracking.module').then(
         (m) => m.TravelRouteTrackingPageModule
       ),
-      canLoad: [AuthGuard],
+    canLoad: [AuthGuard],
   },
   {
     path: 'history',
-    loadChildren: () => import('./pages/history/history.module').then( m => m.HistoryPageModule),
+    loadChildren: () =>
+      import('./pages/history/history.module').then((m) => m.HistoryPageModule),
     canLoad: [AuthGuard],
   },
   {
@@ -89,8 +87,6 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
-  
-
 ];
 
 @NgModule({

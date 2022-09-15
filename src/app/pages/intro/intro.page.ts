@@ -43,10 +43,10 @@ export class IntroPage implements OnInit {
   async onCreditCardClick(): Promise<void> {
     if (this.logInServer.isCardHasDetails.value) {
       // this.utils.presentModal('ברוכים הבאים', '');
-      this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+      this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
     } else {
       this.utils.presentModal('', 'עליך להכניס פרטי אשראי');
-      this.navCtrl.navigateRoot(['credit-card-details'], { replaceUrl: true });
+      this.navCtrl.navigateRoot(['/credit-card-details'], { replaceUrl: true });
     }
   }
   // toggleDarkTheme(matchesMode) {

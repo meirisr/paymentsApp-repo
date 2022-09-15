@@ -1,9 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Gesture, GestureController, NavController, Platform } from '@ionic/angular';
+import {
+  Gesture,
+  GestureController,
+  NavController,
+  Platform,
+} from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { Subscription } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
-import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-travel-route-tracking',
@@ -17,8 +21,8 @@ export class TravelRouteTrackingPage implements OnInit {
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   @ViewChild('dated') datedRef: ElementRef<HTMLElement>;
   isShow: boolean = true;
-  hideItems: boolean=true;
-  noData:boolean=false;
+  hideItems: boolean = true;
+  noData: boolean = false;
   mapHight: string = '100vh';
   startHight: number = 8;
   maxHight: number = 22;
@@ -37,8 +41,7 @@ export class TravelRouteTrackingPage implements OnInit {
     private gestureCtrl: GestureController,
     public navCtrl: NavController,
     private storageService: StorageService,
-    private travelProcessService: TravelProcessService,
-    
+    private travelProcessService: TravelProcessService
   ) {
     this.plt.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateBack('/menu', { replaceUrl: true });
@@ -46,16 +49,17 @@ export class TravelRouteTrackingPage implements OnInit {
   }
 
   ngOnInit() {
-    this.noData=false;
+    this.noData = false;
   }
   ngAfterViewInit(): void {
     let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
       async (data) => {
-        console.log(data)
-        if (!data){
-         this.noData=true;
+        console.log(data);
+        if (!data) {
+          this.noData = true;
           return;
         }
+        this.noData = false;
         this.origin = data.firstStation;
         this.destination = data.lastStation;
         this.allStations = data.stationArray;
@@ -77,7 +81,6 @@ export class TravelRouteTrackingPage implements OnInit {
         threshold: 0,
         gestureName: 'my-gesture',
         onMove: (ev) => this.onMove(ev),
-        // onEnd: (ev) => this.onEnd(ev),
       },
       true
     );
@@ -86,38 +89,16 @@ export class TravelRouteTrackingPage implements OnInit {
   onMove(detail) {
     if (detail.deltaY > 0) {
       this.travelBodyRef.nativeElement.classList.add('OpenBig');
-      this.hideItems=false;
-      
-      // if(!position.scrollTop && detail.deltaY>0){
-      //   this.travelBodyRef.nativeElement.classList.add('OpenBig')
-      // }else{
-      //   this.travelBodyRef.nativeElement.classList.remove('OpenBig')
-      // }
-     
-
-      // if (detail.currentY > this.minHight - 40 || detail.currentY < 70) {
-      //   return;
-      // }
-
-      // if (!position.scrollTop && detail.deltaY > 0) {
-      //   this.travelBodyRef.nativeElement.style.top = 93 + 'vh';
-      // }
+      this.hideItems = false;
     }
   }
-  onEnd(detail) {}
-
   onClick(): void {
-    // const position = document.getElementById('drowerBar');
-    // const top = position.getBoundingClientRect().top;
     this.travelBodyRef.nativeElement.classList.toggle('OpenBig');
-    this.hideItems=!this.hideItems;
+    this.hideItems = !this.hideItems;
     const position = document.getElementById('body-card-1');
     position.scrollTop = 0;
-
-    // this.travelBodyRef.nativeElement.style.height =
-    //   this.convertPXToVh(top) > 60 ? 10 + 'vh' : 93 + 'vh';
   }
-  onEndTrip(){
+  onEndTrip() {
     this.travelProcessService.routeInfo.next(false);
     this.storageService.deleteRouteDetails();
     this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
@@ -127,7 +108,6 @@ export class TravelRouteTrackingPage implements OnInit {
     this.travelBodyRef.nativeElement.classList.toggle('close');
     const position = document.getElementById('body-card-1');
     position.scrollTop = 0;
-    // this.showHideIconRef.nativeElement.classList.toggle('show')
   }
 
   convertPXToVh(px: number): number {

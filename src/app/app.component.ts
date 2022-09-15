@@ -22,16 +22,11 @@ export class AppComponent implements OnInit {
     private alertController: AlertController,
     private authenticationService: AuthenticationService
   ) {
+    window.screen.orientation.lock('portrait');
     translate.setDefaultLang('en');
     translate.use('he');
     App.getState().then((status) => console.log('status:', status));
     this.hideSplashScreen();
-    // this.platform.backButton.subscribeWithPriority(-1, () => {
-    //   if (!this.routerOutlet.canGoBack()||this.router.url=='/menu') {
-    //     App.exitApp();
-    //   }
-    // });
-
     Network.addListener('networkStatusChange', (status) => {
       console.log('Network status changed', status);
       if (!status.connected) {

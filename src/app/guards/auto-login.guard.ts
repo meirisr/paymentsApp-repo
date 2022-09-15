@@ -24,7 +24,7 @@ export class AutoLoginGuard implements CanLoad {
         console.log(isAuthenticated);
         if (isAuthenticated) {
           // Directly open inside area
-          this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
+          this.navCtrl.navigateRoot(['/intro'],{replaceUrl:true})
           // this.router.navigate(['/intro']);
         } else {
           // Simply allow access to the login

@@ -40,6 +40,7 @@ ion-menu{
   --ion-background-color: #091d31;
   --ion-color: #fff;
   --ion-border-color: #091d31;
+
 }
 .md body.scanBg {
   --ion-background-color: #091d3100;
@@ -65,11 +66,10 @@ ion-text {
   color: #fff;
 }
 .my-custom-class {
-  --width: 90vw;
-  --height: 40vh;
-  --border-radius: 8px;
-  border-radius: 10px;
-  background-color: #091d31;
+  --width: 70vw;
+    --height: 30vh;
+    --border-radius: 15px;
+    background-color: #41464b;
 }
 app-popup-modal.ion-page {
   border-radius: 10px;
@@ -87,4 +87,7 @@ app-popup-modal.ion-page {
 }
 .menu-btn-right {
   right: 0;
+}
+input.sc-ion-input-md{
+  --padding-bottom: 3px;
 }

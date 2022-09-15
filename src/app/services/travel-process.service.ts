@@ -27,7 +27,8 @@ export class TravelProcessService {
           trip: 'test',
           fromStop: 'first',
           toStop: 'to',
-        },
+        }
+        ,
         {
           headers: new HttpHeaders({ station: 'hotels' }),
         }
@@ -43,7 +44,7 @@ export class TravelProcessService {
   public getTravelDetails(
     location: { latitude: number; longitude: number },
     VehicleNum: number
-  ): Observable<any> {
+  ){
     try {
       return this.http
         .post(
@@ -87,10 +88,12 @@ export class TravelProcessService {
               routeData
              );
              this.storageService.setRouteDetails(routeData);
-          
+            
             return data;
           })
-        );
+        ).subscribe((data)=>{
+          console.log(data)
+        });
     } catch (error) {
       console.log(error);
     }

@@ -86,8 +86,9 @@ export class PaymentPage implements AfterViewInit {
     from(this.travelProcessService.paymentTranportation()).subscribe(
       async (data) => {
         this.utils.dismissLoader(loader);
+        console.log(data.querySuccessful)
         if (data.querySuccessful) {
-          this.navCtrl.navigateRoot(['travel-route-tracking'], {
+          this.navCtrl.navigateRoot(['/travel-route-tracking'], {
             replaceUrl: true,
           });
           await this.utils.presentModal('נסיעה טובה', 'החיוב בוצע בהצלחה');

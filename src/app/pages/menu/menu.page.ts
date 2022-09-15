@@ -34,27 +34,27 @@ export class MenuPage {
   async hideSplashScreen(): Promise<void> {}
 
   settings(): void {
-    this.navCtrl.navigateRoot(['settings'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/settings'], { replaceUrl: true });
   }
   scan(): void {
-    this.navCtrl.navigateRoot(['scan'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/scan'], { replaceUrl: true });
   }
   map(): void {
-    this.navCtrl.navigateRoot(['travel-route-tracking'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/travel-route-tracking'], { replaceUrl: true });
   }
   history(): void {
-    this.navCtrl.navigateRoot(['history'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/history'], { replaceUrl: true });
   }
   logOut(): void {
     Storage.remove({ key: HOTEL_ID });
-    this.navCtrl.navigateRoot(['intro'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/intro'], { replaceUrl: true });
   }
 
   userProfile(): void {
-    this.navCtrl.navigateRoot(['user-profile'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/user-profile'], { replaceUrl: true });
   }
   creditCardDetails(): void {
-    this.navCtrl.navigateRoot(['credit-card-details'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/credit-card-details'], { replaceUrl: true });
   }
   toggleDarkTheme(matchesMode): void {
     this.prefersDark = matchesMode;

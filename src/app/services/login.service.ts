@@ -16,16 +16,10 @@ const HEADER_HOTELS = 'hotels';
 })
 export class LoginService {
   didSendSms: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isUserHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    null
-  );
-  isUserPermitToOrg: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  isUserHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isUserPermitToOrg: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isCardHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   userDetails = new BehaviorSubject({ firstName: '', lastName: '', email: '' });
-  isCardHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
 
   constructor(
     private http: HttpClient,
@@ -114,9 +108,9 @@ export class LoginService {
         map((data: any) => {
           if (data.body != null && data.body.length > 0) {
             this.storageService.setCreditCard4Dig(data.body);
-            return this.isCardHasDetails.next(true);
+             this.isCardHasDetails.next(true);
           } else {
-            return this.isCardHasDetails.next(false);
+             this.isCardHasDetails.next(false);
           }
         })
       );
@@ -181,7 +175,7 @@ export class LoginService {
   public async handleButtonClick(): Promise<void> {
     const toast = await this.toastController.create({
       color: 'light',
-      // duration: 2000,
+      duration: 3000,
       position: 'bottom',
       message: 'הפרטים עודכנו בצלחה',
     });

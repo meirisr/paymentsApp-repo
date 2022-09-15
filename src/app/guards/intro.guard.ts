@@ -19,7 +19,7 @@ export class IntroGuard implements CanLoad {
       take(1), // Otherwise the Observable doesn't complete!
       map((isUserPermitToOrg) => {
         if (isUserPermitToOrg) {
-          this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+          this.navCtrl.navigateRoot(['/menu'],{replaceUrl:true})
           // this.router.navigate(['/menu']);
           return true;
         } else {

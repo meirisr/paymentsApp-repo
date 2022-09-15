@@ -23,7 +23,7 @@ export class UserProfilePage {
     public navCtrl: NavController,
     private logInServer: LoginService
   ) {
-    this.platform.backButton.subscribeWithPriority(0, () => {
+    this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
     });
   }

@@ -12,7 +12,7 @@ const USER_DETAILS = 'user-details';
 const ROUTE_DETAILS = 'route-details';
 const CARD_DETAILS = 'card-details';
 const HOTEL_ID = 'my-hotel';
-const userStorege = [
+export const userStorege = [
   COLOR_THEME,
   USER_LANGUAGE,
   PHONE_NUM,

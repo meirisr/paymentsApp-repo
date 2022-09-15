@@ -152,7 +152,7 @@ export class MapComponent implements AfterViewInit {
   initMap() {
     this.mapOptions = {
       disableDefaultUI: true,
-      zoom: 16,
+      zoom: 12,
       center: { lat: 30.79476, lng: 35.18761 },
       styles: this.styles.silver,
     };
@@ -180,6 +180,10 @@ export class MapComponent implements AfterViewInit {
           this.nearesStationth = this.fixLocation(
             data.nearestStation?.stationLocation
           );
+          if (this.path && this.path.length >= 2) {
+            this.addMarker(this.nearesStationth);
+            // this.fitToMarkers(this.path);
+            }
         },
         async (error) => {
           console.log(error);
@@ -187,17 +191,17 @@ export class MapComponent implements AfterViewInit {
       );
 
       this.subscriptions.push(routeInfoSubscription);
-      // this.addPolyline()
-      if (this.path && this.path.length >= 2) {
-        this.addMarker(this.nearesStationth);
-        this.fitToMarkers(this.path);
-        // this.markers.push(this.nearesStationth)
-        // console.log(this.nearesStationth)
-        // this.mapOptions.center=this.nearesStationth.toJSON()
-        // this.printCurrentPosition();
-      } else {
-        // this.printCurrentPosition();
-      }
+      // // this.addPolyline()
+      // if (this.path && this.path.length >= 2) {
+      //   this.addMarker(this.nearesStationth);
+      //   this.fitToMarkers(this.path);
+      //   // this.markers.push(this.nearesStationth)
+      //   // console.log(this.nearesStationth)
+      //   // this.mapOptions.center=this.nearesStationth.toJSON()
+      //   // this.printCurrentPosition();
+      // } else {
+      //   // this.printCurrentPosition();
+      // }
     }, 100);
     // console.log(this.mapRef._elementRef)
     //  this.map= new google.maps.Map(this.mapRef.nativeElement,this.mapOptions)

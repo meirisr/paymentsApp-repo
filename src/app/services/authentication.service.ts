@@ -36,7 +36,7 @@ export class AuthenticationService {
             this.loginService.getUserDetails().subscribe(
               () => {
                 this.loginService.isUserHasDetails.subscribe(
-                  (v)=>console.log(v)
+                  (v)=>console.log("isUserHasDetails:",v)
                 )
               },
               (err) => {
@@ -46,7 +46,7 @@ export class AuthenticationService {
             this.loginService.getCreditCardInfo().subscribe(
               () => {
                 this.loginService.isUserHasDetails.subscribe(
-                  (v)=>console.log(v)
+                  (v)=>console.log("isCardHasDetails:",v)
                 )
               },
               (err) => {

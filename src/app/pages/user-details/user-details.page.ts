@@ -31,7 +31,7 @@ export class UserDetailsPage implements OnInit {
     private platform: Platform,
     public navCtrl: NavController
   ) {
-    this.platform.backButton.subscribeWithPriority(0, () => {
+    this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateRoot(['/user-profile'], { replaceUrl: true });
     });
   }

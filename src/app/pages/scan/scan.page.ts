@@ -86,12 +86,12 @@ export class ScanPage implements OnInit {
         this.stopScanner();
         document.querySelector('body').classList.remove('scanBg');
         let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
-        // if (hotelId) {
-        //   this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
-        // }
-        // else {
+        if (hotelId) {
+          this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
+        }
+        else {
           this.navCtrl.navigateRoot(['/travel-route-tracking'], {replaceUrl: true,});
-        // }
+        }
         await this.utils.presentModal('נסיעה טובה', '');
         this.getTrip();
 

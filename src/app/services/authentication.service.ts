@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { LoginService } from './login.service';
+import { UtilsService } from './utils/utils.service';
 const TOKEN_KEY = 'my-token';
 const HOTEL_ID = 'my-hotel';
 @Injectable({
@@ -22,7 +23,8 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient,
     private storageService: StorageService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private utils: UtilsService
   ) {}
   public async loadToken() {
     this.token = await this.storageService.getToken();
@@ -87,7 +89,8 @@ export class AuthenticationService {
     }
   }
   public isTokenValid(refreshToken: string): Observable<any> {
-    return this.http
+    try {
+      return this.http
       .get(
         `${environment.serverUrl}/base-auth/is-token-valid?token=${refreshToken}`
       )
@@ -100,6 +103,10 @@ export class AuthenticationService {
           return data.body;
         })
       );
+    } catch (error) {
+      this.onHttpErorr(" עקב תקלה לא ניתן לגשת לאפליקציה אנא נסה/י בעוד כמה דקות.", "תקלת תקשורת")
+    }
+   
   }
 
   public tryRefreshToken(refreshToken: string) {
@@ -112,5 +119,8 @@ export class AuthenticationService {
           this.storageService.setToken(data.body.jwtToken);
         })
       );
+  }
+  async onHttpErorr(e, header) {
+    this.utils.showalert(e, header);
   }
 }

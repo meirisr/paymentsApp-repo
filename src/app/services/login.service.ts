@@ -128,7 +128,7 @@ export class LoginService {
           headers: new HttpHeaders({ station: 'hotels' }),
         }
       )
-      .pipe(tap(() => {}))
+      .pipe()
       .subscribe(
         async () => {
           this.storageService.setUserDetails(credentials);

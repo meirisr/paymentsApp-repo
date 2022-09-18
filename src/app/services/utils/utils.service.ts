@@ -50,7 +50,7 @@ export class UtilsService {
       this.ischecked = 'false';
     }
   }
-  onToggleLanguages(event): void {
+  onToggleLanguages(event:any): void {
     switch (event.detail.value) {
       case 'en':
         this.translate.use('en');
@@ -171,10 +171,10 @@ export class UtilsService {
     });
     modal.present();
 
-    // setTimeout(() => {
-    //   modal.dismiss({
-    //     dismissed: true,
-    //   });
-    // }, 2000);
+    setTimeout(() => {
+      modal.dismiss({
+        dismissed: true,
+      });
+    }, 2000);
   }
 }

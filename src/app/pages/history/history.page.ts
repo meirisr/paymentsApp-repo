@@ -16,5 +16,8 @@ export class HistoryPage implements OnInit {
 
   ngOnInit() {
   }
+  goToMenu(): void {
+    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+  }
 
 }

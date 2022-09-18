@@ -18,7 +18,7 @@ export class MainPage {
     private navCtrl: NavController
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      navigator['app'].exitApp();
+      this.navCtrl.navigateBack('/info', { replaceUrl: true });
     });
   }
 
@@ -26,7 +26,7 @@ export class MainPage {
     this.getHotel();
   }
   onClick(): void {
-    this.navCtrl.navigateRoot(['scan'], { replaceUrl: true });
+    this.navCtrl.navigateRoot(['/scan'], { replaceUrl: true });
   }
   async getHotel(): Promise<void> {
     const hotel = (await this.storageService.getStorege(HOTEL_ID)).value;

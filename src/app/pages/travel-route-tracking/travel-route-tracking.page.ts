@@ -120,4 +120,5 @@ export class TravelRouteTrackingPage implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
+  
 }

@@ -26,10 +26,12 @@ export class SettingsPage implements OnInit {
   onToggleLanguages(event) {
     this.utils.onToggleLanguages(event);
   }
-  radioGroupChange(event){
+  radioGroupChange(event:Event){
     this.utils.onToggleLanguages(event);
+    window.location.reload();
+
   }
   goToMenu() {
-    this.navCtrl.navigateRoot(['menu'],{replaceUrl:true})
+    this.navCtrl.navigateRoot(['/menu'],{replaceUrl:true})
   }
 }

@@ -26,9 +26,9 @@ export class CreditCardDetailsPage implements OnInit {
     public navCtrl: NavController
   ) {
 
-    this.platform.backButton.subscribeWithPriority(0, () => {
+    this.platform.backButton.subscribeWithPriority(10, () => {
       this.routerOutlet.pop()
-      this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
+      this.navCtrl.navigateRoot(['/intro'],{replaceUrl:true})
       // this.router.navigate(['/intro']);
     });
   }

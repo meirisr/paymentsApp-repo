@@ -22,7 +22,7 @@ export class MenuPage {
     public navCtrl: NavController
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      navigator['app'].exitApp()
+      this.navCtrl.navigateBack('/info', { replaceUrl: true });
     });
 
     document.querySelector('body').classList.remove('scanBg');

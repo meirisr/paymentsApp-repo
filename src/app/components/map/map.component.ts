@@ -8,7 +8,7 @@ import {
 import { Geolocation } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
 import { Observable, Subscription } from 'rxjs';
-import { NavController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
@@ -134,6 +134,7 @@ export class MapComponent implements AfterViewInit {
   constructor(
     private navCtrl: NavController,
     private utils: UtilsService,
+    private menuCtrl: MenuController,
     private travelProcessService: TravelProcessService,
     private ngZone: NgZone
   ) {
@@ -145,15 +146,15 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.initMap();
-    document.addEventListener('touchmove', this.docEvent);
-    document.addEventListener('touchstart', this.docEvent);
+    // document.addEventListener('touchmove', this.docEvent);
+    // document.addEventListener('touchstart', this.docEvent);
   }
 
   initMap() {
     this.mapOptions = {
       disableDefaultUI: true,
       zoom: 12,
-      center: { lat: 30.79476, lng: 35.18761 },
+      // center: { lat: 30.79476, lng: 35.18761 },
       styles: this.styles.silver,
     };
     this.watchmarkerOptions = {
@@ -374,6 +375,9 @@ export class MapComponent implements AfterViewInit {
   docEvent(e) {
     if (e.cancelable) {
       e.preventDefault();
+      console.log(e)
     }
   }
+ 
+
 }

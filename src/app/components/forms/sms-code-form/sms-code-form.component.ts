@@ -63,14 +63,14 @@ export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
     // this.codeInputRef.nativeElement.focus();
   }
   async onSmsCodeFormSubmit() {
-    let loader=this.utils.showLoader();
+    // let loader=this.utils.showLoader();
     const credentials = {
       phone: this.storageService.userPhoneNumber,
       text: Object.values(this.smsCodeForm.value).join(''),
     };
     this.logInServer.getToken(credentials).subscribe(
       async (data) => {
-        this.utils.dismissLoader(loader);
+        // this.utils.dismissLoader(loader);
        await this.authenticationService.loadToken().then(()=>{
         setTimeout(() => {
           this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
@@ -81,7 +81,7 @@ export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
    
       },
       async (res) => {
-        this.utils.dismissLoader(loader);
+        // this.utils.dismissLoader(loader);
         this.onHttpErorr(res, '');
       }
     );
@@ -105,16 +105,16 @@ export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
   }
   async resendSms() {
     this.smsCodeForm.reset();
-    const loader = this.utils.showLoader();
+    // const loader = this.utils.showLoader();
     this.logInServer
       .sendVerificationCode({ phone: this.storageService.userPhoneNumber })
       .subscribe(
         async () => {
-          this.utils.dismissLoader(loader);
+          // this.utils.dismissLoader(loader);
           setTimeout(() => {}, 150);
         },
         async (res) => {
-          this.utils.dismissLoader(loader);
+          // this.utils.dismissLoader(loader);
           this.logInServer.didSendSms.next(false);
           this.onHttpErorr(res, '');
         }

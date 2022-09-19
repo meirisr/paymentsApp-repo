@@ -13,7 +13,8 @@ import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
 const BusImage: string = '../../../assets/images/bus.png';
-const circleImage: string = '../../../assets/location.svg';
+const locationImage: string = '../../../assets/location.svg';
+const emptyCircleImage: string = '../../../assets/empty-circle.svg';
 
 @Component({
   selector: 'app-map',
@@ -27,6 +28,7 @@ export class MapComponent implements AfterViewInit {
   @Input() height: string;
   @Input() path: [];
   @Input() nearesStationth;
+  @Input() stations: any[] = [];
   googleApiLoaded: boolean = false;
   public lat: any;
   public lng: any;
@@ -34,11 +36,13 @@ export class MapComponent implements AfterViewInit {
   bounds;
   watchMarker = null;
   markers = [];
+  stationsMarker = [];
   watchmarkers = [];
   markerPositions: google.maps.Marker[] = [];
   polylineOptions: google.maps.PolylineOptions = {};
   mapOptions: google.maps.MapOptions = {};
   markerOptions: google.maps.MarkerOptions = {};
+  stationsMarkerOptions: google.maps.MarkerOptions = {};
   watchmarkerOptions: google.maps.MarkerOptions = {};
   styles: Record<string, google.maps.MapTypeStyle[]> = {
     default: [],
@@ -142,30 +146,41 @@ export class MapComponent implements AfterViewInit {
       this.googleApiLoaded = res;
     });
     this.subscriptions.push(loadgoogleApi);
+    
   }
 
   ngAfterViewInit() {
     this.initMap();
-    // document.addEventListener('touchmove', this.docEvent);
-    // document.addEventListener('touchstart', this.docEvent);
+   let stationInfo = this.travelProcessService.stationInfo.subscribe(async(res) =>{
+      console.log(res)
+      console.log("gggggggg")
+      let thisStation=this.stationsMarker.find((obj)=>{obj.stationIndex==res})
+      this.creatStationMarker(thisStation)
+    
+    });
+    this.subscriptions.push(stationInfo);
   }
 
   initMap() {
     this.mapOptions = {
       disableDefaultUI: true,
       zoom: 12,
-      // center: { lat: 30.79476, lng: 35.18761 },
+      center: { lat: 30.79476, lng: 35.18761 },
       styles: this.styles.silver,
     };
     this.watchmarkerOptions = {
       draggable: false,
-      icon: circleImage,
+      icon: locationImage,
     };
+
     this.markerOptions = {
       draggable: false,
       icon: BusImage,
     };
-
+    this.stationsMarkerOptions = {
+      draggable: false,
+      icon: emptyCircleImage,
+    };
     this.polylineOptions = {
       strokeColor: '#191919',
       strokeWeight: 6,
@@ -177,14 +192,17 @@ export class MapComponent implements AfterViewInit {
       let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
         async (data) => {
           if (!data) return;
+
           this.path = data.Coordinates;
           this.nearesStationth = this.fixLocation(
             data.nearestStation?.stationLocation
           );
           if (this.path && this.path.length >= 2) {
             this.addMarker(this.nearesStationth);
-            // this.fitToMarkers(this.path);
-            }
+            // data.stationArray.forEach((obj) => {
+            //   this.creatStationMarker(obj);
+            // });
+          }
         },
         async (error) => {
           console.log(error);
@@ -192,22 +210,18 @@ export class MapComponent implements AfterViewInit {
       );
 
       this.subscriptions.push(routeInfoSubscription);
-      // // this.addPolyline()
-      // if (this.path && this.path.length >= 2) {
-      //   this.addMarker(this.nearesStationth);
-      //   this.fitToMarkers(this.path);
-      //   // this.markers.push(this.nearesStationth)
-      //   // console.log(this.nearesStationth)
-      //   // this.mapOptions.center=this.nearesStationth.toJSON()
-      //   // this.printCurrentPosition();
-      // } else {
-      //   // this.printCurrentPosition();
-      // }
     }, 100);
     // console.log(this.mapRef._elementRef)
     //  this.map= new google.maps.Map(this.mapRef.nativeElement,this.mapOptions)
 
     this.printCurrentPosition();
+  }
+  creatStationMarker(obj) {
+    console.log(obj)
+    this.stationsMarker=[];
+    const latLng={lat:obj.stationLocation.lat,lng:obj.stationLocation.lon}
+    this.stationsMarker.push(latLng);
+    this.mapOptions.center = latLng;
   }
   markerClick() {
     return false;
@@ -234,11 +248,6 @@ export class MapComponent implements AfterViewInit {
           });
           this.removeWatcharkers();
           this.addWatchMarker(latLng.toJSON());
-          //     let watchMarker= this.addMarker(latLng.toJSON(), 'location');
-          //     this.markers.push(latLng.toJSON());
-
-          //  console.log( this.markers)
-          //  this.map.panTo(latLng.toJSON());
         });
       });
     } else {
@@ -349,7 +358,7 @@ export class MapComponent implements AfterViewInit {
       this.bounds.extend(extendPoint2);
     }
     this.mapOptions.center = this.bounds;
-    console.log(this.bounds)
+    console.log(this.bounds);
   }
   fixLocation(location: { latitude: number; longitude: number }) {
     if (location) return { lat: location.latitude, lng: location.longitude };
@@ -375,9 +384,7 @@ export class MapComponent implements AfterViewInit {
   docEvent(e) {
     if (e.cancelable) {
       e.preventDefault();
-      console.log(e)
+      console.log(e);
     }
   }
- 
-
 }

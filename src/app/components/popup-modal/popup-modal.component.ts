@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LottieComponent} from '../lottie/lottie.component'
 
 @Component({
   selector: 'app-popup-modal',
@@ -11,6 +12,8 @@ export class PopupModalComponent implements OnInit {
    type:string;
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.type)
+  }
 
 }

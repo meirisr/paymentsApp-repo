@@ -6,7 +6,7 @@ import {
   Platform,
 } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -16,6 +16,7 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class TravelRouteTrackingPage implements OnInit {
   private subscriptions: Subscription[] = [];
+
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('travelBody') travelBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
@@ -116,9 +117,12 @@ export class TravelRouteTrackingPage implements OnInit {
   convertVhTopx(vh: number): number {
     return (vh * document.documentElement.clientWidth) / 100;
   }
+  emitEventToChild(id) {
+    console.log(id);
+    this.travelProcessService.stationInfo.next(id);
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
-  
 }

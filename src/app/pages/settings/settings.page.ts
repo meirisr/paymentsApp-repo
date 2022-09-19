@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-const COLOR_THEME = 'color-theme';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
@@ -10,28 +8,22 @@ const COLOR_THEME = 'color-theme';
 })
 export class SettingsPage implements OnInit {
   ischecked: string;
-  ischecked2;
-  defaultLang:string;
-  constructor(private utils: UtilsService,private router:Router,private navCtrl: NavController) {
-    this.ischecked=this.utils.ischecked;
-    this.defaultLang=this.utils.defaultLang;
- 
+  defaultLang: string;
+  constructor(private utils: UtilsService, private navCtrl: NavController) {
+    this.ischecked = this.utils.ischecked;
+    this.defaultLang = this.utils.defaultLang;
   }
 
   ngOnInit() {}
-  onToggleColorTheme(event) {
-    this.utils.onToggleColorTheme(event);
-  
-  }
+
   onToggleLanguages(event) {
     this.utils.onToggleLanguages(event);
   }
-  radioGroupChange(event:Event){
+  radioGroupChange(event: Event) {
     this.utils.onToggleLanguages(event);
     window.location.reload();
-
   }
   goToMenu() {
-    this.navCtrl.navigateRoot(['/menu'],{replaceUrl:true})
+    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
   }
 }

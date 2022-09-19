@@ -45,7 +45,7 @@ export class IntroPage implements OnInit {
       // this.utils.presentModal('ברוכים הבאים', '');
       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
     } else {
-      this.utils.presentModal('', 'עליך להכניס פרטי אשראי');
+      this.utils.presentModal('', 'עליך להכניס פרטי אשראי','');
       this.navCtrl.navigateRoot(['/credit-card-details'], { replaceUrl: true });
     }
   }
@@ -69,11 +69,12 @@ export class IntroPage implements OnInit {
       if (data) {
         await this.utils.presentModal(
           'ברוכים הבאים',
-          `הנך רשום ב ${hotelName}`
+          `הנך רשום ב ${hotelName}`,
+          'chack'
         );
-        this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+        this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
       } else {
-        await this.utils.presentModal('לא נמצא', 'עליך להכנס עם כרטיס אשראי');
+        await this.utils.presentModal('לא נמצא', 'עליך להכנס עם כרטיס אשראי','');
       }
     });
   (err: Error) => {

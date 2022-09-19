@@ -1,24 +1,12 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <app-header-wave ></app-header-wave>
+    <app-header-wave></app-header-wave>
     <app-back-btn (click)="goToMenu()"></app-back-btn>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  
   <ion-grid>
-    <!-- <ion-row>
-      <ion-col size="12">
-        <ion-item>
-          <ion-label>Dark Mode</ion-label>
-          <ion-toggle
-            (ionChange)="onToggleColorTheme($event)"
-            [checked]="ischecked"
-          ></ion-toggle>
-        </ion-item>
-      </ion-col>
-    </ion-row> -->
     <ion-list>
       <ion-radio-group
         [value]="defaultLang"

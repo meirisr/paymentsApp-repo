@@ -82,23 +82,23 @@ export class PaymentPage implements AfterViewInit {
     }
   }
   async onSubmit(): Promise<void> {
-    let loader = this.utils.showLoader();
+    // let loader = this.utils.showLoader();
     from(this.travelProcessService.paymentTranportation()).subscribe(
       async (data) => {
-        this.utils.dismissLoader(loader);
+        // this.utils.dismissLoader(loader);
         console.log(data.querySuccessful)
         if (data.querySuccessful) {
           this.navCtrl.navigateRoot(['/travel-route-tracking'], {
             replaceUrl: true,
           });
-          await this.utils.presentModal('נסיעה טובה', 'החיוב בוצע בהצלחה');
+          await this.utils.presentModal('נסיעה טובה', 'החיוב בוצע בהצלחה','chack');
         } else {
-          await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב');
+          await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב','');
         }
       },
       async(err) => {
-        this.utils.dismissLoader(loader);
-        await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב');
+        // this.utils.dismissLoader(loader);
+        await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב','');
         console.log(err);
       }
     );

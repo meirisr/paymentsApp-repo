@@ -1,11 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Platform, IonRouterOutlet, AlertController } from '@ionic/angular';
+import { Platform, IonRouterOutlet } from '@ionic/angular';
 import { UtilsService } from './services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Network } from '@capacitor/network';
 import { App } from '@capacitor/app';
 import { AuthenticationService } from './services/authentication.service';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { AlertService } from './services/utils/alert.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,11 @@ import { SplashScreen } from '@capacitor/splash-screen';
 })
 export class AppComponent implements OnInit {
   @ViewChild(IonRouterOutlet, { static: true }) routerOutlet: IonRouterOutlet;
-  apiLoaded = false;
   constructor(
     private platform: Platform,
     private utils: UtilsService,
     private translate: TranslateService,
-    private alertController: AlertController,
+    private alertService: AlertService,
     private authenticationService: AuthenticationService
   ) {
     window.screen.orientation.lock('portrait');
@@ -30,23 +30,20 @@ export class AppComponent implements OnInit {
     Network.addListener('networkStatusChange', (status) => {
       console.log('Network status changed', status);
       if (!status.connected) {
-        this.showalert();
+        this.alertService.connectionAlert();
       }
     });
     this.logCurrentNetworkStatus();
   }
 
   ngOnInit() {
-    this.utils.getUserTheme();
-    this.utils.getUserLanguage().then(()=>{
-      if(!this.apiLoaded){
-        this.utils.loadGoogleMap();
-      }
-
+    
+    this.utils.getUserLanguage().then(() => {
+      this.utils.loadGoogleMap();
     });
-  
     this.utils.loadRoute();
     this.authenticationService.loadToken();
+    this.authenticationService.debtCheck();
   }
   hideSplashScreen = () => {
     this.platform.ready().then(async () => {
@@ -61,22 +58,7 @@ export class AppComponent implements OnInit {
     const status = await Network.getStatus();
     console.log('Network status:', status);
     if (!status.connected) {
-      this.showalert();
+      this.alertService.connectionAlert();
     }
   };
-  async showalert() {
-    const alert = await this.alertController.create({
-      header: 'Loading Error',
-      message: 'No Internet Connection. Please try again later',
-      buttons: [
-        {
-          text: 'Ok',
-          handler: () => {
-            App.exitApp();
-          },
-        },
-      ],
-    });
-    await alert.present();
-  }
 }

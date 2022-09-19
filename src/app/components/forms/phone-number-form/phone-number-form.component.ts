@@ -29,17 +29,17 @@ export class PhoneNumberFormComponent implements OnInit {
    this.phoneInputRef.nativeElement.setFocus();
   }
   async onPhoneNumderFormSubmit() {
-    const loader = this.utils.showLoader();
+    // const loader = this.utils.showLoader();
     this.logInServer.sendVerificationCode(this.phoneNumderForm.value).subscribe(
       async (res) => {
-        this.utils.dismissLoader(loader);
+        // this.utils.dismissLoader(loader);
         this.logInServer.didSendSms.next(true);
         setTimeout(() => {
           
         }, 150);
       },
       async (res) => {
-        this.utils.dismissLoader(loader);
+        // this.utils.dismissLoader(loader);
         this.logInServer.didSendSms.next(false);
         this.onHttpErorr(res, '');
       }

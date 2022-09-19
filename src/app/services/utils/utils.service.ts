@@ -36,20 +36,7 @@ export class UtilsService {
     private travelProcessService: TravelProcessService,
   ) {}
 
-  onToggleColorTheme(event) {
-    let drowerDiv = document.getElementById('travelBody');
-    if (event.detail.checked) {
-      document.body.setAttribute('color-theme', 'dark');
-
-      Storage.set({ key: COLOR_THEME, value: 'true' });
-      this.ischecked = 'true';
-    } else {
-      document.body.setAttribute('color-theme', 'light');
-
-      Storage.set({ key: COLOR_THEME, value: 'false' });
-      this.ischecked = 'false';
-    }
-  }
+  
   onToggleLanguages(event:any): void {
     switch (event.detail.value) {
       case 'en':
@@ -74,18 +61,7 @@ export class UtilsService {
         break;
     }
   }
-  async getUserTheme(): Promise<void> {
-    const themeColor = await Storage.get({ key: COLOR_THEME });
-    if (themeColor.value === 'true') {
-      document.body.setAttribute('color-theme', 'dark');
-
-      this.ischecked = 'true';
-    } else {
-      document.body.setAttribute('color-theme', 'light');
-
-      this.ischecked = 'false';
-    }
-  }
+ 
   async getUserLanguage(): Promise<string> {
      this.userLang = await Storage.get({ key: USER_LANGUAGE });
     if (this.userLang.value === 'en') {
@@ -120,7 +96,7 @@ export class UtilsService {
         map(() => true),
         catchError(() => of(false))
       )
-      .subscribe((result) => {
+      .subscribe(() => {
         this.apiLoaded.next(true);
       }
       ,()=>{
@@ -142,31 +118,32 @@ export class UtilsService {
   async dismissLoader(loader) {
     loader.then((e) => e.dismiss());
   }
-  async showalert(e, header: string): Promise<void> {
+  async showalert(e:any, header: string): Promise<void> {
     const userLang = await Storage.get({ key: USER_LANGUAGE });
     let language = userLang.value == 'en' ? 'en-us' : 'he-il';
 
     const alert = await this.alertController.create({
-      header: 'Login failed',
+      header: 'Error',
       message: e?.error?.error?.errorMessage
         ? e?.error?.error?.errorMessage[language]
         : e?.error?.errorMessage
         ? e?.error?.errorMessage[language]
-        : 'Due to networking error the request could not be fulfilled. Please retry in a few seconds',
+        : 'עקב שגיאת רשת לא ניתן היה למלא את הבקשה. אנא נסה שוב בעוד מספר שניות',
       buttons: ['OK'],
     });
     await alert.present();
   }
+  
 
-  async presentModal(header: string, text: string): Promise<void> {
+  async presentModal(header: string, text: string,type:string): Promise<void> {
     const modal = await this.modalController.create({
       component: PopupModalComponent,
       cssClass: 'my-custom-class',
       swipeToClose: true,
       componentProps: {
         header: header,
-        typy: 'login-success',
         text: text,
+        type: type,
       },
     });
     modal.present();

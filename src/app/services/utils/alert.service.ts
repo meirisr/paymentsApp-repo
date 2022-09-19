@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { App } from '@capacitor/app';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,22 @@ export class AlertService {
         {
           text: 'Ok',
           handler: deteails.okHandler,
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  async connectionAlert() {
+    const alert = await this.alertController.create({
+      header: 'תקלה',
+      message: 'אין חיבור אינטרנט. בבקשה נסה שוב מאוחר יותר',
+      buttons: [
+        {
+          text: 'הבנתי',
+          handler: () => {
+            App.exitApp();
+          },
         },
       ],
     });

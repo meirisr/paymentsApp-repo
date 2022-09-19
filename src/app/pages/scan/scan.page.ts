@@ -88,59 +88,59 @@ export class ScanPage implements OnInit {
         let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
         if (hotelId) {
           this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
+        } else {
+          this.navCtrl.navigateRoot(['/travel-route-tracking'], {
+            replaceUrl: true,
+          });
         }
-        else {
-          this.navCtrl.navigateRoot(['/travel-route-tracking'], {replaceUrl: true,});
-        }
-        await this.utils.presentModal('נסיעה טובה', '');
+        await this.utils.presentModal('נסיעה טובה', '','chack');
         this.getTrip();
-
-        
       }
     }
   }
-  getTrip(){
-    const TravelDetails$ = this.travelProcessService
-          .getTravelDetails(this.userLocation, 7772569)
-          // .subscribe(
-          //   async (data) => {
+  getTrip() {
+    const TravelDetails$ = this.travelProcessService.getTravelDetails(
+      this.userLocation,
+      7772569
+    );
+    // .subscribe(
+    //   async (data) => {
 
-          //     console.log(data);
-          //     if (!data) {
-          //       await this.utils.presentModal(
-          //         'שגיעה',
-          //         'לא היה ניתן למצוא מסלול'
-          //       );
-          //       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
-          //     } else {
-          //       // if (hotelId) {
-          //       //   this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
-          //       // }
-          //       // else {
-          //       //   this.navCtrl.navigateRoot(['/travel-route-tracking'], {replaceUrl: true,});
-          //       // }
-          //       // await this.utils.presentModal('נסיעה טובה', '');
+    //     console.log(data);
+    //     if (!data) {
+    //       await this.utils.presentModal(
+    //         'שגיעה',
+    //         'לא היה ניתן למצוא מסלול'
+    //       );
+    //       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+    //     } else {
+    //       // if (hotelId) {
+    //       //   this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
+    //       // }
+    //       // else {
+    //       //   this.navCtrl.navigateRoot(['/travel-route-tracking'], {replaceUrl: true,});
+    //       // }
+    //       // await this.utils.presentModal('נסיעה טובה', '');
 
-          //     }
-             
-          //   },
-          //   async (err) => {
-          //     // this.utils.dismissLoader(loader);
-          //     console.log(err);
-          //     await this.utils.presentModal('שגיעה', 'לא היה ניתן למצוא מסלול');
-          //     setTimeout(() => {
-          //       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
-          //     }, 1000);
-          //   }
-        //   );
-        // this.subscriptions.push(TravelDetails$);
+    //     }
+
+    //   },
+    //   async (err) => {
+    //     // this.utils.dismissLoader(loader);
+    //     console.log(err);
+    //     await this.utils.presentModal('שגיעה', 'לא היה ניתן למצוא מסלול');
+    //     setTimeout(() => {
+    //       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+    //     }, 1000);
+    //   }
+    //   );
+    // this.subscriptions.push(TravelDetails$);
   }
   async checkPermission(): Promise<boolean> {
     const status = await BarcodeScanner.checkPermission({ force: true });
     if (status.granted) {
       return true;
     } else if (status.denied) {
-    
       this.permissionAlert('cameraDeteails');
     }
   }
@@ -180,8 +180,9 @@ export class ScanPage implements OnInit {
         okHandler: () => {
           BarcodeScanner.openAppSettings();
         },
-        cancelHandler:()=>{this.goTomenu()}
-
+        cancelHandler: () => {
+          this.goTomenu();
+        },
       },
       locationDeteails: {
         header: 'מיקום כבוי',
@@ -189,7 +190,9 @@ export class ScanPage implements OnInit {
         okHandler: () => {
           this.openNativeSettings.open('location');
         },
-        cancelHandler:()=>{this.goTomenu()}
+        cancelHandler: () => {
+          this.goTomenu();
+        },
       },
     };
     this.alertService.cameraPermissionAlert(alertDeteails[type]);

@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { AutoLoginGuard } from './guards/auto-login.guard';
+import { DebtsGuard } from './guards/debts.guard';
 import { IntroGuard } from './guards/intro.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login', //login
+    redirectTo: 'login', 
     pathMatch: 'full',
   },
 
@@ -31,7 +32,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
     // canLoad: [AuthGuard, IntroGuard],
-    canLoad: [AuthGuard],
+    canLoad: [AuthGuard,DebtsGuard],
   },
   {
     path: 'user-profile',

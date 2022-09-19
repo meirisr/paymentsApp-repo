@@ -10,6 +10,7 @@ import { StorageService } from './storage.service';
 })
 export class TravelProcessService {
   routeInfo: BehaviorSubject<any> = new BehaviorSubject<any>(false);
+  stationInfo: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   Coordinates = <any>[];
   firstStation: any;
   lastStation: any;
@@ -59,7 +60,6 @@ export class TravelProcessService {
         )
         .pipe(
           map((data: any) => {
-            // console.log(data);
             if (data.status != 'Success') {
               this.routeInfo.next(false);
               return false;
@@ -72,32 +72,35 @@ export class TravelProcessService {
               this.routeInfo.next(false);
               return false;
             } 
-            const routeData={ Coordinates: data?.data?.drive?.Coordinates.map((element) => {
-              return this.creatPathArray(element);
-            }),
-            stationArray: data.data.drive.stationArray,
-            firstStation: data.data.drive.firstStation.stationIndex !== -1
-                ? data.data.drive.firstStation
-                : null,
-            lastStation: data.data.drive.lastStation.stationIndex !== -1
-                ? data.data.drive.lastStation
-                : null,
-            nearestStation: data.data.nearestStationOnRoute,
-          }
+            const routeData= this.creatRouteData(data);
             this.routeInfo.next(
               routeData
              );
              this.storageService.setRouteDetails(routeData);
             
-            return data;
+            // return data;
           })
-        ).subscribe((data)=>{
-          console.log(data)
+        ).subscribe(()=>{
+         
         });
     } catch (error) {
       console.log(error);
     }
   }
+creatRouteData(obj){
+  return { Coordinates: obj?.data?.drive?.Coordinates.map((element) => {
+    return this.creatPathArray(element);
+  }),
+  stationArray: obj.data.drive.stationArray,
+  firstStation: obj.data.drive.firstStation.stationIndex !== -1
+      ? obj.data.drive.firstStation
+      : null,
+  lastStation: obj.data.drive.lastStation.stationIndex !== -1
+      ? obj.data.drive.lastStation
+      : null,
+  nearestStation: obj.data.nearestStationOnRoute,
+}
+}
   creatPathArray(obj) {
     return { lat: obj.lat, lng: obj.lon };
   }

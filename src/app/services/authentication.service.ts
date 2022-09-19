@@ -16,6 +16,9 @@ export class AuthenticationService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     null
   );
+  debtCheck$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    null
+  );
   private token: GetResult;
   private refreshToken: GetResult;
   private hotelId: GetResult;
@@ -87,6 +90,9 @@ export class AuthenticationService {
     } else {
       this.isAuthenticated.next(false);
     }
+  }
+  public debtCheck(){
+    this.debtCheck$.next(false)
   }
   public isTokenValid(refreshToken: string): Observable<any> {
     try {

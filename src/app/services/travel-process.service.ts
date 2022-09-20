@@ -80,8 +80,8 @@ export class TravelProcessService {
             
             // return data;
           })
-        ).subscribe(()=>{
-         
+        ).subscribe((data)=>{
+         console.log(data)
         });
     } catch (error) {
       console.log(error);

@@ -31,6 +31,6 @@ export class MainPage {
   async getHotel(): Promise<void> {
     const hotel = (await this.storageService.getStorege(HOTEL_ID)).value;
     console.log(hotel);
-    this.headerText = hotel == 'null' ? '' : hotel;
+    this.headerText = hotel == '0' ? '' : hotel;
   }
 }

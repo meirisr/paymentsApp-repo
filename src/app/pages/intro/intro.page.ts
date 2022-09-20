@@ -5,6 +5,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { LoginService } from 'src/app/services/login.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Subscription } from 'rxjs';
 
 const HOTEL_ID = 'my-hotel';
 
@@ -14,6 +15,7 @@ const HOTEL_ID = 'my-hotel';
   styleUrls: ['./intro.page.scss'],
 })
 export class IntroPage implements OnInit {
+  private subscriptions: Subscription[] = [];
   items: any[] = [{id:'333',name:'meir'}];
   tempitems: any[] = [];
   selectedHotel:{id:string,name:string}={id:'' , name:''};
@@ -31,7 +33,7 @@ export class IntroPage implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.logInServer.getAllOrganizations().subscribe(async (data) => {
+    const allOrg$=this.logInServer.getAllOrganizations().subscribe(async (data) => {
       this.items.push(this.creatHotelObj(data.body));
       this.tempitems = [...this.items];
       console.log(data.body),
@@ -39,10 +41,11 @@ export class IntroPage implements OnInit {
           console.log(err);
         };
     });
+    this.subscriptions.push(allOrg$);
   }
   async onCreditCardClick(): Promise<void> {
     if (this.logInServer.isCardHasDetails.value) {
-      // this.utils.presentModal('ברוכים הבאים', '');
+      this.storageService.setHotelId('0');
       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
     } else {
       this.utils.presentModal('', 'עליך להכניס פרטי אשראי','');
@@ -61,9 +64,10 @@ export class IntroPage implements OnInit {
     ];
   }
   async onSelectHotel(): Promise<void>{
+    
     const hotelId= this.selectedHotel.id;
     const hotelName= this.selectedHotel.name;
-    this.logInServer
+   const isPermitToOrg$= this.logInServer
     .isUserPermitToOrganization(hotelId)
     .subscribe(async (data) => {
       if (data) {
@@ -80,6 +84,8 @@ export class IntroPage implements OnInit {
   (err: Error) => {
     console.log(err);
   };
+  this.subscriptions.push(isPermitToOrg$);
+  this.selectedHotel={id:'' , name:''};
   }
   async onClickHotel(event: Event, item:{id:string,name:string}): Promise<void> {
     const element= (event.target as HTMLElement )
@@ -96,5 +102,9 @@ export class IntroPage implements OnInit {
     this.storageService.deleteAllStorege();
     this.authenticationService.isAuthenticated.next(false);
     window.location.reload();
+  }
+  ngOnDestroy(): void {
+    this.selectedHotel={id:'' , name:''};
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

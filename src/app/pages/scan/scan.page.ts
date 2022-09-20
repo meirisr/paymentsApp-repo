@@ -101,7 +101,7 @@ export class ScanPage implements OnInit {
   getTrip() {
     const TravelDetails$ = this.travelProcessService.getTravelDetails(
       this.userLocation,
-      7772569
+      7709769
     );
     // .subscribe(
     //   async (data) => {

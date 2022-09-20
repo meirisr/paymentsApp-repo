@@ -117,9 +117,13 @@ export class TravelRouteTrackingPage implements OnInit {
   convertVhTopx(vh: number): number {
     return (vh * document.documentElement.clientWidth) / 100;
   }
-  emitEventToChild(id) {
-    console.log(id);
+  emitEventToChild(event,id) {
+   
     this.travelProcessService.stationInfo.next(id);
+    this.travelBodyRef.nativeElement.classList.remove('OpenBig');
+    this.hideItems = true;
+    const position = document.getElementById('body-card-1');
+    position.scrollTop = 0;
   }
 
   ngOnDestroy(): void {

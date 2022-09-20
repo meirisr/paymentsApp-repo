@@ -78,6 +78,7 @@ export class AuthenticationService {
         },
         async (err) => {
           console.log(err);
+          this.onHttpErorr(" עקב תקלה לא ניתן לגשת לאפליקציה אנא נסה/י בעוד כמה דקות.", "תקלת תקשורת")
         }
       );
     } else if (this.refreshToken.value) {

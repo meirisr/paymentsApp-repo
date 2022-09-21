@@ -1,28 +1,29 @@
-
 <app-back-btn (click)="goToMenu()"></app-back-btn>
 <div *ngIf="googleApiLoaded">
-
-
-<google-map #map id="map" [height]="height"
-[options]="mapOptions"
-[center]="mapOptions.center"
-[zoom]="mapOptions.zoom"
-width="100vw"   (mapClick)="moveMap($event)"
-(mapMousemove)="move($event)">
-<map-marker *ngFor="let watchmarker of watchmarkers"
-[position]="watchmarker"
-[options]="watchmarkerOptions"></map-marker>
-<map-marker 
- *ngFor="let marker of markers"
-[position]="marker"
-[options]="markerOptions"
-></map-marker>
-<map-marker 
- *ngFor="let stationMarker of stationsMarker"
-[position]="stationMarker"
-[options]="stationsMarkerOptions"
-></map-marker>
-<map-polyline [path]="path" [options]="polylineOptions"></map-polyline>
-
-</google-map>
+  <google-map
+    #map
+    id="map"
+    [height]="height"
+    [options]="mapOptions"
+    [center]="mapOptions.center"
+    [zoom]="mapOptions.zoom"
+    width="100vw"
+  >
+    <map-marker
+      *ngFor="let watchmarker of watchmarkers"
+      [position]="watchmarker"
+      [options]="watchmarkerOptions"
+    ></map-marker>
+    <map-marker
+      *ngFor="let marker of markers"
+      [position]="marker"
+      [options]="markerOptions"
+    ></map-marker>
+    <map-marker
+      *ngFor="let stationMarker of stationsMarker"
+      [position]="stationMarker"
+      [options]="stationsMarkerOptions"
+    ></map-marker>
+    <map-polyline [path]="path" [options]="polylineOptions"></map-polyline>
+  </google-map>
 </div>

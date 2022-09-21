@@ -1,29 +1,18 @@
 import { Injectable } from '@angular/core';
 import { GetResult, Storage } from '@capacitor/storage';
 
-
-const COLOR_THEME = 'color-theme';
-const USER_LANGUAGE = 'user-language';
-const PHONE_NUM = 'my-phone';
-const TOKEN_KEY = 'my-token';
-const REFRESH_TOKEN_KEY = 'token-refresh';
-const HEADER_HOTELS = 'hotels';
-const USER_DETAILS = 'user-details';
-const ROUTE_DETAILS = 'route-details';
-const CARD_DETAILS = 'card-details';
-const HOTEL_ID = 'my-hotel';
-export const userStorege = [
-  COLOR_THEME,
-  USER_LANGUAGE,
-  PHONE_NUM,
-  TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
-  HEADER_HOTELS,
-  USER_DETAILS,
-  CARD_DETAILS,
-  HOTEL_ID,
-  ROUTE_DETAILS
-];
+export const userStoregeObj = {
+  COLOR_THEME: 'color-theme',
+  USER_LANGUAGE: 'user-language',
+  PHONE_NUM: 'my-phone',
+  TOKEN_KEY: 'my-token',
+  REFRESH_TOKEN_KEY: 'token-refresh',
+  HEADER_HOTELS: 'hotels',
+  USER_DETAILS: 'user-details',
+  ROUTE_DETAILS: 'route-details',
+  CARD_DETAILS: 'card-details',
+  HOTEL_ID: 'my-hotel',
+};
 
 export interface UserDetails {
   firstName: string;
@@ -38,46 +27,51 @@ export class StorageService {
   userDetails: UserDetails;
   creditCard4Dig: string = '';
 
-  setUserPhoneNumber(phone: string):void {
+  setUserPhoneNumber(phone: string): void {
     this.userPhoneNumber = phone;
   }
 
   public setToken = (token: string): void => {
-    if (token != null && token.length > 0) this.setStorege(TOKEN_KEY, token);
+    if (token != null && token.length > 0)
+      this.setStorege(userStoregeObj.TOKEN_KEY, token);
   };
 
   public setRefreshToken = (token: string): void => {
     if (token != null && token.length > 0)
-      this.setStorege(REFRESH_TOKEN_KEY, token);
+      this.setStorege(userStoregeObj.REFRESH_TOKEN_KEY, token);
   };
   public setUserDetails = (details: UserDetails): void => {
-    this.setStorege(USER_DETAILS, JSON.stringify(details));
+    this.setStorege(userStoregeObj.USER_DETAILS, JSON.stringify(details));
   };
   public setCreditCard4Dig = (details: string): void => {
-    this.setStorege(CARD_DETAILS, details);
+    this.setStorege(userStoregeObj.CARD_DETAILS, details);
   };
   public setHotelId = (details: string): void => {
-    this.setStorege(HOTEL_ID, details);
+    this.setStorege(userStoregeObj.HOTEL_ID, details);
   };
   public setRouteDetails = (details): void => {
-    this.setStorege(ROUTE_DETAILS,JSON.stringify(details));
+    this.setStorege(userStoregeObj.ROUTE_DETAILS, JSON.stringify(details));
   };
 
-  public getToken = (): Promise<GetResult> => this.getStorege(TOKEN_KEY);
+  public getToken = (): Promise<GetResult> =>
+    this.getStorege(userStoregeObj.TOKEN_KEY);
 
   public getRefreshToken = (): Promise<GetResult> =>
-    this.getStorege(REFRESH_TOKEN_KEY);
+    this.getStorege(userStoregeObj.REFRESH_TOKEN_KEY);
 
   public getUserDetails = (): Promise<GetResult> =>
-    this.getStorege(USER_DETAILS);
+    this.getStorege(userStoregeObj.USER_DETAILS);
   public getRuteDetails = (): Promise<GetResult> =>
-    this.getStorege(ROUTE_DETAILS);
+    this.getStorege(userStoregeObj.ROUTE_DETAILS);
   public getCreditCard4Dig = (): Promise<GetResult> =>
-    this.getStorege(CARD_DETAILS);
-  public getHotelId = (): Promise<GetResult> => this.getStorege(HOTEL_ID);
+    this.getStorege(userStoregeObj.CARD_DETAILS);
+  public getHotelId = (): Promise<GetResult> =>
+    this.getStorege(userStoregeObj.HOTEL_ID);
 
   public deleteToken = (): void => this.deleteAllStorege();
-  public deleteRouteDetails = (): void => {Storage.remove({ key: ROUTE_DETAILS });}
+  public deleteRouteDetails = (): void => {
+    Storage.remove({ key: userStoregeObj.ROUTE_DETAILS });
+  };
 
   public setStorege(k: string, v: string): Promise<any> {
     return Storage.set({ key: k, value: v });
@@ -86,11 +80,11 @@ export class StorageService {
     return await Storage.get({ key: key });
   }
 
-  public deleteStorege(storageKey:string) {
+  public deleteStorege(storageKey: string) {
     Storage.remove({ key: storageKey });
   }
-  public deleteAllStorege():void {
-    userStorege.forEach((storegeKey:string) => {
+  public deleteAllStorege(): void {
+    Object.values(userStoregeObj).forEach((storegeKey: string) => {
       Storage.remove({ key: storegeKey });
     });
   }

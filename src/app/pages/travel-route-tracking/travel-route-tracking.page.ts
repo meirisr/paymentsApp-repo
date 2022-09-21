@@ -1,13 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {
-  Gesture,
-  GestureController,
-  NavController,
-  Platform,
-} from '@ionic/angular';
+import { Gesture, GestureController, Platform } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
   selector: 'app-travel-route-tracking',
@@ -40,12 +36,12 @@ export class TravelRouteTrackingPage implements OnInit {
   constructor(
     private plt: Platform,
     private gestureCtrl: GestureController,
-    public navCtrl: NavController,
+    private navigateService: NavigateHlperService,
     private storageService: StorageService,
     private travelProcessService: TravelProcessService
   ) {
     this.plt.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.navigateBack('/menu', { replaceUrl: true });
+      this.navigateService.goToMenu();
     });
   }
 
@@ -102,7 +98,7 @@ export class TravelRouteTrackingPage implements OnInit {
   onEndTrip() {
     this.travelProcessService.routeInfo.next(false);
     this.storageService.deleteRouteDetails();
-    this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+    this.navigateService.goToMenu();
   }
   showHideTravelBody() {
     this.isShow = !this.isShow;
@@ -117,8 +113,7 @@ export class TravelRouteTrackingPage implements OnInit {
   convertVhTopx(vh: number): number {
     return (vh * document.documentElement.clientWidth) / 100;
   }
-  emitEventToChild(event,id) {
-   
+  emitEventToChild(event, id) {
     this.travelProcessService.stationInfo.next(id);
     this.travelBodyRef.nativeElement.classList.remove('OpenBig');
     this.hideItems = true;

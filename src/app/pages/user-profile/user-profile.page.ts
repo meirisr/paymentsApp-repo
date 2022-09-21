@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,12 +20,12 @@ export class UserProfilePage {
 
   constructor(
     private storageService: StorageService,
+    private navigateService: NavigateHlperService,
     private platform: Platform,
-    public navCtrl: NavController,
     private logInServer: LoginService
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+      this.navigateService.goToMenu();
     });
   }
   ionViewWillEnter(): void {
@@ -35,10 +36,10 @@ export class UserProfilePage {
   }
 
   goToUserDetails(): void {
-    this.navCtrl.navigateRoot(['/user-details'], { replaceUrl: true });
+    this.navigateService.goToUserDetails();
   }
   cardDetails(): void {
-    this.navCtrl.navigateRoot(['/credit-card-details'], { replaceUrl: true });
+    this.navigateService.goToCCDetails();
   }
   async getUserInfo(): Promise<void> {
     let userDetailsSubscription = this.logInServer.userDetails.subscribe(
@@ -66,7 +67,7 @@ export class UserProfilePage {
     this.cardNum = creditCardDetails != null ? '****' + creditCardDetails : '';
   }
   goToMenu(): void {
-    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+    this.navigateService.goToMenu();
   }
 
   ngOnDestroy(): void {

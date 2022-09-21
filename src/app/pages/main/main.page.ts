@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { App } from '@capacitor/app';
-import { NavController, Platform } from '@ionic/angular';
-import { StorageService } from 'src/app/services/storage.service';
-const HOTEL_ID = 'my-hotel';
+import {Platform } from '@ionic/angular';
+import { StorageService,userStoregeObj } from 'src/app/services/storage.service';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
+
 
 @Component({
   selector: 'app-main',
@@ -14,11 +14,11 @@ export class MainPage {
 
   constructor(
     private storageService: StorageService,
+    private navigateService: NavigateHlperService,
     private platform: Platform,
-    private navCtrl: NavController
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.navigateBack('/info', { replaceUrl: true });
+      this.navigateService.goToIntro()
     });
   }
 
@@ -26,10 +26,10 @@ export class MainPage {
     this.getHotel();
   }
   onClick(): void {
-    this.navCtrl.navigateRoot(['/scan'], { replaceUrl: true });
+    this.navigateService.goToScan()
   }
   async getHotel(): Promise<void> {
-    const hotel = (await this.storageService.getStorege(HOTEL_ID)).value;
+    const hotel = (await this.storageService.getStorege(userStoregeObj.HOTEL_ID)).value;
     console.log(hotel);
     this.headerText = hotel == '0' ? '' : hotel;
   }

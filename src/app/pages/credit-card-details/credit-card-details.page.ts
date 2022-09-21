@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IonDatetime, IonRouterOutlet, NavController, Platform } from '@ionic/angular';
+import { IonDatetime, Platform } from '@ionic/angular';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -10,29 +11,27 @@ import { LoginService } from '../../services/login.service';
 })
 export class CreditCardDetailsPage implements OnInit {
   @ViewChild(IonDatetime) dateTime: IonDatetime;
-  showPicker:boolean = false;
-  date:string = '';
-  cardNum:string = '';
-  cvsNum:string = '';
-  cardDate:string = '';
-  flipClass:string = '';
-  userName:string = '';
-  creditCardForm:boolean = true;
+  showPicker: boolean = false;
+  date: string = '';
+  cardNum: string = '';
+  cvsNum: string = '';
+  cardDate: string = '';
+  flipClass: string = '';
+  userName: string = '';
+  creditCardForm: boolean = true;
   public cardDetails: FormGroup;
   constructor(
     private logInServer: LoginService,
     private platform: Platform,
-    private routerOutlet: IonRouterOutlet,
-    public navCtrl: NavController
+    private navigateService: NavigateHlperService
   ) {
-
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.routerOutlet.pop()
-      this.navCtrl.navigateRoot(['/intro'],{replaceUrl:true})
+      this.navigateService.goToIntro();
+
       // this.router.navigate(['/intro']);
     });
   }
-  get firstName(){
+  get firstName() {
     return this.cardDetails.get('firstName');
   }
   get lastName() {
@@ -58,16 +57,16 @@ export class CreditCardDetailsPage implements OnInit {
   onWillDismiss() {
     this.dateTime.confirm(true);
   }
-  dataChange(value:string):void {
+  dataChange(value: string): void {
     const year = value.split('-')[0];
     const month = value.split('-')[1];
     this.date = month + '/' + year;
     this.cardDate = month + '/' + year;
   }
-  close():void {
+  close(): void {
     this.dateTime.cancel(true);
   }
-  select():void {
+  select(): void {
     this.dateTime.confirm(true);
   }
   async updateCreditCard(): Promise<void> {
@@ -76,13 +75,13 @@ export class CreditCardDetailsPage implements OnInit {
     });
   }
 
-  cardNumKeyUp(e:Event) {
+  cardNumKeyUp(e: Event) {
     this.cardNum = (e.target as HTMLInputElement).value;
   }
-  cardCvsKeyUp(e:Event) {
+  cardCvsKeyUp(e: Event) {
     this.cvsNum = (e.target as HTMLInputElement).value;
   }
-  userNameKeyUp(e:Event) {
+  userNameKeyUp(e: Event) {
     this.userName = (e.target as HTMLInputElement).value;
   }
   cvSInputFocus() {
@@ -91,9 +90,7 @@ export class CreditCardDetailsPage implements OnInit {
   cvSInputUnFocus() {
     this.flipClass = '';
   }
-  goToUserProfile():void{
-
-    this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
-   
+  goToUserProfile(): void {
+    this.navigateService.goToIntro();
   }
 }

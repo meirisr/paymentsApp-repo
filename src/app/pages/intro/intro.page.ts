@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
-import { App } from '@capacitor/app';
 import { StorageService } from 'src/app/services/storage.service';
 import { LoginService } from 'src/app/services/login.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Subscription } from 'rxjs';
-
-const HOTEL_ID = 'my-hotel';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
   selector: 'app-intro',
@@ -16,15 +14,16 @@ const HOTEL_ID = 'my-hotel';
 })
 export class IntroPage implements OnInit {
   private subscriptions: Subscription[] = [];
-  items: any[] = [{id:'333',name:'meir'}];
+  items: any[] = [{ id: '333', name: 'meir' }];
   tempitems: any[] = [];
-  selectedHotel:{id:string,name:string}={id:'' , name:''};
+  selectedHotel: { id: string; name: string } = { id: '', name: '' };
 
   constructor(
     private authenticationService: AuthenticationService,
     private logInServer: LoginService,
     private storageService: StorageService,
     private utils: UtilsService,
+    private navigateService: NavigateHlperService,
     private platform: Platform,
     public navCtrl: NavController
   ) {
@@ -33,23 +32,25 @@ export class IntroPage implements OnInit {
     });
   }
   ngOnInit(): void {
-    const allOrg$=this.logInServer.getAllOrganizations().subscribe(async (data) => {
-      this.items.push(this.creatHotelObj(data.body));
-      this.tempitems = [...this.items];
-      console.log(data.body),
-        async (err: Error) => {
-          console.log(err);
-        };
-    });
+    const allOrg$ = this.logInServer
+      .getAllOrganizations()
+      .subscribe(async (data) => {
+        this.items.push(this.creatHotelObj(data.body));
+        this.tempitems = [...this.items];
+        console.log(data.body),
+          async (err: Error) => {
+            console.log(err);
+          };
+      });
     this.subscriptions.push(allOrg$);
   }
   async onCreditCardClick(): Promise<void> {
     if (this.logInServer.isCardHasDetails.value) {
       this.storageService.setHotelId('0');
-      this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+      this.navigateService.goToMenu();
     } else {
-      this.utils.presentModal('', 'עליך להכניס פרטי אשראי','');
-      this.navCtrl.navigateRoot(['/credit-card-details'], { replaceUrl: true });
+      this.utils.presentModal('', 'עליך להכניס פרטי אשראי', '');
+      this.navigateService.goToCCDetails();
     }
   }
   // toggleDarkTheme(matchesMode) {
@@ -63,34 +64,40 @@ export class IntroPage implements OnInit {
       }),
     ];
   }
-  async onSelectHotel(): Promise<void>{
-    
-    const hotelId= this.selectedHotel.id;
-    const hotelName= this.selectedHotel.name;
-   const isPermitToOrg$= this.logInServer
-    .isUserPermitToOrganization(hotelId)
-    .subscribe(async (data) => {
-      if (data) {
-        await this.utils.presentModal(
-          'ברוכים הבאים',
-          `הנך רשום ב ${hotelName}`,
-          'chack'
-        );
-        this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
-      } else {
-        await this.utils.presentModal('לא נמצא', 'עליך להכנס עם כרטיס אשראי','');
-      }
-    });
-  (err: Error) => {
-    console.log(err);
-  };
-  this.subscriptions.push(isPermitToOrg$);
-  this.selectedHotel={id:'' , name:''};
+  async onSelectHotel(): Promise<void> {
+    const hotelId = this.selectedHotel.id;
+    const hotelName = this.selectedHotel.name;
+    const isPermitToOrg$ = this.logInServer
+      .isUserPermitToOrganization(hotelId)
+      .subscribe(async (data) => {
+        if (data) {
+          await this.utils.presentModal(
+            'ברוכים הבאים',
+            `הנך רשום ב ${hotelName}`,
+            'chack'
+          );
+          this.navigateService.goToMenu();
+        } else {
+          await this.utils.presentModal(
+            'לא נמצא',
+            'עליך להכנס עם כרטיס אשראי',
+            ''
+          );
+        }
+      });
+    (err: Error) => {
+      console.log(err);
+    };
+    this.subscriptions.push(isPermitToOrg$);
+    this.selectedHotel = { id: '', name: '' };
   }
-  async onClickHotel(event: Event, item:{id:string,name:string}): Promise<void> {
-    const element= (event.target as HTMLElement )
-    this.selectedHotel=item;
-  
+  async onClickHotel(
+    event: Event,
+    item: { id: string; name: string }
+  ): Promise<void> {
+    const element = event.target as HTMLElement;
+    this.selectedHotel = item;
+
     // await this.utils.presentModal('ברוכים הבאים',`הנך רשום ב ${item.id}`);
     // this.nav.navigateForward('/menu', { animationDirection: 'forward', animated: true })
   }
@@ -104,7 +111,7 @@ export class IntroPage implements OnInit {
     window.location.reload();
   }
   ngOnDestroy(): void {
-    this.selectedHotel={id:'' , name:''};
+    this.selectedHotel = { id: '', name: '' };
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

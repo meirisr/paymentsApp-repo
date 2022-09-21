@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AlertController, NavController, Platform } from '@ionic/angular';
+import { userStoregeObj } from 'src/app/services/storage.service';
 import { Storage } from '@capacitor/storage';
 import { App } from '@capacitor/app';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
-const HOTEL_ID = 'my-hotel';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.page.html',
@@ -19,6 +20,7 @@ export class MenuPage {
   constructor(
     private alertController: AlertController,
     private platform: Platform,
+    private navigateService: NavigateHlperService,
     public navCtrl: NavController
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -34,27 +36,27 @@ export class MenuPage {
   async hideSplashScreen(): Promise<void> {}
 
   settings(): void {
-    this.navCtrl.navigateRoot(['/settings'], { replaceUrl: true });
+    this.navigateService.goToSettings();
   }
   scan(): void {
-    this.navCtrl.navigateRoot(['/scan'], { replaceUrl: true });
+    this.navigateService.goToScan();
   }
   map(): void {
-    this.navCtrl.navigateRoot(['/travel-route-tracking'], { replaceUrl: true });
+    this.navigateService.goToTravelRouteTracking();
   }
   history(): void {
-    this.navCtrl.navigateRoot(['/history'], { replaceUrl: true });
+    this.navigateService.goToHistory();
   }
   logOut(): void {
-    Storage.remove({ key: HOTEL_ID });
-    this.navCtrl.navigateRoot(['/intro'], { replaceUrl: true });
+    Storage.remove({ key: userStoregeObj.HOTEL_ID });
+    this.navigateService.goToIntro();
   }
 
   userProfile(): void {
-    this.navCtrl.navigateRoot(['/user-profile'], { replaceUrl: true });
+    this.navigateService.goToUserProfile();
   }
   creditCardDetails(): void {
-    this.navCtrl.navigateRoot(['/credit-card-details'], { replaceUrl: true });
+    this.navigateService.goToCCDetails();
   }
   toggleDarkTheme(matchesMode): void {
     this.prefersDark = matchesMode;

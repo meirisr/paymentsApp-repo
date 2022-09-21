@@ -7,11 +7,12 @@ import {
 } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
-import { Observable, Subscription } from 'rxjs';
-import { MenuController, NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { filter } from 'rxjs/operators';
+import { mapConfig } from './map-config';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 const BusImage: string = '../../../assets/images/bus.png';
 const locationImage: string = '../../../assets/location.svg';
@@ -28,17 +29,16 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('map') mapRef;
   @Input() height: string;
   @Input() path: [];
-  @Input() nearesStationth;
+  @Input() nearesStationth: any;
   @Input() stations: any[] = [];
   googleApiLoaded: boolean = false;
   public lat: any;
   public lng: any;
   watch: any;
-  bounds;
   watchMarker = null;
-  markers = [];
-  stationsMarker = [];
-  watchmarkers = [];
+  markers: any[] = [];
+  stationsMarker: any[] = [];
+  watchmarkers: any[] = [];
   markerPositions: google.maps.Marker[] = [];
   polylineOptions: google.maps.PolylineOptions = {};
   mapOptions: google.maps.MapOptions = {};
@@ -47,99 +47,11 @@ export class MapComponent implements AfterViewInit {
   watchmarkerOptions: google.maps.MarkerOptions = {};
   styles: Record<string, google.maps.MapTypeStyle[]> = {
     default: [],
-    silver: [
-      {
-        elementType: 'geometry',
-        stylers: [{ color: '#f5f5f5' }],
-      },
-      {
-        elementType: 'labels.icon',
-        stylers: [{ visibility: 'off' }],
-      },
-      {
-        elementType: 'labels.text.fill',
-        stylers: [{ color: '#9e9e9e' }],
-      },
-      {
-        elementType: 'labels.text.stroke',
-        stylers: [{ color: '#f5f5f5' }],
-      },
-      {
-        featureType: 'administrative.land_parcel',
-        elementType: 'labels.text.fill',
-        stylers: [{ color: '#bdbdbd' }],
-      },
-      {
-        featureType: 'poi',
-        elementType: 'geometry',
-        stylers: [{ color: '#eeeeee' }],
-      },
-      {
-        featureType: 'poi',
-        elementType: 'labels.text.fill',
-        stylers: [{ color: '#757575' }],
-      },
-      {
-        featureType: 'poi.park',
-        elementType: 'geometry',
-        stylers: [{ color: '#e5e5e5' }],
-      },
-      {
-        featureType: 'poi.park',
-        elementType: 'labels.text.fill',
-        stylers: [{ color: '#9e9e9e' }],
-      },
-      {
-        featureType: 'road',
-        elementType: 'geometry',
-        stylers: [{ color: '#ffffff' }],
-      },
-      {
-        featureType: 'road.arterial',
-        elementType: 'labels.text.fill',
-        stylers: [{ color: '#9e9e9e' }],
-      },
-      {
-        featureType: 'road.highway',
-        elementType: 'geometry',
-        stylers: [{ color: '#dadada' }],
-      },
-      {
-        featureType: 'road.highway',
-        elementType: 'labels.text.fill',
-        stylers: [{ color: '#9e9e9e' }],
-      },
-      {
-        featureType: 'road.local',
-        elementType: 'labels.text.fill',
-        stylers: [{ color: '#9e9e9e' }],
-      },
-      {
-        featureType: 'transit.line',
-        elementType: 'geometry',
-        stylers: [{ color: '#e5e5e5' }],
-      },
-      {
-        featureType: 'transit.station',
-        elementType: 'geometry',
-        stylers: [{ color: '#eeeeee' }],
-      },
-      {
-        featureType: 'water',
-        elementType: 'geometry',
-        stylers: [{ color: '#d4f1f9' }],
-      },
-      {
-        featureType: 'water',
-        elementType: 'labels.text.fill',
-        stylers: [{ color: '#9e9e9e' }],
-      },
-    ],
+    silver: mapConfig,
   };
   constructor(
-    private navCtrl: NavController,
+    private navigateService: NavigateHlperService,
     private utils: UtilsService,
-    private menuCtrl: MenuController,
     private travelProcessService: TravelProcessService,
     private ngZone: NgZone
   ) {
@@ -178,13 +90,11 @@ export class MapComponent implements AfterViewInit {
       strokeWeight: 6,
       strokeOpacity: 1.0,
     };
-    // console.log(this.mapRef);
 
     setTimeout(() => {
       let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
         async (data) => {
           if (!data) return;
-
           this.path = data.Coordinates;
           this.stations = data.stationArray;
           this.nearesStationth = this.fixLocation(
@@ -192,7 +102,6 @@ export class MapComponent implements AfterViewInit {
           );
           if (this.path && this.path.length >= 2) {
             this.addMarker(this.nearesStationth);
-            // this.fitToMarkers(this.path)
           }
         },
         async (error) => {
@@ -206,14 +115,9 @@ export class MapComponent implements AfterViewInit {
         .pipe(filter((val) => val !== null))
         .subscribe(
           async (res) => {
-            console.log(this.stations);
-            console.log(res);
-
             let thisStation = this.stations.find(
               ({ stationIndex }) => stationIndex === +res
             );
-
-            console.log(thisStation);
             if (thisStation) {
               this.creatStationMarker(thisStation);
             }
@@ -228,7 +132,6 @@ export class MapComponent implements AfterViewInit {
     this.printCurrentPosition();
   }
   creatStationMarker(obj) {
-    console.log(obj);
     this.stationsMarker = [];
     const latLng = {
       lat: obj.stationLocation.lat,
@@ -237,17 +140,6 @@ export class MapComponent implements AfterViewInit {
     this.stationsMarker.push(latLng);
     this.mapOptions.center = latLng;
     this.mapOptions.zoom = 16;
-  }
-  markerClick() {
-    return false;
-  }
-
-  moveMap(event: google.maps.MapMouseEvent) {
-    // this.center = (event.latLng.toJSON());
-  }
-
-  move(event: google.maps.MapMouseEvent) {
-    // this.display = event.latLng.toJSON();
   }
 
   printCurrentPosition = async () => {
@@ -266,7 +158,6 @@ export class MapComponent implements AfterViewInit {
         });
       });
     } else {
-      // async () => {
       this.watch = Geolocation.watchPosition({}, (position, err) => {
         if (position) {
           console.log(position);
@@ -278,30 +169,10 @@ export class MapComponent implements AfterViewInit {
           });
           this.removeWatcharkers();
           this.addWatchMarker(latLng.toJSON());
-          //  this.markers.push(latLng.toJSON());
-          //  console.log(this.nearesStationth)
-
-          console.log(this.markers);
-          // this.map.panTo(latLng.toJSON());
         } else {
           console.log(err);
         }
       });
-      // }
-      // navigator.geolocation.getCurrentPosition((position) => {
-      //  this.ngZone.run(() => {
-      //       latLng= new google.maps.LatLng(
-      //         position.coords.latitude,
-      //         position.coords.longitude
-      //       );
-      //     })
-      //   this.addMarker(latLng.toJSON(), 'location');
-      //   this.map.panTo(latLng.toJSON());
-
-      //   // this.bounds.extend(latLng);
-      //   // this.map.center.center = latLng.toJSON();
-
-      // });
     }
   };
   addMarker(latLng) {
@@ -310,64 +181,14 @@ export class MapComponent implements AfterViewInit {
   }
   addWatchMarker(latLng) {
     this.watchmarkers.push(latLng);
-    console.log(this.nearesStationth)
-    if (!(this.nearesStationth.lat && this.nearesStationth.lng)) this.mapOptions.center = latLng;
-
-    // const marker = new google.maps.Marker({
-
-    //   position: latLng,
-    //   icon: a =='location'?image: ''
-    // });
-    // marker.setMap(this.map)
-    // return marker;
-    // this.markerPositions.push(marker);
-    // this.markers.push(marker);
-    // this.map.center=marker.getPosition()
-  }
-  addPolyline() {
-    const flightPath = new google.maps.Polyline({
-      path: this.path,
-      geodesic: true,
-      strokeColor: '#50c8ff',
-      strokeWeight: 6,
-      strokeOpacity: 1.0,
-    });
-
-    // flightPath.setMap(this.map);
-  }
-  removeAllMarkers() {
-    this.markerPositions = [];
+    if (!(this.nearesStationth.lat && this.nearesStationth.lng))
+      this.mapOptions.center = latLng;
   }
 
   goToMenu() {
-    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+    this.navigateService.goToMenu();
   }
 
-  fitToMarkers(markers) {
-    // Create bounds from markers
-    this.bounds = new google.maps.LatLngBounds();
-    for (var index in markers) {
-      var latlng = markers[index];
-      this.bounds.extend(latlng);
-    }
-
-    // Don't zoom in too far on only one marker
-    if (this.bounds.getNorthEast().equals(this.bounds.getSouthWest())) {
-      var extendPoint1 = new google.maps.LatLng(
-        this.bounds.getNorthEast().lat() + 0.01,
-        this.bounds.getNorthEast().lng() + 0.01
-      );
-      var extendPoint2 = new google.maps.LatLng(
-        this.bounds.getNorthEast().lat() - 0.01,
-        this.bounds.getNorthEast().lng() - 0.01
-      );
-      this.bounds.extend(extendPoint1);
-      this.bounds.extend(extendPoint2);
-    }
-    this.mapOptions.center = this.bounds;
-    // this.mapRef.fitBounds(this.bounds)
-    console.log(this.bounds);
-  }
   fixLocation(location: { latitude: number; longitude: number }) {
     if (location) return { lat: location.latitude, lng: location.longitude };
   }
@@ -378,9 +199,6 @@ export class MapComponent implements AfterViewInit {
   }
   removeWatcharkers() {
     this.watchmarkers.pop();
-    // this.watchmarkers.forEach(marker=>{
-    //   marker.setMap(null);
-    // })
     this.watchmarkers = [];
   }
   async stopTrack() {
@@ -388,11 +206,5 @@ export class MapComponent implements AfterViewInit {
     Geolocation.clearWatch(opt).then((result) => {
       console.log('result of clear is', result);
     });
-  }
-  docEvent(e) {
-    if (e.cancelable) {
-      e.preventDefault();
-      console.log(e);
-    }
   }
 }

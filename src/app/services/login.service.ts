@@ -5,20 +5,24 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ToastController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-import { StorageService, UserDetails } from './storage.service';
+import { StorageService, UserDetails,userStoregeObj } from './storage.service';
 
 
-const PHONE_NUM = 'my-phone';
-const HEADER_HOTELS = 'hotels';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   didSendSms: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isUserHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isUserPermitToOrg: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isCardHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isUserHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  isUserPermitToOrg: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  isCardHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   userDetails = new BehaviorSubject({ firstName: '', lastName: '', email: '' });
 
   constructor(
@@ -32,7 +36,7 @@ export class LoginService {
     return this.http.get(
       `${environment.serverUrl}/user/get-organization-per-station`,
       {
-        headers: new HttpHeaders({ station: HEADER_HOTELS }),
+        headers: new HttpHeaders({ station: userStoregeObj.HEADER_HOTELS }),
       }
     );
   }
@@ -57,13 +61,13 @@ export class LoginService {
   public sendVerificationCode(credentials: { phone: string }): Observable<any> {
     return this.http
       .post(`${environment.serverUrl}/phone-auth/send-code`, null, {
-        headers: new HttpHeaders({ station: HEADER_HOTELS }),
+        headers: new HttpHeaders({ station: userStoregeObj.HEADER_HOTELS }),
         params: new HttpParams().set('phone', credentials.phone),
       })
       .pipe(
         tap(() => {
           this.storageService.setUserPhoneNumber(credentials.phone);
-          this.storageService.setStorege(PHONE_NUM, credentials.phone);
+          this.storageService.setStorege(userStoregeObj.PHONE_NUM, credentials.phone);
         })
       );
   }
@@ -74,7 +78,7 @@ export class LoginService {
   }): Observable<void> {
     return this.http
       .post(`${environment.serverUrl}/phone-auth/verify-code`, null, {
-        headers: new HttpHeaders({ station: HEADER_HOTELS }),
+        headers: new HttpHeaders({ station: userStoregeObj.HEADER_HOTELS }),
         params: new HttpParams()
           .set('phone', credentials.phone)
           .set('code', credentials.text),
@@ -92,9 +96,9 @@ export class LoginService {
       map((data: any) => {
         if (data.body.email && data.body.firstName && data.body.lastName) {
           this.storageService.setUserDetails(data.body);
-           this.isUserHasDetails.next(true);
+          this.isUserHasDetails.next(true);
         } else {
-           this.isUserHasDetails.next(false);
+          this.isUserHasDetails.next(false);
         }
       })
     );
@@ -108,9 +112,9 @@ export class LoginService {
         map((data: any) => {
           if (data.body != null && data.body.length > 0) {
             this.storageService.setCreditCard4Dig(data.body);
-             this.isCardHasDetails.next(true);
+            this.isCardHasDetails.next(true);
           } else {
-             this.isCardHasDetails.next(false);
+            this.isCardHasDetails.next(false);
           }
         })
       );

@@ -11,10 +11,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 export class PhoneNumberFormComponent implements OnInit {
   @ViewChild('phoneInput') phoneInputRef: ElementRef<any>;
   public phoneNumderForm: FormGroup;
-  constructor(
-    private logInServer: LoginService,
-    private utils: UtilsService
-  ) {}
+  constructor(private logInServer: LoginService, private utils: UtilsService) {}
 
   ngOnInit() {
     this.phoneNumderForm = new FormGroup({
@@ -25,26 +22,20 @@ export class PhoneNumberFormComponent implements OnInit {
       ]),
     });
   }
-  ionViewDidEnter(){
-   this.phoneInputRef.nativeElement.setFocus();
+  ionViewDidEnter() {
+    this.phoneInputRef.nativeElement.setFocus();
   }
   async onPhoneNumderFormSubmit() {
-    // const loader = this.utils.showLoader();
     this.logInServer.sendVerificationCode(this.phoneNumderForm.value).subscribe(
       async (res) => {
-        // this.utils.dismissLoader(loader);
         this.logInServer.didSendSms.next(true);
-        setTimeout(() => {
-          
-        }, 150);
+        setTimeout(() => {}, 150);
       },
       async (res) => {
-        // this.utils.dismissLoader(loader);
         this.logInServer.didSendSms.next(false);
         this.onHttpErorr(res, '');
       }
     );
-   
   }
   async onHttpErorr(e, header) {
     this.utils.showalert(e, header);

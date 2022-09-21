@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
   selector: 'app-history',
@@ -7,17 +8,17 @@ import { NavController, Platform } from '@ionic/angular';
   styleUrls: ['./history.page.scss'],
 })
 export class HistoryPage implements OnInit {
-
-  constructor( private plt: Platform, public navCtrl: NavController) {
+  constructor(
+    private plt: Platform,
+    private navigateService: NavigateHlperService
+  ) {
     this.plt.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.navigateBack('/menu', { replaceUrl: true });
+      this.navigateService.goToMenu();
     });
-   }
-
-  ngOnInit() {
   }
+
+  ngOnInit() {}
   goToMenu(): void {
-    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+    this.navigateService.goToMenu();
   }
-
 }

@@ -7,6 +7,7 @@ import {
 import {NavController, Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
 import { LoginService } from 'src/app/services/login.service';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
   selector: 'app-login',
@@ -21,8 +22,10 @@ export class LoginPage implements OnDestroy {
 
   constructor(
     private logInServer: LoginService,
+    private navigateService: NavigateHlperService,
     private platform: Platform,
     public navCtrl: NavController
+     
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       navigator['app'].exitApp();
@@ -37,7 +40,8 @@ export class LoginPage implements OnDestroy {
     this.textForm = false;
   }
   goToIntro():void {
-    this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
+    this.navigateService.goToIntro();
     // this.router.navigate(['/intro']);
+
   }
 }

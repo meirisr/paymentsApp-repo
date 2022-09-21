@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 @Component({
   selector: 'app-settings',
@@ -9,7 +10,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 export class SettingsPage implements OnInit {
   ischecked: string;
   defaultLang: string;
-  constructor(private utils: UtilsService, private navCtrl: NavController) {
+  constructor(private utils: UtilsService,  private navigateService: NavigateHlperService,) {
     this.ischecked = this.utils.ischecked;
     this.defaultLang = this.utils.defaultLang;
   }
@@ -24,6 +25,6 @@ export class SettingsPage implements OnInit {
     window.location.reload();
   }
   goToMenu() {
-    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+    this.navigateService.goToMenu()
   }
 }

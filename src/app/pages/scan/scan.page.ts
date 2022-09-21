@@ -5,16 +5,19 @@ import {
   SupportedFormat,
 } from '@capacitor-community/barcode-scanner';
 import { Capacitor } from '@capacitor/core';
-import { NavController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
 import { Location } from '@angular/common';
-import { StorageService } from 'src/app/services/storage.service';
+import {
+  StorageService,
+  userStoregeObj,
+} from 'src/app/services/storage.service';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AlertService } from 'src/app/services/utils/alert.service';
 import { Subscription } from 'rxjs';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
-const HOTEL_ID = 'my-hotel';
 @Component({
   selector: 'app-scan',
   templateUrl: './scan.page.html',
@@ -35,14 +38,14 @@ export class ScanPage implements OnInit {
     private plt: Platform,
     private utils: UtilsService,
     private location: Location,
+    private navigateService: NavigateHlperService,
     private openNativeSettings: OpenNativeSettings,
     private storageService: StorageService,
     private travelProcessService: TravelProcessService,
-    private alertService: AlertService,
-    public navCtrl: NavController
+    private alertService: AlertService
   ) {
     this.plt.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.navigateBack('/menu', { replaceUrl: true });
+      this.navigateService.goToMenu();
     });
   }
 
@@ -58,7 +61,7 @@ export class ScanPage implements OnInit {
     } else {
       this.scanNotAllowed = true;
       setTimeout(() => {
-        this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+        this.navigateService.goToMenu();
       }, 3000);
     }
   }
@@ -85,15 +88,15 @@ export class ScanPage implements OnInit {
         console.log(result);
         this.stopScanner();
         document.querySelector('body').classList.remove('scanBg');
-        let hotelId = !!(await this.storageService.getStorege(HOTEL_ID));
+        let hotelId = !!(await this.storageService.getStorege(
+          userStoregeObj.HOTEL_ID
+        ));
         if (hotelId) {
-          this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
+          this.navigateService.goToPayment();
         } else {
-          this.navCtrl.navigateRoot(['/travel-route-tracking'], {
-            replaceUrl: true,
-          });
+          this.navigateService.goToTravelRouteTracking();
         }
-        await this.utils.presentModal('נסיעה טובה', '','chack');
+        await this.utils.presentModal('נסיעה טובה', '', 'chack');
         this.getTrip();
       }
     }
@@ -198,7 +201,7 @@ export class ScanPage implements OnInit {
     this.alertService.cameraPermissionAlert(alertDeteails[type]);
   }
   goTomenu(): void {
-    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+    this.navigateService.goToMenu();
   }
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

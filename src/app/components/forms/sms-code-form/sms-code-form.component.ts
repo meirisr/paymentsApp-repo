@@ -1,36 +1,34 @@
-import { Component, ElementRef, OnInit, ViewChild,AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-
-import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
-import { ModalController, NavController } from '@ionic/angular';
-import { PopupModalComponent } from '../../popup-modal/popup-modal.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-
-const HOTEL_ID = 'my-hotel';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
   selector: 'app-sms-code-form',
   templateUrl: './sms-code-form.component.html',
   styleUrls: ['./sms-code-form.component.scss'],
 })
-export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
-  @ViewChild('otp1')codeInputRef:ElementRef<HTMLInputElement>;
+export class SmsCodeFormComponent implements OnInit, AfterViewInit {
+  @ViewChild('otp1') codeInputRef: ElementRef<HTMLInputElement>;
   public smsCodeForm: FormGroup;
   constructor(
-    private router: Router,
+    private navigateService: NavigateHlperService,
     private logInServer: LoginService,
     private utils: UtilsService,
     private storageService: StorageService,
-    private modalController: ModalController,
-    private authenticationService: AuthenticationService,
-    public navCtrl: NavController
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit() {
-    
     this.smsCodeForm = new FormGroup({
       text1: new FormControl(null, [
         Validators.required,
@@ -71,14 +69,11 @@ export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
     this.logInServer.getToken(credentials).subscribe(
       async (data) => {
         // this.utils.dismissLoader(loader);
-       await this.authenticationService.loadToken().then(()=>{
-        setTimeout(() => {
-          this.navCtrl.navigateRoot(['intro'],{replaceUrl:true})
-          // this.router.navigate(['/intro']);
-        },200);
-       });
-          
-   
+        await this.authenticationService.loadToken().then(() => {
+          setTimeout(() => {
+            this.navigateService.goToIntro();
+          }, 200);
+        });
       },
       async (res) => {
         // this.utils.dismissLoader(loader);
@@ -87,13 +82,13 @@ export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
     );
   }
   otpController(event, next, prev) {
-    console.log(event.target.value)
+    console.log(event.target.value);
     if (this.smsCodeForm.valid) {
       this.onSmsCodeFormSubmit();
     }
     if (event.target.value.length < 1 && prev) {
       prev.setFocus();
-      prev.value='';
+      prev.value = '';
     } else if (next && event.target.value.length > 0) {
       next.setFocus();
     } else {
@@ -123,5 +118,4 @@ export class SmsCodeFormComponent implements OnInit ,AfterViewInit {
   back() {
     this.logInServer.didSendSms.next(false);
   }
-  
 }

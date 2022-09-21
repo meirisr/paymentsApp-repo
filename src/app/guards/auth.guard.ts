@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import { UtilsService } from '../services/utils/utils.service';
 import { AuthenticationService } from '../services/authentication.service';
-import { NavController } from '@ionic/angular';
+import { NavigateHlperService } from '../services/utils/navigate-hlper.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +12,8 @@ import { NavController } from '@ionic/angular';
 export class AuthGuard implements CanLoad {
   constructor(
     private authenticationService: AuthenticationService,
-    private router: Router,
-    public navCtrl: NavController
-  ){}
+    private navigateService: NavigateHlperService
+  ) {}
   canLoad(): Observable<boolean> {
     return this.authenticationService.isAuthenticated.pipe(
       filter((val) => val !== null), // Filter out initial Behaviour subject value
@@ -24,7 +22,8 @@ export class AuthGuard implements CanLoad {
         if (isAuthenticated) {
           return true;
         } else {
-          this.navCtrl.navigateRoot(['/login'],{replaceUrl:true})
+          this.navigateService.goToLogin();
+
           return false;
         }
       })

@@ -2,18 +2,16 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import { LoginService } from '../services/login.service';
 import { AuthenticationService } from '../services/authentication.service';
-import { NavController } from '@ionic/angular';
+import { NavigateHlperService } from '../services/utils/navigate-hlper.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AutoLoginGuard implements CanLoad {
   constructor(
-    private logInServer: LoginService,
     private authenticationService: AuthenticationService,
-    public navCtrl: NavController
+    private navigateService: NavigateHlperService
   ) {}
 
   canLoad(): Observable<boolean> {
@@ -23,9 +21,7 @@ export class AutoLoginGuard implements CanLoad {
       map((isAuthenticated) => {
         console.log(isAuthenticated);
         if (isAuthenticated) {
-          // Directly open inside area
-          this.navCtrl.navigateRoot(['/intro'],{replaceUrl:true})
-          // this.router.navigate(['/intro']);
+          this.navigateService.goToIntro();
         } else {
           // Simply allow access to the login
           return true;

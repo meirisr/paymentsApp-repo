@@ -5,13 +5,13 @@ import {
   AlertController,
   IonDatetime,
   ModalController,
-  NavController,
   Platform,
 } from '@ionic/angular';
 import { from } from 'rxjs';
 import { LoginStepsNavbarComponent } from 'src/app/components/login-steps-navbar/login-steps-navbar.component';
 import { LoginService } from 'src/app/services/login.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
   selector: 'app-user-details',
@@ -29,10 +29,10 @@ export class UserDetailsPage implements OnInit {
     private router: Router,
     private modalController: ModalController,
     private platform: Platform,
-    public navCtrl: NavController
+    private navigateService: NavigateHlperService
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.navigateRoot(['/user-profile'], { replaceUrl: true });
+      this.navigateService.goToUserProfile();
     });
   }
   get firstName() {
@@ -90,10 +90,10 @@ export class UserDetailsPage implements OnInit {
   goToUserProfile(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.navCtrl.navigateRoot(['/user-profile'], { replaceUrl: true });
+    this.navigateService.goToUserProfile();
   }
   goToMenu(): void {
-    this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
+    this.navigateService.goToMenu();
   }
   onWillDismiss(): void {
     this.dateTime.confirm(true);

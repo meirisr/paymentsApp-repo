@@ -1,8 +1,9 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { from, Subject, Subscription } from 'rxjs';
-import { NavController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
   selector: 'app-payment',
@@ -28,12 +29,12 @@ export class PaymentPage implements AfterViewInit {
 
   constructor(
     private platform: Platform,
-    private navCtrl: NavController,
+    private navigateService: NavigateHlperService,
     private utils: UtilsService,
     private travelProcessService: TravelProcessService
   ) {
     this.platform.backButton.subscribeWithPriority(0, () => {
-      this.navCtrl.navigateRoot(['menu'], { replaceUrl: true });
+      this.navigateService.goToMenu();
     });
   }
 
@@ -86,19 +87,29 @@ export class PaymentPage implements AfterViewInit {
     from(this.travelProcessService.paymentTranportation()).subscribe(
       async (data) => {
         // this.utils.dismissLoader(loader);
-        console.log(data.querySuccessful)
+        console.log(data.querySuccessful);
         if (data.querySuccessful) {
-          this.navCtrl.navigateRoot(['/travel-route-tracking'], {
-            replaceUrl: true,
-          });
-          await this.utils.presentModal('נסיעה טובה', 'החיוב בוצע בהצלחה','chack');
+          this.navigateService.goToTravelRouteTracking();
+          await this.utils.presentModal(
+            'נסיעה טובה',
+            'החיוב בוצע בהצלחה',
+            'chack'
+          );
         } else {
-          await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב','');
+          await this.utils.presentModal(
+            'שגיאה',
+            'המערכת לא הצליחה לבצע חיוב',
+            ''
+          );
         }
       },
-      async(err) => {
+      async (err) => {
         // this.utils.dismissLoader(loader);
-        await this.utils.presentModal('שגיאה', 'המערכת לא הצליחה לבצע חיוב','');
+        await this.utils.presentModal(
+          'שגיאה',
+          'המערכת לא הצליחה לבצע חיוב',
+          ''
+        );
         console.log(err);
       }
     );

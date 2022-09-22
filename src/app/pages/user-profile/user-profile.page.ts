@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { LoginService } from 'src/app/services/login.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { UserInfoService } from 'src/app/services/user-info.service';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class UserProfilePage {
     private storageService: StorageService,
     private navigateService: NavigateHlperService,
     private platform: Platform,
-    private logInServer: LoginService
+    private userInfoServer:UserInfoService,
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navigateService.goToMenu();
@@ -42,7 +42,7 @@ export class UserProfilePage {
     this.navigateService.goToCCDetails();
   }
   async getUserInfo(): Promise<void> {
-    let userDetailsSubscription = this.logInServer.userDetails.subscribe(
+    let userDetailsSubscription = this.userInfoServer.userDetails.subscribe(
       (data) => {
         this.firstName = data?.firstName || '';
         this.lastName = data?.lastName || '';

@@ -68,7 +68,7 @@ export class MapComponent implements AfterViewInit {
   initMap() {
     this.mapOptions = {
       disableDefaultUI: true,
-      zoom: 16,
+      zoom: 13,
       center: { lat: 30.79476, lng: 35.18761 },
       styles: this.styles.silver,
     };
@@ -196,6 +196,8 @@ export class MapComponent implements AfterViewInit {
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
     this.stopTrack();
+    this.stationsMarker = [];
+    this.mapOptions.zoom = 13;
   }
   removeWatcharkers() {
     this.watchmarkers.pop();

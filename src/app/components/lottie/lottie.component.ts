@@ -35,6 +35,13 @@ export class LottieComponent implements OnInit {
     };
     this.height="200px";
     break;
+  case 'scan':
+    this.options = {
+      ...this.options, // In case you have other properties that you want to copy
+      path: '../../../assets/lottie/scan.json', 
+    };
+    this.height="100%";
+    break;
  
   default:
     this.options = {

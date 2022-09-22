@@ -83,36 +83,36 @@ export class PaymentPage implements AfterViewInit {
     }
   }
   async onSubmit(): Promise<void> {
-    // let loader = this.utils.showLoader();
-    from(this.travelProcessService.paymentTranportation()).subscribe(
-      async (data) => {
-        // this.utils.dismissLoader(loader);
-        console.log(data.querySuccessful);
-        if (data.querySuccessful) {
-          this.navigateService.goToTravelRouteTracking();
-          await this.utils.presentModal(
-            'נסיעה טובה',
-            'החיוב בוצע בהצלחה',
-            'chack'
-          );
-        } else {
-          await this.utils.presentModal(
-            'שגיאה',
-            'המערכת לא הצליחה לבצע חיוב',
-            ''
-          );
-        }
-      },
-      async (err) => {
-        // this.utils.dismissLoader(loader);
-        await this.utils.presentModal(
-          'שגיאה',
-          'המערכת לא הצליחה לבצע חיוב',
-          ''
-        );
-        console.log(err);
-      }
-    );
+    // // let loader = this.utils.showLoader();
+    // from(this.travelProcessService.paymentTranportation()).subscribe(
+    //   async (data) => {
+    //     // this.utils.dismissLoader(loader);
+    //     console.log(data.querySuccessful);
+    //     if (data.querySuccessful) {
+    //       this.navigateService.goToTravelRouteTracking();
+    //       await this.utils.presentModal(
+    //         'נסיעה טובה',
+    //         'החיוב בוצע בהצלחה',
+    //         'chack'
+    //       );
+    //     } else {
+    //       await this.utils.presentModal(
+    //         'שגיאה',
+    //         'המערכת לא הצליחה לבצע חיוב',
+    //         ''
+    //       );
+    //     }
+    //   },
+    //   async (err) => {
+    //     // this.utils.dismissLoader(loader);
+    //     await this.utils.presentModal(
+    //       'שגיאה',
+    //       'המערכת לא הצליחה לבצע חיוב',
+    //       ''
+    //     );
+    //     console.log(err);
+    //   }
+    // );
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

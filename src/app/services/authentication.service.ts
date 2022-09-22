@@ -7,14 +7,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { StorageService, userStoregeObj } from './storage.service';
 import { LoginService } from './login.service';
 import { UtilsService } from './utils/utils.service';
+import { UserInfoService } from './user-info.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    null
-  );
+  isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   debtCheck$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   private token: GetResult;
   private refreshToken: GetResult;
@@ -24,6 +23,7 @@ export class AuthenticationService {
     private http: HttpClient,
     private storageService: StorageService,
     private loginService: LoginService,
+    private userInfoServer:UserInfoService,
     private utils: UtilsService
   ) {}
   public async loadToken() {
@@ -35,9 +35,9 @@ export class AuthenticationService {
       this.isTokenValid(this.token.value).subscribe(
         async (res) => {
           if (res) {
-            this.loginService.getUserDetails().subscribe(
+            this.userInfoServer.getUserDetails().subscribe(
               () => {
-                this.loginService.isUserHasDetails.subscribe((v) =>
+                this.userInfoServer.isUserHasDetails.subscribe((v) =>
                   console.log('isUserHasDetails:', v)
                 );
               },
@@ -46,9 +46,9 @@ export class AuthenticationService {
                 this.onHttpErorr(err, '');
               }
             );
-            this.loginService.getCreditCardInfo().subscribe(
+            this.userInfoServer.getCreditCardInfo().subscribe(
               () => {
-                this.loginService.isUserHasDetails.subscribe((v) =>
+                this.userInfoServer.isUserHasDetails.subscribe((v) =>
                   console.log('isCardHasDetails:', v)
                 );
               },
@@ -71,7 +71,7 @@ export class AuthenticationService {
                 );
             }
 
-            this.isAuthenticated.next(true);
+            this.isAuthenticated$.next(true);
           } else {
             this.loadToken();
           }
@@ -95,7 +95,7 @@ export class AuthenticationService {
         }
       );
     } else {
-      this.isAuthenticated.next(false);
+      this.isAuthenticated$.next(false);
     }
   }
   public debtCheck() {

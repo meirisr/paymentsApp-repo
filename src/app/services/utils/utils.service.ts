@@ -148,10 +148,13 @@ export class UtilsService {
     });
     modal.present();
 
+  }
+  dismissModal(){
     setTimeout(() => {
-      modal.dismiss({
+       this.modalController.dismiss({
         dismissed: true,
       });
-    }, 2000);
+    },0);
   }
+  
 }

@@ -6,6 +6,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Subscription } from 'rxjs';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
+import { UserInfoService } from 'src/app/services/user-info.service';
 
 @Component({
   selector: 'app-intro',
@@ -22,6 +23,7 @@ export class IntroPage implements OnInit {
     private authenticationService: AuthenticationService,
     private logInServer: LoginService,
     private storageService: StorageService,
+    private userInfoServer:UserInfoService,
     private utils: UtilsService,
     private navigateService: NavigateHlperService,
     private platform: Platform,
@@ -45,11 +47,13 @@ export class IntroPage implements OnInit {
     this.subscriptions.push(allOrg$);
   }
   async onCreditCardClick(): Promise<void> {
-    if (this.logInServer.isCardHasDetails.value) {
+    if (this.userInfoServer.isCardHasDetails.value) {
       this.storageService.setHotelId('0');
       this.navigateService.goToMenu();
     } else {
-      this.utils.presentModal('', 'עליך להכניס פרטי אשראי', '');
+     await this.utils.presentModal('', 'עליך להכניס פרטי אשראי', '');
+     setTimeout(()=>{this.utils.dismissModal()},2000) ;
+
       this.navigateService.goToCCDetails();
     }
   }
@@ -76,6 +80,7 @@ export class IntroPage implements OnInit {
             `הנך רשום ב ${hotelName}`,
             'chack'
           );
+          setTimeout(()=>{this.utils.dismissModal()},2000) ;
           this.navigateService.goToMenu();
         } else {
           await this.utils.presentModal(
@@ -83,6 +88,7 @@ export class IntroPage implements OnInit {
             'עליך להכנס עם כרטיס אשראי',
             ''
           );
+          setTimeout(()=>{this.utils.dismissModal()},2000) ;
         }
       });
     (err: Error) => {
@@ -107,7 +113,7 @@ export class IntroPage implements OnInit {
   }
   goToLogin(): void {
     this.storageService.deleteAllStorege();
-    this.authenticationService.isAuthenticated.next(false);
+    this.authenticationService.isAuthenticated$.next(false);
     window.location.reload();
   }
   ngOnDestroy(): void {

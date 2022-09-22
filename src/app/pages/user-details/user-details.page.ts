@@ -4,13 +4,11 @@ import { Router } from '@angular/router';
 import {
   AlertController,
   IonDatetime,
-  ModalController,
   Platform,
 } from '@ionic/angular';
 import { from } from 'rxjs';
-import { LoginStepsNavbarComponent } from 'src/app/components/login-steps-navbar/login-steps-navbar.component';
-import { LoginService } from 'src/app/services/login.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { UserInfoService } from 'src/app/services/user-info.service';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
 @Component({
@@ -24,10 +22,9 @@ export class UserDetailsPage implements OnInit {
   public userDetails: FormGroup;
   constructor(
     private alertController: AlertController,
-    private logInServer: LoginService,
     private storageService: StorageService,
     private router: Router,
-    private modalController: ModalController,
+    private userInfoServer:UserInfoService,
     private platform: Platform,
     private navigateService: NavigateHlperService
   ) {
@@ -58,7 +55,7 @@ export class UserDetailsPage implements OnInit {
   }
 
   async updateUserInfo(): Promise<void> {
-    from(this.logInServer.updateUserInfo(this.userDetails.value)).subscribe(
+    from(this.userInfoServer.updateUserInfo(this.userDetails.value)).subscribe(
       async () => {
         this.getuserInfo().then(() => {
           this.goToUserProfile();
@@ -110,12 +107,12 @@ export class UserDetailsPage implements OnInit {
     const day = value.split('-')[2].split('T')[0];
     this.date = day + '/' + month + '/' + year;
   }
-  async presentModal(): Promise<HTMLIonModalElement> {
-    const modal = await this.modalController.create({
-      component: LoginStepsNavbarComponent,
-      cssClass: 'my-custom-class',
-      swipeToClose: true,
-    });
-    return await modal;
-  }
+  // async presentModal(): Promise<HTMLIonModalElement> {
+  //   const modal = await this.modalController.create({
+  //     component: LoginStepsNavbarComponent,
+  //     cssClass: 'my-custom-class',
+  //     swipeToClose: true,
+  //   });
+  //   return await modal;
+  // }
 }

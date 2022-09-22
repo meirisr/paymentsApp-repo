@@ -15,37 +15,41 @@ export class TravelProcessService {
   firstStation: any;
   lastStation: any;
   nearestStation: any;
-  constructor(private http: HttpClient,private storageService: StorageService,) {}
+  constructor(
+    private http: HttpClient,
+    private storageService: StorageService
+  ) {}
 
-  public paymentTranportation(): Observable<any> {
+  public paymentTranportation(trip, hotelId: string) {
     return this.http
       .post(
-        `${environment.serverUrl}/credit-card-payment/wallet-transportation`,
+        `${environment.serverUrl}/transportation/insert-new-transportation-drive`,
         {
-          paymentAmount: 10,
-          //  currency = Currency.NIS; //לא צריך לשלוח את הפרמטר הזה כשמדובר בשקלים
-          route: '',
-          trip: 'test',
-          fromStop: 'first',
-          toStop: 'to',
-        }
-        ,
+          routeName: 'dfsdfsd',
+          fromStop: trip.nearestStation,
+          toStop: trip.lastStation,
+          organizationId: +hotelId,
+          stationId: +trip.stationId,
+        },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
         }
       )
       .pipe(
         map((data: any) => {
-          console.log( data.body)
           return data.body;
         })
+      )
+      .subscribe(
+        (data) => console.log(data),
+        (err) => console.log(err)
       );
   }
 
   public getTravelDetails(
     location: { latitude: number; longitude: number },
     VehicleNum: number
-  ){
+  ) {
     try {
       return this.http
         .post(
@@ -60,47 +64,49 @@ export class TravelProcessService {
         )
         .pipe(
           map((data: any) => {
+            console.log(data);
             if (data.status != 'Success') {
               this.routeInfo.next(false);
               return false;
             }
-            if(!!!data.data.drive){
+            if (!!!data.data.drive) {
               this.routeInfo.next(false);
               return false;
-            } 
-            if(!data.data.drive.Coordinates.length){
+            }
+            if (!data.data.drive.Coordinates.length) {
               this.routeInfo.next(false);
               return false;
-            } 
-            const routeData= this.creatRouteData(data);
-            this.routeInfo.next(
-              routeData
-             );
-             this.storageService.setRouteDetails(routeData);
-            
-            // return data;
+            }
+            const routeData = this.creatRouteData(data);
+            this.routeInfo.next(routeData);
+            this.storageService.setRouteDetails(routeData);
+
+            return routeData;
           })
-        ).subscribe((data)=>{
-         console.log(data)
-        });
+        );
     } catch (error) {
       console.log(error);
     }
   }
-creatRouteData(obj){
-  return { Coordinates: obj?.data?.drive?.Coordinates.map((element) => {
-    return this.creatPathArray(element);
-  }),
-  stationArray: obj.data.drive.stationArray,
-  firstStation: obj.data.drive.firstStation.stationIndex !== -1
-      ? obj.data.drive.firstStation
-      : null,
-  lastStation: obj.data.drive.lastStation.stationIndex !== -1
-      ? obj.data.drive.lastStation
-      : null,
-  nearestStation: obj.data.nearestStationOnRoute,
-}
-}
+  creatRouteData(obj) {
+    console.log(obj);
+    return {
+      Coordinates: obj?.data?.drive?.Coordinates.map((element) => {
+        return this.creatPathArray(element);
+      }),
+      stationId: obj.data.drive.operatorid,
+      stationArray: obj.data.drive.stationArray,
+      firstStation:
+        obj.data.drive.firstStation.stationIndex !== -1
+          ? obj.data.drive.firstStation
+          : null,
+      lastStation:
+        obj.data.drive.lastStation.stationIndex !== -1
+          ? obj.data.drive.lastStation
+          : null,
+      nearestStation: obj.data.nearestStationOnRoute,
+    };
+  }
   creatPathArray(obj) {
     return { lat: obj.lat, lng: obj.lon };
   }

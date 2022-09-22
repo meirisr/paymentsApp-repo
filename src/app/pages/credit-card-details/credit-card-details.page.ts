@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonDatetime, Platform } from '@ionic/angular';
+import { UserInfoService } from 'src/app/services/user-info.service';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
-import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-credit-card-details',
@@ -21,7 +21,7 @@ export class CreditCardDetailsPage implements OnInit {
   creditCardForm: boolean = true;
   public cardDetails: FormGroup;
   constructor(
-    private logInServer: LoginService,
+    private userInfoServer: UserInfoService,
     private platform: Platform,
     private navigateService: NavigateHlperService
   ) {
@@ -70,9 +70,11 @@ export class CreditCardDetailsPage implements OnInit {
     this.dateTime.confirm(true);
   }
   async updateCreditCard(): Promise<void> {
-    this.logInServer.updateCreditCard(this.cardDetails.value).then(async () => {
-      this.goToUserProfile();
-    });
+    this.userInfoServer
+      .updateCreditCard(this.cardDetails.value)
+      .then(async () => {
+        this.goToUserProfile();
+      });
   }
 
   cardNumKeyUp(e: Event) {

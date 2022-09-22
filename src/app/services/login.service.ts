@@ -5,25 +5,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ToastController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-import { StorageService, UserDetails,userStoregeObj } from './storage.service';
-
-
+import { StorageService, UserDetails, userStoregeObj } from './storage.service';
+import { UserInfoService } from './user-info.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   didSendSms: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  isUserHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+
   isUserPermitToOrg: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-  isCardHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-  userDetails = new BehaviorSubject({ firstName: '', lastName: '', email: '' });
 
   constructor(
     private http: HttpClient,
@@ -67,7 +60,10 @@ export class LoginService {
       .pipe(
         tap(() => {
           this.storageService.setUserPhoneNumber(credentials.phone);
-          this.storageService.setStorege(userStoregeObj.PHONE_NUM, credentials.phone);
+          this.storageService.setStorege(
+            userStoregeObj.PHONE_NUM,
+            credentials.phone
+          );
         })
       );
   }
@@ -88,91 +84,6 @@ export class LoginService {
           this.storageService.setRefreshToken(data.body.refreshToken);
           this.storageService.setToken(data.body.jwtToken);
         })
-      );
-  }
-
-  public getUserDetails(): Observable<any> {
-    return this.http.get(`${environment.serverUrl}/user/get-user-details`).pipe(
-      map((data: any) => {
-        if (data.body.email && data.body.firstName && data.body.lastName) {
-          this.storageService.setUserDetails(data.body);
-          this.isUserHasDetails.next(true);
-        } else {
-          this.isUserHasDetails.next(false);
-        }
-      })
-    );
-  }
-  public getCreditCardInfo(): Observable<any> {
-    return this.http
-      .get(
-        `${environment.serverUrl}/credit-card-payment/get-last-digits-of-credit-card`
-      )
-      .pipe(
-        map((data: any) => {
-          if (data.body != null && data.body.length > 0) {
-            this.storageService.setCreditCard4Dig(data.body);
-            this.isCardHasDetails.next(true);
-          } else {
-            this.isCardHasDetails.next(false);
-          }
-        })
-      );
-  }
-  public async updateUserInfo(credentials: UserDetails): Promise<void> {
-    this.http
-      .post(
-        `${environment.serverUrl}/user/update-details`,
-        {
-          firstName: credentials.firstName,
-          lastName: credentials.lastName,
-          email: credentials.email,
-        },
-        {
-          headers: new HttpHeaders({ station: 'hotels' }),
-        }
-      )
-      .pipe()
-      .subscribe(
-        async () => {
-          this.storageService.setUserDetails(credentials);
-          this.userDetails.next(credentials);
-          this.handleButtonClick();
-        },
-        async (res) => {
-          this.onHttpErorr(res, '');
-        }
-      );
-  }
-  public async updateCreditCard(credentials: {
-    cardNum: string;
-    csvNum: string;
-    date: string;
-    userId: string;
-  }): Promise<void> {
-    this.http
-      .post(
-        `${environment.serverUrl}/credit-card-payment/register-wallet`,
-        {
-          creditCardNumber: credentials.cardNum,
-          verificationNumber: credentials.csvNum,
-          holderId: credentials.userId,
-          validUntilMonth: credentials.date.split('/')[0],
-          validUntilYear: credentials.date.split('/')[1],
-        },
-        {
-          headers: new HttpHeaders({ station: 'hotels' }),
-        }
-      )
-      .subscribe(
-        async () => {
-          this.getCreditCardInfo();
-          this.handleButtonClick();
-        },
-        async (res) => {
-          console.log(res);
-          this.onHttpErorr(res, '');
-        }
       );
   }
 

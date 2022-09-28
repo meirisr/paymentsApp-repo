@@ -43,6 +43,14 @@ export class LottieComponent implements OnInit {
     this.height="100%";
     break;
  
+  case 'user':
+    this.options = {
+      ...this.options, // In case you have other properties that you want to copy
+      path: '../../../assets/lottie/user.json', 
+    };
+    this.height="100%";
+    break;
+ 
   default:
     this.options = {
       ...this.options, // In case you have other properties that you want to copy

@@ -28,3 +28,11 @@ section:not(.full-width),
 .main-list{
   margin: 5%;
 }
+.isrLogo-container{
+  position: absolute;
+  bottom: 2vh;
+  right: 50%;
+  transform: translateX(50%);
+  display: flex;
+  justify-content: center;
+}

@@ -10,9 +10,11 @@ import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.serv
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
 })
+
 export class MenuPage {
   prefersDark: string;
   userDetalis: object;
+  isrLogo: string = '../../../assets/images/isrLogo.png';
   mapOptions: google.maps.MapOptions = {
     center: { lat: 31.79476, lng: 35.18761 },
     zoom: 16,

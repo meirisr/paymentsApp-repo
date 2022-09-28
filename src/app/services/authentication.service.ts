@@ -35,6 +35,7 @@ export class AuthenticationService {
     if (this.token.value != null && this.refreshToken.value != null) {
       this.isTokenValid(this.token.value).subscribe(
         async (res) => {
+          console.log(res)
           if (res) {
             this.userInfoServer.getUnpaidTrips();
             this.userInfoServer.getUserDetails().subscribe(
@@ -102,11 +103,11 @@ export class AuthenticationService {
   }
 
  
-  public isTokenValid(refreshToken: string): Observable<any> {
+  public isTokenValid(Token: string): Observable<any> {
     try {
       return this.http
         .get(
-          `${environment.serverUrl}/base-auth/is-token-valid?token=${refreshToken}`
+          `${environment.serverUrl}/base-auth/is-token-valid?token=${Token}`
         )
         .pipe(
           map((data: any) => {

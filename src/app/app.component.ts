@@ -37,13 +37,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.utils.getUserLanguage().then(() => {
       this.utils.loadGoogleMap();
     });
     this.utils.loadRoute();
     this.authenticationService.loadToken();
-    this.authenticationService.debtCheck();
+    
   }
   hideSplashScreen = () => {
     this.platform.ready().then(async () => {

@@ -14,10 +14,11 @@ import { UserInfoService } from './user-info.service';
 })
 export class AuthenticationService {
   isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  debtCheck$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  
   private token: GetResult;
   private refreshToken: GetResult;
   private hotelId: GetResult;
+  private hotelName: GetResult;
 
   constructor(
     private http: HttpClient,
@@ -30,13 +31,14 @@ export class AuthenticationService {
     this.token = await this.storageService.getToken();
     this.refreshToken = await this.storageService.getRefreshToken();
     this.hotelId = await this.storageService.getHotelId();
-
+    this.hotelName = await this.storageService.getHotelName();
     if (this.token.value != null && this.refreshToken.value != null) {
       this.isTokenValid(this.token.value).subscribe(
         async (res) => {
           if (res) {
+            this.userInfoServer.getUnpaidTrips();
             this.userInfoServer.getUserDetails().subscribe(
-              () => {
+              async() => {
                 this.userInfoServer.isUserHasDetails.subscribe((v) =>
                   console.log('isUserHasDetails:', v)
                 );
@@ -47,8 +49,8 @@ export class AuthenticationService {
               }
             );
             this.userInfoServer.getCreditCardInfo().subscribe(
-              () => {
-                this.userInfoServer.isUserHasDetails.subscribe((v) =>
+              async() => {
+                this.userInfoServer.isCardHasDetails.subscribe((v) =>
                   console.log('isCardHasDetails:', v)
                 );
               },
@@ -59,7 +61,7 @@ export class AuthenticationService {
             );
             if (this.hotelId.value != null) {
               this.loginService
-                .isUserPermitToOrganization(this.hotelId.value)
+                .isUserPermitToOrganization(this.hotelId.value,this.hotelName.value)
                 .subscribe(
                   (data) => {
                     console.log(data);
@@ -98,9 +100,8 @@ export class AuthenticationService {
       this.isAuthenticated$.next(false);
     }
   }
-  public debtCheck() {
-    this.debtCheck$.next(false);
-  }
+
+ 
   public isTokenValid(refreshToken: string): Observable<any> {
     try {
       return this.http

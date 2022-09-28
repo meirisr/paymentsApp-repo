@@ -9,7 +9,7 @@
  
 </ion-header>
 <ion-content dir="{{'dir'|translate}}">
-  <div class="card-container ion-activatable" (click)="onClick()">
+  <div *ngIf="noData" class="card-container ion-activatable" (click)="onClick()">
     <ion-card>
       <ion-card-header>
         <img src="../../../assets/scan.svg" />
@@ -18,4 +18,15 @@
     </ion-card>
     <ion-ripple-effect></ion-ripple-effect>
   </div>
+  <ion-row *ngIf="!noData" class="ion-text-center ion-padding alert-row ion-activatable"
+  (click)="onActiveTrip()">
+    <ion-col class="">
+      <div class="alert" role="alert">
+        <img src="../../../assets/scan.svg" />
+        <h3>נסיעה פעילה</h3>
+      </div>
+    </ion-col>
+    <ion-ripple-effect></ion-ripple-effect>
+  </ion-row>
+
 </ion-content>

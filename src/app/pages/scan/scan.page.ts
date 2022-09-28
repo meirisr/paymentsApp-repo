@@ -19,7 +19,6 @@ import { Subscription } from 'rxjs';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 import { NFC, Ndef } from '@awesome-cordova-plugins/nfc/ngx';
 
-
 @Component({
   selector: 'app-scan',
   templateUrl: './scan.page.html',
@@ -45,7 +44,8 @@ export class ScanPage implements OnInit {
     private storageService: StorageService,
     private travelProcessService: TravelProcessService,
     private alertService: AlertService,
-    private nfc: NFC, private ndef: Ndef
+    private nfc: NFC,
+    private ndef: Ndef
   ) {
     // this.utils.presentModal(
     //   '',
@@ -55,15 +55,9 @@ export class ScanPage implements OnInit {
     this.plt.backButton.subscribeWithPriority(10, () => {
       this.navigateService.goToMenu();
     });
-
-
-
-
-
   }
 
   ngOnInit() {
-    
     if (Capacitor.isNativePlatform()) {
       // this.startNFC()
       this.checkLocationPermission().then((e) => {
@@ -91,8 +85,7 @@ export class ScanPage implements OnInit {
   }
 
   async startScanner(): Promise<void> {
-
-    let hotelId = !! this.storageService.getHotelId();
+    let hotelId = !!this.storageService.getHotelId();
     const allowed = await this.checkPermission();
     if (allowed) {
       // this.utils.dismissModal();
@@ -108,27 +101,28 @@ export class ScanPage implements OnInit {
         console.log(result);
         this.stopScanner();
         document.querySelector('body').classList.remove('scanBg');
-        
+
         // if (hotelId) {
         //   this.navigateService.goToPayment();
         // } else {
-          this.navigateService.goToTravelRouteTracking();
+        this.navigateService.goToTravelRouteTracking();
         // }
         await this.utils.presentModal('נסיעה טובה', '', 'chack');
-        setTimeout(()=>{this.utils.dismissModal()},2000) ;
+        setTimeout(() => {
+          this.utils.dismissModal();
+        }, 2000);
         this.getTrip();
       }
     }
   }
   async getTrip() {
     let hotelId = await this.storageService.getHotelId();
-    const TravelDetails$ = this.travelProcessService.getTravelDetails(
-      this.userLocation,
-      7781769
-    ).subscribe((data)=>{
-      this.travelProcessService.paymentTranportation(data,hotelId.value)
-      
-     });
+    const TravelDetails$ = this.travelProcessService
+      .getTravelDetails(this.userLocation, 7715869)
+      .subscribe((data) => {
+        this.travelProcessService.isRouteValidToOrg(data);
+        this.travelProcessService.paymentTranportation(data, hotelId.value);
+      });
     // .subscribe(
     //   async (data) => {
 
@@ -224,33 +218,31 @@ export class ScanPage implements OnInit {
     this.alertService.cameraPermissionAlert(alertDeteails[type]);
   }
 
-  async startNFC(){
- 
+  async startNFC() {
     // Read NFC Tag - Android
-// Once the reader mode is enabled, any tags that are scanned are sent to the subscriber
-let flags = this.nfc.FLAG_READER_NFC_A | this.nfc.FLAG_READER_NFC_V;
-console.log(flags)
-const readerMode$ = this.nfc.readerMode(flags).subscribe(
-    tag => console.log(JSON.stringify(tag),"NFC"),
-    err => console.log('Error reading tag', err)
-);
+    // Once the reader mode is enabled, any tags that are scanned are sent to the subscriber
+    let flags = this.nfc.FLAG_READER_NFC_A | this.nfc.FLAG_READER_NFC_V;
+    console.log(flags);
+    const readerMode$ = this.nfc.readerMode(flags).subscribe(
+      (tag) => console.log(JSON.stringify(tag), 'NFC'),
+      (err) => console.log('Error reading tag', err)
+    );
 
-
-// Read NFC Tag - iOS
-// On iOS, a NFC reader session takes control from your app while scanning tags then returns a tag
-try {
-   let tag = await this.nfc.scanNdef();
-   console.log(JSON.stringify(tag));
-} catch (err) {
-    console.log('Error reading tag', err);
-}
-this.subscriptions.push(readerMode$);
+    // Read NFC Tag - iOS
+    // On iOS, a NFC reader session takes control from your app while scanning tags then returns a tag
+    try {
+      let tag = await this.nfc.scanNdef();
+      console.log(JSON.stringify(tag));
+    } catch (err) {
+      console.log('Error reading tag', err);
+    }
+    this.subscriptions.push(readerMode$);
   }
-  onSuccess(e){
-      console.log(e)
+  onSuccess(e) {
+    console.log(e);
   }
-  onError(e){
-    console.log(e)
+  onError(e) {
+    console.log(e);
   }
   goTomenu(): void {
     this.navigateService.goToMenu();

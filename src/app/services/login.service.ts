@@ -5,8 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ToastController } from '@ionic/angular';
 import { UtilsService } from 'src/app/services/utils/utils.service';
-import { StorageService, UserDetails, userStoregeObj } from './storage.service';
-import { UserInfoService } from './user-info.service';
+import { StorageService, userStoregeObj } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,15 +32,26 @@ export class LoginService {
       }
     );
   }
-  public isUserPermitToOrganization(orgId: string): Observable<any> {
+  public getAllUserOrganizations(): Observable<any> {
+    return this.http.get(
+      `${environment.serverUrl}/organization/get-user-organizations`
+      // {
+      //   headers: new HttpHeaders({ station: userStoregeObj.HEADER_HOTELS }),
+      // }
+    );
+  }
+  public isUserPermitToOrganization(orgId: string,orgName:string): Observable<any> {
+    this.storageService.deleteHotelId()
+    this.storageService.deleteHotelName()
     return this.http
       .get(`${environment.serverUrl}/user/is-permit-to-organization`, {
-        headers: new HttpHeaders({ organizationId: orgId }),
+        headers: new HttpHeaders({ organizationId:orgId.toString()}),
       })
       .pipe(
         map((data: any) => {
           if (data.body) {
             this.storageService.setHotelId(orgId);
+            this.storageService.setHotelName(orgName);
             this.isUserPermitToOrg.next(true);
           } else {
             this.isUserPermitToOrg.next(false);

@@ -11,7 +11,8 @@ export const userStoregeObj = {
   USER_DETAILS: 'user-details',
   ROUTE_DETAILS: 'route-details',
   CARD_DETAILS: 'card-details',
-  HOTEL_ID: 'my-hotel',
+  HOTEL_ID: 'my-hotel-id',
+  HOTEL_NAME: 'my-hotel-name',
 };
 
 export interface UserDetails {
@@ -49,6 +50,9 @@ export class StorageService {
   public setHotelId = (details: string): void => {
     this.setStorege(userStoregeObj.HOTEL_ID, details);
   };
+  public setHotelName = (details: string): void => {
+    this.setStorege(userStoregeObj.HOTEL_NAME, details);
+  };
   public setRouteDetails = (details): void => {
     this.setStorege(userStoregeObj.ROUTE_DETAILS, JSON.stringify(details));
   };
@@ -67,10 +71,18 @@ export class StorageService {
     this.getStorege(userStoregeObj.CARD_DETAILS);
   public getHotelId = (): Promise<GetResult> =>
     this.getStorege(userStoregeObj.HOTEL_ID);
+  public getHotelName = (): Promise<GetResult> =>
+    this.getStorege(userStoregeObj.HOTEL_NAME);
 
   public deleteToken = (): void => this.deleteAllStorege();
   public deleteRouteDetails = (): void => {
     Storage.remove({ key: userStoregeObj.ROUTE_DETAILS });
+  };
+  public deleteHotelId = (): void => {
+    Storage.remove({ key: userStoregeObj.HOTEL_ID });
+  };
+  public deleteHotelName = (): void => {
+    Storage.remove({ key: userStoregeObj.HOTEL_NAME });
   };
 
   public setStorege(k: string, v: string): Promise<any> {

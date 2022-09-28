@@ -93,6 +93,6 @@ export class CreditCardDetailsPage implements OnInit {
     this.flipClass = '';
   }
   goToUserProfile(): void {
-    this.navigateService.goToIntro();
+    this.navigateService.goToUserProfile();
   }
 }

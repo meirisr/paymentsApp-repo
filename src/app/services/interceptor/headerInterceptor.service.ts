@@ -34,7 +34,7 @@ export class HeaderInterceptor implements HttpInterceptor {
     const modifieRequest = httpRequest.clone({
       headers: httpRequest.headers.append(
         'Authorization',
-        `Bearer ${this.token}`
+        `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOSIsInJscyI6IlJPTEVfT1JHQU5JWkFUSU9OX01BTkFHRVIiLCJzdG4iOjE5LCJleHAiOjE2NjQzNjYzMDJ9.gyVfn0LLLX7-zU6dbyi_ZsrTp0lveY4W1YUb-_jap32ZCgP5p4fQ5GYMBMJQtZ4FgcQesUTMSTL0gHtrThn1Lg`
       ),
     });
     return next.handle(modifieRequest);

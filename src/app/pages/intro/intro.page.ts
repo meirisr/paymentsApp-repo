@@ -23,7 +23,7 @@ export class IntroPage implements OnInit {
     private authenticationService: AuthenticationService,
     private logInServer: LoginService,
     private storageService: StorageService,
-    private userInfoServer:UserInfoService,
+    private userInfoServer: UserInfoService,
     private utils: UtilsService,
     private navigateService: NavigateHlperService,
     private platform: Platform,
@@ -34,12 +34,16 @@ export class IntroPage implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.storageService.deleteHotelId()
+    this.storageService.deleteHotelName()
     const allOrg$ = this.logInServer
-      .getAllOrganizations()
+      .getAllUserOrganizations()
       .subscribe(async (data) => {
-        this.items.push(this.creatHotelObj(data.body));
+       this.items=data.body
+        // this.items.push(this.creatHotelObj(data.body));
         this.tempitems = [...this.items];
-        console.log(data.body),
+        console.log(data.body)
+        console.log(this.items)
           async (err: Error) => {
             console.log(err);
           };
@@ -47,19 +51,20 @@ export class IntroPage implements OnInit {
     this.subscriptions.push(allOrg$);
   }
   async onCreditCardClick(): Promise<void> {
+    // this.storageService.deleteHotelId()
+    // this.storageService.deleteHotelName()
     if (this.userInfoServer.isCardHasDetails.value) {
       this.storageService.setHotelId('0');
       this.navigateService.goToMenu();
     } else {
-     await this.utils.presentModal('', 'עליך להכניס פרטי אשראי', '');
-     setTimeout(()=>{this.utils.dismissModal()},2000) ;
+      await this.utils.presentModal('', 'עליך להכניס פרטי אשראי', '');
+      setTimeout(() => {
+        this.utils.dismissModal();
+      }, 2000);
 
       this.navigateService.goToCCDetails();
     }
   }
-  // toggleDarkTheme(matchesMode) {
-  //   this.prefersDark = matchesMode;
-  // }
   handleInput(event: Event) {
     const query = (event.target as HTMLInputElement).value.toLowerCase();
     this.tempitems = [
@@ -72,7 +77,7 @@ export class IntroPage implements OnInit {
     const hotelId = this.selectedHotel.id;
     const hotelName = this.selectedHotel.name;
     const isPermitToOrg$ = this.logInServer
-      .isUserPermitToOrganization(hotelId)
+      .isUserPermitToOrganization(hotelId,hotelName)
       .subscribe(async (data) => {
         if (data) {
           await this.utils.presentModal(
@@ -80,7 +85,9 @@ export class IntroPage implements OnInit {
             `הנך רשום ב ${hotelName}`,
             'chack'
           );
-          setTimeout(()=>{this.utils.dismissModal()},2000) ;
+          setTimeout(() => {
+            this.utils.dismissModal();
+          }, 2000);
           this.navigateService.goToMenu();
         } else {
           await this.utils.presentModal(
@@ -88,12 +95,14 @@ export class IntroPage implements OnInit {
             'עליך להכנס עם כרטיס אשראי',
             ''
           );
-          setTimeout(()=>{this.utils.dismissModal()},2000) ;
+          setTimeout(() => {
+            this.utils.dismissModal();
+          }, 2000);
         }
+      },(err: Error) => {
+        console.log(err);
       });
-    (err: Error) => {
-      console.log(err);
-    };
+    
     this.subscriptions.push(isPermitToOrg$);
     this.selectedHotel = { id: '', name: '' };
   }

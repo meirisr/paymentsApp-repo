@@ -9,6 +9,7 @@ import { UtilsService } from './utils/utils.service';
   providedIn: 'root',
 })
 export class UserInfoService {
+  debtCheck$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   isUserHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -50,7 +51,7 @@ export class UserInfoService {
         })
       );
   }
-  public getUserHistory() {
+  public getUserHistory():Observable<any>{
     return this.http
       .post(
         `${environment.serverUrl}/transportation/get-history-drives-per-user`,
@@ -67,11 +68,28 @@ export class UserInfoService {
           return data.body;
         })
       )
+ 
+  }
+  public getUnpaidTrips(){
+    return this.http
+      .get(
+        `${environment.serverUrl}/transportation/get-unpaid-drives-per-user`
+      )
+      .pipe(
+        map((data: any) => {
+          this.debtCheck$.next(false);
+          return data.body;
+        })
+      ) 
       .subscribe(
         (data) => console.log(data),
         (err) => console.log(err)
       );
-  }
+  
+}
+
+
+
   public async updateUserInfo(credentials: UserDetails): Promise<void> {
     this.http
       .post(

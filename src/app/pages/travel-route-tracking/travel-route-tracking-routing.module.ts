@@ -6,8 +6,8 @@ import { TravelRouteTrackingPage } from './travel-route-tracking.page';
 const routes: Routes = [
   {
     path: '',
-    component: TravelRouteTrackingPage
-  }
+    component: TravelRouteTrackingPage,
+  },
 ];
 
 @NgModule({

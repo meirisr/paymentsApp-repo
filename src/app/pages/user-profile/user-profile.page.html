@@ -8,12 +8,13 @@
 <ion-content dir="{{'dir'|translate}}">
   <ion-list>
     <ion-list-header>
+     
       <ion-label><h2>פרטים</h2></ion-label>
       <ion-button fill="outline" size="small" (click)="goToUserDetails()"
         >ערוך</ion-button
       ></ion-list-header
     >
-
+    <div>
     <ion-item>
       <ion-label>
         <h3>שם פרטי</h3>
@@ -33,7 +34,7 @@
         <p>{{email}}</p>
       </ion-label>
     </ion-item>
-
+  </div>
     <ion-list-header>
       <ion-label>פרטי אשראי</ion-label>
       <ion-button fill="outline" size="small" (click)="cardDetails()"

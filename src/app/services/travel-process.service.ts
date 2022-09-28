@@ -1,9 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { StorageService } from './storage.service';
+import { StorageService, userStoregeObj } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,27 @@ export class TravelProcessService {
     private http: HttpClient,
     private storageService: StorageService
   ) {}
-
+  public isRouteValidToOrg(data){
+    return this.http
+      .get(
+        `${environment.serverUrl}/transportation/is-route-valid-to-organization`,
+        {
+          headers: new HttpHeaders({ station: userStoregeObj.HEADER_HOTELS }),
+          params: new HttpParams().set('routeName', "credentials.phone"),
+        }
+      )
+      .pipe(
+        map((data: any) => {
+        
+          return data.body;
+        })
+      ) 
+      .subscribe(
+        (data) => console.log(data),
+        (err) => console.log(err)
+      );
+  
+}
   public paymentTranportation(trip, hotelId: string) {
     return this.http
       .post(
@@ -28,7 +48,7 @@ export class TravelProcessService {
           routeName: 'dfsdfsd',
           fromStop: trip.nearestStation,
           toStop: trip.lastStation,
-          organizationId: +hotelId,
+          organizationId: +userStoregeObj.HEADER_HOTELS,
           stationId: +trip.stationId,
         },
         {

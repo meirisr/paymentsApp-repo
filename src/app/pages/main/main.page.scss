@@ -46,3 +46,20 @@ ion-card-header {
 ion-card-title {
   color: #000 !important;
 }
+.alert-row{
+    position: absolute;
+    width: 100vw;
+    top: 5vh;
+  
+
+}
+.alert{
+  margin-bottom: 0rem;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #FFB300;
+  
+}
+

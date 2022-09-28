@@ -4,9 +4,9 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card  *ngFor="let number of [0,1,2,3,4]" dir="rtl">
+  <ion-card  *ngFor="let trip of historyCards" dir="rtl">
     <ion-card-header>
-      <ion-card-subtitle >{{number}}</ion-card-subtitle>
+      <ion-card-subtitle ></ion-card-subtitle>
       <ion-card-title>Card Title</ion-card-title>
     </ion-card-header>
   
@@ -15,26 +15,7 @@
       and climb a mountain or spend a week in the woods. Wash your spirit clean.
     </ion-card-content>
   </ion-card>
-  <!-- <ion-accordion-group [multiple]="true">
-    <ion-accordion value="{{number}}" *ngFor="let number of [0,1,2,3,4]" dir="rtl">
-      <ion-item slot="header" color="dark">
-        <ion-label>First Accordion</ion-label>
-      </ion-item>
-      <div  slot="content">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-subtitle >{{number}}</ion-card-subtitle>
-            <ion-card-title>Card Title</ion-card-title>
-          </ion-card-header>
-        
-          <ion-card-content>
-            Keep close to Nature's heart... and break clear away, once in awhile,
-            and climb a mountain or spend a week in the woods. Wash your spirit clean.
-          </ion-card-content>
-        </ion-card>
-      </div>
-    </ion-accordion>
-  </ion-accordion-group> -->
+
  
   
 </ion-content>

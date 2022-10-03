@@ -1,5 +1,5 @@
 {
-  "name": "fleetPay",
+  "name": "fleetpay",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "android-sync": "npm run build && npx cap sync android && npx cap open android"
+    "android-sync": "npm run build && npx cap sync android && npx cap open android",
+    "serve":"ionic serve"
   },
   "private": true,
   "dependencies": {

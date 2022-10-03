@@ -10,6 +10,7 @@ import { StorageService, userStoregeObj } from './storage.service';
 })
 export class TravelProcessService {
   routeInfo: BehaviorSubject<any> = new BehaviorSubject<any>(false);
+  paymentTrip: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   stationInfo: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   Coordinates = <any>[];
   firstStation: any;
@@ -52,7 +53,8 @@ export class TravelProcessService {
           fromStop: +trip.nearestStation.stationID,
           toStop: +trip.lastStation.stationID,
           organizationId: +hotelId,
-          stationId: +trip.stationId,
+          stationId: 36,
+          // +trip.stationId
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
@@ -65,7 +67,11 @@ export class TravelProcessService {
         })
       )
       .subscribe(
-        (data) => console.log(data),
+        (data) =>{
+          this.paymentTrip.next(true);
+          console.log(data)
+
+        } ,
         (err) => console.log(err)
       );
   }

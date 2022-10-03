@@ -79,8 +79,14 @@ export class UserInfoService {
         })
       )
       .subscribe(
-        (data) =>  this.debtCheck$.next(false),
-        (err) =>  this.debtCheck$.next(false)
+        (data) => {
+          console.log(data)
+          this.debtCheck$.next(false)
+        } ,
+        (err) => {
+          this.debtCheck$.next(false)
+          console.log(err)
+        }
       );
   }
 

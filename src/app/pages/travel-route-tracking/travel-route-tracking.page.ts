@@ -96,6 +96,7 @@ export class TravelRouteTrackingPage implements OnInit {
     position.scrollTop = 0;
   }
   onEndTrip() {
+    this.travelProcessService.paymentTrip.next(false)
     this.travelProcessService.routeInfo.next(false);
     this.storageService.deleteRouteDetails();
     this.navigateService.goToMenu();

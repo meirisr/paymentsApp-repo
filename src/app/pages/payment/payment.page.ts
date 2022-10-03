@@ -27,7 +27,7 @@ export class PaymentPage implements AfterViewInit {
   unsubscribe: Subject<void> = new Subject<void>();
   apiLoaded: boolean = false;
   numOfPassengers: number = 1;
-  data:any;
+  data: any;
 
   constructor(
     private platform: Platform,
@@ -42,13 +42,12 @@ export class PaymentPage implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    
     console.log('pay');
     let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
       async (data) => {
         if (!data) return;
         console.log(data);
-        this.data=data;
+        this.data = data;
         this.origin = data.firstStation;
         this.destination = data.lastStation;
       },
@@ -59,7 +58,7 @@ export class PaymentPage implements AfterViewInit {
     this.subscriptions.push(routeInfoSubscription);
     setTimeout(() => {
       this.utils.dismissModal();
-    },0);
+    }, 10);
   }
   // onMove(detail) {
   //   const position = document.getElementById('paymentBody');
@@ -91,44 +90,14 @@ export class PaymentPage implements AfterViewInit {
     }
   }
   async onSubmit(): Promise<void> {
-         let hotelId = await this.storageService.getHotelId();
-         this.utils.presentModal('נסיעה טובה', '', 'chack');
-        setTimeout(() => {
-          this.utils.dismissModal();
-        }, 2000);
-        this.travelProcessService.isRouteValidToOrg(this.data,hotelId.value);
-        this.travelProcessService.paymentTranportation(this.data, hotelId.value);
-        this.navigateService.goToTravelRouteTracking();
-    // // let loader = this.utils.showLoader();
-    // from(this.travelProcessService.paymentTranportation()).subscribe(
-    //   async (data) => {
-    //     // this.utils.dismissLoader(loader);
-    //     console.log(data.querySuccessful);
-    //     if (data.querySuccessful) {
-    //       this.navigateService.goToTravelRouteTracking();
-    //       await this.utils.presentModal(
-    //         'נסיעה טובה',
-    //         'החיוב בוצע בהצלחה',
-    //         'chack'
-    //       );
-    //     } else {
-    //       await this.utils.presentModal(
-    //         'שגיאה',
-    //         'המערכת לא הצליחה לבצע חיוב',
-    //         ''
-    //       );
-    //     }
-    //   },
-    //   async (err) => {
-    //     // this.utils.dismissLoader(loader);
-    //     await this.utils.presentModal(
-    //       'שגיאה',
-    //       'המערכת לא הצליחה לבצע חיוב',
-    //       ''
-    //     );
-    //     console.log(err);
-    //   }
-    // );
+    let hotelId = await this.storageService.getHotelId();
+    this.utils.presentModal('נסיעה טובה', '', 'chack');
+    setTimeout(() => {
+      this.utils.dismissModal();
+    }, 2000);
+    this.travelProcessService.isRouteValidToOrg(this.data, hotelId.value);
+    this.travelProcessService.paymentTranportation(this.data, hotelId.value);
+    this.navigateService.goToTravelRouteTracking();
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

@@ -112,7 +112,7 @@ export class ScanPage implements OnInit {
     }
   }
   async getTrip() {
-        this.utils.presentModal('', 'טוען...', 'loader');
+        this.utils.presentModal('...טוען', '', 'loader');
     let hotelId = await this.storageService.getHotelId();
     const TravelDetails$ = this.travelProcessService
       .getTravelDetails(this.userLocation, 	7552569)

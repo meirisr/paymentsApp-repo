@@ -41,8 +41,8 @@ export class LoginService {
     );
   }
   public isUserPermitToOrganization(orgId: string,orgName:string): Observable<any> {
-    this.storageService.deleteHotelId()
-    this.storageService.deleteHotelName()
+    // this.storageService.deleteHotelId()
+    // this.storageService.deleteHotelName()
     return this.http
       .get(`${environment.serverUrl}/user/is-permit-to-organization`, {
         headers: new HttpHeaders({ organizationId:orgId.toString()}),

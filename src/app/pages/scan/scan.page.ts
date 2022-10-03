@@ -105,56 +105,35 @@ export class ScanPage implements OnInit {
         // if (hotelId) {
         //   this.navigateService.goToPayment();
         // } else {
-        this.navigateService.goToTravelRouteTracking();
-        // }
-        await this.utils.presentModal('נסיעה טובה', '', 'chack');
-        setTimeout(() => {
-          this.utils.dismissModal();
-        }, 2000);
         this.getTrip();
+        
+       
       }
     }
   }
   async getTrip() {
+        this.utils.presentModal('', 'טוען...', 'loader');
     let hotelId = await this.storageService.getHotelId();
     const TravelDetails$ = this.travelProcessService
-      .getTravelDetails(this.userLocation, 7715869)
+      .getTravelDetails(this.userLocation, 	7552569)
       .subscribe((data) => {
-        this.travelProcessService.isRouteValidToOrg(data);
-        this.travelProcessService.paymentTranportation(data, hotelId.value);
+        if (!data){
+          setTimeout(() => {
+            this.utils.dismissModal();
+          },0);
+           this.utils.presentModal(
+                    'קוד אינו תקין',
+                    'יש לסרוק קוד אחר',
+                    ''
+                  );
+                  this.startScanner();
+        }
+        else{
+          this.navigateService.goToPayment();
+        }
+        
       });
-    // .subscribe(
-    //   async (data) => {
-
-    //     console.log(data);
-    //     if (!data) {
-    //       await this.utils.presentModal(
-    //         'שגיעה',
-    //         'לא היה ניתן למצוא מסלול'
-    //       );
-    //       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
-    //     } else {
-    //       // if (hotelId) {
-    //       //   this.navCtrl.navigateRoot(['/payment'], { replaceUrl: true });
-    //       // }
-    //       // else {
-    //       //   this.navCtrl.navigateRoot(['/travel-route-tracking'], {replaceUrl: true,});
-    //       // }
-    //       // await this.utils.presentModal('נסיעה טובה', '');
-
-    //     }
-
-    //   },
-    //   async (err) => {
-    //     // this.utils.dismissLoader(loader);
-    //     console.log(err);
-    //     await this.utils.presentModal('שגיעה', 'לא היה ניתן למצוא מסלול');
-    //     setTimeout(() => {
-    //       this.navCtrl.navigateRoot(['/menu'], { replaceUrl: true });
-    //     }, 1000);
-    //   }
-    //   );
-    // this.subscriptions.push(TravelDetails$);
+  
   }
   async checkPermission(): Promise<boolean> {
     const status = await BarcodeScanner.checkPermission({ force: true });

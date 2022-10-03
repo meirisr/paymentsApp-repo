@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { StorageService,UserDetails } from './storage.service';
+import { StorageService, UserDetails } from './storage.service';
 import { UtilsService } from './utils/utils.service';
 @Injectable({
   providedIn: 'root',
@@ -51,13 +51,13 @@ export class UserInfoService {
         })
       );
   }
-  public getUserHistory():Observable<any>{
+  public getUserHistory(): Observable<any> {
     return this.http
       .post(
         `${environment.serverUrl}/transportation/get-history-drives-per-user`,
         {
-          before: 0,
-          after: 0,
+          before: Date.now(),
+          after: new Date().setFullYear(new Date().getFullYear() - 1),
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
@@ -67,28 +67,22 @@ export class UserInfoService {
         map((data: any) => {
           return data.body;
         })
-      )
- 
+      );
   }
-  public getUnpaidTrips(){
+  public getUnpaidTrips() {
     return this.http
-      .get(
-        `${environment.serverUrl}/transportation/get-unpaid-drives-per-user`
-      )
+      .get(`${environment.serverUrl}/transportation/get-unpaid-drives-per-user`)
       .pipe(
         map((data: any) => {
           this.debtCheck$.next(false);
           return data.body;
         })
-      ) 
+      )
       .subscribe(
         (data) => console.log(data),
         (err) => console.log(err)
       );
-  
-}
-
-
+  }
 
   public async updateUserInfo(credentials: UserDetails): Promise<void> {
     this.http
@@ -151,5 +145,4 @@ export class UserInfoService {
   public async onHttpErorr(e, header) {
     this.utils.showalert(e, header);
   }
-  
 }

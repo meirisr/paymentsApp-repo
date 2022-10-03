@@ -13,6 +13,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TravelProcessService } from '../travel-process.service';
 import { StorageService } from '../storage.service';
+import { App } from '@capacitor/app';
 const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
 const ROUTE_DETAILS = 'route-details';
@@ -129,7 +130,14 @@ export class UtilsService {
         : e?.error?.errorMessage
         ? e?.error?.errorMessage[language]
         : 'עקב שגיאת רשת לא ניתן היה למלא את הבקשה. אנא נסה שוב בעוד מספר שניות',
-      buttons: ['OK'],
+      buttons: [{text:'OK',
+      handler: () => {
+       App.exitApp()
+      }
+    
+    
+    }],
+
     });
     await alert.present();
   }

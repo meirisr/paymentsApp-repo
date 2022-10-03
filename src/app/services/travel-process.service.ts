@@ -19,13 +19,14 @@ export class TravelProcessService {
     private http: HttpClient,
     private storageService: StorageService
   ) {}
-  public isRouteValidToOrg(data){
+  public isRouteValidToOrg(data,hotelId){
+    console.log("isRouteValidToOrg")
     return this.http
       .get(
         `${environment.serverUrl}/transportation/is-route-valid-to-organization`,
         {
-          headers: new HttpHeaders({ station: userStoregeObj.HEADER_HOTELS }),
-          params: new HttpParams().set('routeName', "credentials.phone"),
+          headers: new HttpHeaders({ station: data.stationId ,organizationId:hotelId}),
+          params: new HttpParams().set('routeName', data.rte),
         }
       )
       .pipe(
@@ -40,20 +41,23 @@ export class TravelProcessService {
       );
   
 }
-  public paymentTranportation(trip, hotelId: string) {
+  public paymentTranportation(trip:any, hotelId: string) {
+    console.log(trip)
+  
     return this.http
       .post(
         `${environment.serverUrl}/transportation/insert-new-transportation-drive`,
         {
-          routeName: 'dfsdfsd',
-          fromStop: trip.nearestStation,
-          toStop: trip.lastStation,
-          organizationId: +userStoregeObj.HEADER_HOTELS,
+          routeName: trip.rte,
+          fromStop: +trip.nearestStation.stationID,
+          toStop: +trip.lastStation.stationID,
+          organizationId: +hotelId,
           stationId: +trip.stationId,
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
         }
+      
       )
       .pipe(
         map((data: any) => {
@@ -114,7 +118,7 @@ export class TravelProcessService {
       Coordinates: obj?.data?.drive?.Coordinates.map((element) => {
         return this.creatPathArray(element);
       }),
-      stationId: obj.data.drive.operatorid,
+      stationId: obj.data.drive.operatorId,
       stationArray: obj.data.drive.stationArray,
       firstStation:
         obj.data.drive.firstStation.stationIndex !== -1
@@ -125,6 +129,7 @@ export class TravelProcessService {
           ? obj.data.drive.lastStation
           : null,
       nearestStation: obj.data.nearestStationOnRoute,
+      rte:obj.data.drive.RTE,
     };
   }
   creatPathArray(obj) {

@@ -79,8 +79,8 @@ export class UserInfoService {
         })
       )
       .subscribe(
-        (data) => console.log(data),
-        (err) => console.log(err)
+        (data) =>  this.debtCheck$.next(false),
+        (err) =>  this.debtCheck$.next(false)
       );
   }
 

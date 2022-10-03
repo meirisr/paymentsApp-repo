@@ -19,7 +19,7 @@ export class ActiveRouteGuard implements CanLoad {
       filter((val) => val !== null), // Filter out initial Behaviour subject value
       take(1), // Otherwise the Observable doesn't complete!
       map((isActiveRoute) => {
-        console.log(isActiveRoute);
+     
         if (isActiveRoute) {
           this.navigateService.goToMenu();
         } else {

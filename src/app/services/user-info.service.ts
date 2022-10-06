@@ -23,8 +23,8 @@ export class UserInfoService {
     private utils: UtilsService
   ) {}
 
-  public getUserDetails(): Observable<any> {
-    return this.http.get(`${environment.serverUrl}/user/get-user-details`).pipe(
+  public getUserDetails():void{
+     this.http.get(`${environment.serverUrl}/user/get-user-details`).pipe(
       map((data: any) => {
         if (data.body.email && data.body.firstName && data.body.lastName) {
           this.storageService.setUserDetails(data.body);
@@ -33,10 +33,20 @@ export class UserInfoService {
           this.isUserHasDetails.next(false);
         }
       })
+    ).subscribe(
+      async() => {
+        this.isUserHasDetails.subscribe((v) =>
+          console.log('isUserHasDetails:', v)
+        );
+      },
+      async (err) => {
+        console.log(err);
+        this.onHttpErorr(err, '');
+      }
     );
   }
-  public getCreditCardInfo(): Observable<any> {
-    return this.http
+  public getCreditCardInfo(){
+     this.http
       .get(
         `${environment.serverUrl}/credit-card-payment/get-last-digits-of-credit-card`
       )
@@ -49,15 +59,28 @@ export class UserInfoService {
             this.isCardHasDetails.next(false);
           }
         })
+      ).subscribe(
+        async() => {
+          this.isCardHasDetails.subscribe((v) =>
+            console.log('isCardHasDetails:', v)
+          );
+        },
+        async (err) => {
+          console.log(err);
+          this.onHttpErorr(err, '');
+        }
       );
   }
   public getUserHistory(): Observable<any> {
+    var date = new Date();
+    // var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     return this.http
       .post(
         `${environment.serverUrl}/transportation/get-history-drives-per-user`,
         {
-          before: Date.now(),
-          after: new Date().setFullYear(new Date().getFullYear() - 1),
+          before: Date.UTC(date.getFullYear(),date.getMonth()),
+          after: Date.now(),
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
@@ -71,9 +94,12 @@ export class UserInfoService {
   }
   public getUnpaidTrips() {
     return this.http
-      .get(`${environment.serverUrl}/transportation/get-unpaid-drives-per-user`)
+      .get(`${environment.serverUrl}/transportation/get-unpaid-drives-per-user` ,{
+        headers: new HttpHeaders({ station: 'hotels' }),
+      })
       .pipe(
         map((data: any) => {
+          console.log(data)
           this.debtCheck$.next(false);
           return data.body;
         })
@@ -85,8 +111,32 @@ export class UserInfoService {
         } ,
         (err) => {
           this.debtCheck$.next(false)
-          console.log(err)
+          console.log("err")
         }
+      );
+  }
+  public tripPayment(): Observable<any> {
+   
+    return this.http
+      .post(
+        `${environment.serverUrl}/credit-card-payment/card-transportation`,
+        {
+            driveId:'',
+            creditCardNumber:'',
+            verificationNumber:'',
+            holderId:'',
+            validUntilMonth:0,
+            validUntilYear:0,
+            paymentAmount:0,
+        },
+        {
+          headers: new HttpHeaders({ station: 'hotels' }),
+        }
+      )
+      .pipe(
+        map((data: any) => {
+          return data.body;
+        })
       );
   }
 
@@ -139,7 +189,6 @@ export class UserInfoService {
       .subscribe(
         async () => {
           this.getCreditCardInfo();
-          // this.handleButtonClick();
         },
         async (res) => {
           console.log(res);

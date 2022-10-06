@@ -23,8 +23,8 @@ const ROUTE_DETAILS = 'route-details';
 })
 export class UtilsService {
   ischecked: string = 'false';
-  apiLoaded: BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
-  userLang:GetResult;
+  apiLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  userLang: GetResult;
   defaultLang: string;
 
   constructor(
@@ -34,23 +34,22 @@ export class UtilsService {
     private translate: TranslateService,
     private modalController: ModalController,
     private storageService: StorageService,
-    private travelProcessService: TravelProcessService,
+    private travelProcessService: TravelProcessService
   ) {}
 
-  
-  onToggleLanguages(event:any): void {
+  onToggleLanguages(event: any): void {
     switch (event.detail.value) {
       case 'en':
         this.translate.use('en');
         Storage.set({ key: USER_LANGUAGE, value: 'en' });
-        this.userLang.value='en';
+        this.userLang.value = 'en';
 
         this.defaultLang = 'en';
         break;
       case 'he':
         this.translate.use('he');
         Storage.set({ key: USER_LANGUAGE, value: 'he' });
-        this.userLang.value='he';
+        this.userLang.value = 'he';
 
         this.defaultLang = 'he';
         break;
@@ -58,13 +57,13 @@ export class UtilsService {
         this.translate.use('he');
         Storage.set({ key: USER_LANGUAGE, value: 'he' });
         this.defaultLang = 'he';
-        this.userLang.value='he';
+        this.userLang.value = 'he';
         break;
     }
   }
- 
+
   async getUserLanguage(): Promise<string> {
-     this.userLang = await Storage.get({ key: USER_LANGUAGE });
+    this.userLang = await Storage.get({ key: USER_LANGUAGE });
     if (this.userLang.value === 'en') {
       this.translate.use('en');
       this.defaultLang = 'en';
@@ -75,14 +74,13 @@ export class UtilsService {
       return 'he';
     }
   }
-  async loadRoute(){
+  async loadRoute() {
     const routeData = JSON.parse(
       (await this.storageService.getRuteDetails()).value
     );
-    if(routeData){
-     this.travelProcessService.routeInfo.next(routeData);
-    }else{
-
+    if (routeData) {
+      this.travelProcessService.routeInfo.next(routeData);
+    } else {
       this.travelProcessService.routeInfo.next(false);
     }
   }
@@ -97,29 +95,18 @@ export class UtilsService {
         map(() => true),
         catchError(() => of(false))
       )
-      .subscribe(() => {
-        this.apiLoaded.next(true);
-      }
-      ,()=>{
-        this.apiLoaded.next(false);
-        this.loadGoogleMap();
-      });
+      .subscribe(
+        () => {
+          this.apiLoaded.next(true);
+        },
+        () => {
+          this.apiLoaded.next(false);
+          this.loadGoogleMap();
+        }
+      );
   }
-  
-  async showLoader() {
-    const loading = await this.loadingController.create({
-      message: 'Loading...',
-      // duration: 3000,
-      spinner: 'bubbles',
-      cssClass: 'loader',
-    });
-    await loading.present();
-    return loading;
-  }
-  async dismissLoader(loader) {
-    loader.then((e) => e.dismiss());
-  }
-  async showalert(e:any, header: string): Promise<void> {
+
+  async showalert(e: any, header: string): Promise<void> {
     const userLang = await Storage.get({ key: USER_LANGUAGE });
     let language = userLang.value == 'en' ? 'en-us' : 'he-il';
 
@@ -130,20 +117,23 @@ export class UtilsService {
         : e?.error?.errorMessage
         ? e?.error?.errorMessage[language]
         : 'עקב שגיאת רשת לא ניתן היה למלא את הבקשה. אנא נסה שוב בעוד מספר שניות',
-      buttons: [{text:'OK',
-      handler: () => {
-       App.exitApp()
-      }
-    
-    
-    }],
-
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            App.exitApp();
+          },
+        },
+      ],
     });
     await alert.present();
   }
-  
 
-  async presentModal(header: string, text: string,type:string): Promise<void> {
+  async presentModal(
+    header: string,
+    text: string,
+    type: string
+  ): Promise<void> {
     const modal = await this.modalController.create({
       component: PopupModalComponent,
       cssClass: 'my-custom-class',
@@ -155,14 +145,12 @@ export class UtilsService {
       },
     });
     modal.present();
-
   }
-  dismissModal(){
+  dismissModal() {
     setTimeout(() => {
-       this.modalController.dismiss({
+      this.modalController.dismiss({
         dismissed: true,
       });
-    },0);
+    }, 0);
   }
-  
 }

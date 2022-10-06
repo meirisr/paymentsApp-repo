@@ -118,14 +118,16 @@ export class ScanPage implements OnInit {
       .getTravelDetails(this.userLocation, 	7552569)
       .subscribe((data) => {
         if (!data){
-          setTimeout(() => {
             this.utils.dismissModal();
-          },0);
-           this.utils.presentModal(
+
+            this.utils.presentModal(
                     'קוד אינו תקין',
                     'יש לסרוק קוד אחר',
                     ''
                   );
+                  setTimeout(() => {
+                    this.utils.dismissModal();
+                  },2000);
                   this.startScanner();
         }
         else{

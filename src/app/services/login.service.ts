@@ -35,14 +35,9 @@ export class LoginService {
   public getAllUserOrganizations(): Observable<any> {
     return this.http.get(
       `${environment.serverUrl}/organization/get-user-organizations`
-      // {
-      //   headers: new HttpHeaders({ station: userStoregeObj.HEADER_HOTELS }),
-      // }
     );
   }
   public isUserPermitToOrganization(orgId: string,orgName:string): Observable<any> {
-    // this.storageService.deleteHotelId()
-    // this.storageService.deleteHotelName()
     return this.http
       .get(`${environment.serverUrl}/user/is-permit-to-organization`, {
         headers: new HttpHeaders({ organizationId:orgId.toString()}),

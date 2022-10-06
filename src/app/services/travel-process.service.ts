@@ -16,6 +16,8 @@ export class TravelProcessService {
   firstStation: any;
   lastStation: any;
   nearestStation: any;
+  routeData :any=null;
+
   constructor(
     private http: HttpClient,
     private storageService: StorageService
@@ -69,6 +71,7 @@ export class TravelProcessService {
       .subscribe(
         (data) =>{
           this.paymentTrip.next(true);
+          this.storageService.setRouteDetails( this.routeData);
           console.log(data)
 
         } ,
@@ -107,11 +110,11 @@ export class TravelProcessService {
               this.routeInfo.next(false);
               return false;
             }
-            const routeData = this.creatRouteData(data);
-            this.routeInfo.next(routeData);
-            this.storageService.setRouteDetails(routeData);
+            this.routeData = this.creatRouteData(data);
+            this.routeInfo.next( this.routeData);
+           
 
-            return routeData;
+            return  this.routeData;
           })
         );
     } catch (error) {

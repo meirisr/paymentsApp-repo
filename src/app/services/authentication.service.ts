@@ -13,8 +13,10 @@ import { UserInfoService } from './user-info.service';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  
+  isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    null
+  );
+
   private token: GetResult;
   private refreshToken: GetResult;
   private hotelId: GetResult;
@@ -24,7 +26,7 @@ export class AuthenticationService {
     private http: HttpClient,
     private storageService: StorageService,
     private loginService: LoginService,
-    private userInfoServer:UserInfoService,
+    private userInfoServer: UserInfoService,
     private utils: UtilsService
   ) {}
   public async loadToken() {
@@ -35,45 +37,18 @@ export class AuthenticationService {
     if (this.token.value != null && this.refreshToken.value != null) {
       this.isTokenValid(this.token.value).subscribe(
         async (res) => {
-          console.log(res)
           if (res) {
             this.userInfoServer.getUnpaidTrips();
-            this.userInfoServer.getUserDetails().subscribe(
-              async() => {
-                this.userInfoServer.isUserHasDetails.subscribe((v) =>
-                  console.log('isUserHasDetails:', v)
-                );
-              },
-              async (err) => {
-                console.log(err);
-                this.onHttpErorr(err, '');
-              }
-            );
-            this.userInfoServer.getCreditCardInfo().subscribe(
-              async() => {
-                this.userInfoServer.isCardHasDetails.subscribe((v) =>
-                  console.log('isCardHasDetails:', v)
-                );
-              },
-              async (err) => {
-                console.log(err);
-                this.onHttpErorr(err, '');
-              }
-            );
+            this.userInfoServer.getUserDetails();
+            this.userInfoServer.getCreditCardInfo();
             if (this.hotelId.value != null) {
               this.loginService
-                .isUserPermitToOrganization(this.hotelId.value,this.hotelName.value)
-                .subscribe(
-                  (data) => {
-                    console.log(data);
-                  },
-                  async (err) => {
-                    console.log(err);
-                    this.onHttpErorr(err, '');
-                  }
-                );
+                .isUserPermitToOrganization(
+                  this.hotelId.value,
+                  this.hotelName.value
+                )
+                .subscribe();
             }
-
             this.isAuthenticated$.next(true);
           } else {
             this.loadToken();
@@ -102,13 +77,10 @@ export class AuthenticationService {
     }
   }
 
- 
   public isTokenValid(Token: string): Observable<any> {
     try {
       return this.http
-        .get(
-          `${environment.serverUrl}/base-auth/is-token-valid?token=${Token}`
-        )
+        .get(`${environment.serverUrl}/base-auth/is-token-valid?token=${Token}`)
         .pipe(
           map((data: any) => {
             if (!data.body) {
@@ -144,7 +116,7 @@ export class AuthenticationService {
       );
     }
   }
-  async onHttpErorr(e, header) {
+  async onHttpErorr(e:string, header:string) {
     this.utils.showalert(e, header);
   }
 }

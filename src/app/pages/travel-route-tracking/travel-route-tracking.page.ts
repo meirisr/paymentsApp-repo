@@ -49,7 +49,7 @@ export class TravelRouteTrackingPage implements OnInit {
     this.noData = false;
   }
   ngAfterViewInit(): void {
-    let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
+    let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
       async (data) => {
         console.log(data);
         if (!data) {

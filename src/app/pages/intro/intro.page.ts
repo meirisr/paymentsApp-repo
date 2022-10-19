@@ -42,8 +42,7 @@ export class IntroPage implements OnInit {
        this.items=data.body
         // this.items.push(this.creatHotelObj(data.body));
         this.tempitems = [...this.items];
-        console.log(data.body)
-        console.log(this.items)
+  
           async (err: Error) => {
             console.log(err);
           };

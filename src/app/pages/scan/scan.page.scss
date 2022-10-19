@@ -92,8 +92,11 @@
     margin-top: 1vh;
 }
 .flashIcon{
-  height: 4vh;
+  height: 5vh;
   width: 10vw;
+  border: 2px solid;
+  padding: 5px;
+  border-radius: 72%;
 }
 
 @keyframes blinker {  

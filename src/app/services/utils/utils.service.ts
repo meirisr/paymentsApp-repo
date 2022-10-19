@@ -106,7 +106,7 @@ export class UtilsService {
       );
   }
 
-  async showalert(e: any, header: string): Promise<void> {
+  async showalert(e?: any, header?: string): Promise<void> {
     const userLang = await Storage.get({ key: USER_LANGUAGE });
     let language = userLang.value == 'en' ? 'en-us' : 'he-il';
 
@@ -117,11 +117,15 @@ export class UtilsService {
         : e?.error?.errorMessage
         ? e?.error?.errorMessage[language]
         : 'עקב שגיאת רשת לא ניתן היה למלא את הבקשה. אנא נסה שוב בעוד מספר שניות',
+      cssClass:language=='en'?"en-alert":"he-alert" ,
+      backdropDismiss:false,
       buttons: [
         {
           text: 'OK',
           handler: () => {
+            console.log(e)
             App.exitApp();
+           
           },
         },
       ],
@@ -143,6 +147,7 @@ export class UtilsService {
         text: text,
         type: type,
       },
+      backdropDismiss:false,
     });
     modal.present();
   }
@@ -153,4 +158,25 @@ export class UtilsService {
       });
     }, 0);
   }
+
+  async presentLoader() {
+    const loading = await this.loadingController.create({
+      // spinner: null,
+      // duration: 5000,
+      // message: 'Please wait...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+   loading.present();
+  }
+  dismissLoader() {
+    setTimeout(() => {
+      this.loadingController.dismiss({
+        dismissed: true,
+      });
+    }, 0);
+  }
+
+
+
 }

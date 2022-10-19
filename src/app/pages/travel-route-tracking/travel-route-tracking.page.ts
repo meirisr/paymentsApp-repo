@@ -47,8 +47,6 @@ export class TravelRouteTrackingPage implements OnInit {
 
   ngOnInit() {
     this.noData = false;
-  }
-  ngAfterViewInit(): void {
     let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
       async (data) => {
         console.log(data);
@@ -66,6 +64,9 @@ export class TravelRouteTrackingPage implements OnInit {
       }
     );
     this.subscriptions.push(routeInfoSubscription);
+  }
+  ngAfterViewInit(): void {
+   
   }
 
   ionViewDidEnter(): void {

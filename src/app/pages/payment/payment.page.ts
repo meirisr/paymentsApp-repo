@@ -42,7 +42,7 @@ export class PaymentPage implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('pay');
+    
     let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
       async (data) => {
         if (!data) return;

@@ -73,14 +73,12 @@ export class UserInfoService {
   }
   public getUserHistory(): Observable<any> {
     var date = new Date();
-    // var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     return this.http
       .post(
         `${environment.serverUrl}/transportation/get-history-drives-per-user`,
         {
-          before: Date.UTC(date.getFullYear(),date.getMonth()),
-          after: Date.now(),
+          before: Date.now(),
+          after:Date.UTC(date.getFullYear(),date.getMonth()) ,
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
@@ -99,18 +97,22 @@ export class UserInfoService {
       })
       .pipe(
         map((data: any) => {
-          console.log(data)
-          this.debtCheck$.next(false);
+         
           return data.body;
         })
       )
       .subscribe(
         (data) => {
-          console.log(data)
+         if(data.length>0){
+          this.debtCheck$.next(true)
+         }
+         else{
           this.debtCheck$.next(false)
+         }
+         return
         } ,
         (err) => {
-          this.debtCheck$.next(false)
+          // this.debtCheck$.next([])
           console.log("err")
         }
       );

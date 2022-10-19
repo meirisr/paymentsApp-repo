@@ -33,14 +33,13 @@
 @import "~swiper/scss/zoom";
 @import "~@ionic/angular/css/ionic-swiper";
 
-ion-menu{
+ion-menu {
   outline: none;
 }
 .md body {
   --ion-background-color: #091d31;
   --ion-color: #fff;
   --ion-border-color: #091d31;
-
 }
 .md body.scanBg {
   --ion-background-color: #091d3100;
@@ -52,8 +51,8 @@ form .input-group {
 form ion-input.sc-ion-input-md-h {
   border-bottom: 1px solid lightgray;
 }
-form ion-input.sc-ion-input-md-h:hover{
-  border-bottom: 1px solid #FFB300;
+form ion-input.sc-ion-input-md-h:hover {
+  border-bottom: 1px solid #ffb300;
 }
 
 .ion-text-center {
@@ -67,10 +66,11 @@ ion-text {
 }
 .my-custom-class {
   --width: 70vw;
-    --height: 40vh;
-    --border-radius: 15px;
-    background-color: #41464b;
+  --height: 40vh;
+  --border-radius: 15px;
+  background-color: #41464b;
 }
+
 app-popup-modal.ion-page {
   border-radius: 10px;
   background-color: #091d31;
@@ -82,12 +82,18 @@ app-popup-modal.ion-page {
 .alert-wrapper.sc-ion-alert-md {
   background-color: #fff;
 }
+.he-alert {
+  direction: rtl;
+}
 .menu-btn-let {
   left: 0;
 }
 .menu-btn-right {
   right: 0;
 }
-input.sc-ion-input-md{
+input.sc-ion-input-md {
   --padding-bottom: 3px;
+}
+.custom-loading{
+  --background: none;
 }

@@ -47,11 +47,8 @@ export class ScanPage implements OnInit {
     private nfc: NFC,
     private ndef: Ndef
   ) {
-    // this.utils.presentModal(
-    //   '',
-    //    '',
-    //    'scan'
-    //  );
+    
+   
     this.plt.backButton.subscribeWithPriority(10, () => {
       this.navigateService.goToMenu();
     });
@@ -59,7 +56,7 @@ export class ScanPage implements OnInit {
 
   ngOnInit() {
     if (Capacitor.isNativePlatform()) {
-      // this.startNFC()
+      
       this.checkLocationPermission().then((e) => {
         if (e) {
           BarcodeScanner.prepare();
@@ -76,6 +73,9 @@ export class ScanPage implements OnInit {
       }, 3000);
     }
   }
+  ionViewWillEnter(){
+    document.querySelector('body').classList.add('scanBg');
+  }
 
   ionViewWillLeave() {
     if (Capacitor.isNativePlatform()) {
@@ -89,8 +89,9 @@ export class ScanPage implements OnInit {
     const allowed = await this.checkPermission();
     if (allowed) {
       // this.utils.dismissModal();
-      document.querySelector('body').classList.add('scanBg');
+      
       this.scanActive = true;
+      document.querySelector('body').classList.add('scanBg');
       this.result = null;
       BarcodeScanner.hideBackground();
       const result = await BarcodeScanner.startScan({
@@ -115,7 +116,7 @@ export class ScanPage implements OnInit {
         this.utils.presentModal('...טוען', '', 'loader');
     let hotelId = await this.storageService.getHotelId();
     const TravelDetails$ = this.travelProcessService
-      .getTravelDetails(this.userLocation, 	7552569)
+      .getTravelDetails(this.userLocation, 	7702369)
       .subscribe((data) => {
         if (!data){
             this.utils.dismissModal();
@@ -127,13 +128,19 @@ export class ScanPage implements OnInit {
                   );
                   setTimeout(() => {
                     this.utils.dismissModal();
-                  },2000);
+                  },1000);
                   this.startScanner();
         }
         else{
           this.navigateService.goToPayment();
         }
         
+      },
+      ()=>{
+        setTimeout(() => {
+          this.utils.dismissModal();
+        },1000);
+        this.startScanner();
       });
   
   }
@@ -173,6 +180,7 @@ export class ScanPage implements OnInit {
   }
 
   permissionAlert(type: string): void {
+    this.stopScanner()
     this.location.back();
     const alertDeteails = {
       cameraDeteails: {
@@ -180,6 +188,7 @@ export class ScanPage implements OnInit {
         message: `האפליקציה חייבת גישה למצלמה`,
         okHandler: () => {
           BarcodeScanner.openAppSettings();
+          this.startScanner()
         },
         cancelHandler: () => {
           this.goTomenu();
@@ -190,6 +199,7 @@ export class ScanPage implements OnInit {
         message: 'האפליקציה חייבת גישה למיקום ',
         okHandler: () => {
           this.openNativeSettings.open('location');
+          this.startScanner()
         },
         cancelHandler: () => {
           this.goTomenu();

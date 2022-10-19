@@ -70,12 +70,15 @@ export class TravelProcessService {
       )
       .subscribe(
         (data) =>{
-          this.paymentTrip.next(true);
+          this.paymentTrip.next(this.routeData);//true
           this.storageService.setRouteDetails( this.routeData);
           console.log(data)
 
         } ,
-        (err) => console.log(err)
+        (err) =>{
+          this.paymentTrip.next(this.routeData);//none
+          console.log(err)
+        } 
       );
   }
 

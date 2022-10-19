@@ -33,7 +33,8 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/menu/menu.module').then((m) => m.MenuPageModule),
     // canLoad: [AuthGuard, IntroGuard],
-    canLoad: [AuthGuard,DebtsGuard],
+    canLoad: [AuthGuard],
+    //,DebtsGuard
   },
   {
     path: 'user-profile',

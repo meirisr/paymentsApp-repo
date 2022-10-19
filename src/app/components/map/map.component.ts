@@ -115,23 +115,23 @@ export class MapComponent implements AfterViewInit {
       ))
 
 
-      // let stationInfo = this.travelProcessService.stationInfo
-      //   .pipe(filter((val) => val !== null))
-      //   .subscribe(
-      //     async (res) => {
-      //       console.log(res)
-      //       let thisStation = this.stations.find(
-      //         ({ stationIndex }) => stationIndex === +res
-      //       );
-      //       if (thisStation) {
-      //         this.creatStationMarker(thisStation);
-      //       }
-      //     },
-      //     async (error) => {
-      //       console.log(error);
-      //     }
-      //   );
-      // this.subscriptions.push(stationInfo);
+      let stationInfo = this.travelProcessService.stationInfo
+        .pipe(filter((val) => val !== null))
+        .subscribe(
+          async (res) => {
+            console.log(res)
+            let thisStation = this.stations.find(
+              ({ stationIndex }) => stationIndex === +res
+            );
+            if (thisStation) {
+              this.creatStationMarker(thisStation);
+            }
+          },
+          async (error) => {
+            console.log(error);
+          }
+        );
+      this.subscriptions.push(stationInfo);
     }, 100);
 
     this.printCurrentPosition();

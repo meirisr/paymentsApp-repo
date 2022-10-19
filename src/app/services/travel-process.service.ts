@@ -46,7 +46,7 @@ export class TravelProcessService {
 }
   public paymentTranportation(trip:any, hotelId: string) {
     console.log(trip)
-  
+
     return this.http
       .post(
         `${environment.serverUrl}/transportation/insert-new-transportation-drive`,
@@ -75,7 +75,7 @@ export class TravelProcessService {
           console.log(data)
 
         } ,
-        (err) =>{
+        (err) =>{               
           this.paymentTrip.next(this.routeData);//none
           console.log(err)
         } 

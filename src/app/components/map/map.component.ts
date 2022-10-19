@@ -31,10 +31,12 @@ export class MapComponent implements AfterViewInit {
   @Input() path: [];
   @Input() nearesStationth: any;
   @Input() stations: any[] = [];
+  @Input() showPath:boolean=false;
   googleApiLoaded: boolean = false;
   public lat: any;
   public lng: any;
   watch: any;
+  
   watchMarker = null;
   markers: any[] = [];
   stationsMarker: any[] = [];
@@ -92,7 +94,10 @@ export class MapComponent implements AfterViewInit {
     };
 
     setTimeout(() => {
-      let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
+                                                               //paymentTrip
+      let routeInfoSubscription = this.showPath ? this.travelProcessService.routeInfo:this.travelProcessService.paymentTrip;
+      
+      this.subscriptions.push(routeInfoSubscription.subscribe(
         async (data) => {
           if (!data) return;
           this.path = data.Coordinates;
@@ -107,26 +112,26 @@ export class MapComponent implements AfterViewInit {
         async (error) => {
           console.log(error);
         }
-      );
+      ))
 
-      this.subscriptions.push(routeInfoSubscription);
 
-      let stationInfo = this.travelProcessService.stationInfo
-        .pipe(filter((val) => val !== null))
-        .subscribe(
-          async (res) => {
-            let thisStation = this.stations.find(
-              ({ stationIndex }) => stationIndex === +res
-            );
-            if (thisStation) {
-              this.creatStationMarker(thisStation);
-            }
-          },
-          async (error) => {
-            console.log(error);
-          }
-        );
-      this.subscriptions.push(stationInfo);
+      // let stationInfo = this.travelProcessService.stationInfo
+      //   .pipe(filter((val) => val !== null))
+      //   .subscribe(
+      //     async (res) => {
+      //       console.log(res)
+      //       let thisStation = this.stations.find(
+      //         ({ stationIndex }) => stationIndex === +res
+      //       );
+      //       if (thisStation) {
+      //         this.creatStationMarker(thisStation);
+      //       }
+      //     },
+      //     async (error) => {
+      //       console.log(error);
+      //     }
+      //   );
+      // this.subscriptions.push(stationInfo);
     }, 100);
 
     this.printCurrentPosition();
@@ -179,7 +184,7 @@ export class MapComponent implements AfterViewInit {
     this.markers.push(latLng);
     this.mapOptions.center = latLng;
   }
-  addWatchMarker(latLng) {
+  addWatchMarker(latLng){
     this.watchmarkers.push(latLng);
     if (!(this.nearesStationth.lat && this.nearesStationth.lng))
       this.mapOptions.center = latLng;

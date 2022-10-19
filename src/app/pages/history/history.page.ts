@@ -13,7 +13,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 })
 export class HistoryPage implements OnInit {
   private subscriptions: Subscription[] = [];
-  historyCards:[]=[];
+  historyCards: any[]=[];
 
   constructor(
     private plt: Platform,

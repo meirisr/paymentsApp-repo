@@ -136,18 +136,19 @@ export class UtilsService {
   async presentModal(
     header: string,
     text: string,
-    type: string
+    type: string,
+    close:boolean=false
   ): Promise<void> {
     const modal = await this.modalController.create({
       component: PopupModalComponent,
       cssClass: 'my-custom-class',
-      swipeToClose: true,
+      // swipeToClose: true,
       componentProps: {
         header: header,
         text: text,
         type: type,
       },
-      backdropDismiss:false,
+      backdropDismiss:close,
     });
     modal.present();
   }

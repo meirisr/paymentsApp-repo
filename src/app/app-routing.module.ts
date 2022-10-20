@@ -69,7 +69,7 @@ const routes: Routes = [
     path: 'payment',
     loadChildren: () =>
       import('./pages/payment/payment.module').then((m) => m.PaymentPageModule),
-    canLoad: [AuthGuard],
+     canLoad: [AuthGuard],
   },
   {
     path: 'travel-route-tracking',

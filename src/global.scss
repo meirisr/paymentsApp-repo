@@ -96,4 +96,9 @@ input.sc-ion-input-md {
 }
 .custom-loading{
   --background: none;
+  --spinner-color:#ffb300;
+
+}
+.loading-wrapper.sc-ion-loading-md{
+  box-shadow: none;
 }

@@ -26,6 +26,7 @@ export class UtilsService {
   apiLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   userLang: GetResult;
   defaultLang: string;
+  isLoading: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
@@ -117,15 +118,14 @@ export class UtilsService {
         : e?.error?.errorMessage
         ? e?.error?.errorMessage[language]
         : 'עקב שגיאת רשת לא ניתן היה למלא את הבקשה. אנא נסה שוב בעוד מספר שניות',
-      cssClass:language=='en'?"en-alert":"he-alert" ,
-      backdropDismiss:false,
+      cssClass: language == 'en' ? 'en-alert' : 'he-alert',
+      backdropDismiss: false,
       buttons: [
         {
           text: 'OK',
           handler: () => {
-            console.log(e)
+            console.log(e);
             App.exitApp();
-           
           },
         },
       ],
@@ -137,7 +137,7 @@ export class UtilsService {
     header: string,
     text: string,
     type: string,
-    close:boolean=false
+    close: boolean = false
   ): Promise<void> {
     const modal = await this.modalController.create({
       component: PopupModalComponent,
@@ -148,7 +148,7 @@ export class UtilsService {
         text: text,
         type: type,
       },
-      backdropDismiss:close,
+      backdropDismiss: close,
     });
     modal.present();
   }
@@ -166,18 +166,19 @@ export class UtilsService {
       // duration: 5000,
       // message: 'Please wait...',
       translucent: true,
-      cssClass: 'custom-class custom-loading'
+      cssClass: 'custom-class custom-loading',
     });
-   loading.present();
+    this.isLoading = true;
+    loading.present();
   }
   dismissLoader() {
-    setTimeout(() => {
-      this.loadingController.dismiss({
-        dismissed: true,
-      });
-    }, 0);
+    if (this.isLoading) {
+      this.isLoading = false;
+      setTimeout(() => {
+        this.loadingController.dismiss({
+          dismissed: true,
+        });
+      }, 0);
+    }
   }
-
-
-
 }

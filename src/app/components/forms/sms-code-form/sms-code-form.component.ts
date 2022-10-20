@@ -61,7 +61,7 @@ export class SmsCodeFormComponent implements OnInit, AfterViewInit {
     // this.codeInputRef.nativeElement.focus();
   }
   async onSmsCodeFormSubmit() {
-    // let loader=this.utils.showLoader();
+    // let loader=this.utils.presentLoader();
     const credentials = {
       phone: this.storageService.userPhoneNumber,
       text: Object.values(this.smsCodeForm.value).join(''),

@@ -46,20 +46,51 @@ ion-card-header {
 ion-card-title {
   color: #000 !important;
 }
-.alert-row{
-    position: absolute;
-    width: 100vw;
-    top: 5vh;
+// .alert-row{
+//     position: absolute;
+//     width: 100vw;
+//     top: 5vh;
   
 
-}
-.alert{
-  margin-bottom: 0rem;
-  display: flex;
-  justify-content: space-around;
-  background-color: #fff;
-  color: #000;
-  border: 2px solid #FFB300;
+// }
+// .alert{
+//   margin-bottom: 0rem;
+//   display: flex;
+//   justify-content: space-around;
+//   background-color: #fff;
+//   color: #000;
+//   border: 2px solid #FFB300;
   
+// }
+.payment-body{
+  position: fixed;
+  top: 15vh;
+  height: 22vh;
+  width: 90vw;
+  margin-right: 5vw;
+  overflow: hidden;
+  margin-left: 5vw;
+  z-index: 1;
+  padding: 10%;
+  color: #000;
+  border-radius: 10px;
+  transition: height 300ms;
+
+  
+}
+.payment-body:before,
+div:after {
+  content:"";
+  position: absolute;
+}
+.payment-body:before {
+  top: -132px;
+  width: 80px;
+  height: 148px;
+  border-radius: 63%;
+  box-shadow: 0px 0px 0px 10000px #f9fafb;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
 }
 

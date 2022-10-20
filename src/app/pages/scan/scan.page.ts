@@ -47,6 +47,7 @@ export class ScanPage implements OnInit {
   }
 
   ngOnInit() {
+    this.utils.presentLoader();
     if (Capacitor.isNativePlatform()) {
       this.checkLocationPermission().then((e) => {
         if (e) {
@@ -72,11 +73,12 @@ export class ScanPage implements OnInit {
   }
 
   async startScanner(): Promise<void> {
+
     let hotelId = !!this.storageService.getHotelId();
     const allowed = await this.checkPermission();
+    this.utils.dismissLoader();
     if (allowed) {
-      // this.utils.dismissModal();
-
+     
       this.scanActive = true;
       document.querySelector('body').classList.add('scanBg');
       this.result = null;
@@ -98,15 +100,16 @@ export class ScanPage implements OnInit {
     }
   }
   async getTrip() {
-    this.utils.presentModal('...טוען', '', 'loader');
+    await this.utils.presentModal('מחפש מסלול', '', 'loader');
     let hotelId = await this.storageService.getHotelId();
     const TravelDetails$ = this.travelProcessService
       .getTravelDetails(this.userLocation, 7702369)
       .subscribe(
-        (data) => {
+        async(data) => {
+          console.log(data)
           if (!data) {
             this.utils.dismissModal();
-            this.utils.presentModal('קוד אינו תקין', 'יש לסרוק קוד אחר', '',true);
+            await this.utils.presentModal('קוד אינו תקין', 'יש לסרוק קוד אחר', '',true);
             setTimeout(() => {
               this.utils.dismissModal();
             }, 1000);
@@ -115,7 +118,7 @@ export class ScanPage implements OnInit {
             this.navigateService.goToPayment();
           }
         },
-        () => {
+        async() => {
           setTimeout(() => {
             this.utils.dismissModal();
           }, 1000);
@@ -192,6 +195,7 @@ export class ScanPage implements OnInit {
     this.navigateService.goToMenu();
   }
   ngOnDestroy() {
+    this.utils.dismissLoader();
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

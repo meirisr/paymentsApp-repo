@@ -26,4 +26,8 @@
     ></map-marker>
     <map-polyline [path]="path" [options]="polylineOptions"></map-polyline>
   </google-map>
+  <div class="centerMapDiv" (click)="centerMap()">
+    <ion-icon name="locate" slot="start" class="centerMapIcon"></ion-icon>
+  </div>
+   
 </div>

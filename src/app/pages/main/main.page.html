@@ -18,15 +18,17 @@
     </ion-card>
     <ion-ripple-effect></ion-ripple-effect>
   </div>
-  <ion-row *ngIf="!noData" class="ion-text-center ion-padding alert-row ion-activatable"
+  <!-- <ion-row *ngIf="!noData" class="ion-text-center ion-padding alert-row ion-activatable"
   (click)="onActiveTrip()">
-    <ion-col class="">
-      <div class="alert" role="alert">
+    <ion-col class=""> -->
+      <div class="payment-body ion-text-center ion-padding ion-activatable"  *ngIf="!noData" (click)="onActiveTrip()">
         <img src="../../../assets/scan.svg" />
         <h3>נסיעה פעילה</h3>
+        <ion-ripple-effect></ion-ripple-effect>
       </div>
-    </ion-col>
-    <ion-ripple-effect></ion-ripple-effect>
-  </ion-row>
+      
+    <!-- </ion-col>
+   
+  </ion-row> -->
 
 </ion-content>

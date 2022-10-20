@@ -4,6 +4,7 @@ import { UtilsService } from './services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Network } from '@capacitor/network';
 import { App } from '@capacitor/app';
+import { Capacitor } from '@capacitor/core';
 import { AuthenticationService } from './services/authentication.service';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { AlertService } from './services/utils/alert.service';
@@ -22,7 +23,8 @@ export class AppComponent implements OnInit {
     private alertService: AlertService,
     private authenticationService: AuthenticationService
   ) {
-    window.screen.orientation.lock('portrait');
+if(Capacitor.isNativePlatform())  window.screen.orientation.lock('portrait');
+  
     translate.setDefaultLang('en');
     translate.use('he');
     App.getState().then((status) => console.log('status:', status));

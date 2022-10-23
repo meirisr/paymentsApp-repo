@@ -9,7 +9,7 @@ import { IntroGuard } from './guards/intro.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login', 
+    redirectTo: 'login',
     pathMatch: 'full',
   },
 
@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
     // canLoad: [AutoLoginGuard],
-    canLoad: [AuthGuard, IntroGuard,ActiveRouteGuard],
+    canLoad: [AuthGuard, IntroGuard, ActiveRouteGuard],
   },
 
   {
@@ -63,13 +63,13 @@ const routes: Routes = [
     path: 'scan',
     loadChildren: () =>
       import('./pages/scan/scan.module').then((m) => m.ScanPageModule),
-    canLoad: [AuthGuard],
+    canLoad: [AuthGuard, DebtsGuard],
   },
   {
     path: 'payment',
     loadChildren: () =>
       import('./pages/payment/payment.module').then((m) => m.PaymentPageModule),
-     canLoad: [AuthGuard],
+    canLoad: [AuthGuard],
   },
   {
     path: 'travel-route-tracking',
@@ -85,6 +85,14 @@ const routes: Routes = [
       import('./pages/history/history.module').then((m) => m.HistoryPageModule),
     canLoad: [AuthGuard],
   },
+  {
+    path: 'history-pay',
+    loadChildren: () =>
+      import('./pages/history-pay/history-pay.module').then(
+        (m) => m.HistoryPayPageModule
+      ),
+  },
+
   {
     path: '**',
     redirectTo: 'login',

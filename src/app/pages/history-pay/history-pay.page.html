@@ -1,0 +1,142 @@
+<ion-header class="ion-no-border" style="height: 10vh">
+  <ion-toolbar>
+    <!-- <app-header-wave></app-header-wave> -->
+    <app-back-btn (click)="goToHistory()"></app-back-btn>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <app-header-wave [big]="true"></app-header-wave>
+  <app-back-btn (click)="goToUserProfile()"></app-back-btn> -->
+  <!-- <app-credit-card
+    [cardNum]="cardNum"
+    [cardDate]="cardDate"
+    [userName]="userName"
+    [cvsNum]="cvsNum"
+    [flipClass]="flipClass"
+  ></app-credit-card> -->
+  <ion-card dir="{{'dir'|translate}}">
+    <ion-card-header>
+      <ion-title class="card-title">פרטי נסיעה</ion-title>
+      <ion-card-subtitle
+        >תאריך:&nbsp;&nbsp;{{formatDate(tripInfo)}}</ion-card-subtitle
+      >
+      <ion-card-subtitle>
+        לתשלום:&nbsp;&nbsp;&#8362;{{tripInfo?.paymentAmount||""
+        }}</ion-card-subtitle
+      >
+    </ion-card-header>
+    <!-- <ion-card-content>
+     
+      Keep close to Nature's heart... and break clear away, once in awhile,
+      and climb a mountain or spend a week in the woods. Wash your spirit clean.
+    </ion-card-content> -->
+    <!-- <ion-card-content > -->
+    <!-- <ion-button *ngIf="!trip.paymentCompleted" ion-button fill="clear" >לתשלום</ion-button> -->
+    <!-- </ion-card-content> -->
+  </ion-card>
+
+  <form
+    dir="{{'dir'|translate}}"
+    class="card-details-Form"
+    [formGroup]="cardDetails"
+    (ngSubmit)="updateCreditCard()"
+  >
+    <h1>פרטי אשראי</h1>
+    <div class="input-group">
+      <ion-input
+        (keyup)="cardNumKeyUp($event)"
+        placeholder="מספר אשראי"
+        type="tel"
+        inputmode="numeric"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+        id="cardNum"
+        formControlName="cardNum"
+        required
+      ></ion-input>
+    </div>
+
+    <div class="input-group">
+      <ion-input
+        placeholder="תוקף"
+        type="text"
+        [value]="date"
+        id="open-date-modal"
+        formControlName="date"
+        required
+      ></ion-input>
+    </div>
+    <div class="input-group">
+      <ion-input
+        (ionFocus)="cvSInputFocus()"
+        (ionBlur)="cvSInputUnFocus()"
+        (keyup)="cardCvsKeyUp($event)"
+        placeholder="CVS"
+        type="tel"
+        inputmode="numeric"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+        id="csvNum"
+        formControlName="csvNum"
+        maxlength="3"
+        minlength="3"
+        required
+      ></ion-input>
+    </div>
+    <div class="input-group">
+      <ion-input
+        placeholder="ת.ז של בעל הכרטיס"
+        type="tel"
+        id="userId"
+        formControlName="userId"
+        inputmode="numeric"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+        required
+      ></ion-input>
+    </div>
+
+    <div class="input-group">
+      <ion-input
+        (keyup)="userNameKeyUp($event)"
+        placeholder="שם בעל הכרטיס"
+        type="text"
+        id="userName"
+        formControlName="userName"
+        required
+      ></ion-input>
+    </div>
+
+    <ion-modal
+      trigger="open-date-modal"
+      mode="md"
+      (willDismiss)="onWillDismiss()"
+    >
+      <ng-template>
+        <ion-content force-overscroll="false"
+          ><ion-datetime
+            locale="he-IL"
+            size="cover"
+            #dateTime
+            displayFormat="M/YYYY"
+            showDefaultTimeLabel="false"
+            [presentation]="'month-year'"
+            (ionChange)="dataChange(dateTime.value)"
+          >
+            <!-- <ion-buttons slot="buttons">
+              <ion-button (click)="close()">Dismiss</ion-button>
+              <ion-button (click)="select()">Select</ion-button>
+            </ion-buttons> -->
+          </ion-datetime>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+    <div class="input-group" dir="ltr">
+      <app-main-btn
+        style="margin-bottom: 5vh; width: 100vw"
+        type="submit"
+        [disabled]="cardDetails.invalid"
+        text="לתשלום"
+      ></app-main-btn>
+    </div>
+  </form>
+</ion-content>
+<!-- <ion-footer> </ion-footer> -->

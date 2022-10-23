@@ -6,8 +6,9 @@
 <ion-content>
   <ion-list>
     <ion-item  *ngFor="let trip of historyCards">
-  <ion-card  dir="rtl" [class.redCard]="!trip.paymentCompleted">
+  <ion-card  dir="{{'dir'|translate}}" [class.redCard]="!trip.paymentCompleted">
     <ion-card-header>
+      <ion-title class="card-title">לא שולם</ion-title>
       <ion-card-subtitle >תאריך:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle>
       <ion-card-subtitle > תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
       }}</ion-card-subtitle>
@@ -18,6 +19,10 @@
       Keep close to Nature's heart... and break clear away, once in awhile,
       and climb a mountain or spend a week in the woods. Wash your spirit clean.
     </ion-card-content>
+    <!-- <ion-card-content > -->
+      <ion-button *ngIf="!trip.paymentCompleted" ion-button fill="clear" (click)="tripPay(trip)">לתשלום</ion-button>
+    <!-- </ion-card-content> -->
+    
   </ion-card>
 </ion-item>
 </ion-list>

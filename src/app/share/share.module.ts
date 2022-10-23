@@ -33,7 +33,8 @@ const content = [
   BackBtnComponent,
   HeaderWaveComponent,
   LottieComponent,
-  PopupModalComponent
+  PopupModalComponent,
+  
 ];
 
 @NgModule({

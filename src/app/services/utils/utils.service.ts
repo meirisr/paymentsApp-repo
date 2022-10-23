@@ -113,7 +113,7 @@ export class UtilsService {
 
     const alert = await this.alertController.create({
       header: 'Error',
-      message: e?.error?.error?.errorMessage
+      message:e?.error?.error?.errorMessage
         ? e?.error?.error?.errorMessage[language]
         : e?.error?.errorMessage
         ? e?.error?.errorMessage[language]

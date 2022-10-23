@@ -53,6 +53,11 @@ export class HistoryPage implements OnInit {
   }
  
   }
+  tripPay(trip){
+   this.userInfoServer.historyTripPay$.next(trip);
+      this.navigateService.goToHistoryPay();
+    }
+  
   formatDate(item){
     let date=new Date(item.created)
     const year=date.getFullYear()

@@ -10,6 +10,7 @@ import { UtilsService } from './utils/utils.service';
 })
 export class UserInfoService {
   debtCheck$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  historyTripPay$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   isUserHasDetails: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -23,30 +24,33 @@ export class UserInfoService {
     private utils: UtilsService
   ) {}
 
-  public getUserDetails():void{
-     this.http.get(`${environment.serverUrl}/user/get-user-details`).pipe(
-      map((data: any) => {
-        if (data.body.email && data.body.firstName && data.body.lastName) {
-          this.storageService.setUserDetails(data.body);
-          this.isUserHasDetails.next(true);
-        } else {
-          this.isUserHasDetails.next(false);
+  public getUserDetails(): void {
+    this.http
+      .get(`${environment.serverUrl}/user/get-user-details`)
+      .pipe(
+        map((data: any) => {
+          if (data.body.email && data.body.firstName && data.body.lastName) {
+            this.storageService.setUserDetails(data.body);
+            this.isUserHasDetails.next(true);
+          } else {
+            this.isUserHasDetails.next(false);
+          }
+        })
+      )
+      .subscribe(
+        async () => {
+          this.isUserHasDetails.subscribe((v) =>
+            console.log('isUserHasDetails:', v)
+          );
+        },
+        async (err) => {
+          console.log(err);
+          this.onHttpErorr(err, '');
         }
-      })
-    ).subscribe(
-      async() => {
-        this.isUserHasDetails.subscribe((v) =>
-          console.log('isUserHasDetails:', v)
-        );
-      },
-      async (err) => {
-        console.log(err);
-        this.onHttpErorr(err, '');
-      }
-    );
+      );
   }
-  public getCreditCardInfo(){
-     this.http
+  public getCreditCardInfo() {
+    this.http
       .get(
         `${environment.serverUrl}/credit-card-payment/get-last-digits-of-credit-card`
       )
@@ -59,8 +63,9 @@ export class UserInfoService {
             this.isCardHasDetails.next(false);
           }
         })
-      ).subscribe(
-        async() => {
+      )
+      .subscribe(
+        async () => {
           this.isCardHasDetails.subscribe((v) =>
             console.log('isCardHasDetails:', v)
           );
@@ -78,7 +83,7 @@ export class UserInfoService {
         `${environment.serverUrl}/transportation/get-history-drives-per-user`,
         {
           before: Date.now(),
-          after:Date.UTC(date.getFullYear(),date.getMonth()) ,
+          after: Date.UTC(date.getFullYear(), date.getMonth()),
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
@@ -92,44 +97,49 @@ export class UserInfoService {
   }
   public getUnpaidTrips() {
     return this.http
-      .get(`${environment.serverUrl}/transportation/get-unpaid-drives-per-user` ,{
-        headers: new HttpHeaders({ station: 'hotels' }),
-      })
+      .get(
+        `${environment.serverUrl}/transportation/get-unpaid-drives-per-user`,
+        {
+          headers: new HttpHeaders({ station: 'hotels' }),
+        }
+      )
       .pipe(
         map((data: any) => {
-         
           return data.body;
         })
       )
       .subscribe(
         (data) => {
-         if(data.length>0){
-          this.debtCheck$.next(true)
-         }
-         else{
-          this.debtCheck$.next(false)
-         }
-         return
-        } ,
+          if (data.length > 0) {
+            this.debtCheck$.next(true);
+          } else {
+            this.debtCheck$.next(false);
+          }
+          return;
+        },
         (err) => {
           // this.debtCheck$.next([])
-          console.log("err")
+          console.log('err');
         }
       );
   }
-  public tripPayment(): Observable<any> {
-   
+  public tripPayment(tripInfo,credentials: {
+    cardNum: string;
+    csvNum: string;
+    date: string;
+    userId: string;
+  }): Observable<any> {
     return this.http
       .post(
         `${environment.serverUrl}/credit-card-payment/card-transportation`,
         {
-            driveId:'',
-            creditCardNumber:'',
-            verificationNumber:'',
-            holderId:'',
-            validUntilMonth:0,
-            validUntilYear:0,
-            paymentAmount:0,
+          driveId: +tripInfo?.id,
+          creditCardNumber: credentials?.cardNum,
+          verificationNumber: credentials?.csvNum,
+          holderId: credentials?.userId,
+          validUntilMonth: credentials?.date.split('/')[0],
+          validUntilYear: credentials?.date.split('/')[1],
+          paymentAmount: tripInfo?.paymentAmount,
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
@@ -139,7 +149,7 @@ export class UserInfoService {
         map((data: any) => {
           return data.body;
         })
-      );
+      )
   }
 
   public async updateUserInfo(credentials: UserDetails): Promise<void> {

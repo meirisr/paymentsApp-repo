@@ -23,8 +23,9 @@ export class AppComponent implements OnInit {
     private alertService: AlertService,
     private authenticationService: AuthenticationService
   ) {
-if(Capacitor.isNativePlatform())  window.screen.orientation.lock('portrait');
-  
+    if (Capacitor.isNativePlatform())
+      window.screen.orientation.lock('portrait');
+
     translate.setDefaultLang('en');
     translate.use('he');
     App.getState().then((status) => console.log('status:', status));
@@ -44,7 +45,6 @@ if(Capacitor.isNativePlatform())  window.screen.orientation.lock('portrait');
     });
     this.utils.loadRoute();
     this.authenticationService.loadToken();
-    
   }
   hideSplashScreen = () => {
     this.platform.ready().then(async () => {

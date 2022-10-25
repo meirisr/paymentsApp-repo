@@ -1,50 +1,56 @@
 {
-  "pages":{
-    "intro":{
-      "header":"Welcome",
-      "title":"",
-      "registration":"One-time registration",
-      "scan":"Scan",
-      "travel":"And travel",
-      "nextBtn":"Confirmation",
-      "creditCard":"Private payment"
+  "pages": {
+    "intro": {
+      "header": "Welcome",
+      "title": "",
+      "registration": "One-time registration",
+      "scan": "Scan",
+      "travel": "And travel",
+      "nextBtn": "Confirmation",
+      "creditCard": "Private payment"
     },
-    "login":{
-"phoneInputText":"Enter Phone Number",
-"nextBtn":"Next",
-"backBtn":"Back",
-"resendSms":"Resend code"
+    "login": {
+      "phoneInputText": "Enter Phone Number",
+      "nextBtn": "Next",
+      "backBtn": "Back",
+      "resendSms": "Resend code"
     },
-    "menu":{
-      "settings":"Settings",
-      "userDetails":"User Details",
-      "creditCardDetails":"Credit Card Details",
-      "scan":"Scan",
-      "map":"Map", 
-      "history":"Travel History", 
-      "logOut":"Logout"
-
+    "menu": {
+      "settings": "Settings",
+      "userDetails": "User Details",
+      "creditCardDetails": "Credit Card Details",
+      "scan": "Scan",
+      "map": "Map",
+      "history": "Travel History",
+      "logOut": "Logout"
     },
-    "main":{
-      "start-trip":"Start Trip" 
-   },
-    "userDetais":{
-      "updated":"save Changes"
+    "main": {
+      "start-trip": "Start Trip"
     },
-    "payment":{
-
+    "userDetais": {
+      "updated": "save Changes"
     },
-    "scan":{
-      "scan":"Scan QR"
+    "payment": {},
+    "scan": {
+      "scan": "Scan QR"
+    },
+    "settings": {
+      "lng": "Language"
+    },
+    "user-profile": {
+      "details": "Details",
+      "edit": "edit",
+      "firstName:": "First Name",
+      "lastName": "Last Name",
+      "ccDetails": "Credit Card Details",
+      "email": "Email"
     }
-    
   },
-  "dir":"ltr",
-  "side":"start",
-  "search-icon-side":"icon-right",
-  "menu-btn-side":"menu-btn-left",
-  "nextBtn":"Next",
-  "backBtn":"Back",
-  "map":"en"
-  
+  "dir": "ltr",
+  "side": "start",
+  "search-icon-side": "icon-right",
+  "menu-btn-side": "menu-btn-left",
+  "nextBtn": "Next",
+  "backBtn": "Back",
+  "map": "en"
 }

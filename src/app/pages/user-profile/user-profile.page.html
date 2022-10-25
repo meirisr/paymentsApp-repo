@@ -8,36 +8,36 @@
 <ion-content dir="{{'dir'|translate}}">
   <ion-list>
     <ion-list-header>
-      <ion-label><h2>פרטים</h2></ion-label>
+      <ion-label><h2>{{'pages.user-profile.details'|translate}}</h2></ion-label>
       <ion-button fill="outline" size="small" (click)="goToUserDetails()"
-        >ערוך</ion-button
+        >{{'pages.user-profile.edit'|translate}}</ion-button
       ></ion-list-header
     >
     <div>
       <ion-item lines="none">
         <ion-label>
-          <h3>שם פרטי</h3>
+          <h3>{{'pages.user-profile.firstName'|translate}}</h3>
           <p>{{firstName}}</p>
         </ion-label>
       </ion-item>
 
       <ion-item lines="none">
         <ion-label>
-          <h3>שם משפחה</h3>
+          <h3>{{'pages.user-profile.lastName'|translate}}</h3>
           <p>{{lastName}}</p>
         </ion-label>
       </ion-item>
       <ion-item lines="none">
         <ion-label>
-          <h3>מייל</h3>
+          <h3>{{'pages.user-profile.email'|translate}}</h3>
           <p>{{email}}</p>
         </ion-label>
       </ion-item>
     </div>
     <ion-list-header>
-      <ion-label>פרטי אשראי</ion-label>
+      <ion-label>{{'pages.user-profile.ccDetails'|translate}}</ion-label>
       <ion-button fill="outline" size="small" (click)="cardDetails()"
-        >ערוך</ion-button
+        >{{'pages.user-profile.edit'|translate}}</ion-button
       ></ion-list-header
     >
     <ion-item lines="none">

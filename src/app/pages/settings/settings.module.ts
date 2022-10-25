@@ -8,6 +8,7 @@ import { SettingsPageRoutingModule } from './settings-routing.module';
 
 import { SettingsPage } from './settings.page';
 import { GlobalModule } from 'src/app/share/share.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { GlobalModule } from 'src/app/share/share.module';
     FormsModule,
     IonicModule,
     SettingsPageRoutingModule,
+    TranslateModule,
     GlobalModule
   ],
   declarations: [SettingsPage]

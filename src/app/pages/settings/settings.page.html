@@ -2,18 +2,19 @@
   <ion-toolbar>
     <app-header-wave></app-header-wave>
     <app-back-btn (click)="goToMenu()"></app-back-btn>
+ 
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid>
+  <ion-grid dir="rtl">
     <ion-list>
       <ion-radio-group
         [value]="defaultLang"
         (ionChange)="radioGroupChange($event)"
       >
         <ion-list-header>
-          <ion-label>Languages</ion-label>
+          <ion-label> {{'pages.settings.lng'|translate}}</ion-label>
         </ion-list-header>
         <ion-item>
           <ion-label>English</ion-label>
@@ -21,7 +22,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>Hebrew</ion-label>
+          <ion-label>עברית</ion-label>
           <ion-radio slot="start" color="medium" value="he"></ion-radio>
         </ion-item>
       </ion-radio-group>

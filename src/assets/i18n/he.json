@@ -1,46 +1,55 @@
 {
-  "pages":{
-    "intro":{
-      "header":"ברוכים הבאים",
-      "title":"כאן אפשר לשלם בכל אמצעי התחבורה",
-      "registration":"הרשמה חד פעמי",
-      "scan":"סורקים קוד",
-      "travel":"מתחילים נסיעה",
-      "nextBtn":"אישור",
-      "creditCard":"הרשמה עצמאית - תשלום פרטי"
-      },
-      "login":{
-        "phoneInputText":"התחברות",
-        "nextBtn":"המשך",
-        "backBtn":"חזור",
-        "resendSms":"שלח קוד שוב"
-            },
-      "menu":{
-        "settings":"הגדרות",
-        "userDetails":"פרטי משתמש ",
-        "creditCardDetails":"פרטי כרטיס אשראי",
-        "scan":"סריקה",
-        "map":"מפה" ,
-        "history":"היסטורית נסיעות", 
-        "logOut":"יציאה"
-      },
-      "main":{
-         "start-trip":"התחל נסיעה"
-      },
-      "userDetais":{
-        "updated":"שמור שינויים"
-      },
-      "scan":{
-        "scan":"QR סרוק/י קוד"
-      }
+  "pages": {
+    "intro": {
+      "header": "ברוכים הבאים",
+      "title": "כאן אפשר לשלם בכל אמצעי התחבורה",
+      "registration": "הרשמה חד פעמי",
+      "scan": "סורקים קוד",
+      "travel": "מתחילים נסיעה",
+      "nextBtn": "אישור",
+      "creditCard": "הרשמה עצמאית - תשלום פרטי"
     },
-    "dir":"rtl",
-    "search-icon-side":"icon-left",
-    "menu-btn-side":"menu-btn-right",
-    "side":"end",
-    "nextBtn":"המשך",
-    "backBtn":"חזור",
-    "map":"wi"
-
-  }
-  
+    "login": {
+      "phoneInputText": "התחברות",
+      "nextBtn": "המשך",
+      "backBtn": "חזור",
+      "resendSms": "שלח קוד שוב"
+    },
+    "menu": {
+      "settings": "הגדרות",
+      "userDetails": "פרטי משתמש ",
+      "creditCardDetails": "פרטי כרטיס אשראי",
+      "scan": "סריקה",
+      "map": "מפה",
+      "history": "היסטורית נסיעות",
+      "logOut": "יציאה"
+    },
+    "main": {
+      "start-trip": "התחל נסיעה"
+    },
+    "userDetais": {
+      "updated": "שמור שינויים"
+    },
+    "scan": {
+      "scan": "QR סרוק/י קוד"
+    },
+    "settings": {
+      "lng": "בחר שפה"
+    },
+    "user-profile": {
+      "details": "פרטים",
+      "edit": "ערוך",
+      "firstName:": "שם פרטי",
+      "lastName": "שם משפחה",
+      "ccDetails": "פרטי אשראי",
+      "email": "מייל"
+    }
+  },
+  "dir": "rtl",
+  "search-icon-side": "icon-left",
+  "menu-btn-side": "menu-btn-right",
+  "side": "end",
+  "nextBtn": "המשך",
+  "backBtn": "חזור",
+  "map": "wi"
+}

@@ -133,13 +133,13 @@ export class UserInfoService {
       .post(
         `${environment.serverUrl}/credit-card-payment/card-transportation`,
         {
-          driveId: +tripInfo?.id,
+          driveId: tripInfo?.id,
           creditCardNumber: credentials?.cardNum,
           verificationNumber: credentials?.csvNum,
           holderId: credentials?.userId,
-          validUntilMonth: credentials?.date.split('/')[0],
-          validUntilYear: credentials?.date.split('/')[1],
-          paymentAmount: tripInfo?.paymentAmount,
+          validUntilMonth:Number(credentials?.date.split('/')[0]),
+          validUntilYear:Number(credentials?.date.split('/')[1]),
+          paymentAmount: Number(tripInfo?.paymentAmount),
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),

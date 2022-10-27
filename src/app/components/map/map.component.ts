@@ -230,6 +230,5 @@ export class MapComponent implements AfterViewInit {
       });
     this.mapOptions.zoom = 16;
     this.mapOptions.center = latLng.toJSON();
-    console.log(coordinates);
   }
 }

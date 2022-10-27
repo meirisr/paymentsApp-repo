@@ -14,9 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { TravelProcessService } from '../travel-process.service';
 import { StorageService } from '../storage.service';
 import { App } from '@capacitor/app';
-const COLOR_THEME = 'color-theme';
 const USER_LANGUAGE = 'user-language';
-const ROUTE_DETAILS = 'route-details';
 
 @Injectable({
   providedIn: 'root',
@@ -110,10 +108,10 @@ export class UtilsService {
   async showalert(e?: any, header?: string): Promise<void> {
     const userLang = await Storage.get({ key: USER_LANGUAGE });
     let language = userLang.value == 'en' ? 'en-us' : 'he-il';
-
+    console.log(e);
     const alert = await this.alertController.create({
       header: 'Error',
-      message:e?.error?.error?.errorMessage
+      message: e?.error?.error?.errorMessage
         ? e?.error?.error?.errorMessage[language]
         : e?.error?.errorMessage
         ? e?.error?.errorMessage[language]
@@ -162,9 +160,6 @@ export class UtilsService {
 
   async presentLoader() {
     const loading = await this.loadingController.create({
-      // spinner: null,
-      // duration: 5000,
-      // message: 'Please wait...',
       translucent: true,
       cssClass: 'custom-class custom-loading',
     });

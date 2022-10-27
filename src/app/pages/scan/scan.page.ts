@@ -103,7 +103,7 @@ export class ScanPage implements OnInit {
     await this.utils.presentModal('מחפש מסלול', '', 'loader');
     let hotelId = await this.storageService.getHotelId();
     const TravelDetails$ = this.travelProcessService
-      .getTravelDetails(this.userLocation, 7702369)
+      .getTravelDetails(this.userLocation, 7793469)
       .subscribe(
         async(data) => {
           console.log(data)

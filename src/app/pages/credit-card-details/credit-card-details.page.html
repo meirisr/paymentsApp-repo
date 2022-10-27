@@ -15,18 +15,18 @@
     [cvsNum]="cvsNum"
     [flipClass]="flipClass"
   ></app-credit-card> -->
-
+  
   <form
     dir="{{'dir'|translate}}"
     class="card-details-Form"
     [formGroup]="cardDetails"
     (ngSubmit)="updateCreditCard()"
   >
-    <h1>פרטי אשראי</h1>
+    <h1>{{'pages.credit-card-details.ccDetails'|translate}}</h1>
     <div class="input-group">
       <ion-input
         (keyup)="cardNumKeyUp($event)"
-        placeholder="מספר אשראי"
+        placeholder="{{'pages.credit-card-details.ccNumber'|translate}}"
         type="tel"
         inputmode="numeric"
         oninput="this.value=this.value.replace(/[^0-9]/g,'');"
@@ -38,7 +38,7 @@
 
     <div class="input-group">
       <ion-input
-        placeholder="תוקף"
+        placeholder="{{'pages.credit-card-details.validity'|translate}}"
         type="text"
         [value]="date"
         id="open-date-modal"
@@ -51,7 +51,7 @@
         (ionFocus)="cvSInputFocus()"
         (ionBlur)="cvSInputUnFocus()"
         (keyup)="cardCvsKeyUp($event)"
-        placeholder="CVS"
+        placeholder="{{'pages.credit-card-details.cvs'|translate}}"
         type="tel"
         inputmode="numeric"
         oninput="this.value=this.value.replace(/[^0-9]/g,'');"
@@ -64,7 +64,7 @@
     </div>
     <div class="input-group">
       <ion-input
-        placeholder="ת.ז של בעל הכרטיס"
+        placeholder="{{'pages.credit-card-details.userId'|translate}}"
         type="tel"
         id="userId"
         formControlName="userId"
@@ -74,7 +74,7 @@
       ></ion-input>
     </div>
 
-    <div class="input-group">
+    <!-- <div class="input-group">
       <ion-input
         (keyup)="userNameKeyUp($event)"
         placeholder="שם בעל הכרטיס"
@@ -83,7 +83,7 @@
         formControlName="userName"
         required
       ></ion-input>
-    </div>
+    </div> -->
 
     <ion-modal
       trigger="open-date-modal"
@@ -110,7 +110,7 @@
         style="margin-bottom: 5vh; width: 100vw"
         type="submit"
         [disabled]="cardDetails.invalid"
-        text="{{'pages.userDetais.updated'|translate}}"
+        text="{{'pages.credit-card-details.updated'|translate}}"
       ></app-main-btn>
     </div>
   </form>

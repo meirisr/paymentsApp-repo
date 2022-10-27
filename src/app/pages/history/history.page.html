@@ -5,30 +5,54 @@
 </ion-header>
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let trip of historyCards" lines="none">
-      <ion-card
-        class="histoy-card"
-        dir="{{'dir'|translate}}"
-        [class.redCard]="!trip.paymentCompleted"
-      >
-        <ion-card-header>
-          <ion-title class="card-title">לא שולם</ion-title>
-          <ion-card-subtitle
-            >תאריך:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
-          >
-          <ion-card-subtitle>
-            תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount }}</ion-card-subtitle
-          >
-        </ion-card-header>
-
-        <ion-button
-          *ngIf="!trip.paymentCompleted"
-          ion-button
-          fill="clear"
-          (click)="tripPay(trip)"
-          >לתשלום</ion-button
+    <ng-container *ngFor="let trip of historyCards" >
+      <ion-item *ngIf="!trip.paymentCompleted" lines="none">
+        <ion-card 
+          class="histoy-card"
+          dir="{{'dir'|translate}}"
+          [class.redCard]="!trip.paymentCompleted"
         >
-      </ion-card>
-    </ion-item>
+          <ion-card-header>
+            <ion-title  class="card-title">לא שולם</ion-title>
+            <ion-card-subtitle
+              >תאריך:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
+            >
+            <ion-card-subtitle>
+              תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount }}</ion-card-subtitle
+            >
+          </ion-card-header>
+  
+          <ion-button
+            ion-button
+            fill="clear"
+            (click)="tripPay(trip)"
+            >לתשלום</ion-button
+          >
+        </ion-card>
+      </ion-item>
+    </ng-container > 
+    
+  </ion-list>
+  <ion-list>
+    <ng-container *ngFor="let trip of historyCards">
+      <ion-item  *ngIf="trip.paymentCompleted"  lines="none" >
+        <ion-card
+          class="histoy-card"
+          dir="{{'dir'|translate}}"
+          [class.redCard]="!trip.paymentCompleted"
+        >
+          <ion-card-header>
+            <ion-title  class="card-title">שולם</ion-title>
+            <ion-card-subtitle
+              >תאריך:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
+            >
+            <ion-card-subtitle>
+              תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount }}</ion-card-subtitle
+            >
+          </ion-card-header>
+        </ion-card>
+      </ion-item>
+    </ng-container>
+    
   </ion-list>
 </ion-content>

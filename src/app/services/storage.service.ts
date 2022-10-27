@@ -73,7 +73,6 @@ export class StorageService {
     this.getStorege(userStoregeObj.HOTEL_ID);
   public getHotelName = (): Promise<GetResult> =>
     this.getStorege(userStoregeObj.HOTEL_NAME);
-
   public deleteToken = (): void => this.deleteAllStorege();
   public deleteRouteDetails = (): void => {
     Storage.remove({ key: userStoregeObj.ROUTE_DETAILS });

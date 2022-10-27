@@ -5,7 +5,7 @@
 
 ion-modal {
   --width: 290px;
-  --height: 40vh;
+  --height:240px;
   --border-radius: 8px;
   --background:rgda(44, 39, 45, 0.2) &::part(cotent) {
     backgruond-filter: blur(6px);

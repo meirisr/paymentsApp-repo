@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { StorageService, userStoregeObj } from './storage.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,36 +16,37 @@ export class TravelProcessService {
   firstStation: any;
   lastStation: any;
   nearestStation: any;
-  routeData :any=null;
+  routeData: any = null;
 
   constructor(
     private http: HttpClient,
     private storageService: StorageService
   ) {}
-  public isRouteValidToOrg(data,hotelId){
-    console.log("isRouteValidToOrg")
+  public isRouteValidToOrg(data, hotelId) {
+    console.log('isRouteValidToOrg');
     return this.http
       .get(
         `${environment.serverUrl}/transportation/is-route-valid-to-organization`,
         {
-          headers: new HttpHeaders({ station: data.stationId ,organizationId:hotelId}),
+          headers: new HttpHeaders({
+            station: data.stationId,
+            organizationId: hotelId,
+          }),
           params: new HttpParams().set('routeName', data.rte),
         }
       )
       .pipe(
         map((data: any) => {
-        
           return data.body;
         })
-      ) 
+      )
       .subscribe(
         (data) => console.log(data),
         (err) => console.log(err)
       );
-  
-}
-  public paymentTranportation(trip:any, hotelId: string) {
-    console.log(trip)
+  }
+  public paymentTranportation(trip: any, hotelId: string) {
+    console.log(trip);
 
     return this.http
       .post(
@@ -61,7 +62,6 @@ export class TravelProcessService {
         {
           headers: new HttpHeaders({ station: 'hotels' }),
         }
-      
       )
       .pipe(
         map((data: any) => {
@@ -69,16 +69,15 @@ export class TravelProcessService {
         })
       )
       .subscribe(
-        (data) =>{
-          this.paymentTrip.next(this.routeData);//true
-          this.storageService.setRouteDetails( this.routeData);
-          console.log(data)
-
-        } ,
-        (err) =>{               
-          this.paymentTrip.next(this.routeData);//none
-          console.log(err)
-        } 
+        (data) => {
+          this.paymentTrip.next(this.routeData); //true
+          this.storageService.setRouteDetails(this.routeData);
+          console.log(data);
+        },
+        (err) => {
+          this.paymentTrip.next(this.routeData); //none
+          console.log(err);
+        }
       );
   }
 
@@ -114,10 +113,9 @@ export class TravelProcessService {
               return false;
             }
             this.routeData = this.creatRouteData(data);
-            this.routeInfo.next( this.routeData);
-           
+            this.routeInfo.next(this.routeData);
 
-            return  this.routeData;
+            return this.routeData;
           })
         );
     } catch (error) {
@@ -141,7 +139,7 @@ export class TravelProcessService {
           ? obj.data.drive.lastStation
           : null,
       nearestStation: obj.data.nearestStationOnRoute,
-      rte:obj.data.drive.RTE,
+      rte: obj.data.drive.RTE,
     };
   }
   creatPathArray(obj) {

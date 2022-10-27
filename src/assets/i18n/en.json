@@ -3,6 +3,7 @@
     "intro": {
       "header": "Welcome",
       "title": "",
+      "search":"Search",
       "registration": "One-time registration",
       "scan": "Scan",
       "travel": "And travel",
@@ -27,8 +28,20 @@
     "main": {
       "start-trip": "Start Trip"
     },
-    "userDetais": {
-      "updated": "save Changes"
+    "user-details": {
+      "updated": "save Changes",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Contact email",
+      "personalInformation":"Personal Information"
+    },
+    "credit-card-details": {
+      "ccDetails":"Credit Card Details",
+      "updated": "save Changes",
+      "ccNumber": "Credit Card Number",
+      "validity": "Card validity",
+      "cvs": "cvs",
+      "userId":"Card Holder Id"
     },
     "payment": {},
     "scan": {
@@ -39,8 +52,8 @@
     },
     "user-profile": {
       "details": "Details",
-      "edit": "edit",
-      "firstName:": "First Name",
+      "edit":"edit",
+      "firstName": "First Name",
       "lastName": "Last Name",
       "ccDetails": "Credit Card Details",
       "email": "Email"

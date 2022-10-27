@@ -40,10 +40,13 @@ export class LoginService {
       }
     );
   }
-  public isUserPermitToOrganization(orgId: string,orgName:string): Observable<any> {
+  public isUserPermitToOrganization(
+    orgId: string,
+    orgName: string
+  ): Observable<any> {
     return this.http
       .get(`${environment.serverUrl}/user/is-permit-to-organization`, {
-        headers: new HttpHeaders({ organizationId:orgId.toString()}),
+        headers: new HttpHeaders({ organizationId: orgId.toString() }),
       })
       .pipe(
         map((data: any) => {

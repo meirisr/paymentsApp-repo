@@ -12,7 +12,9 @@
     [formGroup]="userDetails"
     (ngSubmit)="updateUserInfo()"
   >
-    <h1>פרטים אישיים</h1>
+
+  
+    <h1>{{'pages.user-details.personalInformation'|translate}}</h1>
     <div class="input-group">
       
       <label class="fluatingLabel">
@@ -23,7 +25,7 @@
           formControlName="firstName"
           required
         ></ion-input>
-        <span class="labelSpan">שם פרטי</span>
+        <span class="labelSpan">{{'pages.user-details.firstName'|translate}} </span>
       </label>
     </div>
 
@@ -36,10 +38,10 @@
           formControlName="lastName"
           required
         ></ion-input>
-        <span class="labelSpan">משפחה</span>
+        <span class="labelSpan">{{'pages.user-details.lastName'|translate}}</span>
       </label>
     </div>
-    <div class="input-group">
+    <!-- <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
           class="input"
@@ -51,8 +53,8 @@
         ></ion-input>
         <span class="labelSpan">תעודת זהות</span>
       </label>
-    </div>
-    <div class="input-group">
+    </div> -->
+    <!-- <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
           class="input"
@@ -65,7 +67,7 @@
         ></ion-input>
         <span class="labelSpan">תאריך לידה</span>
       </label>
-    </div>
+    </div> -->
     <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
@@ -76,7 +78,7 @@
           required
           email
         ></ion-input>
-        <span class="labelSpan">מייל ליצירת קשר</span>
+        <span class="labelSpan">{{'pages.user-details.email'|translate}}</span>
       </label>
       <div
         class="help-block"
@@ -96,7 +98,7 @@
         style="margin-bottom: 5vh; width: 100vw"
         type="submit"
         [disabled]="userDetails.invalid"
-        text="{{'pages.userDetais.updated'|translate}}"
+        text="{{'pages.user-details.updated'|translate}}"
       ></app-main-btn>
     </div>
   </form>

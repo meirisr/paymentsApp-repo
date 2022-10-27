@@ -5,8 +5,6 @@ import { Subscription } from 'rxjs';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
-
-
 @Component({
   selector: 'app-history-pay',
   templateUrl: './history-pay.page.html',
@@ -15,7 +13,7 @@ import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.serv
 export class HistoryPayPage implements OnInit {
   private subscriptions: Subscription[] = [];
   @ViewChild(IonDatetime) dateTime: IonDatetime;
-  tripInfo=null;
+  tripInfo = null;
   showPicker: boolean = false;
   date: string = '';
   cardNum: string = '';
@@ -48,14 +46,15 @@ export class HistoryPayPage implements OnInit {
   }
 
   ngOnInit() {
-
-    let tripInfo$=this.userInfoServer.historyTripPay$.subscribe((data)=>{
-      this.tripInfo=data
-    },
-    err=>{
-      console.log(err);
-    })
-    this.subscriptions.push(tripInfo$)
+    let tripInfo$ = this.userInfoServer.historyTripPay$.subscribe(
+      (data) => {
+        this.tripInfo = data;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    this.subscriptions.push(tripInfo$);
     this.cardDetails = new FormGroup({
       cardNum: new FormControl(null, [Validators.required]),
       csvNum: new FormControl(null, [
@@ -85,17 +84,18 @@ export class HistoryPayPage implements OnInit {
   }
   async updateCreditCard(): Promise<void> {
     this.userInfoServer
-      .tripPayment(this.tripInfo,this.cardDetails.value).subscribe((data)=>{
-        // console.log(data)
-        // if(data.responseCode=="123"){
-          console.log(data.responseMessage)
-        // }
-        this.showalert(data.responseMessage);
-        this.goToHistory();
-      },err=>console.log(err))
-     
-    
-    
+      .tripPayment(this.tripInfo, this.cardDetails.value)
+      .subscribe(
+        (data) => {
+          // console.log(data)
+          // if(data.responseCode=="123"){
+          console.log(data.responseMessage);
+          // }
+          this.showalert(data.responseMessage);
+          this.goToHistory();
+        },
+        (err) => console.log(err)
+      );
   }
 
   cardNumKeyUp(e: Event) {
@@ -116,25 +116,22 @@ export class HistoryPayPage implements OnInit {
   goToHistory(): void {
     this.navigateService.goToHistory();
   }
-  formatDate(item){
-    if(!item)return;
-    let date=new Date(item.created)
-    const year=date.getFullYear()
-    const month=date.getMonth()+1
-    const day=date.getDate()
-    return day+'.'+month+'.'+year;
+  formatDate(item) {
+    if (!item) return;
+    let date = new Date(item.created);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return day + '.' + month + '.' + year;
   }
-  async showalert(e){
-    
+  async showalert(e) {
     const alert = await this.alertController.create({
       header: '',
-      message:e,
-     
+      message: e,
     });
     await alert.present();
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
-
 }

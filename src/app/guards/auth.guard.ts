@@ -1,6 +1,5 @@
-import { LoginService } from '../services/login.service';
 import { Injectable } from '@angular/core';
-import { CanLoad, Router } from '@angular/router';
+import { CanLoad } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
@@ -23,7 +22,6 @@ export class AuthGuard implements CanLoad {
           return true;
         } else {
           this.navigateService.goToLogin();
-
           return false;
         }
       })

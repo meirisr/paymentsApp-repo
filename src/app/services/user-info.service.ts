@@ -123,22 +123,25 @@ export class UserInfoService {
         }
       );
   }
-  public tripPayment(tripInfo,credentials: {
-    cardNum: string;
-    csvNum: string;
-    date: string;
-    userId: string;
-  }): Observable<any> {
+  public tripPayment(
+    tripInfo,
+    credentials: {
+      cardNum: string;
+      csvNum: string;
+      date: string;
+      userId: string;
+    }
+  ): Observable<any> {
     return this.http
       .post(
         `${environment.serverUrl}/credit-card-payment/card-transportation`,
         {
-          driveId: tripInfo?.id,
+          driveId: tripInfo?.id.toString(),
           creditCardNumber: credentials?.cardNum,
           verificationNumber: credentials?.csvNum,
           holderId: credentials?.userId,
-          validUntilMonth:Number(credentials?.date.split('/')[0]),
-          validUntilYear:Number(credentials?.date.split('/')[1]),
+          validUntilMonth: Number(credentials?.date.split('/')[0]),
+          validUntilYear: Number(credentials?.date.split('/')[1]),
           paymentAmount: Number(tripInfo?.paymentAmount),
         },
         {
@@ -149,7 +152,7 @@ export class UserInfoService {
         map((data: any) => {
           return data.body;
         })
-      )
+      );
   }
 
   public async updateUserInfo(credentials: UserDetails): Promise<void> {

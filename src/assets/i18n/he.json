@@ -3,6 +3,7 @@
     "intro": {
       "header": "ברוכים הבאים",
       "title": "כאן אפשר לשלם בכל אמצעי התחבורה",
+      "search":"חיפוש",
       "registration": "הרשמה חד פעמי",
       "scan": "סורקים קוד",
       "travel": "מתחילים נסיעה",
@@ -27,8 +28,20 @@
     "main": {
       "start-trip": "התחל נסיעה"
     },
-    "userDetais": {
-      "updated": "שמור שינויים"
+    "user-details": {
+      "updated": " שמירת שינויים",
+      "firstName": "שם פרטי",
+      "lastName": "שם משפחה",
+      "email": "מייל ליצירת קשר",
+      "personalInformation":"פרטים אישיים"
+    },
+    "credit-card-details": {
+      "ccDetails":"פרטי אשראי",
+      "updated": " שמירת שינויים",
+      "ccNumber": "מספר אשראי",
+      "validity": "תוקף",
+      "cvs": "3 ספרות בגב הכרטיס",
+      "userId":"ת.ז של בעל הכרטיס"
     },
     "scan": {
       "scan": "QR סרוק/י קוד"
@@ -39,7 +52,7 @@
     "user-profile": {
       "details": "פרטים",
       "edit": "ערוך",
-      "firstName:": "שם פרטי",
+      "firstName": "שם פרטי",
       "lastName": "שם משפחה",
       "ccDetails": "פרטי אשראי",
       "email": "מייל"

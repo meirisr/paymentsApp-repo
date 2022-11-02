@@ -29,10 +29,10 @@ export class TravelProcessService {
         `${environment.serverUrl}/transportation/is-route-valid-to-organization`,
         {
           headers: new HttpHeaders({
-            station: data.stationId,
+            station: data?.stationId,
             organizationId: hotelId,
           }),
-          params: new HttpParams().set('routeName', data.rte),
+          params: new HttpParams().set('routeName', data?.rte),
         }
       )
       .pipe(
@@ -52,9 +52,12 @@ export class TravelProcessService {
       .post(
         `${environment.serverUrl}/transportation/insert-new-transportation-drive`,
         {
-          routeName: trip.rte,
-          fromStop: +trip.nearestStation.stationID,
-          toStop: +trip.lastStation.stationID,
+          routeName: "49006300",
+          // trip.rte,
+          fromStop:3093 ,
+          // +trip.nearestStation.stationID,
+          toStop: 4216,
+          // +trip.lastStation.stationID,
           organizationId: +hotelId,
           stationId: 36,
           // +trip.stationId

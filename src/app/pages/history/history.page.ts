@@ -14,6 +14,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 export class HistoryPage implements OnInit {
   private subscriptions: Subscription[] = [];
   historyCards: any[]=[];
+  historyCardsIds: any[]=[];
 
   constructor(
     private plt: Platform,
@@ -32,6 +33,8 @@ export class HistoryPage implements OnInit {
       //   this.historyCards.push( this.creatHistoryCard(item))
       // })
       this.historyCards=data;
+      data.forEach(trip=>{!trip.paymentCompleted ? this.historyCardsIds.push(trip.id.toString()):null})
+      console.log(this.historyCardsIds)
       console.log(data)
     },
     (err)=>{

@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 
 import { StorageService } from '../storage.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class HeaderInterceptor implements HttpInterceptor {

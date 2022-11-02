@@ -103,12 +103,13 @@ export class ScanPage implements OnInit {
     await this.utils.presentModal('מחפש מסלול', '', 'loader');
     let hotelId = await this.storageService.getHotelId();
     const TravelDetails$ = this.travelProcessService
-      .getTravelDetails(this.userLocation, 7793469)
+      .getTravelDetails(this.userLocation, 7549169)
       .subscribe(
         async(data) => {
           console.log(data)
           if (!data) {
             this.utils.dismissModal();
+          
             await this.utils.presentModal('קוד אינו תקין', 'יש לסרוק קוד אחר', '',true);
             setTimeout(() => {
               this.utils.dismissModal();

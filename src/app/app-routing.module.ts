@@ -58,6 +58,7 @@ const routes: Routes = [
       import('./pages/credit-card-details/credit-card-details.module').then(
         (m) => m.CreditCardDetailsPageModule
       ),
+      canLoad: [AuthGuard],
   },
   {
     path: 'scan',
@@ -92,6 +93,7 @@ const routes: Routes = [
       import('./pages/history-pay/history-pay.module').then(
         (m) => m.HistoryPayPageModule
       ),
+      canLoad: [AuthGuard],
   },
 
   {

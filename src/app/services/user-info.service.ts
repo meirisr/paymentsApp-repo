@@ -83,7 +83,8 @@ export class UserInfoService {
         `${environment.serverUrl}/transportation/get-history-drives-per-user`,
         {
           before: Date.now(),
-          after: Date.UTC(date.getFullYear(), date.getMonth()),
+          after:0,
+          //  Date.UTC(date.getFullYear(), date.getMonth())
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
@@ -110,6 +111,7 @@ export class UserInfoService {
       )
       .subscribe(
         (data) => {
+          console.log(data)
           if (data.length > 0) {
             this.debtCheck$.next(true);
           } else {

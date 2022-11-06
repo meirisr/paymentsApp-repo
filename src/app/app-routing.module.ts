@@ -95,6 +95,14 @@ const routes: Routes = [
       ),
       canLoad: [AuthGuard],
   },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./pages/settings/settings.module').then(
+        (m) => m.SettingsPageModule
+      ),
+    canLoad: [AuthGuard],
+  },
 
   {
     path: '**',

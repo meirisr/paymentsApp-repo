@@ -42,7 +42,6 @@ export class UtilsService {
         this.translate.use('en');
         Storage.set({ key: USER_LANGUAGE, value: 'en' });
         this.userLang.value = 'en';
-
         this.defaultLang = 'en';
         break;
       case 'he':

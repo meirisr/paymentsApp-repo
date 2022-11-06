@@ -22,7 +22,7 @@ export class SettingsPage implements OnInit {
   }
   radioGroupChange(event: Event) {
     this.utils.onToggleLanguages(event);
-    window.location.reload();
+    // window.location.reload();
   }
   goToMenu() {
     this.navigateService.goToMenu()

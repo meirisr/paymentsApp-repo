@@ -15,15 +15,6 @@ const routes: Routes = [
           import('../main/main.module').then((m) => m.MainPageModule),
         canLoad: [AuthGuard],
       },
-      {
-        path: 'settings',
-        loadChildren: () =>
-          import('../settings/settings.module').then(
-            (m) => m.SettingsPageModule
-          ),
-        canLoad: [AuthGuard],
-      },
-
     ],
   },
 ];

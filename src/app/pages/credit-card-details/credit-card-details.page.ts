@@ -27,18 +27,7 @@ export class CreditCardDetailsPage implements OnInit {
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navigateService.goToIntro();
-
-      // this.router.navigate(['/intro']);
     });
-  }
-  get firstName() {
-    return this.cardDetails.get('firstName');
-  }
-  get lastName() {
-    return this.cardDetails.get('lastName');
-  }
-  get email() {
-    return this.cardDetails.get('email');
   }
 
   ngOnInit() {
@@ -51,7 +40,6 @@ export class CreditCardDetailsPage implements OnInit {
       ]),
       date: new FormControl(null, [Validators.required]),
       userId: new FormControl(null, [Validators.required]),
-      // userName: new FormControl(null, [Validators.required]),
     });
   }
   onWillDismiss() {

@@ -17,12 +17,12 @@
   ></app-credit-card> -->
   <ion-card dir="{{'dir'|translate}}">
     <ion-card-header>
-      <ion-title class="card-title">פרטי נסיעה</ion-title>
+      <ion-title class="card-title">{{'pages.history-pay.travelDetails'|translate}}</ion-title>
       <ion-card-subtitle
-        >תאריך:&nbsp;&nbsp;{{formatDate(tripInfo)}}</ion-card-subtitle
+        >{{'pages.history.date'|translate}}:&nbsp;&nbsp;{{formatDate(tripInfo)}}</ion-card-subtitle
       >
       <ion-card-subtitle>
-        לתשלום:&nbsp;&nbsp;&#8362;{{tripInfo?.paymentAmount||""
+        {{'pages.history.payment'|translate}}:&nbsp;&nbsp;&#8362;{{tripInfo?.paymentAmount||""
         }}</ion-card-subtitle
       >
     </ion-card-header>
@@ -42,11 +42,11 @@
     [formGroup]="cardDetails"
     (ngSubmit)="updateCreditCard()"
   >
-    <h1>פרטי אשראי</h1>
+    <h1>{{'pages.credit-card-details.ccDetails'|translate}}</h1>
     <div class="input-group">
       <ion-input
         (keyup)="cardNumKeyUp($event)"
-        placeholder="מספר אשראי"
+        placeholder="{{'pages.credit-card-details.ccNumber'|translate}}"
         type="tel"
         inputmode="numeric"
         oninput="this.value=this.value.replace(/[^0-9]/g,'');"
@@ -58,7 +58,7 @@
 
     <div class="input-group">
       <ion-input
-        placeholder="תוקף"
+        placeholder="{{'pages.credit-card-details.validity'|translate}}"
         type="text"
         [value]="date"
         id="open-date-modal"
@@ -71,7 +71,7 @@
         (ionFocus)="cvSInputFocus()"
         (ionBlur)="cvSInputUnFocus()"
         (keyup)="cardCvsKeyUp($event)"
-        placeholder="CVS"
+        placeholder="{{'pages.credit-card-details.cvs'|translate}}"
         type="tel"
         inputmode="numeric"
         oninput="this.value=this.value.replace(/[^0-9]/g,'');"
@@ -84,7 +84,7 @@
     </div>
     <div class="input-group">
       <ion-input
-        placeholder="ת.ז של בעל הכרטיס"
+        placeholder="{{'pages.credit-card-details.userId'|translate}}"
         type="tel"
         id="userId"
         formControlName="userId"
@@ -94,7 +94,7 @@
       ></ion-input>
     </div>
 
-    <div class="input-group">
+    <!-- <div class="input-group">
       <ion-input
         (keyup)="userNameKeyUp($event)"
         placeholder="שם בעל הכרטיס"
@@ -103,7 +103,7 @@
         formControlName="userName"
         required
       ></ion-input>
-    </div>
+    </div> -->
 
     <ion-modal
       trigger="open-date-modal"
@@ -113,7 +113,7 @@
       <ng-template>
         <ion-content force-overscroll="false"
           ><ion-datetime
-            locale="he-IL"
+          locale="{{'pages.credit-card-details.locale'|translate}}"
             size="cover"
             #dateTime
             displayFormat="M/YYYY"
@@ -134,7 +134,7 @@
         style="margin-bottom: 5vh; width: 100vw"
         type="submit"
         [disabled]="cardDetails.invalid"
-        text="לתשלום"
+        text="{{'pages.history.payNow'|translate}}"
       ></app-main-btn>
     </div>
   </form>

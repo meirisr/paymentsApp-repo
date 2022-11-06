@@ -32,15 +32,15 @@ export class UserDetailsPage implements OnInit {
       this.navigateService.goToUserProfile();
     });
   }
-  get firstName() {
-    return this.userDetails.get('firstName');
-  }
-  get lastName() {
-    return this.userDetails.get('lastName');
-  }
-  get email() {
-    return this.userDetails.get('email');
-  }
+  // get firstName() {
+  //   return this.userDetails.get('firstName');
+  // }
+  // get lastName() {
+  //   return this.userDetails.get('lastName');
+  // }
+  // get email() {
+  //   return this.userDetails.get('email');
+  // }
   ngOnInit() {
     this.userDetails = new FormGroup({
       firstName: new FormControl(null, [Validators.required]),

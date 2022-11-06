@@ -49,7 +49,7 @@ export class TravelRouteTrackingPage implements OnInit {
     this.noData = false;
     let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
       async (data) => {
-        console.log(data);
+        // console.log(data);
         if (!data) {
           this.noData = true;
           return;

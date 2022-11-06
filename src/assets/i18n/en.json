@@ -41,7 +41,8 @@
       "ccNumber": "Credit Card Number",
       "validity": "Card validity",
       "cvs": "cvs",
-      "userId":"Card Holder Id"
+      "userId":"Card Holder Id",
+      "locale":"en-US"
     },
     "payment": {},
     "scan": {
@@ -57,6 +58,16 @@
       "lastName": "Last Name",
       "ccDetails": "Credit Card Details",
       "email": "Email"
+    },
+    "history":{
+      "paid":"Paid",
+      "notPaid":"Not Paid",
+      "date":"Date",
+      "payment":"Payment",
+      "payNow":"Pay now"
+    },
+    "history-pay":{
+      "travelDetails":"Travel details"
     }
   },
   "dir": "ltr",

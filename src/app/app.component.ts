@@ -3,11 +3,11 @@ import { Platform, IonRouterOutlet } from '@ionic/angular';
 import { UtilsService } from './services/utils/utils.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Network } from '@capacitor/network';
-import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 import { AuthenticationService } from './services/authentication.service';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { AlertService } from './services/utils/alert.service';
+
 
 @Component({
   selector: 'app-root',
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
 
     translate.setDefaultLang('en');
     translate.use('he');
-    App.getState().then((status) => console.log('status:', status));
+    // App.getState().then((status) => console.log('status:', status));
     this.hideSplashScreen();
     Network.addListener('networkStatusChange', (status) => {
       console.log('Network status changed', status);
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
   };
   logCurrentNetworkStatus = async () => {
     const status = await Network.getStatus();
-    console.log('Network status:', status);
+    // console.log('Network status:', status);
     if (!status.connected) {
       this.alertService.connectionAlert();
     }

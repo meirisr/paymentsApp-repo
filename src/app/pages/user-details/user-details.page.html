@@ -12,11 +12,8 @@
     [formGroup]="userDetails"
     (ngSubmit)="updateUserInfo()"
   >
-
-  
     <h1>{{'pages.user-details.personalInformation'|translate}}</h1>
     <div class="input-group">
-      
       <label class="fluatingLabel">
         <ion-input
           class="input"
@@ -25,7 +22,9 @@
           formControlName="firstName"
           required
         ></ion-input>
-        <span class="labelSpan">{{'pages.user-details.firstName'|translate}} </span>
+        <span class="labelSpan"
+          >{{'pages.user-details.firstName'|translate}}
+        </span>
       </label>
     </div>
 
@@ -38,36 +37,12 @@
           formControlName="lastName"
           required
         ></ion-input>
-        <span class="labelSpan">{{'pages.user-details.lastName'|translate}}</span>
+        <span class="labelSpan"
+          >{{'pages.user-details.lastName'|translate}}</span
+        >
       </label>
     </div>
-    <!-- <div class="input-group">
-      <label class="fluatingLabel">
-        <ion-input
-          class="input"
-          type="tel"
-          inputmode="numeric"
-          oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-          id="userId"
-          formControlName="userId"
-        ></ion-input>
-        <span class="labelSpan">תעודת זהות</span>
-      </label>
-    </div> -->
-    <!-- <div class="input-group">
-      <label class="fluatingLabel">
-        <ion-input
-          class="input"
-          id="userDate"
-          formControlName="userDate"
-          type="text"
-          [value]="date"
-          id="user-date-modal"
-          required
-        ></ion-input>
-        <span class="labelSpan">תאריך לידה</span>
-      </label>
-    </div> -->
+
     <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
@@ -80,7 +55,7 @@
         ></ion-input>
         <span class="labelSpan">{{'pages.user-details.email'|translate}}</span>
       </label>
-      <div
+      <!-- <div
         class="help-block"
         *ngIf="(userDetails.get('email').dirty || userDetails.get('email').touched) && userDetails.get('email').errors"
       >
@@ -91,7 +66,7 @@
         >
           please enter a valid email address
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="input-group" dir="ltr">
       <app-main-btn
@@ -102,22 +77,4 @@
       ></app-main-btn>
     </div>
   </form>
-
 </ion-content>
-
-<ion-modal trigger="user-date-modal" mode="md" (willDismiss)="onWillDismiss()">
-  <ng-template>
-    <ion-content force-overscroll="false"
-      ><ion-datetime
-        locale="he-IL"
-        size="cover"
-        #dateTime
-        displayFormat="DD/MM/YYYY"
-        showDefaultTimeLabel="false"
-        [presentation]="'date'"
-        (ionChange)="dataChange(dateTime.value)"
-      >
-      </ion-datetime>
-    </ion-content>
-  </ng-template>
-</ion-modal>

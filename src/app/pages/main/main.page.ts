@@ -42,7 +42,7 @@ export class MainPage {
   ngAfterViewInit(): void {
     let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
       async (data) => {
-        console.log(data);
+        // console.log(data);
         if (!data) {
           this.noData = true;
           return;
@@ -73,7 +73,7 @@ export class MainPage {
     const hotel = (
       await this.storageService.getStorege(userStoregeObj.HOTEL_NAME)
     ).value;
-    console.log(hotel);
+    // console.log(hotel);
     if(hotel)this.headerText = hotel
     // this.headerText = hotel == '0' ? '' : hotel;
   }

@@ -38,13 +38,13 @@ ion-card-header {
   justify-content: center;
 }
 .card-container ion-card {
-  // border-radius: 60%;
-  // background: #ffb300;
-  border-radius: 10%;
-  background: #f9fafb;
+  border-radius: 60%;
+  background: #ffb300;
+  // border-radius: 10%;
+  // background: #f9fafb;
   height: 200px;
   width: 200px;
-  border: 2px solid black;
+  border: 3px solid white;
 }
 ion-card-title {
   color: #000 !important;

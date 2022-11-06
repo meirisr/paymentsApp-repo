@@ -5,7 +5,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import {NavController, Platform } from '@ionic/angular';
-import { App } from '@capacitor/app';
 import { LoginService } from 'src/app/services/login.service';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 
@@ -24,7 +23,8 @@ export class LoginPage implements OnDestroy {
     private logInServer: LoginService,
     private navigateService: NavigateHlperService,
     private platform: Platform,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    
      
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {

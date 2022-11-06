@@ -22,7 +22,7 @@ export class UserProfilePage {
     private storageService: StorageService,
     private navigateService: NavigateHlperService,
     private platform: Platform,
-    private userInfoServer:UserInfoService,
+    private userInfoServer: UserInfoService
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navigateService.goToMenu();
@@ -30,8 +30,6 @@ export class UserProfilePage {
   }
   ionViewWillEnter(): void {
     this.getUserInfo();
-  }
-  ionViewDidEnter(): void {
     this.getcardInfo();
   }
 
@@ -61,10 +59,10 @@ export class UserProfilePage {
   }
 
   async getcardInfo(): Promise<void> {
-    let creditCardDetails = await (
-      await this.storageService.getCreditCard4Dig()
-    ).value;
-    this.cardNum = creditCardDetails != null ? '****' + creditCardDetails : '';
+    let creditCardDetails = (await this.storageService.getCreditCard4Dig())
+      .value;
+    this.cardNum =
+      creditCardDetails != null ? creditCardDetails + '  ****' : '';
   }
   goToMenu(): void {
     this.navigateService.goToMenu();

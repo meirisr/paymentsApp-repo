@@ -20,7 +20,7 @@ export class DebtsGuard implements CanLoad {
       filter((val) => val !== null), // Filter out initial Behaviour subject value
       take(1), // Otherwise the Observable doesn't complete!
       map((debtCheck) => {
-        console.log(debtCheck)
+        // console.log(debtCheck)
         if (debtCheck) {
           this.navigateService.goToHistory();
         } else {

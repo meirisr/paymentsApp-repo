@@ -168,7 +168,7 @@ export class MapComponent implements AfterViewInit {
     } else {
       this.watch = Geolocation.watchPosition({}, (position, err) => {
         if (position) {
-          console.log(position);
+          // console.log(position);
           this.ngZone.run(() => {
             latLng = new google.maps.LatLng(
               position.coords.latitude,
@@ -215,7 +215,7 @@ export class MapComponent implements AfterViewInit {
   async stopTrack() {
     const opt = { id: await this.watch };
     Geolocation.clearWatch(opt).then((result) => {
-      console.log('result of clear is', result);
+      // console.log('result of clear is', result);
     });
   }
  async centerMap() {

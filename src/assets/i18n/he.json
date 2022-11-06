@@ -41,7 +41,8 @@
       "ccNumber": "מספר אשראי",
       "validity": "תוקף",
       "cvs": "3 ספרות בגב הכרטיס",
-      "userId":"ת.ז של בעל הכרטיס"
+      "userId":"ת.ז של בעל הכרטיס",
+      "locale":"he-IL"
     },
     "scan": {
       "scan": "QR סרוק/י קוד"
@@ -56,6 +57,16 @@
       "lastName": "שם משפחה",
       "ccDetails": "פרטי אשראי",
       "email": "מייל"
+    },
+    "history":{
+      "paid":"שולם",
+      "notPaid":"לא שולם",
+      "date":"תאריך",
+      "payment":"תשלום",
+      "payNow":"לתשלום"
+    },
+    "history-pay":{
+      "travelDetails":"פרטי נסיעה"
     }
   },
   "dir": "rtl",

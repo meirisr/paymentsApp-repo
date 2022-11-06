@@ -15,7 +15,6 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HeaderInterceptor } from './services/interceptor/headerInterceptor.service';
-import { NFC, Ndef } from '@awesome-cordova-plugins/nfc/ngx';
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -41,7 +40,7 @@ export function createTranslateLoader(http: HttpClient) {
     GlobalModule,
     GoogleMapsModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true }, NFC,Ndef],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

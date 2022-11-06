@@ -38,11 +38,7 @@ export class UserInfoService {
         })
       )
       .subscribe(
-        async () => {
-          this.isUserHasDetails.subscribe((v) =>
-            console.log('isUserHasDetails:', v)
-          );
-        },
+        async () => {},
         async (err) => {
           console.log(err);
           this.onHttpErorr(err, '');
@@ -65,11 +61,7 @@ export class UserInfoService {
         })
       )
       .subscribe(
-        async () => {
-          this.isCardHasDetails.subscribe((v) =>
-            console.log('isCardHasDetails:', v)
-          );
-        },
+        async () => {},
         async (err) => {
           console.log(err);
           this.onHttpErorr(err, '');
@@ -83,7 +75,7 @@ export class UserInfoService {
         `${environment.serverUrl}/transportation/get-history-drives-per-user`,
         {
           before: Date.now(),
-          after:0,
+          after: 0,
           //  Date.UTC(date.getFullYear(), date.getMonth())
         },
         {
@@ -111,7 +103,6 @@ export class UserInfoService {
       )
       .subscribe(
         (data) => {
-          console.log(data)
           if (data.length > 0) {
             this.debtCheck$.next(true);
           } else {
@@ -120,13 +111,12 @@ export class UserInfoService {
           return;
         },
         (err) => {
-          // this.debtCheck$.next([])
           console.log('err');
         }
       );
   }
   public tripPayment(
-    tripInfo,
+    // tripInfo,
     credentials: {
       cardNum: string;
       csvNum: string;
@@ -138,13 +128,13 @@ export class UserInfoService {
       .post(
         `${environment.serverUrl}/credit-card-payment/card-transportation`,
         {
-          driveId: tripInfo?.id.toString(),
+          // driveId: tripInfo?.id.toString(),
           creditCardNumber: credentials?.cardNum,
           verificationNumber: credentials?.csvNum,
           holderId: credentials?.userId,
           validUntilMonth: Number(credentials?.date.split('/')[0]),
           validUntilYear: Number(credentials?.date.split('/')[1]),
-          paymentAmount: Number(tripInfo?.paymentAmount),
+          paymentAmount: 5,
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),
@@ -175,7 +165,6 @@ export class UserInfoService {
         async () => {
           this.storageService.setUserDetails(credentials);
           this.userDetails.next(credentials);
-          // this.handleButtonClick();
         },
         async (res) => {
           this.onHttpErorr(res, '');
@@ -204,7 +193,8 @@ export class UserInfoService {
         }
       )
       .subscribe(
-        async () => {
+        async (data) => {
+          console.log(data);
           this.getCreditCardInfo();
         },
         async (res) => {

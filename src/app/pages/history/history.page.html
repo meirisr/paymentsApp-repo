@@ -35,7 +35,7 @@
     <ion-accordion *ngFor="let trip of historyCards; let i=index" value="{{trip.id}}">
       <ion-item *ngIf="!trip.paymentCompleted" slot="header">
         <ion-label>{{formatDate(trip)}}</ion-label>
-        <ion-label>לא שולם</ion-label>
+        <ion-label>{{'pages.history.notPaid'|translate}}</ion-label>
        
       </ion-item>
       <div class="ion-padding" slot="content">
@@ -45,17 +45,17 @@
         [class.redCard]="!trip.paymentCompleted"
       >
         <ion-card-header>
-          <ion-title class="card-title">לא שולם</ion-title>
+          <ion-title class="card-title">{{'pages.history.notPaid'|translate}}</ion-title>
           <ion-card-subtitle
-            >תאריך:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
+            >{{'pages.history.date'|translate}}:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
           >
           <ion-card-subtitle>
-            תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
+            {{'pages.history.payment'|translate}}:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
             }}</ion-card-subtitle
           >
         </ion-card-header>
         <ion-button ion-button fill="clear" (click)="tripPay(trip)"
-        >לתשלום</ion-button>
+        >{{'pages.history.payNow'|translate}}</ion-button>
       </ion-card>
       </div>
     </ion-accordion>
@@ -87,7 +87,7 @@
     <ion-accordion *ngFor="let trip of historyCards; let i=index" value="{{trip.id}}">
       <ion-item *ngIf="trip.paymentCompleted" slot="header">
         <ion-label>{{formatDate(trip)}}</ion-label>
-        <ion-label>שולם</ion-label>
+        <ion-label>{{'pages.history.paid'|translate}}</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <ion-card
@@ -96,7 +96,7 @@
         [class.redCard]="!trip.paymentCompleted"
       >
         <ion-card-header>
-          <ion-title class="card-title">שולם</ion-title>
+          <ion-title class="card-title">{{'pages.history.paid'|translate}}</ion-title>
           <ion-card-subtitle
             >תאריך:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
           >

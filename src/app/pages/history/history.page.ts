@@ -34,8 +34,8 @@ export class HistoryPage implements OnInit {
       // })
       this.historyCards=data;
       data.forEach(trip=>{!trip.paymentCompleted ? this.historyCardsIds.push(trip.id.toString()):null})
-      console.log(this.historyCardsIds)
-      console.log(data)
+      // console.log(this.historyCardsIds)
+      // console.log(data)
     },
     (err)=>{
       this.utils.showalert(err,'')

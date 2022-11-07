@@ -8,33 +8,30 @@ import {
 import { Observable } from 'rxjs';
 
 import { StorageService } from '../storage.service';
-import { tap } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication.service';
+import { GetResult } from '@capacitor/storage';
 
 @Injectable()
 export class HeaderInterceptor implements HttpInterceptor {
-  token: string;
+  token: GetResult | string;
+  refreshToken: GetResult;
 
-  constructor(private storageService: StorageService,private authenticationService: AuthenticationService) {}
+  constructor(
+    private storageService: StorageService,
+    private authenticationService: AuthenticationService
+  ) {}
 
   intercept(
     httpRequest: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    
-    // this.authenticationService.loadToken().then(()=>{
-    //   this.token=this.authenticationService.token.value
-    // })
-    this.storageService.getToken().then((val) => {
-     
-            this.token = val.value;
+    this.storageService.getToken().then((tokenVal) => {
+     this.TokenValidation(httpRequest,tokenVal)
     });
 
     if (
-      httpRequest.url.includes('GetDetailsByVehicle') 
-      ||
+      httpRequest.url.includes('GetDetailsByVehicle') ||
       httpRequest.url.includes('get-organization-per-station')
-
     ) {
       return next.handle(httpRequest);
     }
@@ -44,6 +41,28 @@ export class HeaderInterceptor implements HttpInterceptor {
         `Bearer ${this.token}`
       ),
     });
+
     return next.handle(modifieRequest);
+  }
+  TokenValidation=(httpRequest:HttpRequest<any>,tokenVal:GetResult)=>{
+    if (
+      tokenVal.value == null &&
+      !httpRequest.url.includes('refresh-token')
+    ) {
+      this.authenticationService.loadToken();
+    } else if (
+      !httpRequest.url.includes('is-token-valid') &&
+      !httpRequest.url.includes('refresh-token') &&
+      !httpRequest.url.includes('get-unpaid-drives-per-user')
+    ) {
+      this.authenticationService
+        .isTokenValid(tokenVal.value)
+        .subscribe((val) => {
+          if (!val) {
+            this.authenticationService.loadToken();
+          }
+        });
+    }
+    this.token = tokenVal.value;
   }
 }

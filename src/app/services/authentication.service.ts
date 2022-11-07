@@ -29,28 +29,37 @@ export class AuthenticationService {
     private userInfoServer: UserInfoService,
     private utils: UtilsService
   ) {}
-  public async loadToken() {
+
+   getDataFromStorage= async():Promise<void>=>{
     this.token = await this.storageService.getToken();
     this.refreshToken = await this.storageService.getRefreshToken();
     this.hotelId = await this.storageService.getHotelId();
     this.hotelName = await this.storageService.getHotelName();
+  }
+  getAllUserInfo=()=>{
+    this.userInfoServer.getUnpaidTrips();
+    this.userInfoServer.getUserDetails();
+    this.userInfoServer.getCreditCardInfo();
+    if (this.hotelId.value != null&& this.hotelName!=null) {
+      this.loginService.isUserPermitToOrganization(
+          this.hotelId.value,
+          this.hotelName.value
+        )
+        .subscribe();
+    }
+  }
+
+  public async loadToken() {
+    await this.getDataFromStorage()
     if (this.token.value != null && this.refreshToken.value != null) {
       this.isTokenValid(this.token.value).subscribe(
-        async (res) => {
+        async (res:boolean) => {
           if (res) {
-            this.userInfoServer.getUnpaidTrips();
-            this.userInfoServer.getUserDetails();
-            this.userInfoServer.getCreditCardInfo();
-            if (this.hotelId.value != null) {
-              this.loginService
-                .isUserPermitToOrganization(
-                  this.hotelId.value,
-                  this.hotelName.value
-                )
-                .subscribe();
-            }
+            this.getAllUserInfo()
             this.isAuthenticated$.next(true);
           } else {
+            this.storageService.deleteStorege(userStoregeObj.TOKEN_KEY);
+            this.storageService.deleteStorege(userStoregeObj.HOTEL_ID);
             this.loadToken();
           }
         },
@@ -77,16 +86,12 @@ export class AuthenticationService {
     }
   }
 
-  public isTokenValid(Token: string): Observable<any> {
+  public isTokenValid(Token: string): Observable<boolean> {
     try {
       return this.http
         .get(`${environment.serverUrl}/base-auth/is-token-valid?token=${Token}`)
         .pipe(
           map((data: any) => {
-            if (!data.body) {
-              this.storageService.deleteStorege(userStoregeObj.TOKEN_KEY);
-              this.storageService.deleteStorege(userStoregeObj.HOTEL_ID);
-            }
             return data.body;
           })
         );
@@ -98,17 +103,12 @@ export class AuthenticationService {
     }
   }
 
-  public tryRefreshToken(refreshToken: string) {
+  public tryRefreshToken(refreshToken: string): Observable<any> {
     try {
       return this.http
         .get(
           `${environment.serverUrl}/base-auth/refresh-token?refreshToken=${refreshToken}`
         )
-        .pipe(
-          tap((data: any) => {
-            this.storageService.setToken(data.body.jwtToken);
-          })
-        );
     } catch (error) {
       this.onHttpErorr(
         ' עקב תקלה לא ניתן לגשת לאפליקציה אנא נסה/י בעוד כמה דקות.',

@@ -33,9 +33,13 @@
 @import "~swiper/scss/zoom";
 @import "~@ionic/angular/css/ionic-swiper";
 
+
 ion-menu {
   outline: none;
 }
+ion-button {
+  text-transform: none;
+ }
 .md body {
   --ion-background-color: #253f58;;
   --ion-color: #fff;

@@ -51,24 +51,24 @@ export class UtilsService {
 
         this.defaultLang = 'he';
         break;
-      default:
-        this.translate.use('he');
-        Storage.set({ key: USER_LANGUAGE, value: 'he' });
-        this.defaultLang = 'he';
-        this.userLang.value = 'he';
-        break;
+      // default:
+      //   this.translate.use('he');
+      //   Storage.set({ key: USER_LANGUAGE, value: 'he' });
+      //   this.defaultLang = 'he';
+      //   this.userLang.value = 'he';
+      //   break;
     }
   }
 
   async getUserLanguage(): Promise<string> {
     this.userLang = await Storage.get({ key: USER_LANGUAGE });
-    if (this.userLang.value === 'en') {
+    if (this.userLang.value =='en') {
       this.translate.use('en');
-      this.defaultLang = 'en';
+      this.defaultLang ='en';
       return 'en';
     } else {
       this.translate.use('he');
-      this.defaultLang = 'he';
+      this.defaultLang='he';
       return 'he';
     }
   }

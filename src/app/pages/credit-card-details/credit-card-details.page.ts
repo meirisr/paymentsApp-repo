@@ -31,6 +31,7 @@ export class CreditCardDetailsPage implements OnInit {
   }
 
   ngOnInit() {
+    const  date_regex = /^(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
     this.cardDetails = new FormGroup({
       cardNum: new FormControl(null, [Validators.required]),
       csvNum: new FormControl(null, [
@@ -38,7 +39,11 @@ export class CreditCardDetailsPage implements OnInit {
         Validators.maxLength(3),
         Validators.minLength(3),
       ]),
-      date: new FormControl(null, [Validators.required]),
+      date: new FormControl(null,Validators.compose([
+        Validators.required,
+        Validators.pattern(date_regex)])
+        
+        ),
       userId: new FormControl(null, [Validators.required]),
     });
   }

@@ -17,11 +17,11 @@ export class AuthenticationService {
     null
   );
 
-  private token: GetResult;
+
   private refreshToken: GetResult;
   private hotelId: GetResult;
   private hotelName: GetResult;
-
+  public token: GetResult;
   constructor(
     private http: HttpClient,
     private storageService: StorageService,

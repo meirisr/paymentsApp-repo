@@ -46,6 +46,7 @@ export class HistoryPayPage implements OnInit {
   }
 
   ngOnInit() {
+    const  date_regex = /^(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
     let tripInfo$ = this.userInfoServer.historyTripPay$.subscribe(
       (data) => {
         this.tripInfo = data;
@@ -62,7 +63,11 @@ export class HistoryPayPage implements OnInit {
         Validators.maxLength(3),
         Validators.minLength(3),
       ]),
-      date: new FormControl(null, [Validators.required]),
+      date: new FormControl(null,Validators.compose([
+        Validators.required,
+        Validators.pattern(date_regex)])
+        
+        ),
       userId: new FormControl(null, [Validators.required]),
       userName: new FormControl(null, [Validators.required]),
     });

@@ -57,7 +57,6 @@ export class IntroPage implements OnInit {
       setTimeout(() => {
         this.utils.dismissModal();
       }, 2000);
-
       this.navigateService.goToCCDetails();
     }
   }
@@ -73,7 +72,9 @@ export class IntroPage implements OnInit {
     const hotelId = this.selectedHotel.id;
     const hotelName = this.selectedHotel.name;
    if(hotelId==='0'){
-    this.onCreditCardClick()
+    this.storageService.setHotelId('0');
+    this.navigateService.goToMenu();
+    // this.onCreditCardClick()
    }else{
     const isPermitToOrg$ = this.logInServer
     .isUserPermitToOrganization(hotelId, hotelName)
@@ -104,7 +105,6 @@ export class IntroPage implements OnInit {
         console.log(err);
       }
     );
-
   this.subscriptions.push(isPermitToOrg$);
    }
     this.selectedHotel = { id: '', name: '' };

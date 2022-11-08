@@ -50,7 +50,6 @@ export class LoginService {
       })
       .pipe(
         map((data: any) => {
-          
           if (data.body) {
             this.storageService.setHotelId(orgId);
             this.storageService.setHotelName(orgName);

@@ -34,24 +34,21 @@ export class IntroPage implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.storageService.deleteHotelId()
-    this.storageService.deleteHotelName()
+    this.storageService.deleteHotelId();
+    this.storageService.deleteHotelName();
     const allOrg$ = this.logInServer
       .getAllUserOrganizations()
       .subscribe(async (data) => {
-       this.items=data.body
-        // this.items.push(this.creatHotelObj(data.body));
+        this.items = data.body;
         this.tempitems = [...this.items];
-  
-          async (err: Error) => {
-            console.log(err);
-          };
+
+        async (err: Error) => {
+          console.log(err);
+        };
       });
     this.subscriptions.push(allOrg$);
   }
   async onCreditCardClick(): Promise<void> {
-    // this.storageService.deleteHotelId()
-    // this.storageService.deleteHotelName()
     if (this.userInfoServer.isCardHasDetails.value) {
       this.storageService.setHotelId('0');
       this.navigateService.goToMenu();
@@ -75,9 +72,13 @@ export class IntroPage implements OnInit {
   async onSelectHotel(): Promise<void> {
     const hotelId = this.selectedHotel.id;
     const hotelName = this.selectedHotel.name;
+   if(hotelId==='0'){
+    this.onCreditCardClick()
+   }else{
     const isPermitToOrg$ = this.logInServer
-      .isUserPermitToOrganization(hotelId,hotelName)
-      .subscribe(async (data) => {
+    .isUserPermitToOrganization(hotelId, hotelName)
+    .subscribe(
+      async (data) => {
         if (data) {
           await this.utils.presentModal(
             'ברוכים הבאים',
@@ -98,11 +99,14 @@ export class IntroPage implements OnInit {
             this.utils.dismissModal();
           }, 2000);
         }
-      },(err: Error) => {
+      },
+      (err: Error) => {
         console.log(err);
-      });
-    
-    this.subscriptions.push(isPermitToOrg$);
+      }
+    );
+
+  this.subscriptions.push(isPermitToOrg$);
+   }
     this.selectedHotel = { id: '', name: '' };
   }
   async onClickHotel(
@@ -111,9 +115,6 @@ export class IntroPage implements OnInit {
   ): Promise<void> {
     const element = event.target as HTMLElement;
     this.selectedHotel = item;
-
-    // await this.utils.presentModal('ברוכים הבאים',`הנך רשום ב ${item.id}`);
-    // this.nav.navigateForward('/menu', { animationDirection: 'forward', animated: true })
   }
 
   creatHotelObj(data: { name: string; id: string }) {

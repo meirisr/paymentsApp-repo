@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { GetResult } from '@capacitor/storage';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -17,7 +17,6 @@ export class AuthenticationService {
     null
   );
 
-
   private refreshToken: GetResult;
   private hotelId: GetResult;
   private hotelName: GetResult;
@@ -30,32 +29,30 @@ export class AuthenticationService {
     private utils: UtilsService
   ) {}
 
-   getDataFromStorage= async():Promise<void>=>{
+  getDataFromStorage = async (): Promise<void> => {
     this.token = await this.storageService.getToken();
     this.refreshToken = await this.storageService.getRefreshToken();
     this.hotelId = await this.storageService.getHotelId();
     this.hotelName = await this.storageService.getHotelName();
-  }
-  getAllUserInfo=()=>{
+  };
+  getAllUserInfo = () => {
     this.userInfoServer.getUnpaidTrips();
     this.userInfoServer.getUserDetails();
     this.userInfoServer.getCreditCardInfo();
-    if (this.hotelId.value != null&& this.hotelName!=null) {
-      this.loginService.isUserPermitToOrganization(
-          this.hotelId.value,
-          this.hotelName.value
-        )
+    if (this.hotelId.value != null && this.hotelName != null) {
+      this.loginService
+        .isUserPermitToOrganization(this.hotelId.value, this.hotelName.value)
         .subscribe();
     }
-  }
+  };
 
   public async loadToken() {
-    await this.getDataFromStorage()
+    await this.getDataFromStorage();
     if (this.token.value != null && this.refreshToken.value != null) {
       this.isTokenValid(this.token.value).subscribe(
-        async (res:boolean) => {
+        async (res: boolean) => {
           if (res) {
-            this.getAllUserInfo()
+            this.getAllUserInfo();
             this.isAuthenticated$.next(true);
           } else {
             this.storageService.deleteStorege(userStoregeObj.TOKEN_KEY);
@@ -105,10 +102,9 @@ export class AuthenticationService {
 
   public tryRefreshToken(refreshToken: string): Observable<any> {
     try {
-      return this.http
-        .get(
-          `${environment.serverUrl}/base-auth/refresh-token?refreshToken=${refreshToken}`
-        )
+      return this.http.get(
+        `${environment.serverUrl}/base-auth/refresh-token?refreshToken=${refreshToken}`
+      );
     } catch (error) {
       this.onHttpErorr(
         ' עקב תקלה לא ניתן לגשת לאפליקציה אנא נסה/י בעוד כמה דקות.',
@@ -116,7 +112,7 @@ export class AuthenticationService {
       );
     }
   }
-  async onHttpErorr(e:string, header:string) {
+  async onHttpErorr(e: string, header: string) {
     this.utils.showalert(e, header);
   }
 }

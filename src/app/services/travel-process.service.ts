@@ -52,9 +52,9 @@ export class TravelProcessService {
       .post(
         `${environment.serverUrl}/transportation/insert-new-transportation-drive`,
         {
-          routeName: "49006300",
+          routeName: '49006300',
           // trip.rte,
-          fromStop:3093 ,
+          fromStop: 3093,
           // +trip.nearestStation.stationID,
           toStop: 4216,
           // +trip.lastStation.stationID,

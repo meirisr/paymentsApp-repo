@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -13,12 +12,12 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 })
 export class HistoryPage implements OnInit {
   private subscriptions: Subscription[] = [];
-  historyCards: any[]=[];
-  historyCardsIds: any[]=[];
+  historyCards: any[] = [];
+  historyCardsIds: any[] = [];
 
   constructor(
     private plt: Platform,
-    private userInfoServer:UserInfoService,
+    private userInfoServer: UserInfoService,
     private navigateService: NavigateHlperService,
     private utils: UtilsService
   ) {
@@ -28,21 +27,21 @@ export class HistoryPage implements OnInit {
   }
 
   ngOnInit() {
-     let userInfo$=this.userInfoServer.getUserHistory().subscribe((data)=>{
-      // data.forEach(item=>{
-      //   this.historyCards.push( this.creatHistoryCard(item))
-      // })
-      this.historyCards=data;
-      data.forEach(trip=>{!trip.paymentCompleted ? this.historyCardsIds.push(trip.id.toString()):null})
-      // console.log(this.historyCardsIds)
-      // console.log(data)
-    },
-    (err)=>{
-      this.utils.showalert(err,'')
-      console.log(err)
-    })
-    this.subscriptions.push(userInfo$)
-    
+    let userInfo$ = this.userInfoServer.getUserHistory().subscribe(
+      (data) => {
+        this.historyCards = data;
+        data.forEach((trip) => {
+          !trip.paymentCompleted
+            ? this.historyCardsIds.push(trip.id.toString())
+            : null;
+        });
+      },
+      (err) => {
+        this.utils.showalert(err, '');
+        console.log(err);
+      }
+    );
+    this.subscriptions.push(userInfo$);
   }
   goToMenu(): void {
     this.navigateService.goToMenu();
@@ -50,23 +49,19 @@ export class HistoryPage implements OnInit {
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
-  creatHistoryCard(item){
-  return{
-     
+  creatHistoryCard(item) {
+    return {};
   }
- 
-  }
-  tripPay(trip){
-   this.userInfoServer.historyTripPay$.next(trip);
-      this.navigateService.goToHistoryPay();
-    }
-  
-  formatDate(item){
-    let date=new Date(item.created)
-    const year=date.getFullYear()
-    const month=date.getMonth()+1
-    const day=date.getDate()
-    return day+'.'+month+'.'+year;
+  tripPay(trip) {
+    this.userInfoServer.historyTripPay$.next(trip);
+    this.navigateService.goToHistoryPay();
   }
 
+  formatDate(item) {
+    let date = new Date(item.created);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return day + '.' + month + '.' + year;
+  }
 }

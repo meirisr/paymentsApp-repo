@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, IonDatetime, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -46,7 +46,7 @@ export class HistoryPayPage implements OnInit {
   }
 
   ngOnInit() {
-    const  date_regex = /^(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
+    const date_regex = /^(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
     let tripInfo$ = this.userInfoServer.historyTripPay$.subscribe(
       (data) => {
         this.tripInfo = data;
@@ -63,11 +63,13 @@ export class HistoryPayPage implements OnInit {
         Validators.maxLength(3),
         Validators.minLength(3),
       ]),
-      date: new FormControl(null,Validators.compose([
-        Validators.required,
-        Validators.pattern(date_regex)])
-        
-        ),
+      date: new FormControl(
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(date_regex),
+        ])
+      ),
       userId: new FormControl(null, [Validators.required]),
       userName: new FormControl(null, [Validators.required]),
     });
@@ -88,19 +90,14 @@ export class HistoryPayPage implements OnInit {
     this.dateTime.confirm(true);
   }
   async updateCreditCard(): Promise<void> {
-    this.userInfoServer
-      .tripPayment(this.cardDetails.value)
-      .subscribe(
-        (data) => {
-          // console.log(data)
-          // if(data.responseCode=="123"){
-          console.log(data.responseMessage);
-          // }
-          this.showalert(data.responseMessage);
-          this.goToHistory();
-        },
-        (err) => console.log(err)
-      );
+    this.userInfoServer.tripPayment(this.cardDetails.value).subscribe(
+      (data) => {
+        console.log(data.responseMessage);
+        this.showalert(data.responseMessage);
+        this.goToHistory();
+      },
+      (err) => console.log(err)
+    );
   }
 
   cardNumKeyUp(e: Event) {

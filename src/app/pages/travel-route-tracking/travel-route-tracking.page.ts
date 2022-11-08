@@ -49,7 +49,6 @@ export class TravelRouteTrackingPage implements OnInit {
     this.noData = false;
     let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
       async (data) => {
-        // console.log(data);
         if (!data) {
           this.noData = true;
           return;
@@ -115,7 +114,7 @@ export class TravelRouteTrackingPage implements OnInit {
   convertVhTopx(vh: number): number {
     return (vh * document.documentElement.clientWidth) / 100;
   }
-  emitEventToChild(event, id) {
+  emitEventToChild(id:string) {
     this.travelProcessService.stationInfo.next(id);
     this.travelBodyRef.nativeElement.classList.remove('OpenBig');
     this.hideItems = true;

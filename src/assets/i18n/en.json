@@ -8,7 +8,7 @@
       "scan": "Scan",
       "travel": "And travel",
       "nextBtn": "Confirmation",
-      "creditCard": "Private payment"
+      "creditCard": "Credit card payment"
     },
     "login": {
       "phoneInputText": "Enter Phone Number",

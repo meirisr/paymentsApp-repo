@@ -1,11 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  AlertController,
-  IonDatetime,
-  Platform,
-} from '@ionic/angular';
+import { AlertController, IonDatetime, Platform } from '@ionic/angular';
 import { from } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
@@ -24,7 +20,7 @@ export class UserDetailsPage implements OnInit {
     private alertController: AlertController,
     private storageService: StorageService,
     private router: Router,
-    private userInfoServer:UserInfoService,
+    private userInfoServer: UserInfoService,
     private platform: Platform,
     private navigateService: NavigateHlperService
   ) {
@@ -32,15 +28,6 @@ export class UserDetailsPage implements OnInit {
       this.navigateService.goToUserProfile();
     });
   }
-  // get firstName() {
-  //   return this.userDetails.get('firstName');
-  // }
-  // get lastName() {
-  //   return this.userDetails.get('lastName');
-  // }
-  // get email() {
-  //   return this.userDetails.get('email');
-  // }
   ngOnInit() {
     this.userDetails = new FormGroup({
       firstName: new FormControl(null, [Validators.required]),

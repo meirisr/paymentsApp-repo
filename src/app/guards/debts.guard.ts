@@ -5,14 +5,15 @@ import { filter, map, take } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserInfoService } from '../services/user-info.service';
 import { NavigateHlperService } from '../services/utils/navigate-hlper.service';
+import { UtilsService } from '../services/utils/utils.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DebtsGuard implements CanLoad {
   constructor(
-    private authenticationService: AuthenticationService,
-   private userInfoService:UserInfoService,
+    private utils: UtilsService,
+    private userInfoService:UserInfoService,
     private navigateService: NavigateHlperService
   ) {}
   canLoad(): Observable<boolean> {
@@ -22,6 +23,10 @@ export class DebtsGuard implements CanLoad {
       map((debtCheck) => {
         // console.log(debtCheck)
         if (debtCheck) {
+            // this.utils.presentModal('נסיעות שלא שולמו', 'יש לעדכן את  פרטי האשראי', '',true);
+            // setTimeout(() => {
+            //   // this.utils.dismissModal();
+            // }, 1000);
           this.navigateService.goToHistory();
         } else {
           return true;

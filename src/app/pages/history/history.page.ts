@@ -52,9 +52,9 @@ export class HistoryPage implements OnInit {
   creatHistoryCard(item) {
     return {};
   }
-  tripPay(trip) {
-    this.userInfoServer.historyTripPay$.next(trip);
-    this.navigateService.goToHistoryPay();
+  tripPay() {
+    this.userInfoServer.historyTripPay$.next(null);
+    this.navigateService.goToCCDetails();
   }
 
   formatDate(item) {

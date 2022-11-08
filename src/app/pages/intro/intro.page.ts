@@ -69,7 +69,7 @@ export class IntroPage implements OnInit {
       }),
     ];
   }
-  async onSelectHotel(): Promise<void> {
+  async onSubmit(): Promise<void> {
     const hotelId = this.selectedHotel.id;
     const hotelName = this.selectedHotel.name;
    if(hotelId==='0'){

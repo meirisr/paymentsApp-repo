@@ -111,9 +111,9 @@ export class UtilsService {
     const alert = await this.alertController.create({
       header: 'Error',
       message: e?.error?.error?.errorMessage
-        ? e?.error?.error?.errorMessage[language]
+        ? e?.error?.error?.errorMessage['en-us']
         : e?.error?.errorMessage
-        ? e?.error?.errorMessage[language]
+        ? e?.error?.errorMessage['en-us']
         : 'עקב שגיאת רשת לא ניתן היה למלא את הבקשה. אנא נסה שוב בעוד מספר שניות',
       cssClass: language == 'en' ? 'en-alert' : 'he-alert',
       backdropDismiss: false,
@@ -135,7 +135,7 @@ export class UtilsService {
     text: string,
     type: string,
     close: boolean = false
-  ): Promise<void> {
+  ): Promise<HTMLIonModalElement> {
     const modal = await this.modalController.create({
       component: PopupModalComponent,
       cssClass: 'my-custom-class',
@@ -148,12 +148,12 @@ export class UtilsService {
       backdropDismiss: close,
     });
     modal.present();
+  
+   return modal
   }
   dismissModal() {
     setTimeout(() => {
-      this.modalController.dismiss({
-        dismissed: true,
-      });
+      this.modalController.dismiss();
     }, 0);
   }
 

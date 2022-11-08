@@ -47,6 +47,7 @@ export class ScanPage implements OnInit {
   }
 
   ngOnInit() {
+    
     this.utils.presentLoader();
     if (Capacitor.isNativePlatform()) {
       this.checkLocationPermission().then((e) => {
@@ -100,7 +101,7 @@ export class ScanPage implements OnInit {
     }
   }
   async getTrip() {
-    await this.utils.presentModal('מחפש מסלול', '', 'loader');
+   const loader= await this.utils.presentModal('מחפש מסלול', '', 'loader');
     let hotelId = await this.storageService.getHotelId();
     const TravelDetails$ = this.travelProcessService
       .getTravelDetails(this.userLocation, 7549169)
@@ -110,10 +111,10 @@ export class ScanPage implements OnInit {
           if (!data) {
             this.utils.dismissModal();
           
-            await this.utils.presentModal('קוד אינו תקין', 'יש לסרוק קוד אחר', '',true);
-            setTimeout(() => {
-              this.utils.dismissModal();
-            }, 1000);
+            // await this.utils.presentModal('קוד אינו תקין', 'יש לסרוק קוד אחר', '',true);
+            // setTimeout(() => {
+            //   this.utils.dismissModal();
+            // }, 1000);
             this.startScanner();
           } else {
             this.navigateService.goToPayment();

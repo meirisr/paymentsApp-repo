@@ -33,7 +33,7 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
-    IonicModule.forRoot(),
+    IonicModule.forRoot({animated: true}),
     AppRoutingModule,
     HttpClientModule,
     HttpClientJsonpModule,

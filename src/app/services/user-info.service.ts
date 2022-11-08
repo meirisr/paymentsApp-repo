@@ -194,6 +194,7 @@ export class UserInfoService {
       )
       .subscribe(
         async (data) => {
+          this.tripPayment(credentials).subscribe((data)=>console.log(data),(err)=>console.log(err))
           console.log(data);
           this.getCreditCardInfo();
         },

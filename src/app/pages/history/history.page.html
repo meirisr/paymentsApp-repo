@@ -31,7 +31,9 @@
     </ng-container>
   </ion-list> -->
 
-  <ion-accordion-group expand="inset"  dir="{{'dir'|translate}}"  [value]="historyCardsIds">
+  <ion-accordion-group *ngIf="historyCardsIds.length"  expand="inset"  dir="{{'dir'|translate}}"  [value]="historyCardsIds">
+    <ion-button  ion-button fill="outline" (click)="tripPay()" 
+    >{{'pages.history.payNow'|translate}}</ion-button>
     <ion-accordion *ngFor="let trip of historyCards; let i=index" value="{{trip.id}}">
       <ion-item *ngIf="!trip.paymentCompleted" slot="header">
         <ion-label>{{formatDate(trip)}}</ion-label>
@@ -54,8 +56,8 @@
             }}</ion-card-subtitle
           >
         </ion-card-header>
-        <ion-button ion-button fill="clear" (click)="tripPay(trip)"
-        >{{'pages.history.payNow'|translate}}</ion-button>
+        <!-- <ion-button ion-button fill="clear" (click)="tripPay(trip)"
+        >{{'pages.history.payNow'|translate}}</ion-button> -->
       </ion-card>
       </div>
     </ion-accordion>
@@ -83,7 +85,7 @@
       </ion-item>
     </ng-container>
   </ion-list> -->
-  <ion-accordion-group expand="inset"  dir="{{'dir'|translate}}" >
+  <ion-accordion-group *ngIf="historyCards.length" expand="inset"  dir="{{'dir'|translate}}" >
     <ion-accordion *ngFor="let trip of historyCards; let i=index" value="{{trip.id}}">
       <ion-item *ngIf="trip.paymentCompleted" slot="header">
         <ion-label>{{formatDate(trip)}}</ion-label>

@@ -74,12 +74,11 @@ export class ScanPage implements OnInit {
   }
 
   async startScanner(): Promise<void> {
-
+    this.utils.dismissLoader();
     let hotelId = !!this.storageService.getHotelId();
     const allowed = await this.checkPermission();
-    this.utils.dismissLoader();
+    
     if (allowed) {
-     
       this.scanActive = true;
       document.querySelector('body').classList.add('scanBg');
       this.result = null;
@@ -92,7 +91,6 @@ export class ScanPage implements OnInit {
         console.log(result);
         this.stopScanner();
         document.querySelector('body').classList.remove('scanBg');
-
         // if (hotelId) {
         //   this.navigateService.goToPayment();
         // } else {
@@ -103,8 +101,7 @@ export class ScanPage implements OnInit {
   async getTrip() {
    const loader= await this.utils.presentModal('מחפש מסלול', '', 'loader');
     let hotelId = await this.storageService.getHotelId();
-    const TravelDetails$ = this.travelProcessService
-      .getTravelDetails(this.userLocation, 7549169)
+    const TravelDetails$ = this.travelProcessService.getTravelDetails(this.userLocation, 7549169)
       .subscribe(
         async(data) => {
           console.log(data)

@@ -42,7 +42,7 @@
         >
           <div [class.hideItem]="(hideItems)&&!(last || first)">
             <ion-item
-              (click)="emitEventToChild($event ,station.stationIndex)"
+              (click)="emitEventToChild(station.stationIndex)"
               class="item-background"
               style="direction: rtl; height: 5vh"
             >

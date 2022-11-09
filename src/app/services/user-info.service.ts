@@ -76,7 +76,8 @@ export class UserInfoService {
         {
           before: Date.now(),
           after: 0,
-          //  Date.UTC(date.getFullYear(), date.getMonth())
+          //from the first day of the this month
+          //  Date.UTC(date.getFullYear(), date.getMonth(),1)
         },
         {
           headers: new HttpHeaders({ station: 'hotels' }),

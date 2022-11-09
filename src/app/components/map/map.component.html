@@ -10,10 +10,13 @@
     width="100vw"
   >
     <map-marker
+      #marker="mapMarker"
       *ngFor="let watchmarker of watchmarkers"
       [position]="watchmarker"
       [options]="watchmarkerOptions"
+      (mapClick)="openInfoWindow(marker)"
     ></map-marker>
+    
     <map-marker
       *ngFor="let marker of markers"
       [position]="marker"

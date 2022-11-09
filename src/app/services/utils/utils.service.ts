@@ -77,9 +77,9 @@ export class UtilsService {
       (await this.storageService.getRuteDetails()).value
     );
     if (routeData) {
-      this.travelProcessService.routeInfo.next(routeData);
+      this.travelProcessService.paymentTrip.next(routeData);
     } else {
-      this.travelProcessService.routeInfo.next(false);
+      this.travelProcessService.paymentTrip.next(false);
     }
   }
   async loadGoogleMap(): Promise<void> {

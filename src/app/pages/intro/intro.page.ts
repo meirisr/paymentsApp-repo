@@ -49,8 +49,9 @@ export class IntroPage implements OnInit {
     this.subscriptions.push(allOrg$);
   }
   async onCreditCardClick(): Promise<void> {
+       this.storageService.setHotelId('0');
     if (this.userInfoServer.isCardHasDetails.value) {
-      this.storageService.setHotelId('0');
+      // this.storageService.setHotelId('0');
       this.navigateService.goToMenu();
     } else {
       await this.utils.presentModal('', 'עליך להכניס פרטי אשראי', '');
@@ -72,9 +73,9 @@ export class IntroPage implements OnInit {
     const hotelId = this.selectedHotel.id;
     const hotelName = this.selectedHotel.name;
    if(hotelId==='0'){
-    this.storageService.setHotelId('0');
-    this.navigateService.goToMenu();
-    // this.onCreditCardClick()
+    // this.storageService.setHotelId('0');
+    // this.navigateService.goToMenu();
+    this.onCreditCardClick()
    }else{
     const isPermitToOrg$ = this.logInServer
     .isUserPermitToOrganization(hotelId, hotelName)

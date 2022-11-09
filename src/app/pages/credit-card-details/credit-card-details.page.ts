@@ -26,7 +26,7 @@ export class CreditCardDetailsPage implements OnInit {
     private navigateService: NavigateHlperService
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navigateService.goToIntro();
+      this.navigateService.goToMenu();
     });
   }
 

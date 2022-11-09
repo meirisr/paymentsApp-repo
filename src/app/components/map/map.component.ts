@@ -13,6 +13,8 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 import { filter } from 'rxjs/operators';
 import { mapConfig } from './map-config';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+
 
 const BusImage: string = '../../../assets/images/bus.png';
 const locationImage: string = '../../../assets/location.svg';
@@ -24,8 +26,8 @@ const emptyCircleImage: string = '../../../assets/empty-circle.svg';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements AfterViewInit {
+  @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
   private subscriptions: Subscription[] = [];
-
   @ViewChild('map') mapRef;
   @Input() height: string;
   @Input() path: [];
@@ -166,7 +168,7 @@ export class MapComponent implements AfterViewInit {
         });
       });
     } else {
-      this.watch = Geolocation.watchPosition({}, (position, err) => {
+      this.watch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
         if (position) {
           // console.log(position);
           this.ngZone.run(() => {
@@ -190,8 +192,9 @@ export class MapComponent implements AfterViewInit {
   addWatchMarker(latLng) {
     this.watchmarkers.push(latLng);
     this.watchMarker=latLng;
-    if (!(this.nearesStationth.lat && this.nearesStationth.lng))
-      this.mapOptions.center = latLng;
+    console.log(this.watchmarkers)
+    // if (!(this.nearesStationth.lat && this.nearesStationth.lng))
+      this.mapOptions.center = new google.maps.LatLng(this.watchMarker);
   }
 
   goToMenu() {
@@ -213,22 +216,27 @@ export class MapComponent implements AfterViewInit {
     this.watchmarkers = [];
   }
   async stopTrack() {
-    const opt = { id: await this.watch };
+    const opt = { id:  this.watch };
     Geolocation.clearWatch(opt).then((result) => {
       // console.log('result of clear is', result);
     });
   }
  async centerMap() {
  
-      const coordinates = await Geolocation.getCurrentPosition();
-    let latLng;
-      this.ngZone.run(() => {
-        latLng = new google.maps.LatLng(
-          coordinates.coords.latitude,
-          coordinates.coords.longitude
-        );
-      });
+    //   const coordinates = await Geolocation.getCurrentPosition();
+    // let latLng;
+    //   this.ngZone.run(() => {
+    //     latLng = new google.maps.LatLng(
+    //       coordinates.coords.latitude,
+    //       coordinates.coords.longitude
+    //     );
+    //   });
+  console.log(this.watchMarker)
     this.mapOptions.zoom = 16;
-    this.mapOptions.center = latLng.toJSON();
+    this.mapOptions.center =  new google.maps.LatLng(this.watchMarker)
   }
+  openInfoWindow(marker: MapMarker) {
+    this.infoWindow.open(marker);
+  }
+
 }

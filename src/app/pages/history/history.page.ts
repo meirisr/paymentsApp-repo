@@ -29,7 +29,7 @@ export class HistoryPage implements OnInit {
   ngOnInit() {
     let userInfo$ = this.userInfoServer.getUserHistory().subscribe(
       (data) => {
-        this.historyCards = data;
+        this.historyCards = data.reverse();
         data.forEach((trip) => {
           !trip.paymentCompleted
             ? this.historyCardsIds.push(trip.id.toString())

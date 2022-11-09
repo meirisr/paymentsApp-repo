@@ -15,13 +15,13 @@ export class ActiveRouteGuard implements CanLoad {
   ) {}
   
   canLoad(): Observable<boolean> {
-    return this.travelProcessService.routeInfo.pipe(
+    return this.travelProcessService.paymentTrip.pipe(
       filter((val) => val !== null), // Filter out initial Behaviour subject value
       take(1), // Otherwise the Observable doesn't complete!
       map((isActiveRoute) => {
-     
         if (isActiveRoute) {
           this.navigateService.goToMenu();
+          return true;
         } else {
           return true;
         }

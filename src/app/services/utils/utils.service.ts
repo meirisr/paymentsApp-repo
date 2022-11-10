@@ -165,14 +165,14 @@ export class UtilsService {
     this.isLoading = true;
     loading.present();
   }
-  dismissLoader() {
+ async dismissLoader() {
     if (this.isLoading) {
       this.isLoading = false;
-      setTimeout(() => {
-        this.loadingController.dismiss({
+      
+       await this.loadingController.dismiss({
           dismissed: true,
         });
-      }, 0);
+    
     }
   }
 }

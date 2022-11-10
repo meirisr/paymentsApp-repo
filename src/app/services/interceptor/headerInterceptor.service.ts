@@ -24,8 +24,9 @@ export class HeaderInterceptor implements HttpInterceptor {
     httpRequest: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+
     this.storageService.getToken().then((tokenVal) => {
-      this.TokenValidation(httpRequest, tokenVal);
+       this.TokenValidation(httpRequest, tokenVal);
     });
 
     if (
@@ -43,7 +44,7 @@ export class HeaderInterceptor implements HttpInterceptor {
 
     return next.handle(modifieRequest);
   }
-  TokenValidation = (httpRequest: HttpRequest<any>, tokenVal: GetResult) => {
+  TokenValidation =  (httpRequest: HttpRequest<any>, tokenVal: GetResult) => {
     if (tokenVal.value == null && !httpRequest.url.includes('refresh-token')) {
       this.authenticationService.loadToken();
     } else if (

@@ -26,7 +26,8 @@
       "logOut": "יציאה"
     },
     "main": {
-      "start-trip": "התחל נסיעה"
+      "startTrip": "התחל נסיעה",
+      "activeTrip": "נסיעה פעילה"
     },
     "user-details": {
       "updated": " שמירת שינויים",
@@ -47,6 +48,15 @@
     "scan": {
       "scan": "QR סרוק/י קוד"
     },
+    "payment": {
+      "payment":"תשלום",
+      "numberOfPassengers":"מספר נוסעים",
+      "totalPayment":"סה'כ לתשלום"
+    },
+    "travel-route-tracking":{
+      "endTrip":"סיום נסיעה",
+      "activeTrip": "נסיעה פעילה"
+  },
     "settings": {
       "lng": "בחר שפה"
     },
@@ -75,5 +85,6 @@
   "side": "end",
   "nextBtn": "המשך",
   "backBtn": "חזור",
+  "backBtn-side": "backBtn-side-right",
   "map": "wi"
 }

@@ -8,6 +8,7 @@ import { TravelRouteTrackingPageRoutingModule } from './travel-route-tracking-ro
 
 import { TravelRouteTrackingPage } from './travel-route-tracking.page';
 import { GlobalModule } from 'src/app/share/share.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { GlobalModule } from 'src/app/share/share.module';
     FormsModule,
     IonicModule,
     TravelRouteTrackingPageRoutingModule,
+    TranslateModule,
     GlobalModule
   ],
   declarations: [TravelRouteTrackingPage]

@@ -14,6 +14,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 import { AlertService } from 'src/app/services/utils/alert.service';
 import { Subscription } from 'rxjs';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
+import { TranslationService } from 'src/app/services/utils/translation.service';
 
 @Component({
   selector: 'app-scan',
@@ -39,11 +40,13 @@ export class ScanPage implements OnInit {
     private openNativeSettings: OpenNativeSettings,
     private storageService: StorageService,
     private travelProcessService: TravelProcessService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private translationService: TranslationService
   ) {
     this.plt.backButton.subscribeWithPriority(10, () => {
       this.navigateService.goToMenu();
     });
+
   }
 
   ngOnInit() {
@@ -74,7 +77,7 @@ export class ScanPage implements OnInit {
   }
 
   async startScanner(): Promise<void> {
-    this.utils.dismissLoader();
+   await this.utils.dismissLoader();
     let hotelId = !!this.storageService.getHotelId();
     const allowed = await this.checkPermission();
     

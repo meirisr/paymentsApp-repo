@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border">
+<ion-header class="ion-no-border" dir="{{'dir'|translate}}">
   <ion-toolbar>
     <app-header-wave></app-header-wave>
     <app-back-btn (click)="goToMenu()"></app-back-btn>
@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid dir="rtl">
+  <ion-grid dir="{{'dir'|translate}}">
     <ion-list>
       <ion-radio-group
         [value]="defaultLang"

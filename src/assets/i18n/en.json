@@ -26,7 +26,9 @@
       "logOut": "Logout"
     },
     "main": {
-      "start-trip": "Start Trip"
+      "startTrip": "Start Trip",
+      "activeTrip": "Active Trip"
+
     },
     "user-details": {
       "updated": "save Changes",
@@ -44,7 +46,16 @@
       "userId":"Card Holder Id",
       "locale":"en-US"
     },
-    "payment": {},
+    "payment": {
+      "payment":"Payment",
+      "numberOfPassengers":"Number Of Passengers",
+      "totalPayment":"Total Payment"
+
+    },
+    "travel-route-tracking":{
+        "endTrip":"End Trip",
+        "activeTrip": "Active Trip"
+    },
     "scan": {
       "scan": "Scan QR"
     },
@@ -76,5 +87,6 @@
   "menu-btn-side": "menu-btn-left",
   "nextBtn": "Next",
   "backBtn": "Back",
+  "backBtn-side": "backBtn-side-left",
   "map": "en"
 }

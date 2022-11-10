@@ -1,12 +1,17 @@
 .back-btn{
   position: absolute;
   top: 2vh;
-  right: 10px;
   z-index: 101;
   background-color: rgba(50, 50, 50,0.4 );
-    border-radius: 30px;
-
-
+  border-radius: 30px;
+  
+}
+.backBtn-side-left{
+  left: 10px;
+  transform: rotate(180deg);
+}
+.backBtn-side-right{
+  right: 10px
 }
 img{
   height: 30px;

@@ -15,7 +15,7 @@ import { UserInfoService } from 'src/app/services/user-info.service';
 })
 export class IntroPage implements OnInit {
   private subscriptions: Subscription[] = [];
-  items: any[] = [{ id: '333', name: 'meir' }];
+  items: any[] = [];
   tempitems: any[] = [];
   selectedHotel: { id: string; name: string } = { id: '', name: '' };
 

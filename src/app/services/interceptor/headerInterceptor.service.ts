@@ -27,22 +27,25 @@ export class HeaderInterceptor implements HttpInterceptor {
 
     this.storageService.getToken().then((tokenVal) => {
        this.TokenValidation(httpRequest, tokenVal);
-    });
-
-    if (
-      httpRequest.url.includes('GetDetailsByVehicle') ||
-      httpRequest.url.includes('get-organization-per-station')
-    ) {
-      return next.handle(httpRequest);
-    }
-    const modifieRequest = httpRequest.clone({
-      headers: httpRequest.headers.append(
-        'Authorization',
-        `Bearer ${this.token}`
-      ),
-    });
-
-    return next.handle(modifieRequest);
+    }).then(()=>{
+      
+    })
+      if (
+        httpRequest.url.includes('GetDetailsByVehicle') ||
+        httpRequest.url.includes('get-organization-per-station')
+      ) {
+        return next.handle(httpRequest);
+      }
+      const modifieRequest = httpRequest.clone({
+        headers: httpRequest.headers.append(
+          'Authorization',
+          `Bearer ${this.token}`
+        ),
+      });
+  
+      return next.handle(modifieRequest);
+   
+    
   }
   TokenValidation =  (httpRequest: HttpRequest<any>, tokenVal: GetResult) => {
     if (tokenVal.value == null && !httpRequest.url.includes('refresh-token')) {
@@ -62,4 +65,9 @@ export class HeaderInterceptor implements HttpInterceptor {
     }
     this.token = tokenVal.value;
   };
+
+  sendHttp=()=>{
+
+    
+  }
 }

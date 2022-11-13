@@ -42,7 +42,7 @@ export class LoginService {
   }
   public isUserPermitToOrganization(
     orgId: string,
-    orgName: string
+    orgName: string 
   ): Observable<any> {
     return this.http
       .get(`${environment.serverUrl}/user/is-permit-to-organization`, {

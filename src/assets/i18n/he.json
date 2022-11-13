@@ -30,6 +30,7 @@
       "activeTrip": "נסיעה פעילה"
     },
     "user-details": {
+      "cancel":"ביטול",
       "updated": " שמירת שינויים",
       "firstName": "שם פרטי",
       "lastName": "שם משפחה",

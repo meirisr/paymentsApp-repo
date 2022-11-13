@@ -28,7 +28,6 @@ const emptyCircleImage: string = '../../../assets/empty-circle.svg';
 export class MapComponent implements AfterViewInit {
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
   private subscriptions: Subscription[] = [];
-  @ViewChild('map') mapRef;
   @Input() height: string;
   @Input() path: [];
   @Input() nearesStationth: any;
@@ -163,21 +162,20 @@ export class MapComponent implements AfterViewInit {
               position.coords.longitude
             );
           });
-          this.removeWatcharkers();
+          // this.removeWatcharkers();
           this.addWatchMarker(latLng.toJSON());
         });
       });
     } else {
       this.watch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
         if (position) {
-          // console.log(position);
           this.ngZone.run(() => {
             latLng = new google.maps.LatLng(
               position.coords.latitude,
               position.coords.longitude
             );
           });
-          this.removeWatcharkers();
+          // this.removeWatcharkers();
           this.addWatchMarker(latLng.toJSON());
         } else {
           console.log(err);
@@ -218,7 +216,7 @@ export class MapComponent implements AfterViewInit {
   async stopTrack() {
     const opt = { id:  this.watch };
     Geolocation.clearWatch(opt).then((result) => {
-      // console.log('result of clear is', result);
+     
     });
   }
  async centerMap() {

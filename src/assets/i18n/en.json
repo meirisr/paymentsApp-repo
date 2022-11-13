@@ -31,6 +31,7 @@
 
     },
     "user-details": {
+      "cancel":"Cancel",
       "updated": "save Changes",
       "firstName": "First Name",
       "lastName": "Last Name",

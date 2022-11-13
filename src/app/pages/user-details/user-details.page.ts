@@ -94,6 +94,9 @@ export class UserDetailsPage implements OnInit {
     const day = value.split('-')[2].split('T')[0];
     this.date = day + '/' + month + '/' + year;
   }
+  onCancel(){
+    this.goToUserProfile()
+  }
   // async presentModal(): Promise<HTMLIonModalElement> {
   //   const modal = await this.modalController.create({
   //     component: LoginStepsNavbarComponent,

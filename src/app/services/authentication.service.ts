@@ -29,7 +29,7 @@ export class AuthenticationService {
     private utils: UtilsService
   ) {}
 
-  getDataFromStorage = async (): Promise<void> => {
+  getDataFromStorage = async(): Promise<void> => {
     this.token = await this.storageService.getToken();
     this.refreshToken = await this.storageService.getRefreshToken();
     this.hotelId = await this.storageService.getHotelId();

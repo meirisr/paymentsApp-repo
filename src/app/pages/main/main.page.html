@@ -1,23 +1,29 @@
 <ion-header class="ion-no-border">
-  <div class="toolbar-container">
-    <app-header-wave [big]="true" [text]="headerText"></app-header-wave>
-    
+  <!-- <div class="toolbar-container"> -->
+    <!-- <app-header-wave [big]="true" [text]="headerText"></app-header-wave> -->
+  <ion-toolbar>
       <ion-menu-button  menu="main" class="{{'menu-btn-side'|translate}}">
         <ion-img src="../../../assets/menu-btn.svg"></ion-img>
       </ion-menu-button>
-    </div>
+    </ion-toolbar>
+    <!-- </div> -->
  
 </ion-header>
 <ion-content dir="{{'dir'|translate}}">
-  <div *ngIf="noData" class="card-container ion-activatable" (click)="onClick()">
-    <ion-card>
-      <ion-card-header>
-        <img src="../../../assets/scan.svg" />
-        <ion-card-title>{{'pages.main.startTrip'|translate}}</ion-card-title>
-      </ion-card-header>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-card>
-  </div>
+  <ng-container *ngIf="noData">
+    <div style="text-align:center ;"><h3>{{'pages.main.startTrip'|translate}}</h3></div>
+    <div  class="card-container ion-activatable" (click)="onClick()">
+      <ion-card>
+        <ion-card-header>
+          <img src="../../../assets/scan.svg" />
+     
+        </ion-card-header>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-card>
+    </div>
+
+  </ng-container>
+
   <!-- <ion-row *ngIf="!noData" class="ion-text-center ion-padding alert-row ion-activatable"
   (click)="onActiveTrip()">
     <ion-col class=""> -->

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, NavController, Platform } from '@ionic/angular';
-import { userStoregeObj } from 'src/app/services/storage.service';
+import { StorageService, userStoregeObj } from 'src/app/services/storage.service';
 import { Storage } from '@capacitor/storage';
 import { App } from '@capacitor/app';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
@@ -13,7 +13,8 @@ import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.serv
 
 export class MenuPage {
   prefersDark: string;
-  userDetalis: object;
+  userEmail:string='';
+  userName:string='';
   isrLogo: string = '../../../assets/images/isrLogo.png';
   mapOptions: google.maps.MapOptions = {
     center: { lat: 31.79476, lng: 35.18761 },
@@ -23,8 +24,10 @@ export class MenuPage {
     private alertController: AlertController,
     private platform: Platform,
     private navigateService: NavigateHlperService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    private storageService: StorageService,
   ) {
+    
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateBack('/info', { replaceUrl: true });
     });
@@ -33,6 +36,7 @@ export class MenuPage {
   }
 
   ngAfterViewInit(): void {
+    this.getuserInfo()
     this.hideSplashScreen();
   }
   async hideSplashScreen(): Promise<void> {}
@@ -60,6 +64,9 @@ export class MenuPage {
   creditCardDetails(): void {
     this.navigateService.goToCCDetails();
   }
+  onEdit():void{
+    this.navigateService.goToUserDetails();
+  }
   toggleDarkTheme(matchesMode): void {
     this.prefersDark = matchesMode;
   }
@@ -82,4 +89,16 @@ export class MenuPage {
     });
     await alert.present();
   }
+  async getuserInfo(): Promise<void> {
+    this.userEmail = (JSON.parse(
+      (await this.storageService.getUserDetails()).value).email
+    );
+    let firtName = (JSON.parse(
+      (await this.storageService.getUserDetails()).value).firstName
+    );
+    let lastName = (JSON.parse(
+      (await this.storageService.getUserDetails()).value).lastName
+    );
+    this.userName=firtName+' '+lastName;
+}
 }

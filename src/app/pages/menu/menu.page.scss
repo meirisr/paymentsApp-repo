@@ -2,10 +2,37 @@ ion-menu-button{
 position: absolute;
 top: 25px;
 }
+ion-header ,ion-list{
+  background: #fff;
+}
+ion-content,ion-item{
+  --background: #fff;
+}
+ion-label,ion-icon{
+  color: #000 !important;
+}
+ion-label.userEmail{
+  color:#FFB300 !important;
+}
+ion-text.userName{
+  display: block;
+  font-weight: bold;
+  color: #000 ;
+}
+.image-center{
+  margin: 0vh auto;
+  margin-bottom:5vh;
+  text-align: center;
+  position: relative;
+  }
+.avatar-user{
+  margin: 0vh auto;
+    width: 30%;
+  }
 
 .toolbar-container{
   height:75px !important ;
-  margin-bottom: 5vh !important;
+  // margin-bottom: 5vh !important;
 }
 
 .my-custom-menu {
@@ -14,7 +41,7 @@ top: 25px;
 
 .nemu-text{
 
-   color: #fff; ;
+  //  color: #fff; ;
 }
 section {
   margin-top: 5em;

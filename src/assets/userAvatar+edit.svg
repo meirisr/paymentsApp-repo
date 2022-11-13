@@ -1,0 +1,11 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="116.5" height="129.792" viewBox="0 0 116.5 129.792">
+  <g id="Group_3151" data-name="Group 3151" transform="translate(-136.75 -102.757)">
+    <path id="user-avatar-filled" d="M60.5,2.25A58.25,58.25,0,1,0,118.75,60.5,58.25,58.25,0,0,0,60.5,2.25Zm0,20.8a18.681,18.681,0,1,1-13.254,5.471A18.725,18.725,0,0,1,60.5,23.054Zm33.286,74.56a49.637,49.637,0,0,1-66.571,0V95.2a21.636,21.636,0,0,1,20.8-22.22H72.982a21.676,21.676,0,0,1,20.8,22.094Z" transform="translate(134.5 100.507)" fill="#767676"/>
+    <g id="Rectangle_2318" data-name="Rectangle 2318" transform="translate(181.25 200.549)" fill="#fff" stroke="#ffb300" stroke-width="1">
+      <rect width="32" height="32" rx="4" stroke="none"/>
+      <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" fill="none"/>
+    </g>
+    <path id="edit" d="M0,11.743,9.116,2.627l3.09,3.09L3.09,14.833H0ZM14.6,3.322,13.1,4.829l-3.09-3.09L11.512.232a.839.839,0,0,1,1.159,0L14.6,2.164a.786.786,0,0,1,.232.579A.786.786,0,0,1,14.6,3.322Z" transform="translate(189.363 208.904)" fill="#ffb300"/>
+  </g>
+</svg>

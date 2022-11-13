@@ -13,6 +13,14 @@
   <ion-content dir="{{'dir'|translate}}">
     <ion-list>
       <ion-menu-toggle autoHide="true">
+        <div class="image-center">
+          <div class="avatar-user ion-activatable ripple-parent circle" (click)="onEdit()">
+            <img  alt="" src="../../../assets/userAvatar+edit.svg" />
+            <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+          </div>
+          <ion-text class="userName">{{this.userName}}</ion-text>
+          <ion-label class="userEmail">{{this.userEmail}}</ion-label>
+        </div>
         <ion-item
           lines="none"
           button

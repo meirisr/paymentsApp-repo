@@ -1,18 +1,35 @@
-<ion-header class="ion-no-border" style="height: 10vh">
-  <ion-toolbar>
-    <!-- <app-header-wave></app-header-wave> -->
+<!-- <ion-header class="ion-no-border" style="height: 10vh; " >
+  <ion-toolbar >
+    <app-header-wave></app-header-wave>
     <app-back-btn (click)="goToUserProfile()"></app-back-btn>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content>
-  <form
+<ion-content  dir="{{'dir'|translate}}">
+  <ion-item lines="none">
+    <ion-text slot="start"><h5>{{'pages.user-details.personalInformation'|translate}}</h5></ion-text> 
+    <ion-button fill="outline" size="default" slot="end"  (click)="onCancel()">{{'pages.user-details.cancel'|translate}}</ion-button>
+  </ion-item>
+  <div class="image-center">
+    <img  alt="" src="../../../assets/userAvatar+edit.svg" />
+  </div>
+ 
+  <!-- <ion-avatar class="image-center">
+    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+    <div class="edit-btn"><img
+      width="25"
+      height="auto"
+       src="../../../assets/edit.svg"
+     /></div>
+  </ion-avatar> -->
+  <form 
     dir="{{'dir'|translate}}"
     class="user-details-Form"
     [formGroup]="userDetails"
     (ngSubmit)="updateUserInfo()"
   >
-    <h1>{{'pages.user-details.personalInformation'|translate}}</h1>
+ 
+  <div class="form-inputs-container" >
     <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
@@ -76,5 +93,6 @@
         text="{{'pages.user-details.updated'|translate}}"
       ></app-main-btn>
     </div>
+  </div>
   </form>
 </ion-content>

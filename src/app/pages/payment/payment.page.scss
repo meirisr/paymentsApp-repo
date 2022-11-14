@@ -14,7 +14,7 @@ ion-item{
 
 .payment-body{
   position: fixed;
-  top: 7vh;
+  bottom: 2vh;
   height: 42vh;
   width: 90vw;
   overflow: hidden;
@@ -22,6 +22,8 @@ ion-item{
   z-index: 1;
   border-radius: 10px;
   transition: height 300ms;
+  box-shadow: 0px 3px 6px #18171740;
+  color: #000;
   
 }
 .payment-body:before,
@@ -30,14 +32,20 @@ div:after {
   position: absolute;
 }
 .payment-body:before {
-  top: -132px;
-  width: 80px;
-  height: 148px;
+  top: -125px;
+  width: 70px;
+  height: 140px;
   border-radius: 63%;
-  box-shadow: 0px 0px 0px 10000px #091d31;
+  box-shadow: 0px 0px 1px #d7d8da, 0px 0px 5px #dee2e6, 0px 0px 0px #d7d8da, 0px 0px 0px 10000px #f9fafb;
   z-index: -1;
   left: 50%;
   transform: translateX(-50%);
+}
+ion-icon.blackIcon{
+  color: #000 !important;
+}
+ion-icon.grayIcon{
+  color: #CECECE !important;
 }
 // .payment-body:before,
 // div:after {
@@ -55,7 +63,7 @@ div:after {
 // }
 
 .item-background-color{
-  --ion-item-background: #50c8ff;
+  --ion-item-background: #FFB300;
   margin-right: 2%;
   margin-top: 5%;
   border-radius: 10%;
@@ -74,7 +82,7 @@ div:after {
   
 }
 hr {
-  
+  display: none;
   border: 0;
   border-top: 0.5px solid rgba(0, 0, 0, 0.1);
   margin:0 5%;
@@ -85,24 +93,35 @@ hr {
   left: 48%;
 }
 
-
+.addBtn{
+  --background: #FFB300;
+  --color: #000;
+  --border-radius:  6px;
+  width: 8vw;
+  height: 4vh;
+}
 .removeBtn{
   color: var(--color);
-  --border-color:  #3dc2ff;
+  --border-color:  #CECECE;
+  --border-radius: 6px;
   --background: transparent;
-  --color: #3dc2ff;
-  --border-width: 2px;
+    width: 8vw;
+    height: 4vh;
+    --border-width: 2px;
     --border-style: solid;
     --box-shadow: none;
     --background-activated: transparent;
-    --background-focused: var(--ion-color-primary, #3dc2ff);
-    --background-hover: var(--ion-color-primary, #3dc2ff);
-    --background-activated-opacity: 0;
-    --background-focused-opacity: 0.12;
-    --background-hover-opacity: 0.04;
+    
 }
 .footer-container {
   position: absolute;
   bottom: 3vh;
   display: flex;
+}
+.payBtn{
+  width: 100vw;
+  position: absolute;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
 }

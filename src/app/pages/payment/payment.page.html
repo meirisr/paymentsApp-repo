@@ -34,30 +34,34 @@
           <div style="display: flex; justify-content: space-evenly">
             <ion-fab-button
               class="addBtn"
-              color="secondary"
               size="small"
               (click)="addPassengers()"
             >
-              <ion-icon name="add"></ion-icon>
+              <ion-icon class="blackIcon" name="add"></ion-icon>
             </ion-fab-button>
 
-            <h2 style="margin-top: 13px">{{numOfPassengers}}</h2>
+            <h4 style="margin-top: 10px">{{numOfPassengers}}</h4>
 
             <ion-fab-button
               class="removeBtn"
               size="small"
               (click)="removePassengers()"
             >
-              <ion-icon name="remove"></ion-icon>
+              <ion-icon class="grayIcon"  name="remove"></ion-icon>
             </ion-fab-button>
           </div>
         </ion-col>
         <ion-col><h4>{{'pages.payment.numberOfPassengers'|translate}}</h4></ion-col>
       </ion-row>
       <ion-row>
-        <ion-col></ion-col>
+        <ion-col style="text-align: center;"><h2>&#8362;&nbsp;{{numOfPassengers*5}}.00</h2></ion-col>
         <ion-col><h4>{{'pages.payment.totalPayment'|translate}}</h4></ion-col>
       </ion-row>
+      <app-main-btn class="payBtn"
+      type="click"
+      text="שלם"
+      (click)="onSubmit()"
+    ></app-main-btn>
     </ion-grid>
   </div>
     <!-- <div style="margin-left: 20px"> -->
@@ -66,12 +70,7 @@
   
 </ion-content>
 <div class="footer-container">
-  <app-main-btn
-    style="width: 100vw"
-    type="click"
-    text="שלם"
-    (click)="onSubmit()"
-  ></app-main-btn>
+ 
 </div>
 
 <!-- <div style="margin-left: 20px">

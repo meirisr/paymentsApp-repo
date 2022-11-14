@@ -88,4 +88,10 @@ export class CreditCardDetailsPage implements OnInit {
   goToUserProfile(): void {
     this.navigateService.goToUserProfile();
   }
+  goToMenu(): void {
+    this.navigateService.goToMenu();
+  }
+  onCancel(){
+    this.goToMenu()
+  }
 }

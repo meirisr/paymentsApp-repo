@@ -19,7 +19,7 @@
     "menu": {
       "settings": "הגדרות",
       "userDetails": "פרטי משתמש ",
-      "creditCardDetails": "פרטי כרטיס אשראי",
+      "PaymentDetails": "פרטי  תשלום",
       "scan": "סריקה",
       "map": "מפה",
       "history": "היסטורית נסיעות",
@@ -31,15 +31,16 @@
     },
     "user-details": {
       "cancel":"ביטול",
-      "updated": " שמירת שינויים",
+      "updated": "עדכון",
       "firstName": "שם פרטי",
       "lastName": "שם משפחה",
       "email": "מייל ליצירת קשר",
       "personalInformation":"פרטים אישיים"
     },
     "credit-card-details": {
-      "ccDetails":"פרטי אשראי",
-      "updated": " שמירת שינויים",
+      "cancel":"ביטול",
+      "PaymentDetails": "פרטי תשלום",
+      "updated": " עדכון",
       "ccNumber": "מספר אשראי",
       "validity": "תוקף",
       "cvs": "3 ספרות בגב הכרטיס",
@@ -84,6 +85,7 @@
   "search-icon-side": "icon-left",
   "menu-btn-side": "menu-btn-right",
   "side": "end",
+  "menuSide": "end",
   "nextBtn": "המשך",
   "backBtn": "חזור",
   "backBtn-side": "backBtn-side-right",

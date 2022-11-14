@@ -1,11 +1,29 @@
-<ion-header class="ion-no-border">
+<!-- <ion-header class="ion-no-border">
   <ion-toolbar>
     <app-back-btn (click)="goToMenu()"></app-back-btn>
   </ion-toolbar>
-</ion-header>
-<ion-content>
+</ion-header> -->
+<ion-header class="ion-no-border"  dir="{{'dir'|translate}}">
+  <ion-item class="header" lines="none" >
  
-  <!-- <ion-list>
+    <ion-menu-button   menu="main" class="{{'menu-btn-side'|translate}}">
+      <ion-img src="../../../assets/menu-btn.svg"></ion-img>
+    </ion-menu-button>
+    <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"><h5>{{'pages.credit-card-details.PaymentDetails'|translate}}</h5></ion-text> 
+    </ion-item>
+    <ion-list>
+      <ion-item class="select">
+        <ion-select [value]="selectValue"  placeholder=""   (ionChange)="handleChange($event)" >
+          <ion-select-option value="all">הכל</ion-select-option>
+          <ion-select-option value="oranges">Oranges</ion-select-option>
+          <ion-select-option value="bananas">Bananas</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+</ion-header>
+<ion-content dir="{{'dir'|translate}}">
+ 
+  <ion-list>
     <ng-container *ngFor="let trip of historyCards">
       <ion-item *ngIf="!trip.paymentCompleted" lines="none">
         <ion-card
@@ -14,9 +32,9 @@
           [class.redCard]="!trip.paymentCompleted"
         >
           <ion-card-header>
-            <ion-title class="card-title">לא שולם</ion-title>
+            <ion-title class="card-title">{{'pages.history.notPaid'|translate}}</ion-title>
             <ion-card-subtitle
-              >תאריך:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
+              >{{'pages.history.date'|translate}}:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
             >
             <ion-card-subtitle>
               תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
@@ -24,47 +42,15 @@
             >
           </ion-card-header>
 
-          <ion-button ion-button fill="clear" (click)="tripPay(trip)"
-            >לתשלום</ion-button
+          <ion-button ion-button fill="clear" (click)="tripPay()"
+            >{{'pages.history.payNow'|translate}}</ion-button
           >
         </ion-card>
       </ion-item>
     </ng-container>
-  </ion-list> -->
+  </ion-list>
 
-  <ion-accordion-group *ngIf="historyCardsIds.length"  expand="inset"  dir="{{'dir'|translate}}"  [value]="historyCardsIds">
-    <ion-button  ion-button fill="outline" (click)="tripPay()" 
-    >{{'pages.history.payNow'|translate}}</ion-button>
-    <ion-accordion *ngFor="let trip of historyCards; let i=index" value="{{trip.id}}">
-      <ion-item *ngIf="!trip.paymentCompleted" slot="header">
-        <ion-label>{{formatDate(trip)}}</ion-label>
-        <ion-label>{{'pages.history.notPaid'|translate}}</ion-label>
-       
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <ion-card
-        class="histoy-card"
-        dir="{{'dir'|translate}}"
-        [class.redCard]="!trip.paymentCompleted"
-      >
-        <ion-card-header>
-          <ion-title class="card-title">{{'pages.history.notPaid'|translate}}</ion-title>
-          <ion-card-subtitle
-            >{{'pages.history.date'|translate}}:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
-          >
-          <ion-card-subtitle>
-            {{'pages.history.payment'|translate}}:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
-            }}</ion-card-subtitle
-          >
-        </ion-card-header>
-        <!-- <ion-button ion-button fill="clear" (click)="tripPay(trip)"
-        >{{'pages.history.payNow'|translate}}</ion-button> -->
-      </ion-card>
-      </div>
-    </ion-accordion>
-    
-  </ion-accordion-group>
-  <!-- <ion-list>
+    <ion-list>
     <ng-container *ngFor="let trip of historyCards">
       <ion-item *ngIf="trip.paymentCompleted" lines="none">
         <ion-card
@@ -73,9 +59,9 @@
           [class.redCard]="!trip.paymentCompleted"
         >
           <ion-card-header>
-            <ion-title class="card-title">שולם</ion-title>
+            <ion-title class="card-title">{{'pages.history.paid'|translate}}</ion-title>
             <ion-card-subtitle
-              >תאריך:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
+              >{{'pages.history.date'|translate}}:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
             >
             <ion-card-subtitle>
               תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
@@ -85,32 +71,6 @@
         </ion-card>
       </ion-item>
     </ng-container>
-  </ion-list> -->
-  <ion-accordion-group *ngIf="historyCards.length" expand="inset"  dir="{{'dir'|translate}}" >
-    <ion-accordion *ngFor="let trip of historyCards; let i=index" value="{{trip.id}}">
-      <ion-item *ngIf="trip.paymentCompleted" slot="header">
-        <ion-label>{{formatDate(trip)}}</ion-label>
-        <ion-label>{{'pages.history.paid'|translate}}</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <ion-card
-        class="histoy-card"
-        dir="{{'dir'|translate}}"
-        [class.redCard]="!trip.paymentCompleted"
-      >
-        <ion-card-header>
-          <ion-title class="card-title">{{'pages.history.paid'|translate}}</ion-title>
-          <ion-card-subtitle
-            >תאריך:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
-          >
-          <ion-card-subtitle>
-            תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
-            }}</ion-card-subtitle
-          >
-        </ion-card-header>
-      </ion-card>
-      </div>
-    </ion-accordion>
-    
-  </ion-accordion-group>
+  </ion-list>
+ 
 </ion-content>

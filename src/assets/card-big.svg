@@ -1,0 +1,7 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="90" viewBox="0 0 120 90">
+  <g id="credit-card-2-back-fill" transform="translate(0 -4.5)">
+    <path id="Path_6864" data-name="Path 6864" d="M0,19.5a15,15,0,0,1,15-15h90a15,15,0,0,1,15,15V57H0ZM86.25,27a3.75,3.75,0,0,0-3.75,3.75v7.5A3.75,3.75,0,0,0,86.25,42h15A3.75,3.75,0,0,0,105,38.25v-7.5A3.75,3.75,0,0,0,101.25,27Z" transform="translate(0 0)" fill="#767676" fill-rule="evenodd"/>
+    <path id="Path_6865" data-name="Path 6865" d="M0,24.75v7.5a15,15,0,0,0,15,15h90a15,15,0,0,0,15-15v-7.5Z" transform="translate(0 47.25)" fill="#767676"/>
+  </g>
+</svg>

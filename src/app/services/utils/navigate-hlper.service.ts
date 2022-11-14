@@ -40,7 +40,7 @@ goToSettings=()=>{
   this.navCtrl.navigateRoot(['/settings'],{replaceUrl:true})
 }
 goToHistory=()=>{
-  this.navCtrl.navigateRoot(['/history'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/menu/history'],{replaceUrl:true})
 }
 goToHistoryPay=()=>{
   this.navCtrl.navigateRoot(['/history-pay'],{replaceUrl:true})

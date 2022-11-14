@@ -1,11 +1,18 @@
-<ion-header class="ion-no-border" style="height: 10vh">
+<!-- <ion-header class="ion-no-border" style="height: 10vh">
   <ion-toolbar>
-    <!-- <app-header-wave></app-header-wave> -->
+    <app-header-wave></app-header-wave>
     <app-back-btn (click)="goToUserProfile()"></app-back-btn>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content>
+<ion-content  dir="{{'dir'|translate}}">
+  <ion-item lines="none">
+    <ion-text slot="start"><h5>{{'pages.credit-card-details.PaymentDetails'|translate}}</h5></ion-text> 
+    <ion-button fill="outline" size="default" slot="end"  (click)="onCancel()">{{'pages.credit-card-details.cancel'|translate}}</ion-button>
+  </ion-item>
+  <div class="image-center">
+    <img  alt="" src="../../../assets/card-big.svg" />
+  </div>
   <!-- <app-header-wave [big]="true"></app-header-wave>
   <app-back-btn (click)="goToUserProfile()"></app-back-btn> -->
   <!-- <app-credit-card
@@ -22,69 +29,78 @@
     [formGroup]="cardDetails"
     (ngSubmit)="updateCreditCard()"
   >
-    <h1>{{'pages.credit-card-details.ccDetails'|translate}}</h1>
+    
     <div class="input-group">
-      <ion-input
+      <label class="fluatingLabel">
+        <ion-input
         (keyup)="cardNumKeyUp($event)"
-        placeholder="{{'pages.credit-card-details.ccNumber'|translate}}"
-        type="tel"
-        inputmode="numeric"
-        oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-        id="cardNum"
-        formControlName="cardNum"
-        required
-      ></ion-input>
+          class="input"
+          type="tel"
+          id="cardNum"
+          inputmode="numeric"
+          formControlName="cardNum"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+          required
+        ></ion-input>
+        <span class="labelSpan"
+          >{{'pages.credit-card-details.ccNumber'|translate}}
+        </span>
+      </label>
     </div>
 
     <div class="input-group">
-      <ion-input
-        placeholder="{{'pages.credit-card-details.validity'|translate}}"
-        type="text"
-        [value]="date"
-        id="open-date-modal"
-        formControlName="date"
-        required
-   
-      ></ion-input>
+      <label class="fluatingLabel">
+        <ion-input
+          class="input"
+          type="text"
+          [value]="date"
+          id="open-date-modal"
+          inputmode="numeric"
+          formControlName="date"
+          required
+        ></ion-input>
+        <span class="labelSpan"
+          >{{'pages.credit-card-details.validity'|translate}}
+        </span>
+      </label>
     </div>
     <div class="input-group">
-      <ion-input
+      <label class="fluatingLabel">
+        <ion-input
         (ionFocus)="cvSInputFocus()"
         (ionBlur)="cvSInputUnFocus()"
         (keyup)="cardCvsKeyUp($event)"
-        placeholder="{{'pages.credit-card-details.cvs'|translate}}"
-        type="tel"
-        inputmode="numeric"
+          class="input"
+          type="tel"
+          inputmode="numeric"
         oninput="this.value=this.value.replace(/[^0-9]/g,'');"
         id="csvNum"
         formControlName="csvNum"
         maxlength="3"
         minlength="3"
-        required
-      ></ion-input>
+          required
+        ></ion-input>
+        <span class="labelSpan"
+          >{{'pages.credit-card-details.cvs'|translate}}
+        </span>
+      </label>
     </div>
     <div class="input-group">
-      <ion-input
-        placeholder="{{'pages.credit-card-details.userId'|translate}}"
-        type="tel"
-        id="userId"
-        formControlName="userId"
-        inputmode="numeric"
-        oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-        required
-      ></ion-input>
+      <label class="fluatingLabel">
+        <ion-input
+          class="input"
+          type="tel"
+          id="userId"
+          formControlName="userId"
+          inputmode="numeric"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+          required
+        ></ion-input>
+        <span class="labelSpan"
+          >{{'pages.credit-card-details.userId'|translate}}
+        </span>
+      </label>
     </div>
-
-    <!-- <div class="input-group">
-      <ion-input
-        (keyup)="userNameKeyUp($event)"
-        placeholder="שם בעל הכרטיס"
-        type="text"
-        id="userName"
-        formControlName="userName"
-        required
-      ></ion-input>
-    </div> -->
 
     <ion-modal
       trigger="open-date-modal"

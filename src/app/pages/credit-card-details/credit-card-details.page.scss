@@ -1,6 +1,31 @@
-.card-details-Form {
-  margin-top: 8vh;
+ion-header{
+  background: #fff;
+}
+ion-content{
+  --background:#fff;
+}
+ion-item{
+  --background: #fff;
+  margin-top: 3vh;
+  
+}
+ion-text{
+  color: #000 !important;
+  font-weight:bold;
+}
+ion-button{
+  color: var(--ion-color-btn);
+  --border-color: white;
+  background: #fff;
+  
+
+}
+
+.card-details-Form{
+  margin-top: 3vh;
   padding: 0 10vw;
+  background:white;
+   color: #000;
 }
 
 ion-modal {
@@ -32,9 +57,7 @@ ion-datetime {
 ion-input {
   --padding-end: 10px;
 }
-ion-button {
-  --background: var(--ion-color-btn);
-}
+
 app-header-wave {
   position: fixed;
   top: 0;
@@ -56,4 +79,32 @@ form ion-input.sc-ion-input-md-h:hover{
 form .input-group {
   margin-top: 5vh;
 }
+.image-center{
+  margin: 5vh auto;
+  height: 15vh;
+  width: 30vw;
+  position: relative;
+  }
+  .fluatingLabel {
+    width: 100%;
+    position: relative;
+  }
+  .flutingLabel {
+    width: 100%;
+    position: relative;
+  }
+  span {
+    display: inline-block;
+    position: absolute;
+    margin: -30px 8px 0 8px;
+    transition: all 0.1s ease-in-out;
+  }
+  
+  form ion-input.sc-ion-input-md-h:focus-within+span,
+  form ion-input.sc-ion-input-md-h.has-value+span {
+    font-size: 12px;
+    padding: 0 2px;
+    z-index: 2;
+    margin: -52px 8px 0 8px;
+  }
 

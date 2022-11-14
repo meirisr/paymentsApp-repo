@@ -14,6 +14,7 @@ export class HistoryPage implements OnInit {
   private subscriptions: Subscription[] = [];
   historyCards: any[] = [];
   historyCardsIds: any[] = [];
+  selectValue:string='all';
 
   constructor(
     private plt: Platform,
@@ -63,5 +64,9 @@ export class HistoryPage implements OnInit {
     const month = date.getMonth() + 1;
     const day = date.getDate();
     return day + '.' + month + '.' + year;
+  }
+  handleChange(e){
+    this.selectValue=e.target.value
+console.log(e.target.value)
   }
 }

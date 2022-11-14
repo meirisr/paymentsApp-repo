@@ -19,7 +19,7 @@
     "menu": {
       "settings": "Settings",
       "userDetails": "User Details",
-      "creditCardDetails": "Credit Card Details",
+      "PaymentDetails": "Payment details",
       "scan": "Scan",
       "map": "Map",
       "history": "Travel History",
@@ -39,7 +39,8 @@
       "personalInformation":"Personal Information"
     },
     "credit-card-details": {
-      "ccDetails":"Credit Card Details",
+      "cancel":"Cancel",
+      "PaymentDetails": "Payment details",
       "updated": "save Changes",
       "ccNumber": "Credit Card Number",
       "validity": "Card validity",
@@ -84,6 +85,7 @@
   },
   "dir": "ltr",
   "side": "start",
+  "menuSide": "end",
   "search-icon-side": "icon-right",
   "menu-btn-side": "menu-btn-left",
   "nextBtn": "Next",

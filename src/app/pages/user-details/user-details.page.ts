@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, IonDatetime, Platform } from '@ionic/angular';
-import { from } from 'rxjs';
+import { from, Subscription } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
@@ -13,6 +13,7 @@ import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.serv
   styleUrls: ['./user-details.page.scss'],
 })
 export class UserDetailsPage implements OnInit {
+  private subscriptions: Subscription[] = [];
   @ViewChild(IonDatetime) dateTime: IonDatetime;
   date: string = '';
   public userDetails: FormGroup;
@@ -42,12 +43,22 @@ export class UserDetailsPage implements OnInit {
   }
 
   async updateUserInfo(): Promise<void> {
-    from(this.userInfoServer.updateUserInfo(this.userDetails.value)).subscribe(
+   let updateUserInfo$= from(this.userInfoServer.updateUserInfo(this.userDetails.value)).subscribe(
       async () => {
-        this.getuserInfo().then(() => {
-          this.goToUserProfile();
-        });
+        let userDetailsSubscription$ = this.userInfoServer.userDetails.subscribe(
+          (data) => {
+            this.userDetails.setValue({
+              firstName: data.firstName,
+              lastName: data.lastName,
+              userId: '',
+              userDate: 'DD/MM/YY',
+              email: data.email,
+            });
+          }
+        );
+        this.subscriptions.push(userDetailsSubscription$);
       },
+      
       async (res) => {
         const alert = await this.alertController.create({
           header: 'Update failed',
@@ -57,12 +68,14 @@ export class UserDetailsPage implements OnInit {
         await alert.present();
       }
     );
+    this.subscriptions.push(updateUserInfo$);
   }
   async getuserInfo(): Promise<void> {
+   
     let userDetails = JSON.parse(
       (await this.storageService.getUserDetails()).value
     );
-
+    console.log(userDetails)
     this.userDetails.setValue({
       firstName: userDetails.firstName,
       lastName: userDetails.lastName,
@@ -70,6 +83,7 @@ export class UserDetailsPage implements OnInit {
       userDate: 'DD/MM/YY',
       email: userDetails.email,
     });
+
   }
   goToUserProfile(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -95,7 +109,10 @@ export class UserDetailsPage implements OnInit {
     this.date = day + '/' + month + '/' + year;
   }
   onCancel(){
-    this.goToUserProfile()
+    this.goToMenu()
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
   // async presentModal(): Promise<HTMLIonModalElement> {
   //   const modal = await this.modalController.create({

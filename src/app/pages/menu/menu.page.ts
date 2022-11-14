@@ -15,6 +15,7 @@ export class MenuPage {
   prefersDark: string;
   userEmail:string='';
   userName:string='';
+  cardLast4Digits:string='';
   isrLogo: string = '../../../assets/images/isrLogo.png';
   mapOptions: google.maps.MapOptions = {
     center: { lat: 31.79476, lng: 35.18761 },
@@ -100,5 +101,8 @@ export class MenuPage {
       (await this.storageService.getUserDetails()).value).lastName
     );
     this.userName=firtName+' '+lastName;
+    this.cardLast4Digits = (JSON.parse(
+      (await this.storageService.getCreditCard4Dig()).value)
+    );
 }
 }

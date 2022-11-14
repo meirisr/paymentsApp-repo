@@ -81,12 +81,12 @@ const routes: Routes = [
       ),
     canLoad: [AuthGuard],
   },
-  {
-    path: 'history',
-    loadChildren: () =>
-      import('./pages/history/history.module').then((m) => m.HistoryPageModule),
-    canLoad: [AuthGuard],
-  },
+  // {
+  //   path: 'history',
+  //   loadChildren: () =>
+  //     import('./pages/history/history.module').then((m) => m.HistoryPageModule),
+  //   canLoad: [AuthGuard],
+  // },
   {
     path: 'history-pay',
     loadChildren: () =>

@@ -15,6 +15,12 @@ const routes: Routes = [
           import('../main/main.module').then((m) => m.MainPageModule),
         canLoad: [AuthGuard],
       },
+      {
+        path: 'history',
+        loadChildren: () =>
+          import('../history/history.module').then((m) => m.HistoryPageModule),
+        canLoad: [AuthGuard],
+      },
     ],
   },
 ];

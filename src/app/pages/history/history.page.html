@@ -9,17 +9,24 @@
     <ion-menu-button   menu="main" class="{{'menu-btn-side'|translate}}">
       <ion-img src="../../../assets/menu-btn.svg"></ion-img>
     </ion-menu-button>
-    <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"><h5>{{'pages.credit-card-details.PaymentDetails'|translate}}</h5></ion-text> 
+    <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"><h5>{{'pages.history.travelHistory'|translate}}</h5></ion-text> 
     </ion-item>
-    <ion-list>
+    <ion-list  dir="{{'dir'|translate}}">
       <ion-item class="select">
-        <ion-select [value]="selectValue"  placeholder=""   (ionChange)="handleChange($event)" >
-          <ion-select-option value="all">הכל</ion-select-option>
-          <ion-select-option value="oranges">Oranges</ion-select-option>
-          <ion-select-option value="bananas">Bananas</ion-select-option>
+        <ion-label>{{'pages.history.filtering'|translate}}</ion-label>
+        <ion-select interface="popover" [value]="selectValue"  placeholder=""   (ionChange)="handleChange($event)" >
+          <ion-select-option value="all">{{'pages.history.all'|translate}}</ion-select-option>
+          <ion-select-option value="month">{{'pages.history.currentMonth'|translate}}</ion-select-option>
+          <ion-select-option value="today">{{'pages.history.today'|translate}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
+    <ion-list>
+    <ion-item lines="none" style="margin:0 3vw ;">
+      <ion-text style="font-weight:bold;">{{'pages.history.details'|translate}}</ion-text>
+      <ion-text>({{historyCards.length}}&nbsp;{{'pages.history.trips'|translate}})</ion-text>
+    </ion-item>
+  </ion-list>
 </ion-header>
 <ion-content dir="{{'dir'|translate}}">
  

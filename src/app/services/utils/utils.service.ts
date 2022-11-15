@@ -43,13 +43,14 @@ export class UtilsService {
         Storage.set({ key: USER_LANGUAGE, value: 'en' });
         this.userLang.value = 'en';
         this.defaultLang = 'en';
+        document.querySelector('body').style.direction='ltr';
         break;
       case 'he':
         this.translate.use('he');
         Storage.set({ key: USER_LANGUAGE, value: 'he' });
         this.userLang.value = 'he';
-
         this.defaultLang = 'he';
+        document.querySelector('body').style.direction='rtl';
         break;
       // default:
       //   this.translate.use('he');
@@ -62,13 +63,15 @@ export class UtilsService {
 
   async getUserLanguage(): Promise<string> {
     this.userLang = await Storage.get({ key: USER_LANGUAGE });
-    if (this.userLang.value =='en') {
+    if (this.userLang.value =='en'){
       this.translate.use('en');
       this.defaultLang ='en';
+      document.querySelector('body').style.direction='ltr';
       return 'en';
     } else {
       this.translate.use('he');
       this.defaultLang='he';
+      document.querySelector('body').style.direction='rtl';
       return 'he';
     }
   }

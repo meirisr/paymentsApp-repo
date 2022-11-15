@@ -71,11 +71,18 @@
       "email": "מייל"
     },
     "history":{
+      "travelHistory":"הסטוריית נסיעות",
       "paid":"שולם",
       "notPaid":"לא שולם",
       "date":"תאריך",
       "payment":"תשלום",
-      "payNow":"לתשלום"
+      "payNow":"לתשלום",
+      "currentMonth":"חודש נוכחי",
+      "all":"הכל",
+      "today":"היום",
+      "filtering":"סינון",
+      "details":"פירוט",
+      "trips":"נסיעות"
     },
     "history-pay":{
       "travelDetails":"פרטי נסיעה"

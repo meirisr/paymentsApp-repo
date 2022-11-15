@@ -68,14 +68,15 @@ export class UserInfoService {
         }
       );
   }
-  public getUserHistory(): Observable<any> {
+  public getUserHistory(after:string): Observable<any> {
     var date = new Date();
+    let afterDate= after =='today'? Date.now():(after=='month'? Date.UTC(date.getFullYear(), date.getMonth(),1):0)   
     return this.http
       .post(
         `${environment.serverUrl}/transportation/get-history-drives-per-user`,
         {
           before: Date.now(),
-          after: 0,
+          after: afterDate,
           //from the first day of the this month
           //  Date.UTC(date.getFullYear(), date.getMonth(),1)
         },

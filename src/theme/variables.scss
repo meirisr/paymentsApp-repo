@@ -242,7 +242,7 @@
     --ion-card-background: #1e1e1e;
   }
   body{
-    color: #fff !important;
+    color: #000 !important;
     --ion-text-color:#fff !important;
   }
   ion-icon{
@@ -252,10 +252,13 @@
     color: #fff !important;
   }
   ion-item{
-    color: #fff !important;
+    color: #000 !important;
   }
   ion-label{
-    color: #fff !important;
+    color: #000 !important;
+  }
+  ion-text{
+    color: #000 !important;
   }
   ion-card-title, ion-card-subtitle{
     color: #fff !important;

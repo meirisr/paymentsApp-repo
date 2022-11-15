@@ -43,7 +43,7 @@ ion-button {
 .md body {
   --ion-background-color: #091D31;;
   --ion-color: #fff;
-  --ion-border-color: #091D31;;
+  // --ion-border-color: #091D31;;
 }
 .md body.scanBg {
   --ion-background-color: #091d3100;
@@ -105,4 +105,33 @@ input.sc-ion-input-md {
 }
 .loading-wrapper.sc-ion-loading-md{
   box-shadow: none;
+}
+ion-popover{
+  // top: 20vh !important;
+  --width: 93vw !important;
+}
+ion-popover ion-list{
+background: #fff !important;
+}
+ion-popover ion-list ion-item{
+--background: #fff !important;
+}
+ion-popover ion-list ion-item ion-label{
+color: #000 !important;
+}
+ion-item.item-radio-checked.sc-ion-select-popover-md{
+  --background-focused: #c1c7d1;
+
+}
+
+
+
+
+ion-select::part(text) {
+  color: #67686b;
+}
+
+ion-select::part(icon) {
+  color: #575353;
+  opacity: 1;
 }

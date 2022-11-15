@@ -60,6 +60,11 @@ export class PaymentPage implements AfterViewInit {
       this.utils.dismissModal();
     }, 10);
   }
+  onOpenClose(){
+    this.paymentBodyRef.nativeElement.classList.toggle('OpenBig');
+    this.paymentBodyRef.nativeElement.classList.contains('OpenBig')? this.mapHight="40vh":this.mapHight="100vh";
+    
+  }
   // onMove(detail) {
   //   const position = document.getElementById('paymentBody');
   //   const top = position.getBoundingClientRect().top;

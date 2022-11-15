@@ -73,11 +73,18 @@
       "email": "Email"
     },
     "history":{
+      "travelHistory":"Travel History",
       "paid":"Paid",
       "notPaid":"Not Paid",
       "date":"Date",
       "payment":"Payment",
-      "payNow":"Pay now"
+      "payNow":"Pay now",
+      "currentMonth":"Current Month",
+      "all":"All",
+      "today":"Today",
+      "filtering":"Filtering",
+      "details":"Details",
+      "trips":"Trips"
     },
     "history-pay":{
       "travelDetails":"Travel details"

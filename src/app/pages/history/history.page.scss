@@ -19,6 +19,7 @@ ion-item.header{
 ion-item.select{
   padding:0 10vw ;
   margin-top: 2vh;
+  --highlight-background: #10101055;
 }
 ion-text.pageTitle{
   color: #000;
@@ -43,6 +44,13 @@ ion-card-title, ion-card-subtitle{
 ion-accordion-group{
   margin-top: 5vh;
   // padding: 0 2vw;
+}
+ion-label{
+  color: #000 !important;
+}
+ion-text{
+  color: #000 !important;
+  margin: 0 2px;
 }
 ion-menu-button {
   position: absolute;

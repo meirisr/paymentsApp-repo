@@ -14,7 +14,7 @@ export class HistoryPage implements OnInit {
   private subscriptions: Subscription[] = [];
   historyCards: any[] = [];
   historyCardsIds: any[] = [];
-  selectValue:string='all';
+  selectValue:string='month';
 
   constructor(
     private plt: Platform,
@@ -28,31 +28,12 @@ export class HistoryPage implements OnInit {
   }
 
   ngOnInit() {
-    let userInfo$ = this.userInfoServer.getUserHistory().subscribe(
-      (data) => {
-        this.historyCards = data.reverse();
-        data.forEach((trip) => {
-          !trip.paymentCompleted
-            ? this.historyCardsIds.push(trip.id.toString())
-            : null;
-        });
-      },
-      (err) => {
-        this.utils.showalert(err, '');
-        console.log(err);
-      }
-    );
-    this.subscriptions.push(userInfo$);
+   this.getHistoryData('month')
   }
   goToMenu(): void {
     this.navigateService.goToMenu();
   }
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-  }
-  creatHistoryCard(item) {
-    return {};
-  }
+  
   tripPay() {
     this.userInfoServer.historyTripPay$.next(null);
     this.navigateService.goToCCDetails();
@@ -67,6 +48,28 @@ export class HistoryPage implements OnInit {
   }
   handleChange(e){
     this.selectValue=e.target.value
-console.log(e.target.value)
+    this.getHistoryData(e.target.value)
+    console.log(e.target.value)
+  }
+  getHistoryData(after:string){
+    let userInfo$ = this.userInfoServer.getUserHistory(after).subscribe(
+      (data) => {
+        console.log(data)
+        this.historyCards = data.reverse();
+        data.forEach((trip) => {
+          !trip.paymentCompleted
+            ? this.historyCardsIds.push(trip.id.toString())
+            : null;
+        });
+      },
+      (err) => {
+        this.utils.showalert(err, '');
+        console.log(err);
+      }
+    );
+    this.subscriptions.push(userInfo$);
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

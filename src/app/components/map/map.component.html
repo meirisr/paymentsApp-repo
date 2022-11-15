@@ -1,4 +1,4 @@
-<app-back-btn (click)="goToMenu()"></app-back-btn>
+<app-back-btn (click)="goToMenu()" [hidden]="hideBackBtn"></app-back-btn>
 <div *ngIf="googleApiLoaded">
   <google-map
     #map

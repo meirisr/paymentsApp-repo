@@ -16,7 +16,7 @@ export class PaymentPage implements AfterViewInit {
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('paymentBody') paymentBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
-  mapHight: string = '100vh';
+  mapHight: string = '40vh';
   origin;
   destination;
   nearestStation = {
@@ -61,8 +61,8 @@ export class PaymentPage implements AfterViewInit {
     }, 10);
   }
   onOpenClose(){
-    this.paymentBodyRef.nativeElement.classList.toggle('OpenBig');
-    this.paymentBodyRef.nativeElement.classList.contains('OpenBig')? this.mapHight="40vh":this.mapHight="100vh";
+    this.paymentBodyRef.nativeElement.classList.toggle('closeBig');
+    this.paymentBodyRef.nativeElement.classList.contains('closeBig')? this.mapHight="100vh":this.mapHight="40vh";
     
   }
   // onMove(detail) {

@@ -4,6 +4,7 @@ import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { Subscription } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
+import { GetResult } from '@capacitor/storage';
 
 @Component({
   selector: 'app-travel-route-tracking',
@@ -28,6 +29,7 @@ export class TravelRouteTrackingPage implements OnInit {
   allStations: any[] = [];
   origin: string;
   destination: string;
+  hotelName: GetResult | string='';
   nearestStation: { lat: number; lng: number } = {
     lat: 0,
     lng: 0,
@@ -63,10 +65,9 @@ export class TravelRouteTrackingPage implements OnInit {
       }
     );
     this.subscriptions.push(routeInfoSubscription);
+    this.getHotelName()
   }
-  ngAfterViewInit(): void {
-   
-  }
+ 
 
   ionViewDidEnter(): void {
     this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
@@ -120,6 +121,9 @@ export class TravelRouteTrackingPage implements OnInit {
     this.hideItems = true;
     const position = document.getElementById('body-card-1');
     position.scrollTop = 0;
+  }
+  async getHotelName(){
+    this.hotelName=(await this.storageService.getHotelName()).value
   }
 
   ngOnDestroy(): void {

@@ -13,7 +13,7 @@ ion-text{
 .body-card-1{
   justify-content: end;
   height: 30vh;
-  padding-top: 15%;
+  padding-top: 10%;
 }
 .body-card-2{
   text-align: end;
@@ -29,7 +29,7 @@ ion-text{
 .payment-body{
   position: fixed;
   bottom: 2vh;
-  height: 30vh;
+  height: 70vh;
   width: 90vw;
   overflow: hidden;
   margin: 0px 5vw;
@@ -40,8 +40,8 @@ ion-text{
   color: #000;
   
 }
-.OpenBig{
-  height: 70vh;
+.closeBig{
+  height: 30vh;
 }
 .payment-body:before,
 div:after {
@@ -125,12 +125,12 @@ hr {
   height: 35px;
   background: #FFB300;
   border-radius: 10%;
-  padding: 22% 0;
+  padding: 23% 0;
 }
 .blackLine{
   background: #000;
   width: 10px;
-  height: 5px;
+  height: 4px;
   position: absolute;
   border-radius: 10%;
   left: 50%;

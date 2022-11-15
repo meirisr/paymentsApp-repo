@@ -1,6 +1,20 @@
+
+
+
+
+
 <ion-content class="no-scroll">
-  <!-- <app-header-wave text="נסיעה פעילה"></app-header-wave> -->
+  <ion-item class="header" lines="none" >
+    <ion-menu-button   menu="main" class="{{'menu-btn-side'|translate}}">
+      <ion-img src="../../../assets/menu-btn.svg"></ion-img>
+    </ion-menu-button>
+    <ion-icon color="#000" slot="{{'menuSide'|translate}}" name="globe-outline"></ion-icon>
+    <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"><h5>{{hotelName}}</h5></ion-text> 
+  
+  </ion-item>
+    
   <app-map
+  [hideBackBtn]="true"
     [height]="mapHight"
     [path]="coordinates"
     [nearesStationth]="nearestStation"

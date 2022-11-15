@@ -21,6 +21,14 @@ const routes: Routes = [
           import('../history/history.module').then((m) => m.HistoryPageModule),
         canLoad: [AuthGuard],
       },
+      {
+        path: 'travel-route-tracking',
+        loadChildren: () =>
+          import('../travel-route-tracking/travel-route-tracking.module').then(
+            (m) => m.TravelRouteTrackingPageModule
+          ),
+        canLoad: [AuthGuard],
+      },
     ],
   },
 ];

@@ -1,3 +1,14 @@
+ion-item{
+  --background: #fff00;
+  position: fixed;
+  top: 20px;
+  z-index: 3;
+  width: 90vw;
+}
+.pageTitle{
+  margin-right: 15px;
+
+}
 .no-scroll {
   --overflow: hidden;
 }

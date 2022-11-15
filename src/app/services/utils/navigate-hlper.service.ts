@@ -34,7 +34,7 @@ goToPayment=()=>{
   this.navCtrl.navigateRoot(['/payment'],{replaceUrl:true})
 }
 goToTravelRouteTracking=()=>{
-  this.navCtrl.navigateRoot(['/travel-route-tracking'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/menu/travel-route-tracking'],{replaceUrl:true})
 }
 goToSettings=()=>{
   this.navCtrl.navigateRoot(['/settings'],{replaceUrl:true})

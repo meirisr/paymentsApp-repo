@@ -73,14 +73,14 @@ const routes: Routes = [
       import('./pages/payment/payment.module').then((m) => m.PaymentPageModule),
     canLoad: [AuthGuard],
   },
-  {
-    path: 'travel-route-tracking',
-    loadChildren: () =>
-      import('./pages/travel-route-tracking/travel-route-tracking.module').then(
-        (m) => m.TravelRouteTrackingPageModule
-      ),
-    canLoad: [AuthGuard],
-  },
+  // {
+  //   path: 'travel-route-tracking',
+  //   loadChildren: () =>
+  //     import('./pages/travel-route-tracking/travel-route-tracking.module').then(
+  //       (m) => m.TravelRouteTrackingPageModule
+  //     ),
+  //   canLoad: [AuthGuard],
+  // },
   // {
   //   path: 'history',
   //   loadChildren: () =>

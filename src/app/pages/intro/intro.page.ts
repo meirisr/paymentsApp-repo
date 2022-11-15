@@ -50,6 +50,7 @@ export class IntroPage implements OnInit {
   }
   async onCreditCardClick(): Promise<void> {
        this.storageService.setHotelId('0');
+       this.storageService.setHotelName('תשלום פרטי');
     if (this.userInfoServer.isCardHasDetails.value) {
       // this.storageService.setHotelId('0');
       this.navigateService.goToMenu();
@@ -82,6 +83,8 @@ export class IntroPage implements OnInit {
     .subscribe(
       async (data) => {
         if (data) {
+          this.storageService.setHotelId(hotelId);
+          this.storageService.setHotelName(hotelName);
           await this.utils.presentModal(
             'ברוכים הבאים',
             `הנך רשום ב ${hotelName}`,

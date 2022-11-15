@@ -33,6 +33,7 @@ export class MapComponent implements AfterViewInit {
   @Input() nearesStationth: any;
   @Input() stations: any[] = [];
   @Input() showPath: boolean = false;
+  @Input() hideBackBtn: boolean = false;
   googleApiLoaded: boolean = false;
   public lat: any;
   public lng: any;

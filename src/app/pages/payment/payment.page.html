@@ -1,28 +1,29 @@
-<ion-content>ion
-  <app-map [height]="mapHight" [path]="coordinates" [nearesStationth]="nearestStation" [showPath]="true"></app-map>
-  <div  #paymentBody id="paymentBody" class="payment-body">
+<ion-content>
+  <app-map
+    [height]="mapHight"
+    [path]="coordinates"
+    [nearesStationth]="nearestStation"
+    [showPath]="true"
+  ></app-map>
+  <div #paymentBody id="paymentBody" class="payment-body">
     <ion-grid class="body-card-1">
-      <ion-row style="justify-content: center;">
-        <ion-col size="4"><hr></ion-col>
-        <ion-col size="3"><div class="openCloseBtn" (click)="onOpenClose()"><div class="blackLine"></div></div></ion-col>
-        <ion-col size="4"><hr></ion-col>
-        <!-- <ion-item  lines="none">
-          <h1 (click)="onOpenClose()">{{'pages.payment.payment'|translate}}</h1>
-        </ion-item> -->
+      <ion-row style="justify-content: center">
+        <ion-col size="4"><hr /></ion-col>
+        <ion-col size="3"
+          ><div class="openCloseBtn" (click)="onOpenClose()">
+            <div class="blackLine"></div></div
+        ></ion-col>
+        <ion-col size="4"><hr /></ion-col>
       </ion-row>
-      <ion-row >
-        <ion-col size="0">
-          <!-- <ion-item text-right lines="none" class="item-background-color"
-            ><ion-icon name="bed" class="bedIcon"></ion-icon>
-          </ion-item> -->
-        </ion-col>
+      <ion-row>
+        <ion-col size="0"> </ion-col>
         <ion-col>
           <h4>{{origin?.stationName||''}}</h4>
           <p>{{origin?.stationCityName||''}}</p>
-          <div class="dated" style="display: none;"></div>
+          <div class="dated" style="display: none"></div>
         </ion-col>
       </ion-row>
-      <ion-row  style="display: none;">
+      <ion-row style="display: none">
         <ion-col size="0"></ion-col>
         <ion-col>
           <h4>{{destination?.stationName||''}}</h4>
@@ -30,57 +31,53 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-       <!-- <hr> -->
+    <!-- <hr> -->
     <ion-grid class="body-card-2">
-      <ion-item >
-          <h3 >{{'pages.payment.payment'|translate}}</h3>
-        </ion-item>
+      <ion-item>
+        <h3>{{'pages.payment.payment'|translate}}</h3>
+      </ion-item>
       <ion-row class="padding-r">
-        <ion-col class="right"><ion-text class="bold ">{{'pages.payment.numberOfPassengers'|translate}}</ion-text></ion-col>
+        <ion-col class="right"
+          ><ion-text class="bold"
+            >{{'pages.payment.numberOfPassengers'|translate}}</ion-text
+          ></ion-col
+        >
         <ion-col>
           <div style="display: flex; justify-content: center">
             <ion-fab-button
-            class="removeBtn"
-            size="small"
-            (click)="removePassengers()"
-          >
-            <ion-icon class="grayIcon"  name="remove"></ion-icon>
-          </ion-fab-button>
+              class="removeBtn"
+              size="small"
+              (click)="removePassengers()"
+            >
+              <ion-icon class="grayIcon" name="remove"></ion-icon>
+            </ion-fab-button>
             <h2 style="margin-top: 10px">{{numOfPassengers}}</h2>
             <ion-fab-button
-            class="addBtn"
-            size="small"
-            (click)="addPassengers()"
-          >
-            <ion-icon class="blackIcon" name="add"></ion-icon>
-          </ion-fab-button>
-           
+              class="addBtn"
+              size="small"
+              (click)="addPassengers()"
+            >
+              <ion-icon class="blackIcon" name="add"></ion-icon>
+            </ion-fab-button>
           </div>
         </ion-col>
-        
       </ion-row>
       <ion-row class="padding-r">
-        <ion-col class="right"><ion-text class="bold">{{'pages.payment.totalPayment'|translate}}</ion-text></ion-col>
-        <ion-col style="text-align: center;"><h2>&#8362;&nbsp;{{numOfPassengers*5}}.00</h2></ion-col>
-        
+        <ion-col class="right"
+          ><ion-text class="bold"
+            >{{'pages.payment.totalPayment'|translate}}</ion-text
+          ></ion-col
+        >
+        <ion-col style="text-align: center"
+          ><h2>&#8362;&nbsp;{{numOfPassengers*5}}.00</h2></ion-col
+        >
       </ion-row>
-      
     </ion-grid>
-    <app-main-btn class="payBtn"
+    <app-main-btn
+      class="payBtn"
       type="click"
       text="שלם"
       (click)="onSubmit()"
     ></app-main-btn>
   </div>
-    <!-- <div style="margin-left: 20px"> -->
-     
-    <!-- </div> -->
-  
 </ion-content>
-<div class="footer-container">
- 
-</div>
-
-<!-- <div style="margin-left: 20px">
-  <app-main-btn type="click" text="שלם" (click)="onSubmit()"></app-main-btn>
-</div> -->

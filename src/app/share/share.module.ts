@@ -16,6 +16,7 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import {LottieComponent } from '../components/lottie/lottie.component';
 import { PopupModalComponent } from '../components/popup-modal/popup-modal.component';
+import { EndTripModalComponent } from '../components/end-trip-modal/end-trip-modal.component';
 
 
 export function playerFactory() {
@@ -34,6 +35,7 @@ const content = [
   HeaderWaveComponent,
   LottieComponent,
   PopupModalComponent,
+  EndTripModalComponent
   
 ];
 

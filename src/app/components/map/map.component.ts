@@ -37,7 +37,7 @@ export class MapComponent implements AfterViewInit {
   googleApiLoaded: boolean = false;
   public lat: any;
   public lng: any;
-  watch: any;
+  watch: any=null;
 
   watchMarker = null;
   markers: any[] = [];
@@ -156,15 +156,19 @@ export class MapComponent implements AfterViewInit {
     let latLng;
     if (Capacitor.isNativePlatform()) {
       await Geolocation.requestPermissions().then(async () => {
-        this.watch = Geolocation.watchPosition({}, (position, err) => {
-          this.ngZone.run(() => {
-            latLng = new google.maps.LatLng(
-              position.coords.latitude,
-              position.coords.longitude
-            );
-          });
-          // this.removeWatcharkers();
-          this.addWatchMarker(latLng.toJSON());
+        this.watch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
+          if (position) {
+            this.ngZone.run(() => {
+              latLng = new google.maps.LatLng(
+                position.coords.latitude,
+                position.coords.longitude
+              );
+            });
+            // this.removeWatcharkers();
+            this.addWatchMarker(latLng.toJSON());
+          } else {
+            console.log(err);
+          }
         });
       });
     } else {
@@ -215,10 +219,12 @@ export class MapComponent implements AfterViewInit {
     this.watchmarkers = [];
   }
   async stopTrack() {
-    const opt = { id:  this.watch };
-    Geolocation.clearWatch(opt).then((result) => {
-     
-    });
+    if (this.watch != null) {
+      const opt = { id:this.watch };
+     await Geolocation.clearWatch(opt)
+     this.watch=null;
+    }
+   
   }
  async centerMap() {
  

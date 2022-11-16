@@ -5,3 +5,16 @@
 .modal-text{
   margin-top: 25px;
 }
+.open-travelBody{
+  position: absolute;
+  top: 8vh;
+  display: flex;
+  width: 100vw;
+  z-index: 5;
+  justify-content: center;
+}
+.open-travelBody ion-fab-button{
+  background: #fff;
+  border-radius: 60%;
+  // box-shadow: 0px 3px 6px #18171740;
+}

@@ -68,9 +68,22 @@ export class UserInfoService {
         }
       );
   }
-  public getUserHistory(after:string): Observable<any> {
+  public getUserHistory(after: string): Observable<any> {
     var date = new Date();
-    let afterDate= after =='today'? Date.now():(after=='month'? Date.UTC(date.getFullYear(), date.getMonth(),1):0)   
+    let afterDate =
+      after == 'today'
+        ? Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            0,
+            0,
+            0,
+            0
+          )
+        : after == 'month'
+        ? Date.UTC(date.getFullYear(), date.getMonth(), 1)
+        : 0;
     return this.http
       .post(
         `${environment.serverUrl}/transportation/get-history-drives-per-user`,
@@ -196,7 +209,10 @@ export class UserInfoService {
       )
       .subscribe(
         async (data) => {
-          this.tripPayment(credentials).subscribe((data)=>console.log(data),(err)=>console.log(err))
+          this.tripPayment(credentials).subscribe(
+            (data) => console.log(data),
+            (err) => console.log(err)
+          );
           console.log(data);
           this.getCreditCardInfo();
         },

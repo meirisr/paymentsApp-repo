@@ -1,8 +1,10 @@
 .hideBg{
   --ion-background-color: #091d3100;
   background: rgba(0, 0, 0, 0.7);
+  mask: linear-gradient(to top, black, black) top/100% 29%, linear-gradient(to bottom, black, black) bottom/100% 44%, linear-gradient(to left, black, black) left/23% 100%, linear-gradient(to right, black, black) right/23% 100%;
   -webkit-mask: linear-gradient(to top, black, black) top/100% 29%, linear-gradient(to bottom, black, black) bottom/100% 44%, linear-gradient(to left, black, black) left/23% 100%, linear-gradient(to right, black, black) right/23% 100%;
   -webkit-mask-repeat: no-repeat;
+   mask-repeat: no-repeat;
 }
 .back-btn{
   position: absolute;
@@ -79,6 +81,9 @@
 .alert-col{
   border: solid 1px orange;
   margin-top: 25vh;
+}
+.ocrloader p{
+  color: #fff !important;
 }
 .scan-body-header {
   color: #fff;

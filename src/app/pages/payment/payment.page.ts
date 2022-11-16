@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { from, Subject, Subscription } from 'rxjs';
+import {Subject, Subscription } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
@@ -42,7 +42,6 @@ export class PaymentPage implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    
     let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
       async (data) => {
         if (!data) return;
@@ -60,10 +59,11 @@ export class PaymentPage implements AfterViewInit {
       this.utils.dismissModal();
     }, 10);
   }
-  onOpenClose(){
+  onOpenClose() {
     this.paymentBodyRef.nativeElement.classList.toggle('closeBig');
-    this.paymentBodyRef.nativeElement.classList.contains('closeBig')? this.mapHight="100vh":this.mapHight="40vh";
-    
+    this.paymentBodyRef.nativeElement.classList.contains('closeBig')
+      ? (this.mapHight = '100vh')
+      : (this.mapHight = '40vh');
   }
   // onMove(detail) {
   //   const position = document.getElementById('paymentBody');

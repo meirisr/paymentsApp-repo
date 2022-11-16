@@ -14,9 +14,8 @@
       *ngFor="let watchmarker of watchmarkers"
       [position]="watchmarker"
       [options]="watchmarkerOptions"
-
     ></map-marker>
-    
+
     <map-marker
       *ngFor="let marker of markers"
       [position]="marker"
@@ -32,5 +31,4 @@
   <div class="centerMapDiv" (click)="centerMap()">
     <ion-icon name="locate" slot="start" class="centerMapIcon"></ion-icon>
   </div>
-   
 </div>

@@ -52,8 +52,8 @@ export class HeaderInterceptor implements HttpInterceptor {
       this.authenticationService.loadToken();
     } else if (
       !httpRequest.url.includes('is-token-valid') &&
-      !httpRequest.url.includes('refresh-token') &&
-      !httpRequest.url.includes('get-unpaid-drives-per-user')
+      !httpRequest.url.includes('refresh-token') 
+      // &&!httpRequest.url.includes('get-unpaid-drives-per-user')
     ) {
       this.authenticationService
         .isTokenValid(tokenVal.value)

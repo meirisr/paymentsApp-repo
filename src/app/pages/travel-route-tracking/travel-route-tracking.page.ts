@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { StorageService } from 'src/app/services/storage.service';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 import { GetResult } from '@capacitor/storage';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 
 @Component({
   selector: 'app-travel-route-tracking',
@@ -22,7 +23,7 @@ export class TravelRouteTrackingPage implements OnInit {
   hideItems: boolean = true;
   noData: boolean = false;
   mapHight: string = '100vh';
-  startHight: number = 8;
+  startHight: number = 12;
   maxHight: number = 22;
   minHight: number;
   coordinates: [] = [];
@@ -40,6 +41,7 @@ export class TravelRouteTrackingPage implements OnInit {
     private gestureCtrl: GestureController,
     private navigateService: NavigateHlperService,
     private storageService: StorageService,
+    private utils: UtilsService,
     private travelProcessService: TravelProcessService
   ) {
     this.plt.backButton.subscribeWithPriority(10, () => {
@@ -100,6 +102,7 @@ export class TravelRouteTrackingPage implements OnInit {
     this.travelProcessService.paymentTrip.next(false)
     this.travelProcessService.routeInfo.next(false);
     this.storageService.deleteRouteDetails();
+    const loader=  this.utils.presentEndOfTripModal(this.origin,this.destination);
     this.navigateService.goToMenu();
   }
   showHideTravelBody() {

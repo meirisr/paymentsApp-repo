@@ -28,6 +28,7 @@ export class HistoryPage implements OnInit {
   }
 
   ngOnInit() {
+    // const loader=  this.utils.presentEndOfTripModal("אבירים פינת יעקב אליאב 5, ירושלים","מלון כרמים ירושלים , הגן הזאולוגי 7");
    this.getHistoryData('month')
   }
   goToMenu(): void {

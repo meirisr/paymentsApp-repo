@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { TravelProcessService } from '../travel-process.service';
 import { StorageService } from '../storage.service';
 import { App } from '@capacitor/app';
+import { EndTripModalComponent } from 'src/app/components/end-trip-modal/end-trip-modal.component';
 const USER_LANGUAGE = 'user-language';
 
 @Injectable({
@@ -155,6 +156,30 @@ export class UtilsService {
    return modal
   }
   dismissModal() {
+    setTimeout(() => {
+      this.modalController.dismiss();
+    }, 0);
+  }
+  async presentEndOfTripModal(
+    origin: string,
+    destanation: string,
+    close: boolean = true
+  ): Promise<HTMLIonModalElement> {
+    const modal = await this.modalController.create({
+      component: EndTripModalComponent,
+      cssClass: 'my-custom-class',
+      // swipeToClose: true,
+      componentProps: {
+        origin: origin,
+        destanation: destanation,
+      },
+      backdropDismiss: close,
+    });
+    modal.present();
+  
+   return modal
+  }
+  dismissEndOfTripModal() {
     setTimeout(() => {
       this.modalController.dismiss();
     }, 0);

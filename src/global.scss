@@ -41,7 +41,7 @@ ion-button {
   text-transform: none;
  }
 .md body {
-  --ion-background-color: #091D31;;
+  --ion-background-color: #091D31;
   --ion-color: #fff;
   // --ion-border-color: #091D31;;
 }
@@ -69,15 +69,51 @@ ion-text {
   color: #fff;
 }
 .my-custom-class {
-  --width: 70vw;
-  --height: 40vh;
+  --width: 90vw;
+  --height: 35vh;
   --border-radius: 15px;
-  background-color: #41464b;
+  
+  background-color: #091D31;
 }
 
 app-popup-modal.ion-page {
   border-radius: 10px;
-  background-color: #091D31;
+
+}
+
+app-popup-modal.ion-page:before,
+div:after {
+  content:"";
+  position: absolute;
+}
+app-popup-modal.ion-page:before {
+  top: -125px;
+  width: 70px;
+  height: 140px;
+  border-radius: 63%;
+  box-shadow: 0px 0px 1px #d7d8da, 0px 0px 5px #dee2e6, 0px 0px 0px #d7d8da, 0px 0px 0px 10000px #f9fafb;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
+}
+app-end-trip-modal.ion-page {
+  border-radius: 10px;
+}
+
+app-end-trip-modal.ion-page:before,
+div:after {
+  content:"";
+  position: absolute;
+}
+app-end-trip-modal.ion-page:before {
+  top: -125px;
+  width: 70px;
+  height: 140px;
+  border-radius: 63%;
+  box-shadow: 0px 0px 1px #d7d8da, 0px 0px 5px #dee2e6, 0px 0px 0px #d7d8da, 0px 0px 0px 10000px #f9fafb;
+  z-index: -1;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .errors {

@@ -28,8 +28,8 @@ export class TravelRouteTrackingPage implements OnInit {
   minHight: number;
   coordinates: [] = [];
   allStations: any[] = [];
-  origin: string;
-  destination: string;
+  origin: any;
+  destination: any;
   hotelName: GetResult | string='';
   nearestStation: { lat: number; lng: number } = {
     lat: 0,
@@ -102,7 +102,7 @@ export class TravelRouteTrackingPage implements OnInit {
     this.travelProcessService.paymentTrip.next(false)
     this.travelProcessService.routeInfo.next(false);
     this.storageService.deleteRouteDetails();
-    const loader=  this.utils.presentEndOfTripModal(this.origin,this.destination);
+    const loader=  this.utils.presentEndOfTripModal(this.origin.stationName,this.destination.stationName);
     this.navigateService.goToMenu();
   }
   showHideTravelBody() {

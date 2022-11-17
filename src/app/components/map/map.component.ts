@@ -15,7 +15,6 @@ import { mapConfig } from './map-config';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
-
 const BusImage: string = '../../../assets/images/bus.png';
 const locationImage: string = '../../../assets/location.svg';
 const emptyCircleImage: string = '../../../assets/empty-circle.svg';
@@ -37,19 +36,20 @@ export class MapComponent implements AfterViewInit {
   googleApiLoaded: boolean = false;
   public lat: any;
   public lng: any;
-  watch: any=null;
-
-  watchMarker = null;
-  markers: any[] = [];
-  stationsMarker: any[] = [];
-  watchmarkers: any[] = [];
-  markerPositions: google.maps.Marker[] = [];
-  polylineOptions: google.maps.PolylineOptions = {};
-  mapOptions: google.maps.MapOptions = {};
-  markerOptions: google.maps.MarkerOptions = {};
-  stationsMarkerOptions: google.maps.MarkerOptions = {};
-  watchmarkerOptions: google.maps.MarkerOptions = {};
-  styles: Record<string, google.maps.MapTypeStyle[]> = {
+  private followMe: boolean = true;
+  private watch: any = null;
+  private interval = null;
+  private watchMarker = null;
+  public markers: any[] = [];
+  public stationsMarker: any[] = [];
+  public watchmarkers: any[] = [];
+  public markerPositions: google.maps.Marker[] = [];
+  public polylineOptions: google.maps.PolylineOptions = {};
+  public mapOptions: google.maps.MapOptions = {};
+  public markerOptions: google.maps.MarkerOptions = {};
+  public stationsMarkerOptions: google.maps.MarkerOptions = {};
+  public watchmarkerOptions: google.maps.MarkerOptions = {};
+  private styles: Record<string, google.maps.MapTypeStyle[]> = {
     default: [],
     silver: mapConfig,
   };
@@ -137,9 +137,10 @@ export class MapComponent implements AfterViewInit {
           }
         );
       this.subscriptions.push(stationInfo);
+      // document.querySelector('#map').addEventListener('mouseup', this.move);
     }, 100);
 
-    this.printCurrentPosition();
+    this.getUserLocation();
   }
   creatStationMarker(obj) {
     this.stationsMarker = [];
@@ -151,53 +152,23 @@ export class MapComponent implements AfterViewInit {
     this.mapOptions.center = latLng;
     this.mapOptions.zoom = 16;
   }
+  move() {
+    this.followMe = false;
+  }
+  dragstart() {
+    console.log('hjgjhfhgfhgfht');
+  }
 
-  printCurrentPosition = async () => {
-    let latLng;
-    if (Capacitor.isNativePlatform()) {
-      await Geolocation.requestPermissions().then(async () => {
-        this.watch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
-          if (position) {
-            this.ngZone.run(() => {
-              latLng = new google.maps.LatLng(
-                position.coords.latitude,
-                position.coords.longitude
-              );
-            });
-            // this.removeWatcharkers();
-            this.addWatchMarker(latLng.toJSON());
-          } else {
-            console.log(err);
-          }
-        });
-      });
-    } else {
-      this.watch = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
-        if (position) {
-          this.ngZone.run(() => {
-            latLng = new google.maps.LatLng(
-              position.coords.latitude,
-              position.coords.longitude
-            );
-          });
-          // this.removeWatcharkers();
-          this.addWatchMarker(latLng.toJSON());
-        } else {
-          console.log(err);
-        }
-      });
-    }
-  };
   addMarker(latLng) {
     this.markers.push(latLng);
     this.mapOptions.center = latLng;
   }
   addWatchMarker(latLng) {
     this.watchmarkers.push(latLng);
-    this.watchMarker=latLng;
-    console.log(this.watchmarkers)
-    // if (!(this.nearesStationth.lat && this.nearesStationth.lng))
-      this.mapOptions.center = new google.maps.LatLng(this.watchMarker);
+    this.watchMarker = latLng;
+    this.followMe
+      ? (this.mapOptions.center = new google.maps.LatLng(this.watchMarker))
+      : null;
   }
 
   goToMenu() {
@@ -207,41 +178,47 @@ export class MapComponent implements AfterViewInit {
   fixLocation(location: { latitude: number; longitude: number }) {
     if (location) return { lat: location.latitude, lng: location.longitude };
   }
+  async getUserLocation() {
+    let latLng = await this.getCorentPosition();
+    this.removeWatcharkers();
+    this.addWatchMarker(latLng.toJSON());
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+    this.interval = setInterval(async () => {
+      latLng = await this.getCorentPosition();
+      this.removeWatcharkers();
+      this.addWatchMarker(latLng.toJSON());
+    }, 10000);
+  }
+  async getCorentPosition() {
+    const coordinates = await Geolocation.getCurrentPosition();
+    return this.ngZone.run(() => {
+      return new google.maps.LatLng(
+        coordinates.coords.latitude,
+        coordinates.coords.longitude
+      );
+    });
+  }
 
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-    this.stopTrack();
     this.stationsMarker = [];
     this.mapOptions.zoom = 13;
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
   removeWatcharkers() {
     this.watchmarkers.pop();
     this.watchmarkers = [];
   }
-  async stopTrack() {
-    if (this.watch != null) {
-      const opt = { id:this.watch };
-     await Geolocation.clearWatch(opt)
-     this.watch=null;
-    }
-   
-  }
- async centerMap() {
  
-    //   const coordinates = await Geolocation.getCurrentPosition();
-    // let latLng;
-    //   this.ngZone.run(() => {
-    //     latLng = new google.maps.LatLng(
-    //       coordinates.coords.latitude,
-    //       coordinates.coords.longitude
-    //     );
-    //   });
-  console.log(this.watchMarker)
+  async centerMap() {
     this.mapOptions.zoom = 16;
-    this.mapOptions.center =  new google.maps.LatLng(this.watchMarker)
+    this.watchMarker
+      ? (this.mapOptions.center = new google.maps.LatLng(this.watchMarker))
+      : null;
+    this.followMe = true;
   }
-  openInfoWindow(marker: MapMarker) {
-    this.infoWindow.open(marker);
-  }
-
 }

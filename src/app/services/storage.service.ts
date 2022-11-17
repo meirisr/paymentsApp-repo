@@ -57,8 +57,10 @@ export class StorageService {
     this.setStorege(userStoregeObj.ROUTE_DETAILS, JSON.stringify(details));
   };
 
-  public getToken = (): Promise<GetResult> =>
-    this.getStorege(userStoregeObj.TOKEN_KEY);
+  public getToken = (): Promise<GetResult> =>{
+    return this.getStorege(userStoregeObj.TOKEN_KEY)
+  }
+
 
   public getRefreshToken = (): Promise<GetResult> =>
     this.getStorege(userStoregeObj.REFRESH_TOKEN_KEY);

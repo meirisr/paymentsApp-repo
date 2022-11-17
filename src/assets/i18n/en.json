@@ -77,6 +77,7 @@
       "paid":"Paid",
       "notPaid":"Not Paid",
       "date":"Date",
+      "time":"Time",
       "payment":"Payment",
       "payNow":"Pay now",
       "currentMonth":"Current Month",

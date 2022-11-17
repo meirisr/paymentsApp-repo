@@ -111,7 +111,7 @@ export class UtilsService {
   async showalert(e?: any, header?: string): Promise<void> {
     const userLang = await Storage.get({ key: USER_LANGUAGE });
     let language = userLang.value == 'en' ? 'en-us' : 'he-il';
-    console.log(e);
+   
     const alert = await this.alertController.create({
       header: 'Error',
       message: e?.error?.error?.errorMessage
@@ -126,6 +126,7 @@ export class UtilsService {
           text: 'OK',
           handler: () => {
             console.log(e);
+            if(e?.error?.error?.errorCode!==6)
             App.exitApp();
           },
         },
@@ -167,7 +168,7 @@ export class UtilsService {
   ): Promise<HTMLIonModalElement> {
     const modal = await this.modalController.create({
       component: EndTripModalComponent,
-      cssClass: 'my-custom-class',
+      cssClass: 'endOfTripModal',
       // swipeToClose: true,
       componentProps: {
         origin: origin,

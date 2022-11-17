@@ -3,33 +3,48 @@
     <app-back-btn (click)="goToMenu()"></app-back-btn>
   </ion-toolbar>
 </ion-header> -->
-<ion-header class="ion-no-border"  dir="{{'dir'|translate}}">
-  <ion-item class="header" lines="none" >
- 
-    <ion-menu-button   menu="main" class="{{'menu-btn-side'|translate}}">
+<ion-header class="ion-no-border" dir="{{'dir'|translate}}">
+  <ion-item class="header" lines="none">
+    <ion-menu-button menu="main" class="{{'menu-btn-side'|translate}}">
       <ion-img src="../../../assets/menu-btn.svg"></ion-img>
     </ion-menu-button>
-    <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"><h5>{{'pages.history.travelHistory'|translate}}</h5></ion-text> 
+    <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"
+      ><h5>{{'pages.history.travelHistory'|translate}}</h5></ion-text
+    >
+  </ion-item>
+  <ion-list dir="{{'dir'|translate}}">
+    <ion-item class="select">
+      <ion-label>{{'pages.history.filtering'|translate}}</ion-label>
+      <ion-select
+        interface="popover"
+        [value]="selectValue"
+        placeholder=""
+        (ionChange)="handleChange($event)"
+      >
+        <ion-select-option value="all"
+          >{{'pages.history.all'|translate}}</ion-select-option
+        >
+        <ion-select-option value="month"
+          >{{'pages.history.currentMonth'|translate}}</ion-select-option
+        >
+        <ion-select-option value="today"
+          >{{'pages.history.today'|translate}}</ion-select-option
+        >
+      </ion-select>
     </ion-item>
-    <ion-list  dir="{{'dir'|translate}}">
-      <ion-item class="select">
-        <ion-label>{{'pages.history.filtering'|translate}}</ion-label>
-        <ion-select interface="popover" [value]="selectValue"  placeholder=""   (ionChange)="handleChange($event)" >
-          <ion-select-option value="all">{{'pages.history.all'|translate}}</ion-select-option>
-          <ion-select-option value="month">{{'pages.history.currentMonth'|translate}}</ion-select-option>
-          <ion-select-option value="today">{{'pages.history.today'|translate}}</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-    <ion-list>
-    <ion-item lines="none" style="margin:0 3vw ;">
-      <ion-text style="font-weight:bold;">{{'pages.history.details'|translate}}</ion-text>
-      <ion-text>({{historyCards.length}}&nbsp;{{'pages.history.trips'|translate}})</ion-text>
+  </ion-list>
+  <ion-list>
+    <ion-item lines="none" style="margin: 0 3vw">
+      <ion-text style="font-weight: bold"
+        >{{'pages.history.details'|translate}}</ion-text
+      >
+      <ion-text
+        >({{historyCards.length}}&nbsp;{{'pages.history.trips'|translate}})</ion-text
+      >
     </ion-item>
   </ion-list>
 </ion-header>
 <ion-content dir="{{'dir'|translate}}">
- 
   <ion-list>
     <ng-container *ngFor="let trip of historyCards">
       <ion-item *ngIf="!trip.paymentCompleted" lines="none">
@@ -39,9 +54,14 @@
           [class.redCard]="!trip.paymentCompleted"
         >
           <ion-card-header>
-            <ion-title class="card-title">{{'pages.history.notPaid'|translate}}</ion-title>
+            <ion-title class="card-title"
+              >{{'pages.history.notPaid'|translate}}</ion-title
+            >
             <ion-card-subtitle
               >{{'pages.history.date'|translate}}:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
+            >
+            <ion-card-subtitle
+              >{{'pages.history.time'|translate}}:&nbsp;&nbsp;{{formatTime(trip)}}</ion-card-subtitle
             >
             <ion-card-subtitle>
               תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
@@ -57,7 +77,7 @@
     </ng-container>
   </ion-list>
 
-    <ion-list>
+  <ion-list>
     <ng-container *ngFor="let trip of historyCards">
       <ion-item *ngIf="trip.paymentCompleted" lines="none">
         <ion-card
@@ -66,10 +86,17 @@
           [class.redCard]="!trip.paymentCompleted"
         >
           <ion-card-header>
-            <ion-title class="card-title">{{'pages.history.paid'|translate}}</ion-title>
+            <ion-title class="card-title"
+              >{{'pages.history.paid'|translate}}</ion-title
+            >
+
             <ion-card-subtitle
               >{{'pages.history.date'|translate}}:&nbsp;&nbsp;{{formatDate(trip)}}</ion-card-subtitle
             >
+            <ion-card-subtitle
+              >{{'pages.history.time'|translate}}:&nbsp;&nbsp;{{formatTime(trip)}}</ion-card-subtitle
+            >
+
             <ion-card-subtitle>
               תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
               }}</ion-card-subtitle
@@ -79,5 +106,4 @@
       </ion-item>
     </ng-container>
   </ion-list>
- 
 </ion-content>

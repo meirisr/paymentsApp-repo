@@ -70,6 +70,13 @@ ion-text {
 }
 .my-custom-class {
   --width: 90vw;
+  --height: 34vh;
+  --border-radius: 15px;
+  
+  background-color: #091D31;
+}
+.endOfTripModal{
+  --width: 90vw;
   --height: 35vh;
   --border-radius: 15px;
   

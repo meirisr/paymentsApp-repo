@@ -1,18 +1,22 @@
-<ion-content class="no-scroll">
-  <ion-item class="header" lines="none">
-    <ion-menu-button menu="main" class="{{'menu-btn-side'|translate}}">
-      <ion-img src="../../../assets/menu-btn.svg"></ion-img>
-    </ion-menu-button>
-    <ion-icon
-      color="#000"
-      slot="{{'menuSide'|translate}}"
-      name="logo-amplify"
-    ></ion-icon>
-    <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"
-      ><h5>{{hotelName}}</h5></ion-text
-    >
-  </ion-item>
+<ion-header>
 
+    <ion-item class="header" lines="none">
+      <ion-menu-button menu="main" class="{{'menu-btn-side'|translate}}">
+        <ion-img src="../../../assets/menu-btn.svg"></ion-img>
+      </ion-menu-button>
+      <ion-icon
+        color="#000"
+        slot="{{'menuSide'|translate}}"
+        name="logo-amplify"
+      ></ion-icon>
+      <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"
+        ><h5>{{hotelName}}</h5></ion-text
+      >
+    </ion-item>
+
+</ion-header>
+
+<ion-content class="no-scroll">
   <app-map
     [hideBackBtn]="true"
     [height]="mapHight"

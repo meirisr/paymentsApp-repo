@@ -47,6 +47,12 @@ export class HistoryPage implements OnInit {
     const day = date.getDate();
     return day + '.' + month + '.' + year;
   }
+  formatTime(item) {
+    let date = new Date(item.created);
+    const h= date.getHours();
+    const m= date.getMinutes();
+    return h + ":" + m;
+  }
   handleChange(e){
     this.selectValue=e.target.value
     this.getHistoryData(e.target.value)

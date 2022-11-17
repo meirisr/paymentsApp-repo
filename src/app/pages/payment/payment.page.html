@@ -20,6 +20,7 @@
         <ion-col>
           <ion-label>{{origin?.stationName||''}}</ion-label>
           <p>{{origin?.stationCityName||''}}</p>
+          <ion-icon slot="start" name="location-outline"></ion-icon>
           <div class="dated" style="display: none"></div>
         </ion-col>
       </ion-row>
@@ -28,6 +29,7 @@
         <ion-col>
           <ion-label>{{destination?.stationName||''}}</ion-label>
           <p>{{destination?.stationCityName||''}}</p>
+          <ion-icon slot="start" name="flag-outline"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>

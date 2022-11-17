@@ -1,19 +1,17 @@
 <ion-header>
-
-    <ion-item class="header" lines="none">
-      <ion-menu-button menu="main" class="{{'menu-btn-side'|translate}}">
-        <ion-img src="../../../assets/menu-btn.svg"></ion-img>
-      </ion-menu-button>
-      <ion-icon
-        color="#000"
-        slot="{{'menuSide'|translate}}"
-        name="logo-amplify"
-      ></ion-icon>
-      <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"
-        ><h5>{{hotelName}}</h5></ion-text
-      >
-    </ion-item>
-
+  <ion-item class="header" lines="none">
+    <ion-menu-button menu="main" class="{{'menu-btn-side'|translate}}">
+      <ion-img src="../../../assets/menu-btn.svg"></ion-img>
+    </ion-menu-button>
+    <ion-icon
+      color="#000"
+      slot="{{'menuSide'|translate}}"
+      name="logo-amplify"
+    ></ion-icon>
+    <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"
+      ><h5>{{hotelName}}</h5></ion-text
+    >
+  </ion-item>
 </ion-header>
 
 <ion-content class="no-scroll">
@@ -38,16 +36,9 @@
     </div>
     <div #travelBody id="travelBody" class="travel-body">
       <ion-item class="item-background">
-        <!-- <ion-avatar slot="end">
-          <img
-            class="travel-info-header-icons"
-            src="../../../assets/small-checkmark.svg"
-          />
-        </ion-avatar> -->
         <ion-text dir="rtl">
           <h4>{{'pages.travel-route-tracking.activeTrip'|translate}}</h4>
         </ion-text>
-        <!-- <ion-text slot="start"> </ion-text> -->
       </ion-item>
 
       <ion-grid

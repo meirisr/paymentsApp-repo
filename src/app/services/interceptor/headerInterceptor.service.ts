@@ -28,7 +28,6 @@ export class HeaderInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return from(this.TokenValidation(httpRequest, next)).pipe(
       switchMap((token) => {
-        console.log(token);
         if (
           httpRequest.url.includes('GetDetailsByVehicle') ||
           httpRequest.url.includes('get-organization-per-station')
@@ -53,6 +52,7 @@ export class HeaderInterceptor implements HttpInterceptor {
         !httpRequest.url.includes('refresh-token')
       ) {
         this.authenticationService.loadToken();
+        // window.location.reload();
       } else if (
         !httpRequest.url.includes('is-token-valid') &&
         !httpRequest.url.includes('refresh-token')

@@ -46,11 +46,9 @@ export class ScanPage implements OnInit {
     this.plt.backButton.subscribeWithPriority(10, () => {
       this.navigateService.goToMenu();
     });
-
   }
 
   ngOnInit() {
-    
     this.utils.presentLoader();
     if (Capacitor.isNativePlatform()) {
       this.checkLocationPermission().then((e) => {
@@ -77,10 +75,10 @@ export class ScanPage implements OnInit {
   }
 
   async startScanner(): Promise<void> {
-   await this.utils.dismissLoader();
+    await this.utils.dismissLoader();
     let hotelId = !!this.storageService.getHotelId();
     const allowed = await this.checkPermission();
-    
+
     if (allowed) {
       this.scanActive = true;
       document.querySelector('body').classList.add('scanBg');
@@ -102,15 +100,15 @@ export class ScanPage implements OnInit {
     }
   }
   async getTrip() {
-   const loader= await this.utils.presentModal('מחפש מסלול', '', 'loader');
+    const loader = await this.utils.presentModal('מחפש מסלול', '', 'loader');
     let hotelId = await this.storageService.getHotelId();
-    const TravelDetails$ = this.travelProcessService.getTravelDetails(this.userLocation, 7793469)
+    const TravelDetails$ = this.travelProcessService
+      .getTravelDetails(this.userLocation, 7504869)
       .subscribe(
-        async(data) => {
-          console.log(data)
+        async (data) => {
+          this.utils.dismissModal();
+          console.log(data);
           if (!data) {
-            this.utils.dismissModal();
-          
             // await this.utils.presentModal('קוד אינו תקין', 'יש לסרוק קוד אחר', '',true);
             // setTimeout(() => {
             //   this.utils.dismissModal();
@@ -120,7 +118,7 @@ export class ScanPage implements OnInit {
             this.navigateService.goToPayment();
           }
         },
-        async() => {
+        async () => {
           setTimeout(() => {
             this.utils.dismissModal();
           }, 1000);

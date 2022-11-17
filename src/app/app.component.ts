@@ -38,9 +38,6 @@ export class AppComponent implements OnInit {
       this.utils.loadGoogleMap();
     });
     this.utils.loadRoute();
-    // this.userInfoServer.getUnpaidTrips();
-    // this.userInfoServer.getUserDetails();
-    // this.userInfoServer.getCreditCardInfo();
     this.authenticationService.loadToken();
   }
   hideSplashScreen = () => {

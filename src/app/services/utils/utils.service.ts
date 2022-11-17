@@ -44,14 +44,14 @@ export class UtilsService {
         Storage.set({ key: USER_LANGUAGE, value: 'en' });
         this.userLang.value = 'en';
         this.defaultLang = 'en';
-        document.querySelector('body').style.direction='ltr';
+        document.querySelector('body').style.direction = 'ltr';
         break;
       case 'he':
         this.translate.use('he');
         Storage.set({ key: USER_LANGUAGE, value: 'he' });
         this.userLang.value = 'he';
         this.defaultLang = 'he';
-        document.querySelector('body').style.direction='rtl';
+        document.querySelector('body').style.direction = 'rtl';
         break;
       // default:
       //   this.translate.use('he');
@@ -64,15 +64,15 @@ export class UtilsService {
 
   async getUserLanguage(): Promise<string> {
     this.userLang = await Storage.get({ key: USER_LANGUAGE });
-    if (this.userLang.value =='en'){
+    if (this.userLang.value == 'en') {
       this.translate.use('en');
-      this.defaultLang ='en';
-      document.querySelector('body').style.direction='ltr';
+      this.defaultLang = 'en';
+      document.querySelector('body').style.direction = 'ltr';
       return 'en';
     } else {
       this.translate.use('he');
-      this.defaultLang='he';
-      document.querySelector('body').style.direction='rtl';
+      this.defaultLang = 'he';
+      document.querySelector('body').style.direction = 'rtl';
       return 'he';
     }
   }
@@ -111,7 +111,7 @@ export class UtilsService {
   async showalert(e?: any, header?: string): Promise<void> {
     const userLang = await Storage.get({ key: USER_LANGUAGE });
     let language = userLang.value == 'en' ? 'en-us' : 'he-il';
-   
+
     const alert = await this.alertController.create({
       header: 'Error',
       message: e?.error?.error?.errorMessage
@@ -122,14 +122,19 @@ export class UtilsService {
       cssClass: language == 'en' ? 'en-alert' : 'he-alert',
       backdropDismiss: false,
       buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            console.log(e);
-            if(e?.error?.error?.errorCode!==6)
-            App.exitApp();
-          },
-        },
+        e?.error?.error?.errorCode == 6
+          ? {
+              text: 'reload',
+              handler: () => {
+                window.location.reload();
+              },
+            }
+          : {
+              text: 'OK',
+              handler: () => {
+                App.exitApp();
+              },
+            },
       ],
     });
     await alert.present();
@@ -153,8 +158,8 @@ export class UtilsService {
       backdropDismiss: close,
     });
     modal.present();
-  
-   return modal
+
+    return modal;
   }
   dismissModal() {
     setTimeout(() => {
@@ -177,8 +182,8 @@ export class UtilsService {
       backdropDismiss: close,
     });
     modal.present();
-  
-   return modal
+
+    return modal;
   }
   dismissEndOfTripModal() {
     setTimeout(() => {
@@ -194,14 +199,13 @@ export class UtilsService {
     this.isLoading = true;
     loading.present();
   }
- async dismissLoader() {
+  async dismissLoader() {
     if (this.isLoading) {
       this.isLoading = false;
-      
-       await this.loadingController.dismiss({
-          dismissed: true,
-        });
-    
+
+      await this.loadingController.dismiss({
+        dismissed: true,
+      });
     }
   }
 }

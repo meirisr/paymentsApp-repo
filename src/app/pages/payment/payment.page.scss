@@ -71,20 +71,6 @@ ion-col.right{
 .padding-r{
   padding-right: 10px;
 }
-// .payment-body:before,
-// div:after {
-//   content:"";
-//   position: absolute;
-// }
-// .payment-body:before {
-//   top: -132px;
-//   width: 80px;
-//   height: 148px;
-//   border-radius: 63%;
-//   box-shadow: 0px 0px 0px 10000px #091d31;
-//   // opacity: 0.8;
-//   z-index: -1;
-// }
 
 .item-background-color{
   --ion-item-background: #FFB300;
@@ -106,11 +92,8 @@ ion-col.right{
   
 }
 hr {
-  // display: none;
   border: 0;
   border-top: 2px solid #FFB300;
-  // background:#FFB300 ;
-  // margin: 15% 5%;
 }
 #drowerBar{
   position: absolute;
@@ -161,8 +144,6 @@ hr {
 }
 .payBtn{
   width: 100vw;
-  // position: absolute;
-  // bottom: 3vh;
   left: 50%;
   transform: translateX(-50%);
 }

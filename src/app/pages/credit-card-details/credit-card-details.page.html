@@ -1,17 +1,16 @@
-<!-- <ion-header class="ion-no-border" style="height: 10vh">
-  <ion-toolbar>
-    <app-header-wave></app-header-wave>
-    <app-back-btn (click)="goToUserProfile()"></app-back-btn>
-  </ion-toolbar>
-</ion-header> -->
-
-<ion-content  dir="{{'dir'|translate}}">
+<ion-content dir="{{'dir'|translate}}">
   <ion-item lines="none">
-    <ion-text slot="start"><h5>{{'pages.credit-card-details.PaymentDetails'|translate}}</h5></ion-text> 
-    <ion-button fill="outline" size="default" slot="end"  (click)="onCancel()">{{'pages.credit-card-details.cancel'|translate}}</ion-button>
+    <ion-text slot="start"
+      ><h5>
+        {{'pages.credit-card-details.PaymentDetails'|translate}}
+      </h5></ion-text
+    >
+    <ion-button fill="outline" size="default" slot="end" (click)="onCancel()"
+      >{{'pages.credit-card-details.cancel'|translate}}</ion-button
+    >
   </ion-item>
   <div class="image-center">
-    <img  alt="" src="../../../assets/card-big.svg" />
+    <img alt="" src="../../../assets/card-big.svg" />
   </div>
   <!-- <app-header-wave [big]="true"></app-header-wave>
   <app-back-btn (click)="goToUserProfile()"></app-back-btn> -->
@@ -22,18 +21,17 @@
     [cvsNum]="cvsNum"
     [flipClass]="flipClass"
   ></app-credit-card> -->
-  
+
   <form
     dir="{{'dir'|translate}}"
     class="card-details-Form"
     [formGroup]="cardDetails"
     (ngSubmit)="updateCreditCard()"
   >
-    
     <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
-        (keyup)="cardNumKeyUp($event)"
+          (keyup)="cardNumKeyUp($event)"
           class="input"
           type="tel"
           id="cardNum"
@@ -67,17 +65,17 @@
     <div class="input-group">
       <label class="fluatingLabel">
         <ion-input
-        (ionFocus)="cvSInputFocus()"
-        (ionBlur)="cvSInputUnFocus()"
-        (keyup)="cardCvsKeyUp($event)"
+          (ionFocus)="cvSInputFocus()"
+          (ionBlur)="cvSInputUnFocus()"
+          (keyup)="cardCvsKeyUp($event)"
           class="input"
           type="tel"
           inputmode="numeric"
-        oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-        id="csvNum"
-        formControlName="csvNum"
-        maxlength="3"
-        minlength="3"
+          oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+          id="csvNum"
+          formControlName="csvNum"
+          maxlength="3"
+          minlength="3"
           required
         ></ion-input>
         <span class="labelSpan"

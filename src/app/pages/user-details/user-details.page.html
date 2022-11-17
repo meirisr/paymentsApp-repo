@@ -1,9 +1,4 @@
-<!-- <ion-header class="ion-no-border" style="height: 10vh; " >
-  <ion-toolbar >
-    <app-header-wave></app-header-wave>
-    <app-back-btn (click)="goToUserProfile()"></app-back-btn>
-  </ion-toolbar>
-</ion-header> -->
+
 
 <ion-content  dir="{{'dir'|translate}}">
   <ion-item lines="none">
@@ -13,15 +8,6 @@
   <div class="image-center">
     <img  alt="" src="../../../assets/userAvatar+edit.svg" />
   </div>
- 
-  <!-- <ion-avatar class="image-center">
-    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-    <div class="edit-btn"><img
-      width="25"
-      height="auto"
-       src="../../../assets/edit.svg"
-     /></div>
-  </ion-avatar> -->
   <form 
     dir="{{'dir'|translate}}"
     class="user-details-Form"
@@ -81,7 +67,7 @@
           *ngIf="userDetails.get('email').errors?.email"
           class="errors ion-text-center"
         >
-          please enter a valid email address
+         כתובת מייל לא חוקית
         </div>
       </div> -->
     </div>

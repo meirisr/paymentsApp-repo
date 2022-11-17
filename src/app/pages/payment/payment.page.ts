@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import {Subject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
@@ -65,21 +65,7 @@ export class PaymentPage implements AfterViewInit {
       ? (this.mapHight = '100vh')
       : (this.mapHight = '40vh');
   }
-  // onMove(detail) {
-  //   const position = document.getElementById('paymentBody');
-  //   const top = position.getBoundingClientRect().top;
-  //   if (detail.deltaY >= 0) {
-  //     if (this.convertPXToVh(top) <= 80 && detail.currentY <= 640) {
-  //       this.paymentBodyRef.nativeElement.style.top =
-  //         this.convertPXToVh(detail.currentY) + 'vh';
-  //     }
-  //   } else {
-  //     if (this.convertPXToVh(detail.currentY) > 9) {
-  //       this.paymentBodyRef.nativeElement.style.top =
-  //         this.convertPXToVh(detail.currentY) + 'vh';
-  //     }
-  //   }
-  // }
+
   convertPXToVh(px: number): number {
     return 100 * (px / document.documentElement.clientHeight);
   }

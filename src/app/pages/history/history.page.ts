@@ -14,7 +14,7 @@ export class HistoryPage implements OnInit {
   private subscriptions: Subscription[] = [];
   historyCards: any[] = [];
   historyCardsIds: any[] = [];
-  selectValue:string='month';
+  selectValue: string = 'month';
 
   constructor(
     private plt: Platform,
@@ -29,12 +29,12 @@ export class HistoryPage implements OnInit {
 
   ngOnInit() {
     // const loader=  this.utils.presentEndOfTripModal("אבירים פינת יעקב אליאב 5, ירושלים","מלון כרמים ירושלים , הגן הזאולוגי 7");
-   this.getHistoryData('month')
+    this.getHistoryData('month');
   }
   goToMenu(): void {
     this.navigateService.goToMenu();
   }
-  
+
   tripPay() {
     this.userInfoServer.historyTripPay$.next(null);
     this.navigateService.goToCCDetails();
@@ -49,19 +49,18 @@ export class HistoryPage implements OnInit {
   }
   formatTime(item) {
     let date = new Date(item.created);
-    const h= date.getHours();
-    const m= date.getMinutes();
-    return h + ":" + m;
+    const h = date.getHours();
+    const m = date.getMinutes();
+    return h + ':' + m;
   }
-  handleChange(e){
-    this.selectValue=e.target.value
-    this.getHistoryData(e.target.value)
-    console.log(e.target.value)
+  handleChange(e) {
+    this.selectValue = e.target.value;
+    this.getHistoryData(e.target.value);
+    console.log(e.target.value);
   }
-  getHistoryData(after:string){
+  getHistoryData(after: string) {
     let userInfo$ = this.userInfoServer.getUserHistory(after).subscribe(
       (data) => {
-        console.log(data)
         this.historyCards = data.reverse();
         data.forEach((trip) => {
           !trip.paymentCompleted

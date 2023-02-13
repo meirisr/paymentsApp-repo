@@ -121,6 +121,7 @@ export class UserInfoService {
       )
       .subscribe(
         (data) => {
+          console.log(data)
           if (data.length > 0) {
             this.debtCheck$.next(true);
           } else {

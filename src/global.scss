@@ -45,6 +45,12 @@ ion-button {
   --ion-color: #fff;
   // --ion-border-color: #091D31;;
 }
+body {
+  --ion-background-color: #091D31;
+  --ion-color: #fff;
+  // --ion-border-color: #091D31;;
+}
+
 .md body.scanBg {
   --ion-background-color: #091d3100;
 }

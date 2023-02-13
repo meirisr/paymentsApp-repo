@@ -73,6 +73,9 @@ export class IntroPage implements OnInit {
   async onSubmit(): Promise<void> {
     const hotelId = this.selectedHotel.id;
     const hotelName = this.selectedHotel.name;
+    if(hotelId==='')return;
+    this.storageService.setHotelId(hotelId);
+   this.storageService.setHotelName(hotelName);
    if(hotelId==='0'){
     // this.storageService.setHotelId('0');
     // this.navigateService.goToMenu();

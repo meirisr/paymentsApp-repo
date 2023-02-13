@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
@@ -11,13 +11,14 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './payment.page.html',
   styleUrls: ['./payment.page.scss'],
 })
-export class PaymentPage implements AfterViewInit {
+export class PaymentPage implements AfterViewInit , OnInit {
   private subscriptions: Subscription[] = [];
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('paymentBody') paymentBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   mapHight: string = '40vh';
   origin;
+  hidePayment:boolean=false;
   destination;
   nearestStation = {
     lat: 0,
@@ -38,6 +39,12 @@ export class PaymentPage implements AfterViewInit {
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navigateService.goToMenu();
+    });
+  }
+  ngOnInit(){
+     this.storageService.getHotelId().then((data)=>{
+      this.hidePayment= Number(data.value)? false:true;
+     
     });
   }
 
@@ -86,7 +93,7 @@ export class PaymentPage implements AfterViewInit {
     setTimeout(() => {
       this.utils.dismissModal();
     }, 2000);
-    this.travelProcessService.isRouteValidToOrg(this.data, hotelId.value);
+    // this.travelProcessService.isRouteValidToOrg(this.data, hotelId.value);
     this.travelProcessService.paymentTranportation(this.data, hotelId.value);
     this.navigateService.goToTravelRouteTracking();
   }

@@ -61,7 +61,10 @@ export class UserInfoService {
         })
       )
       .subscribe(
-        async () => {},
+        async () => {
+
+          
+        },
         async (err) => {
           console.log(err);
           this.onHttpErorr(err, '');
@@ -217,7 +220,6 @@ export class UserInfoService {
           this.getCreditCardInfo();
         },
         async (res) => {
-          console.log(res);
           this.onHttpErorr(res, '');
         }
       );

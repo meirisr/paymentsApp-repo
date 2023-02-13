@@ -26,7 +26,7 @@
     dir="{{'dir'|translate}}"
     class="card-details-Form"
     [formGroup]="cardDetails"
-    (ngSubmit)="updateCreditCard()"
+    
   >
     <div class="input-group">
       <label class="fluatingLabel">
@@ -120,13 +120,19 @@
         </ion-content>
       </ng-template>
     </ion-modal>
-    <div class="input-group" dir="ltr">
-      <app-main-btn
-        style="margin-bottom: 5vh; width: 100vw"
-        type="submit"
-        [disabled]="cardDetails.invalid"
-        text="{{'pages.credit-card-details.updated'|translate}}"
-      ></app-main-btn>
-    </div>
+   
+   
+      
+   
   </form>
+  <div  class="footer-container">
+    <app-main-btn
+    style=" width: 100vw"
+    type="click"
+    [fullWidth]="true"
+    [disabled]="cardDetails.invalid"
+    text="{{'pages.credit-card-details.updated'|translate}}"
+    (click)="updateCreditCard()"
+  ></app-main-btn>
+  </div>
 </ion-content>

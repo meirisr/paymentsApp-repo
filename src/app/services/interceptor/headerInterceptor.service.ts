@@ -40,19 +40,17 @@ export class HeaderInterceptor implements HttpInterceptor {
             `Bearer ${token}`
           ),
         });
-
         return next.handle(modifieRequest);
       })
     );
   }
-  TokenValidation = (httpRequest: HttpRequest<any>, next: HttpHandler) => {
+  TokenValidation = async(httpRequest: HttpRequest<any>, next: HttpHandler) => {
     return this.storageService.getToken().then((tokenVal) => {
       if (
         tokenVal.value == null &&
         !httpRequest.url.includes('refresh-token')
       ) {
         this.authenticationService.loadToken();
-        // window.location.reload();
       } else if (
         !httpRequest.url.includes('is-token-valid') &&
         !httpRequest.url.includes('refresh-token')
@@ -71,20 +69,20 @@ export class HeaderInterceptor implements HttpInterceptor {
     });
   };
 
-  sendHttp = (httpRequest: HttpRequest<any>, next: HttpHandler) => {
-    if (
-      httpRequest.url.includes('GetDetailsByVehicle') ||
-      httpRequest.url.includes('get-organization-per-station')
-    ) {
-      return next.handle(httpRequest);
-    }
-    const modifieRequest = httpRequest.clone({
-      headers: httpRequest.headers.append(
-        'Authorization',
-        `Bearer ${this.token}`
-      ),
-    });
+  // sendHttp = (httpRequest: HttpRequest<any>, next: HttpHandler) => {
+  //   if (
+  //     httpRequest.url.includes('GetDetailsByVehicle') ||
+  //     httpRequest.url.includes('get-organization-per-station')
+  //   ) {
+  //     return next.handle(httpRequest);
+  //   }
+  //   const modifieRequest = httpRequest.clone({
+  //     headers: httpRequest.headers.append(
+  //       'Authorization',
+  //       `Bearer ${this.token}`
+  //     ),
+  //   });
 
-    return next.handle(modifieRequest);
-  };
+  //   return next.handle(modifieRequest);
+  // };
 }

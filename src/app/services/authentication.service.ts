@@ -80,6 +80,7 @@ export class AuthenticationService {
       );
     } else {
       this.isAuthenticated$.next(false);
+      this.storageService.deleteAllStorege();
     }
   }
 

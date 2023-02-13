@@ -66,8 +66,10 @@ export class CreditCardDetailsPage implements OnInit {
     this.userInfoServer
       .updateCreditCard(this.cardDetails.value)
       .then(async () => {
-        this.goToUserProfile();
-      });
+        // this.goToMenu();
+      })
+     
+      
   }
 
   cardNumKeyUp(e: Event) {

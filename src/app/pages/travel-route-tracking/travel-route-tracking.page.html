@@ -7,6 +7,7 @@
       color="#000"
       slot="{{'menuSide'|translate}}"
       name="logo-amplify"
+      style="margin: 0;"
     ></ion-icon>
     <ion-text class="pageTitle" slot="{{'menuSide'|translate}}"
       ><h5>{{hotelName}}</h5></ion-text
@@ -97,11 +98,12 @@
     </div>
   </div>
 </ion-content>
-<div *ngIf="!noData" class="footer-container">
+<div *ngIf="!noData" class="footer-container"  style="bottom: 0vh">
   <app-main-btn
     style="width: 100vw"
     type="click"
     text="{{'pages.travel-route-tracking.endTrip'|translate}}"
     (click)="onEndTrip()"
+    [fullWidth]="true"
   ></app-main-btn>
 </div>

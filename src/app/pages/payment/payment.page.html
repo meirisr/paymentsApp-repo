@@ -9,7 +9,7 @@
     <ion-grid class="body-card-1">
       <ion-row style="justify-content: center">
         <ion-col size="4"><hr /></ion-col>
-        <ion-col size="3"
+        <ion-col size="2"
           ><div class="openCloseBtn" (click)="onOpenClose()">
             <div class="blackLine"></div></div
         ></ion-col>
@@ -33,8 +33,8 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-grid class="body-card-2">
-      <ion-item>
+    <ion-grid class="body-card-2" [class.hide]="hidePayment">
+      <ion-item lines="none" style="margin:0 5%;">
         <h3>{{'pages.payment.payment'|translate}}</h3>
       </ion-item>
       <ion-row class="padding-r">
@@ -44,7 +44,7 @@
           ></ion-col
         >
         <ion-col>
-          <div style="display: flex; justify-content: center">
+          <div style="display: flex; justify-content: space-around">
             <ion-fab-button
               class="removeBtn"
               size="small"

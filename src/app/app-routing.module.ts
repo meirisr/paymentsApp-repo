@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/intro/intro.module').then((m) => m.IntroPageModule),
     // canLoad: [AutoLoginGuard],
-    canLoad: [AuthGuard, IntroGuard, ActiveRouteGuard],
+    canLoad: [AuthGuard, ActiveRouteGuard] //, IntroGuard
   },
 
   {

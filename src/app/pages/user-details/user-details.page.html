@@ -12,7 +12,7 @@
     dir="{{'dir'|translate}}"
     class="user-details-Form"
     [formGroup]="userDetails"
-    (ngSubmit)="updateUserInfo()"
+    
   >
  
   <div class="form-inputs-container" >
@@ -71,14 +71,20 @@
         </div>
       </div> -->
     </div>
-    <div class="input-group" dir="ltr">
-      <app-main-btn
-        style="margin-bottom: 5vh; width: 100vw"
-        type="submit"
-        [disabled]="userDetails.invalid"
-        text="{{'pages.user-details.updated'|translate}}"
-      ></app-main-btn>
-    </div>
+   
+   
+ 
   </div>
   </form>
+  <div  class="footer-container">
+    <app-main-btn
+    style="margin-bottom: 5vh; width: 100vw"
+    type="submit"
+    [disabled]="userDetails.invalid"
+    [fullWidth]="true"
+    text="{{'pages.user-details.updated'|translate}}"
+    (click)="updateUserInfo()"
+  ></app-main-btn>
+  </div>
+  
 </ion-content>

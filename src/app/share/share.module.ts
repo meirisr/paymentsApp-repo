@@ -35,13 +35,14 @@ const content = [
   HeaderWaveComponent,
   LottieComponent,
   PopupModalComponent,
-  EndTripModalComponent
+  EndTripModalComponent,
+  
   
 ];
 
 @NgModule({
   declarations: content,
-  exports: [content],
-  imports: [CommonModule, IonicModule, FormsModule,ReactiveFormsModule,TranslateModule,GoogleMapsModule,LottieModule.forRoot({ player: playerFactory })]
+  exports: [...content,TranslateModule],
+  imports: [CommonModule, IonicModule, FormsModule,ReactiveFormsModule,GoogleMapsModule,LottieModule.forRoot({ player: playerFactory })]
 })
 export class GlobalModule {}

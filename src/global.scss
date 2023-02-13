@@ -133,8 +133,9 @@ app-end-trip-modal.ion-page:before {
 .he-alert {
   direction: rtl;
 }
-.menu-btn-let {
+.menu-btn-left {
   left: 0;
+  position: absolute;
 }
 .menu-btn-right {
   right: 0;

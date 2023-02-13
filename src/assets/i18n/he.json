@@ -27,7 +27,7 @@
     },
     "main": {
       "startTrip": "התחל נסיעה",
-      "activeTrip": "נסיעה פעילה"
+      "activeTrip": " קיימת נסיעה פעילה"
     },
     "user-details": {
       "cancel":"ביטול",
@@ -91,9 +91,9 @@
   },
   "dir": "rtl",
   "search-icon-side": "icon-left",
-  "menu-btn-side": "menu-btn-right",
+  "menu-btn-side": "menu-btn-left",
   "side": "end",
-  "menuSide": "end",
+  "menuSide": "start",
   "nextBtn": "המשך",
   "backBtn": "חזור",
   "backBtn-side": "backBtn-side-right",

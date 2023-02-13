@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Geolocation } from '@capacitor/geolocation';
-import { Capacitor } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
@@ -15,7 +14,7 @@ import { mapConfig } from './map-config';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
-const BusImage: string = '../../../assets/images/bus.png';
+const BusImage: string = '../../../assets/bus.svg';
 const locationImage: string = '../../../assets/location.svg';
 const emptyCircleImage: string = '../../../assets/empty-circle.svg';
 
@@ -78,7 +77,7 @@ export class MapComponent implements AfterViewInit {
     };
     this.watchmarkerOptions = {
       draggable: false,
-      icon: locationImage,
+      icon: BusImage,
     };
 
     this.markerOptions = {
@@ -137,7 +136,6 @@ export class MapComponent implements AfterViewInit {
           }
         );
       this.subscriptions.push(stationInfo);
-      // document.querySelector('#map').addEventListener('mouseup', this.move);
     }, 100);
 
     this.getUserLocation();
@@ -154,9 +152,6 @@ export class MapComponent implements AfterViewInit {
   }
   move() {
     this.followMe = false;
-  }
-  dragstart() {
-    console.log('hjgjhfhgfhgfht');
   }
 
   addMarker(latLng) {
@@ -201,6 +196,18 @@ export class MapComponent implements AfterViewInit {
     });
   }
 
+  removeWatcharkers() {
+    this.watchmarkers.pop();
+    this.watchmarkers = [];
+  }
+
+  async centerMap() {
+    this.mapOptions.zoom = 16;
+    this.watchMarker
+      ? (this.mapOptions.center = new google.maps.LatLng(this.watchMarker))
+      : null;
+    this.followMe = true;
+  }
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
     this.stationsMarker = [];
@@ -208,17 +215,5 @@ export class MapComponent implements AfterViewInit {
     if (this.interval) {
       clearInterval(this.interval);
     }
-  }
-  removeWatcharkers() {
-    this.watchmarkers.pop();
-    this.watchmarkers = [];
-  }
- 
-  async centerMap() {
-    this.mapOptions.zoom = 16;
-    this.watchMarker
-      ? (this.mapOptions.center = new google.maps.LatLng(this.watchMarker))
-      : null;
-    this.followMe = true;
   }
 }

@@ -9,13 +9,14 @@
   <ng-container *ngIf="noData">
     <div style="text-align:center ;"><h3>{{'pages.main.startTrip'|translate}}</h3></div>
     <div  class="card-container ion-activatable" (click)="onClick()">
-      <ion-card>
-        <ion-card-header>
+      <!-- <ion-card> -->
+        <app-lottie [type]="'mainScanBtn'"></app-lottie>
+        <!-- <ion-card-header>
           <img src="../../../assets/qrCode.svg" />
      
-        </ion-card-header>
+        </ion-card-header> -->
         <ion-ripple-effect></ion-ripple-effect>
-      </ion-card>
+      <!-- </ion-card> -->
     </div>
 
   </ng-container>
@@ -23,10 +24,13 @@
   <!-- <ion-row *ngIf="!noData" class="ion-text-center ion-padding alert-row ion-activatable"
   (click)="onActiveTrip()">
     <ion-col class=""> -->
-      <div class="payment-body ion-text-center ion-padding ion-activatable"  *ngIf="!noData" (click)="onActiveTrip()">
-        <img src="../../../assets/scan.svg" />
-        <h3>{{'pages.main.activeTrip'|translate}}</h3>
-        <ion-ripple-effect></ion-ripple-effect>
+      <div *ngIf="!noData" class=" footer-container ion-text-center ion-padding ion-activatable"  (click)="onActiveTrip()">
+        <div class="activeTripeBtn">
+          <h4 style="margin-top:10px;">{{'pages.main.activeTrip'|translate}}</h4>
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+       
+       
       </div>
       
     <!-- </ion-col>

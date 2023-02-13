@@ -49,8 +49,9 @@ export class ScanPage implements OnInit {
   }
 
   ngOnInit() {
-    this.utils.presentLoader();
+    // this.utils.presentLoader();
     if (Capacitor.isNativePlatform()) {
+       
       this.checkLocationPermission().then((e) => {
         if (e) {
           BarcodeScanner.prepare();
@@ -75,15 +76,17 @@ export class ScanPage implements OnInit {
   }
 
   async startScanner(): Promise<void> {
-    await this.utils.dismissLoader();
+    BarcodeScanner.hideBackground();
+    document.querySelector('body').classList.add('scanBg');
     let hotelId = !!this.storageService.getHotelId();
     const allowed = await this.checkPermission();
-
+    
     if (allowed) {
       this.scanActive = true;
-      document.querySelector('body').classList.add('scanBg');
+      
       this.result = null;
-      BarcodeScanner.hideBackground();
+      // await this.utils.dismissLoader();
+     
       const result = await BarcodeScanner.startScan({
         targetedFormats: [SupportedFormat.QR_CODE],
       });
@@ -107,16 +110,17 @@ export class ScanPage implements OnInit {
       .subscribe(
         async (data) => {
           this.utils.dismissModal();
+          this.navigateService.goToPayment();
           console.log(data);
-          if (!data) {
-            // await this.utils.presentModal('קוד אינו תקין', 'יש לסרוק קוד אחר', '',true);
-            // setTimeout(() => {
-            //   this.utils.dismissModal();
-            // }, 1000);
-            this.startScanner();
-          } else {
-            this.navigateService.goToPayment();
-          }
+          // if (!data) {
+          //   // await this.utils.presentModal('קוד אינו תקין', 'יש לסרוק קוד אחר', '',true);
+          //   // setTimeout(() => {
+          //   //   this.utils.dismissModal();
+          //   // }, 1000);
+          //   this.startScanner();
+          // } else {
+          //   this.navigateService.goToPayment();
+          // }
         },
         async () => {
           setTimeout(() => {
@@ -135,6 +139,7 @@ export class ScanPage implements OnInit {
     }
   }
   async checkLocationPermission(): Promise<boolean> {
+  
     const locationStatus = await Geolocation.requestPermissions();
     if (locationStatus.location) {
       try {
@@ -195,7 +200,7 @@ export class ScanPage implements OnInit {
     this.navigateService.goToMenu();
   }
   ngOnDestroy() {
-    this.utils.dismissLoader();
+    // this.utils.dismissLoader();
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

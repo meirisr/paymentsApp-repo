@@ -27,6 +27,13 @@ export class LottieComponent implements OnInit {
   generateOptios(type:string){
     console.log(type)
  switch (type) {
+  case 'mainScanBtn':
+    this.options = {
+      ...this.options, // In case you have other properties that you want to copy
+      path: '../../../assets/lottie/mainScanBtn.json', 
+    };
+    this.height="100%";
+    break;
   case 'chack':
     this.options = {
       ...this.options, // In case you have other properties that you want to copy

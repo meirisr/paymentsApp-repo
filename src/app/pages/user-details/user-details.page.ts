@@ -26,7 +26,7 @@ export class UserDetailsPage implements OnInit {
     private navigateService: NavigateHlperService
   ) {
     this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navigateService.goToUserProfile();
+      this.goToMenu();
     });
   }
   ngOnInit() {

@@ -92,8 +92,8 @@ ion-col.right{
   
 }
 hr {
-  border: 0;
   border-top: 2px solid #FFB300;
+  background: none;
 }
 #drowerBar{
   position: absolute;
@@ -102,21 +102,21 @@ hr {
 
 }
 .openCloseBtn{
-  width: 100%;
-  height: 35px;
-  background: #FFB300;
-  border-radius: 10%;
+  width: 39px;
+  height: 40px;
+  border:1px solid #FFB300;
+  border-radius: 60%;
   padding: 23% 0;
 }
-.blackLine{
-  background: #000;
-  width: 10px;
-  height: 4px;
-  position: absolute;
-  border-radius: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-}
+// .blackLine{
+//   background: #000;
+//   width: 10px;
+//   height: 4px;
+//   position: absolute;
+//   border-radius: 10%;
+//   left: 50%;
+//   transform: translateX(-50%);
+// }
 .addBtn{
   --background: #FFB300;
   --color: #000;
@@ -129,7 +129,7 @@ hr {
   --border-color:  #CECECE;
   --border-radius: 6px;
   --background: transparent;
-    width: 8vw;
+    width: 9vw;
     height: 4vh;
     --border-width: 2px;
     --border-style: solid;
@@ -146,4 +146,7 @@ hr {
   width: 100vw;
   left: 50%;
   transform: translateX(-50%);
+}
+.hide{
+  visibility: hidden;
 }

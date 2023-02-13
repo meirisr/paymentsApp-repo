@@ -78,38 +78,39 @@ export class IntroPage implements OnInit {
     // this.navigateService.goToMenu();
     this.onCreditCardClick()
    }else{
+    this.navigateService.goToMenu();
     const isPermitToOrg$ = this.logInServer
-    .isUserPermitToOrganization(hotelId, hotelName)
-    .subscribe(
-      async (data) => {
-        if (data) {
-          this.storageService.setHotelId(hotelId);
-          this.storageService.setHotelName(hotelName);
-          await this.utils.presentModal(
-            'ברוכים הבאים',
-            `הנך רשום ב ${hotelName}`,
-            'chack'
-          );
-          setTimeout(() => {
-            this.utils.dismissModal();
-          }, 2000);
-          this.navigateService.goToMenu();
-        } else {
-          await this.utils.presentModal(
-            'לא נמצא',
-            'עליך להכנס עם כרטיס אשראי',
-            ''
-          );
-          setTimeout(() => {
-            this.utils.dismissModal();
-          }, 2000);
-        }
-      },
-      (err: Error) => {
-        console.log(err);
-      }
-    );
-  this.subscriptions.push(isPermitToOrg$);
+  //   .isUserPermitToOrganization(hotelId, hotelName)
+  //   .subscribe(
+  //     async (data) => {
+  //       if (data) {
+  //         this.storageService.setHotelId(hotelId);
+  //         this.storageService.setHotelName(hotelName);
+  //         await this.utils.presentModal(
+  //           'ברוכים הבאים',
+  //           `הנך רשום ב ${hotelName}`,
+  //           'chack'
+  //         );
+  //         setTimeout(() => {
+  //           this.utils.dismissModal();
+  //         }, 2000);
+  //         this.navigateService.goToMenu();
+  //       } else {
+  //         await this.utils.presentModal(
+  //           'לא נמצא',
+  //           'עליך להכנס עם כרטיס אשראי',
+  //           ''
+  //         );
+  //         setTimeout(() => {
+  //           this.utils.dismissModal();
+  //         }, 2000);
+  //       }
+  //     },
+  //     (err: Error) => {
+  //       console.log(err);
+  //     }
+  //   );
+  // this.subscriptions.push(isPermitToOrg$);
    }
     this.selectedHotel = { id: '', name: '' };
   }

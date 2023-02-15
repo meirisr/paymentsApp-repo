@@ -77,11 +77,11 @@ export class UserDetailsPage implements OnInit {
     );
     console.log(userDetails)
     this.userDetails.setValue({
-      firstName: userDetails.firstName,
-      lastName: userDetails.lastName,
+      firstName: userDetails?.firstName??'',
+      lastName: userDetails?.lastName??"",
       userId: '',
       userDate: 'DD/MM/YY',
-      email: userDetails.email,
+      email: userDetails?.email??"",
     });
 
   }

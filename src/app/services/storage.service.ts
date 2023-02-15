@@ -7,7 +7,7 @@ export const userStoregeObj = {
   PHONE_NUM: 'my-phone',
   TOKEN_KEY: 'my-token',
   REFRESH_TOKEN_KEY: 'token-refresh',
-  HEADER_HOTELS: 'hotels',
+  HEADER_HOTELS: 'Maya-Tours',
   USER_DETAILS: 'user-details',
   ROUTE_DETAILS: 'route-details',
   CARD_DETAILS: 'card-details',

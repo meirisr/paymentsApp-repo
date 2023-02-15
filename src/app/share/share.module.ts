@@ -43,6 +43,6 @@ const content = [
 @NgModule({
   declarations: content,
   exports: [...content,TranslateModule],
-  imports: [CommonModule, IonicModule, FormsModule,ReactiveFormsModule,GoogleMapsModule,LottieModule.forRoot({ player: playerFactory })]
+  imports: [CommonModule, IonicModule,TranslateModule, FormsModule,ReactiveFormsModule,GoogleMapsModule,LottieModule.forRoot({ player: playerFactory })]
 })
 export class GlobalModule {}

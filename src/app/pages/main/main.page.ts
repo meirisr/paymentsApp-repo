@@ -42,6 +42,7 @@ export class MainPage {
   ngAfterViewInit(): void {
     let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
       async (data) => {
+        console.log(data)
         if (!data) {
           this.noData = true;
           return;
@@ -55,15 +56,21 @@ export class MainPage {
     this.subscriptions.push(routeInfoSubscription);
   }
   async onClick() {
-    if (this.userInfoServer.isCardHasDetails.value) {
+    if(!this.noData){
+      this.navigateService.goToTravelRouteTracking();
+    }else{
       this.navigateService.goToScan();
-    } else {
-      await this.utils.presentModal('', 'עליך להכניס פרטי אשראי', '');
-      setTimeout(() => {
-        this.utils.dismissModal();
-      }, 2000);
-      this.navigateService.goToCCDetails();
     }
+    // if (this.userInfoServer.isCardHasDetails.value) {
+    //   this.navigateService.goToScan();
+    // } else {
+    //   await this.utils.presentModal('', 'עליך להכניס פרטי אשראי', '');
+    //   setTimeout(() => {
+    //     this.utils.dismissModal();
+    //   }, 2000);
+    //   this.navigateService.goToCCDetails();
+    // }
+    
   }
   onActiveTrip(): void {
     this.navigateService.goToTravelRouteTracking();

@@ -61,6 +61,7 @@ export class HistoryPage implements OnInit {
   getHistoryData(after: string) {
     let userInfo$ = this.userInfoServer.getUserHistory(after).subscribe(
       (data) => {
+        console.log(data)
         this.historyCards = data.reverse();
         data.forEach((trip) => {
           !trip.paymentCompleted

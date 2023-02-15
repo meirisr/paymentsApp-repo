@@ -97,7 +97,7 @@ export class UserInfoService {
           //  Date.UTC(date.getFullYear(), date.getMonth(),1)
         },
         {
-          headers: new HttpHeaders({ station: 'hotels' }),
+          headers: new HttpHeaders({ station: 'Maya-Tours' }),
         }
       )
       .pipe(
@@ -111,7 +111,7 @@ export class UserInfoService {
       .get(
         `${environment.serverUrl}/transportation/get-unpaid-drives-per-user`,
         {
-          headers: new HttpHeaders({ station: 'hotels' }),
+          headers: new HttpHeaders({ station: 'Maya-Tours' }),
         }
       )
       .pipe(
@@ -156,7 +156,7 @@ export class UserInfoService {
           paymentAmount: 5,
         },
         {
-          headers: new HttpHeaders({ station: 'hotels' }),
+          headers: new HttpHeaders({ station: 'Maya-Tours' }),
         }
       )
       .pipe(
@@ -176,7 +176,7 @@ export class UserInfoService {
           email: credentials.email,
         },
         {
-          headers: new HttpHeaders({ station: 'hotels' }),
+          headers: new HttpHeaders({ station: 'Maya-Tours' }),
         }
       )
       .pipe()
@@ -208,7 +208,7 @@ export class UserInfoService {
           validUntilYear: credentials.date.split('/')[1],
         },
         {
-          headers: new HttpHeaders({ station: 'hotels' }),
+          headers: new HttpHeaders({ station: 'Maya-Tours' }),
         }
       )
       .subscribe(

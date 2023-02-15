@@ -16,8 +16,9 @@ export class PaymentPage implements AfterViewInit , OnInit {
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('paymentBody') paymentBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
-  mapHight: string = '40vh';
-  origin;
+  // mapHight: string = '40vh';
+  mapHight: string = '100vh';
+  origin="";
   hidePayment:boolean=false;
   destination;
   nearestStation = {
@@ -49,28 +50,41 @@ export class PaymentPage implements AfterViewInit , OnInit {
   }
 
   ngAfterViewInit(): void {
-    let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
+    // let routeInfoSubscription = this.travelProcessService.routeInfo.subscribe(
+    //   async (data) => {
+    //     if (!data) return;
+    //     console.log(data);
+    //     this.data = data;
+    //     this.origin = data.firstStation;
+    //     this.destination = data.lastStation;
+    //   },
+    //   async (error) => {
+    //     console.log(error);
+    //   }
+    // );
+    // this.subscriptions.push(routeInfoSubscription);
+    // setTimeout(() => {
+    //   this.utils.dismissModal();
+    // }, 10);
+    let tripInfoSubscription = this.travelProcessService.tripInfo.subscribe(
       async (data) => {
         if (!data) return;
         console.log(data);
         this.data = data;
-        this.origin = data.firstStation;
-        this.destination = data.lastStation;
+        this.origin = data.busNomber;
+        
       },
       async (error) => {
         console.log(error);
       }
     );
-    this.subscriptions.push(routeInfoSubscription);
-    setTimeout(() => {
-      this.utils.dismissModal();
-    }, 10);
+    this.subscriptions.push(tripInfoSubscription);
   }
   onOpenClose() {
-    this.paymentBodyRef.nativeElement.classList.toggle('closeBig');
-    this.paymentBodyRef.nativeElement.classList.contains('closeBig')
-      ? (this.mapHight = '100vh')
-      : (this.mapHight = '40vh');
+    // this.paymentBodyRef.nativeElement.classList.toggle('closeBig');
+    // this.paymentBodyRef.nativeElement.classList.contains('closeBig')
+    //   ? (this.mapHight = '100vh')
+    //   : (this.mapHight = '40vh');
   }
 
   convertPXToVh(px: number): number {
@@ -89,12 +103,24 @@ export class PaymentPage implements AfterViewInit , OnInit {
   }
   async onSubmit(): Promise<void> {
     let hotelId = await this.storageService.getHotelId();
-    this.utils.presentModal('נסיעה טובה', '', 'chack');
-    setTimeout(() => {
+    
+    // this.travelProcessService.isRouteValidToOrg(this.data, hotelId.value);
+    this.travelProcessService.newTransportationDrive(this.data, hotelId.value).subscribe(
+      (data) => {
+        this.travelProcessService.paymentTrip.next(true); //true
+        this.storageService.setRouteDetails(true);
+        this.utils.presentModal('נסיעה טובה', '', 'chack');
+        setTimeout(() => {
       this.utils.dismissModal();
     }, 2000);
-    // this.travelProcessService.isRouteValidToOrg(this.data, hotelId.value);
-    this.travelProcessService.paymentTranportation(this.data, hotelId.value);
+       
+      },
+      (err) => {
+        this.travelProcessService.paymentTrip.next(false); //none
+        console.log(err);
+        
+      }
+    );;
     this.navigateService.goToTravelRouteTracking();
   }
   ngOnDestroy(): void {

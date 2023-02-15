@@ -17,7 +17,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-list>
-            <ion-item id="0" lines="none" [class.selected]="selectedHotel.id==='0'"  (click)="onClickHotel($event,{id:'0',name:'cC'})"
+            <!-- <ion-item id="0" lines="none" [class.selected]="selectedHotel.id==='0'"  (click)="onClickHotel($event,{id:'0',name:'cC'})"
       >
       <div *ngIf="selectedHotel.id==='0'" slot="end">
         <img
@@ -32,7 +32,7 @@
           
           src="../../../assets/credit-card.svg"
         />
-      </ion-item>
+      </ion-item> -->
             <ion-item 
               *ngFor="let item of tempitems"
               id={{item.id}}
@@ -47,6 +47,10 @@
               />
             </div>
               <ion-text>{{item.name}}</ion-text>
+              <img slot="start"
+          
+          src="../../../assets/empty-circle.svg"
+        />
             </ion-item>
           </ion-list>
         </ion-col>

@@ -37,11 +37,13 @@ export class IntroPage implements OnInit {
     this.storageService.deleteHotelId();
     this.storageService.deleteHotelName();
     const allOrg$ = this.logInServer
-      .getAllUserOrganizations()
+      .getAllOrganizations()
       .subscribe(async (data) => {
-        this.items = data.body;
+        console.log(data)
+       
+        this.items =[...Object.entries(data.body).map(item=>this.creatHotelObj(item))]
         this.tempitems = [...this.items];
-
+        console.log( this.tempitems)
         async (err: Error) => {
           console.log(err);
         };
@@ -82,7 +84,7 @@ export class IntroPage implements OnInit {
     this.onCreditCardClick()
    }else{
     this.navigateService.goToMenu();
-    const isPermitToOrg$ = this.logInServer
+    // const isPermitToOrg$ = this.logInServer
   //   .isUserPermitToOrganization(hotelId, hotelName)
   //   .subscribe(
   //     async (data) => {
@@ -125,8 +127,8 @@ export class IntroPage implements OnInit {
     this.selectedHotel = item;
   }
 
-  creatHotelObj(data: { name: string; id: string }) {
-    return { name: Object.values(data)[0], id: Object.keys(data)[0] };
+  creatHotelObj(data) {
+    return { name: data[1], id: data[0] };
   }
   goToLogin(): void {
     this.storageService.deleteAllStorege();

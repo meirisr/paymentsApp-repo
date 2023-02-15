@@ -64,7 +64,7 @@ const routes: Routes = [
     path: 'scan',
     loadChildren: () =>
       import('./pages/scan/scan.module').then((m) => m.ScanPageModule),
-    canLoad: [AuthGuard,DebtsGuard],
+    canLoad: [AuthGuard],
     // canLoad: [AuthGuard, DebtsGuard],
   },
   {

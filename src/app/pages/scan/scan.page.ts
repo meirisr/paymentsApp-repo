@@ -95,10 +95,12 @@ export class ScanPage implements OnInit {
         console.log(result);
         this.stopScanner();
         document.querySelector('body').classList.remove('scanBg');
+        this.travelProcessService.tripInfo.next({userLocation:this.userLocation, busNomber:this.result});
+        this.navigateService.goToPayment();
         // if (hotelId) {
         //   this.navigateService.goToPayment();
         // } else {
-        this.getTrip();
+        // this.getTrip();
       }
     }
   }

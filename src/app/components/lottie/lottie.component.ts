@@ -40,7 +40,7 @@ export class LottieComponent implements OnInit {
       path: '../../../assets/lottie/chack.json',
       
     };
-    this.height="200px";
+    this.height="145px";
     break;
   case 'scan':
     this.options = {

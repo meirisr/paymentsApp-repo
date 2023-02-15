@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
@@ -10,6 +10,7 @@ import { StorageService } from './storage.service';
 })
 export class TravelProcessService {
   routeInfo: BehaviorSubject<any> = new BehaviorSubject<any>(false);
+  tripInfo: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   paymentTrip: BehaviorSubject<any> = new BehaviorSubject<any>(false);
   stationInfo: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   Coordinates = <any>[];
@@ -23,7 +24,6 @@ export class TravelProcessService {
     private storageService: StorageService
   ) {}
   public isRouteValidToOrg(data, hotelId) {
-    console.log('isRouteValidToOrg');
     return this.http
       .get(
         `${environment.serverUrl}/transportation/is-route-valid-to-organization`,
@@ -63,7 +63,7 @@ export class TravelProcessService {
           // +trip.stationId
         },
         {
-          headers: new HttpHeaders({ station: 'hotels' }),
+          headers: new HttpHeaders({ station: 'Maya-Tours' }),
         }
       )
       .pipe(
@@ -82,6 +82,26 @@ export class TravelProcessService {
           console.log(err);
         }
       );
+  }
+  public newTransportationDrive(trip:{userLocation:any, busNomber:string}, hotelId: string):Observable<any>{
+    console.log(trip);
+
+    return this.http
+      .post(
+        `${environment.serverUrl}/transportation/insert-new-transportation-drive-without-route`,
+        {
+          vehicle: +trip?.busNomber||'',
+          organizationId: +hotelId,
+          // organizationId: "41",
+          // stationId: 59562,
+          stationId: 32,
+          coordinates:trip.userLocation
+          // coordinates:{latitude: 31.79441, longitude: 35.1875368}
+        },
+        // {
+        //   headers: new HttpHeaders({ station: 'Maya-Tours' }),
+        // }
+      )
   }
 
   public getTravelDetails(

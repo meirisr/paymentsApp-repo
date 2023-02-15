@@ -92,17 +92,17 @@ export class MenuPage {
   }
   async getuserInfo(): Promise<void> {
     this.userEmail = (JSON.parse(
-      (await this.storageService.getUserDetails()).value).email
+      (await this.storageService.getUserDetails()).value)?.email??''
     );
     let firtName = (JSON.parse(
-      (await this.storageService.getUserDetails()).value).firstName
+      (await this.storageService.getUserDetails()).value)?.firstName??''
     );
     let lastName = (JSON.parse(
-      (await this.storageService.getUserDetails()).value).lastName
+      (await this.storageService.getUserDetails()).value)?.lastName??''
     );
     this.userName=firtName+' '+lastName;
     this.cardLast4Digits = (JSON.parse(
-      (await this.storageService.getCreditCard4Dig()).value)
+      (await this.storageService.getCreditCard4Dig())?.value)
     );
 }
 }

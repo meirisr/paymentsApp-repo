@@ -71,21 +71,21 @@ export class TravelRouteTrackingPage implements OnInit {
   }
  
 
-  ionViewDidEnter(): void {
-    this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
-    this.minHight = this.plt.height();
+  // ionViewDidEnter(): void {
+  //   // this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
+  //   this.minHight = this.plt.height();
 
-    const gesture: Gesture = this.gestureCtrl.create(
-      {
-        el: this.travelBodyRef.nativeElement,
-        threshold: 0,
-        gestureName: 'my-gesture',
-        onMove: (ev) => this.onMove(ev),
-      },
-      true
-    );
-    gesture.enable();
-  }
+  //   const gesture: Gesture = this.gestureCtrl.create(
+  //     {
+  //       el: this.travelBodyRef.nativeElement,
+  //       threshold: 0,
+  //       gestureName: 'my-gesture',
+  //       onMove: (ev) => this.onMove(ev),
+  //     },
+  //     true
+  //   );
+  //   gesture.enable();
+  // }
   onMove(detail) {
     if (detail.deltaY > 0) {
       this.travelBodyRef.nativeElement.classList.add('OpenBig');
@@ -99,11 +99,12 @@ export class TravelRouteTrackingPage implements OnInit {
     position.scrollTop = 0;
   }
   onEndTrip() {
-    this.travelProcessService.paymentTrip.next(false)
+    this.travelProcessService.paymentTrip.next(false);
     this.travelProcessService.routeInfo.next(false);
     this.storageService.deleteRouteDetails();
-    const loader=  this.utils.presentEndOfTripModal(this.origin.stationName,this.destination.stationName);
     this.navigateService.goToMenu();
+    // const loader=  this.utils.presentEndOfTripModal(this.origin.stationName,this.destination.stationName);
+    
   }
   showHideTravelBody() {
     this.isShow = !this.isShow;

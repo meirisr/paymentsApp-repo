@@ -3,7 +3,7 @@
 }
 
 ion-content {
-  --padding-top: 18vh;
+  --padding-top: 10vh;
 }
 
 .nemu-text {
@@ -40,11 +40,11 @@ ion-card-header {
   // margin-top: 5vh;
 }
 // .card-container ion-card {
-  // border-radius: 60%;
-  // background: #ffb300;
-  // height: 200px;
-  // width: 200px;
-  // border: 3px solid white;
+// border-radius: 60%;
+// background: #ffb300;
+// height: 200px;
+// width: 200px;
+// border: 3px solid white;
 // }
 ion-card-title {
   color: #000 !important;
@@ -53,7 +53,6 @@ ion-card-title {
 //     position: absolute;
 //     width: 100vw;
 //     top: 5vh;
-  
 
 // }
 // .alert{
@@ -63,9 +62,9 @@ ion-card-title {
 //   background-color: #fff;
 //   color: #000;
 //   border: 2px solid #FFB300;
-  
+
 // }
-.payment-body{
+.payment-body {
   position: fixed;
   top: 15vh;
   height: 22vh;
@@ -78,12 +77,10 @@ ion-card-title {
   color: #000;
   border-radius: 10px;
   transition: height 300ms;
-
-  
 }
 .payment-body:before,
 div:after {
-  content:"";
+  content: "";
   position: absolute;
 }
 .payment-body:before {
@@ -98,12 +95,39 @@ div:after {
 }
 .footer-container {
   position: absolute;
-  bottom: 3vh;
+  top: 20vh;
   width: 100vw;
 }
-.activeTripeBtn{
-  border: 1px solid #FFB300;
-  color: #FFB300;
+.activeTripeBtn {
+  border: 1px solid #ffb300;
+  color: #ffb300;
   border-radius: 6px;
-
+}
+ion-list {
+  // padding: 0 10px;
+ 
+}
+ion-item {
+  --border-color:#fff;
+  margin: 5px 0px;
+ 
+}
+ion-item.header {
+  margin-top: 2vh;
+ 
+}
+ion-item.select {
+  // padding: 0 10vw;
+  // margin-top: 2vh;
+  padding: 0px 15px;
+  --highlight-background: #10101055;
+}
+p{
+  color: #fff !important;
+}
+ion-text {
+  color: #fff;
+}
+ion-label{
+  color: #fff!important;
 }

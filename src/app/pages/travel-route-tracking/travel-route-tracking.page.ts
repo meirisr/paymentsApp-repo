@@ -30,21 +30,21 @@ export class TravelRouteTrackingPage implements OnInit {
   allStations: any[] = [];
   origin: any;
   destination: any;
-  hotelName: GetResult | string='';
+  hotelName: GetResult | string = '';
   nearestStation: { lat: number; lng: number } = {
     lat: 0,
     lng: 0,
   };
 
   constructor(
-    private plt: Platform,
+    private platform: Platform,
     private gestureCtrl: GestureController,
     private navigateService: NavigateHlperService,
     private storageService: StorageService,
     private utils: UtilsService,
     private travelProcessService: TravelProcessService
   ) {
-    this.plt.backButton.subscribeWithPriority(10, () => {
+    this.platform.backButton.subscribeWithPriority(10, () => {
       this.navigateService.goToMenu();
     });
   }
@@ -67,9 +67,8 @@ export class TravelRouteTrackingPage implements OnInit {
       }
     );
     this.subscriptions.push(routeInfoSubscription);
-    this.getHotelName()
+    this.getHotelName();
   }
- 
 
   // ionViewDidEnter(): void {
   //   // this.travelBodyRef.nativeElement.style.top = this.startHight + 'vh';
@@ -104,7 +103,6 @@ export class TravelRouteTrackingPage implements OnInit {
     this.storageService.deleteRouteDetails();
     this.navigateService.goToMenu();
     // const loader=  this.utils.presentEndOfTripModal(this.origin.stationName,this.destination.stationName);
-    
   }
   showHideTravelBody() {
     this.isShow = !this.isShow;
@@ -119,15 +117,15 @@ export class TravelRouteTrackingPage implements OnInit {
   convertVhTopx(vh: number): number {
     return (vh * document.documentElement.clientWidth) / 100;
   }
-  emitEventToChild(id:string) {
+  emitEventToChild(id: string) {
     this.travelProcessService.stationInfo.next(id);
     this.travelBodyRef.nativeElement.classList.remove('OpenBig');
     this.hideItems = true;
     const position = document.getElementById('body-card-1');
     position.scrollTop = 0;
   }
-  async getHotelName(){
-    this.hotelName=(await this.storageService.getHotelName()).value
+  async getHotelName() {
+    this.hotelName = (await this.storageService.getHotelName()).value;
   }
 
   ngOnDestroy(): void {

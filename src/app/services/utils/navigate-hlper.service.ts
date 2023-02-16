@@ -10,7 +10,7 @@ export class NavigateHlperService {
 
 
 goToMenu=()=>{
-  this.navCtrl.navigateRoot(['/menu'],{replaceUrl:true})
+  this.navCtrl.navigateRoot(['/menu/main'],{replaceUrl:true})
 }
 goToIntro=()=>{
   this.navCtrl.navigateRoot(['/intro'],{replaceUrl:true})

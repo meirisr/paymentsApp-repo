@@ -1,4 +1,10 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnInit,
+} from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { Platform } from '@ionic/angular';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
@@ -11,15 +17,15 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './payment.page.html',
   styleUrls: ['./payment.page.scss'],
 })
-export class PaymentPage implements AfterViewInit , OnInit {
+export class PaymentPage implements AfterViewInit, OnInit {
   private subscriptions: Subscription[] = [];
   @ViewChild('polyline') polylineRef: ElementRef<HTMLElement>;
   @ViewChild('paymentBody') paymentBodyRef: ElementRef<HTMLElement>;
   @ViewChild('drowerBar') drowerBarRef: ElementRef<HTMLElement>;
   // mapHight: string = '40vh';
   mapHight: string = '100vh';
-  origin="";
-  hidePayment:boolean=false;
+  origin = '';
+  hidePayment: boolean = false;
   destination;
   nearestStation = {
     lat: 0,
@@ -42,10 +48,9 @@ export class PaymentPage implements AfterViewInit , OnInit {
       this.navigateService.goToMenu();
     });
   }
-  ngOnInit(){
-     this.storageService.getHotelId().then((data)=>{
-      this.hidePayment= Number(data.value)? false:true;
-     
+  ngOnInit() {
+    this.storageService.getHotelId().then((data) => {
+      this.hidePayment = Number(data.value) ? false : true;
     });
   }
 
@@ -69,10 +74,8 @@ export class PaymentPage implements AfterViewInit , OnInit {
     let tripInfoSubscription = this.travelProcessService.tripInfo.subscribe(
       async (data) => {
         if (!data) return;
-        console.log(data);
         this.data = data;
         this.origin = data.busNomber;
-        
       },
       async (error) => {
         console.log(error);
@@ -103,24 +106,24 @@ export class PaymentPage implements AfterViewInit , OnInit {
   }
   async onSubmit(): Promise<void> {
     let hotelId = await this.storageService.getHotelId();
-    
+
     // this.travelProcessService.isRouteValidToOrg(this.data, hotelId.value);
-    this.travelProcessService.newTransportationDrive(this.data, hotelId.value).subscribe(
-      (data) => {
-        this.travelProcessService.paymentTrip.next(true); //true
-        this.storageService.setRouteDetails(true);
-        this.utils.presentModal('נסיעה טובה', '', 'chack');
-        setTimeout(() => {
-      this.utils.dismissModal();
-    }, 2000);
-       
-      },
-      (err) => {
-        this.travelProcessService.paymentTrip.next(false); //none
-        console.log(err);
-        
-      }
-    );;
+    this.travelProcessService
+      .newTransportationDrive(this.data, hotelId.value)
+      .subscribe(
+        (data) => {
+          this.travelProcessService.paymentTrip.next(true); //true
+          this.storageService.setRouteDetails(true);
+          this.utils.presentModal('נסיעה טובה', '', 'chack');
+          setTimeout(() => {
+            this.utils.dismissModal();
+          }, 2000);
+        },
+        (err) => {
+          this.travelProcessService.paymentTrip.next(false); //none
+          console.log(err);
+        }
+      );
     this.navigateService.goToTravelRouteTracking();
   }
   ngOnDestroy(): void {

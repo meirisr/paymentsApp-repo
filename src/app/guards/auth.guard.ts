@@ -19,7 +19,6 @@ export class AuthGuard implements CanLoad {
       take(1), // Otherwise the Observable doesn't complete!
       map((isAuthenticated) => {
         if (isAuthenticated) {
-          
           return true;
         } else {
           this.navigateService.goToLogin();

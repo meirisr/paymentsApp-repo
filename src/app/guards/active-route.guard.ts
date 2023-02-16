@@ -6,24 +6,26 @@ import { TravelProcessService } from '../services/travel-process.service';
 import { NavigateHlperService } from '../services/utils/navigate-hlper.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ActiveRouteGuard implements CanLoad {
   constructor(
     private navigateService: NavigateHlperService,
     private travelProcessService: TravelProcessService
   ) {}
-  
+
   canLoad(): Observable<boolean> {
     return this.travelProcessService.paymentTrip.pipe(
       filter((val) => val !== null), // Filter out initial Behaviour subject value
       take(1), // Otherwise the Observable doesn't complete!
       map((isActiveRoute) => {
+     
+        console.log(isActiveRoute)
         if (isActiveRoute) {
-          this.navigateService.goToMenu();
-          return true;
+          this.navigateService.goToTravelRouteTracking()
+          return false;
         } else {
-          return true;
+          return true
         }
       })
     );

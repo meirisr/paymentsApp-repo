@@ -75,7 +75,7 @@ export class UserDetailsPage implements OnInit {
     let userDetails = JSON.parse(
       (await this.storageService.getUserDetails()).value
     );
-    console.log(userDetails)
+
     this.userDetails.setValue({
       firstName: userDetails?.firstName??'',
       lastName: userDetails?.lastName??"",

@@ -123,7 +123,7 @@ export class MapComponent implements AfterViewInit {
         .pipe(filter((val) => val !== null))
         .subscribe(
           async (res) => {
-            console.log(res);
+         
             let thisStation = this.stations.find(
               ({ stationIndex }) => stationIndex === +res
             );

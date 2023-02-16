@@ -39,7 +39,7 @@ export class IntroPage implements OnInit {
     const allOrg$ = this.logInServer
       .getAllOrganizations()
       .subscribe(async (data) => {
-        console.log(data)
+      
        
         this.items =[...Object.entries(data.body).map(item=>this.creatHotelObj(item))]
         this.tempitems = [...this.items];

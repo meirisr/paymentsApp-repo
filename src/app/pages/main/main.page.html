@@ -6,8 +6,8 @@
     <!-- </ion-toolbar> -->
 </ion-header>
 <ion-content dir="{{'dir'|translate}}">
-  <ng-container >
-    <div style="text-align:center ;"><h3>{{'pages.main.startTrip'|translate}}</h3></div>
+  <ng-container  *ngIf="noData">
+    <div style="text-align:center ; display: none;"><h3>{{'pages.main.startTrip'|translate}}</h3></div>
     <div  class="card-container ion-activatable" (click)="onClick()">
       <!-- <ion-card> -->
         <app-lottie [type]="'mainScanBtn'"></app-lottie>
@@ -29,12 +29,46 @@
           <h4 style="margin-top:10px;">{{'pages.main.activeTrip'|translate}}</h4>
           <ion-ripple-effect></ion-ripple-effect>
         </div>
-       
-       
       </div>
       
-    <!-- </ion-col>
+         <div style="position: absolute;
+         bottom: 4px;">
+        <ion-list dir="{{'dir'|translate}}">
+          <ion-item class="select">
+            <ion-label>{{'pages.history.filtering'|translate}}</ion-label>
+            <ion-select
+              interface="popover"
+              [value]="selectValue"
+              placeholder=""
+              (ionChange)="handleChange($event)"
+            >
+              <ion-select-option value="all"
+                >{{'pages.history.all'|translate}}</ion-select-option
+              >
+              <ion-select-option value="month"
+                >{{'pages.history.currentMonth'|translate}}</ion-select-option
+              >
+              <ion-select-option value="today"
+                >{{'pages.history.today'|translate}}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+        </ion-list>
+       
+      <ion-list style="height: 40vh; overflow: auto;">
+        <ng-container *ngFor="let trip of historyCards">
+          <ion-item lines="inset">
+            <ion-label ><p>קו:&nbsp;&nbsp;{{trip.vehicle}}</p></ion-label>
+            <ion-label slot="end"><p>{{formatTime(trip)}},&nbsp;{{formatDate(trip)}}</p></ion-label>
+          </ion-item>
+         
+        </ng-container>
+      </ion-list>
+    </div> 
+    
    
-  </ion-row> -->
+   
+   
+
 
 </ion-content>

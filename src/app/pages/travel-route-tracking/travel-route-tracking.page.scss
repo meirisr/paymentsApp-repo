@@ -1,14 +1,13 @@
-ion-item.header{
---background: #fff00;
+ion-item.header {
+  --background: #fff00;
   position: fixed;
   top: 2vh;
   z-index: 3;
   // right: -5vw;
   width: 100vw;
 }
-.pageTitle{
+.pageTitle {
   margin-right: 15px;
-
 }
 .no-scroll {
   --overflow: hidden;
@@ -19,34 +18,32 @@ ion-item.header{
   width: 100%;
   overflow-y: auto;
 }
-.body-card-height-open{
+.body-card-height-open {
   height: 90%;
 }
 .travel-body {
-    position: fixed;
-    top: 15vh;
-    height: 27vh;
-    width: 90vw;
-    overflow: hidden;
-    margin: 0 auto;
-    margin:0 5vw;
-    z-index: 1;
-    display: inline-grid;
-    justify-items: center;
-    border-radius: 10px;
-    transition: height 300ms;
-    box-shadow: 0px 3px 6px #18171740;
-    color: #000;
-    
+  position: fixed;
+  top: 15vh;
+  height: 27vh;
+  width: 90vw;
+  overflow: hidden;
+  margin: 0 auto;
+  margin: 0 5vw;
+  z-index: 1;
+  display: inline-grid;
+  justify-items: center;
+  border-radius: 10px;
+  transition: height 300ms;
+  box-shadow: 0px 3px 6px #18171740;
+  color: #000;
 }
 .OpenBig {
   height: 75vh;
   .arrow-down-img {
     transform: rotate(180deg);
-    
   }
 }
-.close{
+.close {
   height: 0vh;
 }
 
@@ -86,7 +83,6 @@ hr {
   padding-bottom: 2px;
   justify-content: center;
   // background: #091d31;
-
 }
 h4 {
   margin: 0;
@@ -100,7 +96,7 @@ app-header-wave {
 
 .travel-body:before,
 div:after {
-  content:"";
+  content: "";
   position: absolute;
 }
 .travel-body:before {
@@ -108,7 +104,8 @@ div:after {
   width: 80px;
   height: 148px;
   border-radius: 63%;
-  box-shadow: 0px 0px 1px #d7d8da, 0px 0px 5px #dee2e6, 0px 0px 0px #d7d8da, 0px 0px 0px 10000px #f9fafb;
+  box-shadow: 0px 0px 1px #d7d8da, 0px 0px 5px #dee2e6, 0px 0px 0px #d7d8da,
+    0px 0px 0px 10000px #f9fafb;
   z-index: -1;
 }
 
@@ -120,7 +117,6 @@ div:after {
 .item-background {
   --ion-item-background: none;
   width: 100%;
- 
 }
 
 .travel-info-header-icons {
@@ -143,7 +139,7 @@ ion-item {
   --inner-padding-start: 0;
   --inner-padding-top: 0;
 }
-.close-travelBody{
+.close-travelBody {
   position: absolute;
   top: 3vh;
   display: flex;
@@ -151,7 +147,7 @@ ion-item {
   z-index: 5;
   justify-content: left;
 }
-.open-travelBody{
+.open-travelBody {
   position: absolute;
   top: 8vh;
   display: flex;
@@ -159,15 +155,15 @@ ion-item {
   z-index: 5;
   justify-content: center;
 }
-.open-travelBody ion-fab-button{
+.open-travelBody ion-fab-button {
   background: #fff;
   border-radius: 60%;
 }
 
-ion-icon[name="add-outline"]{
+ion-icon[name="add-outline"] {
   transition: transform 300ms;
   color: black !important;
 }
-.hideItem{
+.hideItem {
   display: none;
 }

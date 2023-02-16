@@ -19,7 +19,7 @@ export class LottieComponent implements OnInit {
   }
 
   animationCreated(animationItem: AnimationItem): void {
-    console.log(animationItem);
+
   }
   ngOnInit() {
     this.generateOptios(this.type);

@@ -49,9 +49,19 @@ export class ScanPage implements OnInit {
   }
 
   ngOnInit() {
+    let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
+      async (data) => {
+        if (data)this.navigateService.goToTravelRouteTracking();
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+    this.subscriptions.push(routeInfoSubscription);
+
+
     // this.utils.presentLoader();
     if (Capacitor.isNativePlatform()) {
-       
       this.checkLocationPermission().then((e) => {
         if (e) {
           BarcodeScanner.prepare();
@@ -73,6 +83,8 @@ export class ScanPage implements OnInit {
       BarcodeScanner.stopScan();
     }
     this.scanNotAllowed = false;
+    
+    document.querySelector('body').classList.remove('scanBg');
   }
 
   async startScanner(): Promise<void> {
@@ -80,22 +92,24 @@ export class ScanPage implements OnInit {
     document.querySelector('body').classList.add('scanBg');
     let hotelId = !!this.storageService.getHotelId();
     const allowed = await this.checkPermission();
-    
+
     if (allowed) {
       this.scanActive = true;
-      
+
       this.result = null;
       // await this.utils.dismissLoader();
-     
+
       const result = await BarcodeScanner.startScan({
         targetedFormats: [SupportedFormat.QR_CODE],
       });
       if (result.hasContent) {
         this.result = result.content;
-        console.log(result);
         this.stopScanner();
         document.querySelector('body').classList.remove('scanBg');
-        this.travelProcessService.tripInfo.next({userLocation:this.userLocation, busNomber:this.result});
+        this.travelProcessService.tripInfo.next({
+          userLocation: this.userLocation,
+          busNomber: this.result,
+        });
         this.navigateService.goToPayment();
         // if (hotelId) {
         //   this.navigateService.goToPayment();
@@ -141,7 +155,6 @@ export class ScanPage implements OnInit {
     }
   }
   async checkLocationPermission(): Promise<boolean> {
-  
     const locationStatus = await Geolocation.requestPermissions();
     if (locationStatus.location) {
       try {
@@ -203,6 +216,7 @@ export class ScanPage implements OnInit {
   }
   ngOnDestroy() {
     // this.utils.dismissLoader();
+    document.querySelector('body').classList.remove('scanBg');
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

@@ -83,7 +83,6 @@ export class SmsCodeFormComponent implements OnInit, AfterViewInit {
     );
   }
   otpController(event, next, prev) {
-    console.log(event.target.value);
     if (this.smsCodeForm.valid) {
       this.onSmsCodeFormSubmit();
     }

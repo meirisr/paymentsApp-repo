@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { StorageService, userStoregeObj } from 'src/app/services/storage.service';
 import { Storage } from '@capacitor/storage';
 import { App } from '@capacitor/app';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
+import { TravelProcessService } from 'src/app/services/travel-process.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -11,7 +13,8 @@ import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.serv
   styleUrls: ['./menu.page.scss'],
 })
 
-export class MenuPage {
+export class MenuPage implements OnInit{
+  private subscriptions: Subscription[] = [];
   prefersDark: string;
   userEmail:string='';
   userName:string='';
@@ -27,15 +30,30 @@ export class MenuPage {
     private navigateService: NavigateHlperService,
     public navCtrl: NavController,
     private storageService: StorageService,
+    private travelProcessService: TravelProcessService,
   ) {
     
     this.platform.backButton.subscribeWithPriority(10, () => {
       this.navCtrl.navigateBack('/info', { replaceUrl: true });
     });
 
-    document.querySelector('body').classList.remove('scanBg');
-  }
 
+  }
+  ngOnInit() {
+    
+    let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
+      async (data) => {
+     
+        if (data)this.navigateService.goToTravelRouteTracking();
+      },
+      async (error) => {
+        console.log(error);
+      }
+    );
+    this.subscriptions.push(routeInfoSubscription);
+
+
+  }
   ngAfterViewInit(): void {
     this.getuserInfo()
     this.hideSplashScreen();
@@ -104,5 +122,8 @@ export class MenuPage {
     this.cardLast4Digits = (JSON.parse(
       (await this.storageService.getCreditCard4Dig())?.value)
     );
+}
+ngOnDestroy() {
+  this.subscriptions.forEach((subscription) => subscription.unsubscribe());
 }
 }

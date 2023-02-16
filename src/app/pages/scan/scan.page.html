@@ -1,8 +1,10 @@
-
 <app-back-btn (click)="goTomenu()"></app-back-btn>
-  
+
 <ion-content [class.hideBg]="scanActive">
-  <ion-row class="ion-text-center ion-padding alert-row" [hidden]="!scanNotAllowed">
+  <ion-row
+    class="ion-text-center ion-padding alert-row"
+    [hidden]="!scanNotAllowed"
+  >
     <ion-col class="">
       <div class="alert alert-warning" role="alert">
         Not implemented on web!
@@ -24,13 +26,11 @@
         (click)="toggleFlash()"
       ></ion-icon>
     </div>
-   
   </div>
   <ion-row [hidden]="!scanActive">
     <div class="ocrloader">
       <p>{{'pages.scan.scan'|translate}}</p>
       <em></em>
-
     </div>
   </ion-row>
 </ion-content>

@@ -41,7 +41,7 @@ export class TravelProcessService {
         })
       )
       .subscribe(
-        (data) => console.log(data),
+        (data) =>{},
         (err) => console.log(err)
       );
   }
@@ -75,7 +75,7 @@ export class TravelProcessService {
         (data) => {
           this.paymentTrip.next(this.routeData); //true
           this.storageService.setRouteDetails(this.routeData);
-          console.log(data);
+        
         },
         (err) => {
           this.paymentTrip.next(this.routeData); //none
@@ -83,25 +83,27 @@ export class TravelProcessService {
         }
       );
   }
-  public newTransportationDrive(trip:{userLocation:any, busNomber:string}, hotelId: string):Observable<any>{
-    console.log(trip);
+  public newTransportationDrive(
+    trip: { userLocation: any; busNomber: string },
+    hotelId: string
+  ): Observable<any> {
+  
 
-    return this.http
-      .post(
-        `${environment.serverUrl}/transportation/insert-new-transportation-drive-without-route`,
-        {
-          vehicle: +trip?.busNomber||'',
-          organizationId: +hotelId,
-          // organizationId: "41",
-          // stationId: 59562,
-          stationId: 32,
-          coordinates:trip.userLocation
-          // coordinates:{latitude: 31.79441, longitude: 35.1875368}
-        },
-        // {
-        //   headers: new HttpHeaders({ station: 'Maya-Tours' }),
-        // }
-      )
+    return this.http.post(
+      `${environment.serverUrl}/transportation/insert-new-transportation-drive-without-route`,
+      {
+        vehicle: +trip.busNomber,
+        organizationId: +hotelId,
+        // organizationId: "41",
+        // stationId: 59562,
+        stationId: 32,
+        coordinates: trip.userLocation,
+        // coordinates:{latitude: 31.79441, longitude: 35.1875368}
+      }
+      // {
+      //   headers: new HttpHeaders({ station: 'Maya-Tours' }),
+      // }
+    );
   }
 
   public getTravelDetails(
@@ -122,7 +124,7 @@ export class TravelProcessService {
         )
         .pipe(
           map((data: any) => {
-            console.log(data);
+          
             if (data.status != 'Success') {
               this.routeInfo.next(false);
               return false;
@@ -146,7 +148,7 @@ export class TravelProcessService {
     }
   }
   creatRouteData(obj) {
-    console.log(obj);
+
     return {
       Coordinates: obj?.data?.drive?.Coordinates.map((element) => {
         return this.creatPathArray(element);

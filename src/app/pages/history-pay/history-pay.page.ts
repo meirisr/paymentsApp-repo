@@ -92,7 +92,7 @@ export class HistoryPayPage implements OnInit {
   async updateCreditCard(): Promise<void> {
     this.userInfoServer.tripPayment(this.cardDetails.value).subscribe(
       (data) => {
-        console.log(data.responseMessage);
+  
         this.showalert(data.responseMessage);
         this.goToHistory();
       },

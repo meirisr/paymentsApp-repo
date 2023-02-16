@@ -50,7 +50,7 @@ export class HistoryPage implements OnInit {
   formatTime(item) {
     let date = new Date(item.created);
     const h = date.getHours();
-    const m = date.getMinutes();
+    const m = date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes();
     return h + ':' + m;
   }
   handleChange(e) {
@@ -61,7 +61,6 @@ export class HistoryPage implements OnInit {
   getHistoryData(after: string) {
     let userInfo$ = this.userInfoServer.getUserHistory(after).subscribe(
       (data) => {
-        console.log(data)
         this.historyCards = data.reverse();
         data.forEach((trip) => {
           !trip.paymentCompleted

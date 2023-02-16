@@ -13,7 +13,7 @@ export class PopupModalComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.type)
+
   }
 
 }

@@ -1,80 +1,78 @@
-ion-header{
+ion-header {
   margin-bottom: 15px;
 }
-ion-footer{
+ion-footer {
   margin-top: 15px;
 }
-ion-text{
+ion-text {
   color: #fff !important;
 }
 
-.slide-body-header h1{
-  font-size: 49px
-
-  
+.slide-body-header h1 {
+  font-size: 49px;
 }
-.slide-body-header p{
-  font-size:19px;
+.slide-body-header p {
+  font-size: 19px;
   font-weight: 500;
-  
 }
-.icon{
-  background-color: #EFEFEF;
+.icon {
+  background-color: #efefef;
   width: 38px;
   height: 38px;
 }
+.infoListItem {
+  border-bottom: 1px solid gray;
+}
 
-
-.nextBtn{
+.nextBtn {
   margin: 0px 15px 30px;
   height: 45px;
-  --border-color:var(--ion-color-btn);
-  --color:#fff;
-  --border-radius: 10px; 
+  --border-color: var(--ion-color-btn);
+  --color: #fff;
+  --border-radius: 10px;
 }
-.icon-circle{
+.icon-circle {
   width: 50px;
   height: 50px;
   padding-top: 5px;
   font-size: 30px;
   border-radius: 50%;
-  background: #EFEFEF;
+  background: #efefef;
   text-align: center;
 }
-ion-item{
+ion-item {
   margin: 2vh 0;
 }
 
-.icon-list{
+.icon-list {
   text-align: center;
 }
-.white-text{
+.white-text {
   color: #fff;
 }
-.searchInputRap{
+.searchInputRap {
   padding: 0px 15px;
 }
-.searchInput{
+.searchInput {
   margin-top: 5vh;
-  border-bottom: 1px solid #D8D8D8;
+  border-bottom: 1px solid #d8d8d8;
   color: #fff;
+}
+.searchInput:hover {
+  border-bottom: 1px solid #ffb300;
+}
+.selected {
+  border: 1px solid #ffb300;
+  border-radius: 6px;
+}
 
-}
-.searchInput:hover{
-  border-bottom: 1px solid #FFB300;
-}
-.selected{
-  border: 1px solid #FFB300;
-  border-radius: 6px ;
-}
-
-.searchInputRap ion-icon[name="search-outline"]{
+.searchInputRap ion-icon[name="search-outline"] {
   position: absolute;
-    bottom: 0;
+  bottom: 0;
 }
-.icon-left{
-  left:5vw;
+.icon-left {
+  left: 5vw;
 }
-.icon-right{
+.icon-right {
   right: 5vw;
 }

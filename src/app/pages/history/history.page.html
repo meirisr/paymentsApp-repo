@@ -47,16 +47,19 @@
 <ion-content dir="{{'dir'|translate}}">
   <ion-list>
     <ng-container *ngFor="let trip of historyCards">
-      <ion-item *ngIf="!trip.paymentCompleted" lines="none">
-        <ion-card
+      <ion-item lines="inset">
+        <ion-label ><p>קו:&nbsp;&nbsp;{{trip.vehicle}}</p></ion-label>
+        <ion-label slot="end"><p>{{formatTime(trip)}},&nbsp;{{formatDate(trip)}}</p></ion-label>
+      </ion-item>
+        <!-- <ion-card
           class="histoy-card"
           dir="{{'dir'|translate}}"
           [class.redCard]="!trip.paymentCompleted"
         >
           <ion-card-header>
-            <!-- <ion-title class="card-title"
+            <ion-title class="card-title"
               >{{'pages.history.notPaid'|translate}}</ion-title
-            > -->
+            >
             <ion-card-subtitle
               >קו:&nbsp;&nbsp;{{trip.vehicle}}</ion-card-subtitle
             >
@@ -66,22 +69,26 @@
             <ion-card-subtitle
               >{{'pages.history.time'|translate}}:&nbsp;&nbsp;{{formatTime(trip)}}</ion-card-subtitle
             >
-            <!-- <ion-card-subtitle>
+            <ion-card-subtitle>
               תשלום:&nbsp;&nbsp;&#8362;{{trip.paymentAmount
-              }}</ion-card-subtitle -->
-            <!-- > -->
+              }}</ion-card-subtitle>
+            
           </ion-card-header>
 
-          <!-- <ion-button ion-button fill="clear" (click)="tripPay()"
+          <ion-button ion-button fill="clear" (click)="tripPay()"
             >{{'pages.history.payNow'|translate}}</ion-button
-          > -->
-        </ion-card>
-      </ion-item>
+          >
+        </ion-card> -->
+     
     </ng-container>
   </ion-list>
 
   <ion-list>
-    <ng-container *ngFor="let trip of historyCards">
+    <!-- <ng-container *ngFor="let trip of historyCards">
+      <ion-item lines="inset">
+        <ion-label ><p>Default Item Lines</p></ion-label>
+        <ion-label slot="end"><p>Default Item Lines</p></ion-label>
+      </ion-item>
       <ion-item *ngIf="trip.paymentCompleted" lines="none">
         <ion-card
           class="histoy-card"
@@ -106,7 +113,7 @@
             >
           </ion-card-header>
         </ion-card>
-      </ion-item>
-    </ng-container>
+      </ion-item> -->
+    <!-- </ng-container> -->
   </ion-list>
 </ion-content>

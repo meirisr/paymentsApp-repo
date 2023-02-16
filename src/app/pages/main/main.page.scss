@@ -108,8 +108,9 @@ ion-list {
  
 }
 ion-item {
-  --border-color:#fff;
+  --border-color:gray;
   margin: 5px 0px;
+  padding: 0px 15px;
  
 }
 ion-item.header {

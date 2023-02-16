@@ -17,6 +17,8 @@ import player from 'lottie-web';
 import {LottieComponent } from '../components/lottie/lottie.component';
 import { PopupModalComponent } from '../components/popup-modal/popup-modal.component';
 import { EndTripModalComponent } from '../components/end-trip-modal/end-trip-modal.component';
+import { HistoryPage } from '../pages/history/history.page';
+
 
 
 export function playerFactory() {
@@ -36,6 +38,7 @@ const content = [
   LottieComponent,
   PopupModalComponent,
   EndTripModalComponent,
+  HistoryPage
   
   
 ];

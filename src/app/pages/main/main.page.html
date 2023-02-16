@@ -32,10 +32,10 @@
       </div>
       
          <div style="position: absolute;
-         bottom: 4px;">
+         top: 40vh; width: 100vw;">
         <ion-list dir="{{'dir'|translate}}">
           <ion-item class="select">
-            <ion-label>{{'pages.history.filtering'|translate}}</ion-label>
+            <ion-label>הסטוריית נסיעות</ion-label>
             <ion-select
               interface="popover"
               [value]="selectValue"
@@ -55,7 +55,7 @@
           </ion-item>
         </ion-list>
        
-      <ion-list style="height: 40vh; overflow: auto;">
+      <ion-list style="height: 50vh; overflow: auto;">
         <ng-container *ngFor="let trip of historyCards">
           <ion-item lines="inset">
             <ion-label ><p>קו:&nbsp;&nbsp;{{trip.vehicle}}</p></ion-label>
@@ -65,10 +65,4 @@
         </ng-container>
       </ion-list>
     </div> 
-    
-   
-   
-   
-
-
 </ion-content>

@@ -10,15 +10,18 @@ import { MainPage } from './main.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { GlobalModule } from 'src/app/share/share.module';
 
+
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MainPageRoutingModule,
-    TranslateModule,
-    GlobalModule
-  ],
-  declarations: [MainPage]
+    declarations: [MainPage],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        MainPageRoutingModule,
+        TranslateModule,
+        GlobalModule,
+       
+        
+    ]
 })
 export class MainPageModule {}

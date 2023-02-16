@@ -32,7 +32,7 @@ export class LottieComponent implements OnInit {
       ...this.options, // In case you have other properties that you want to copy
       path: '../../../assets/lottie/mainScanBtn.json', 
     };
-    this.height="100%";
+    this.height="85%";
     break;
   case 'chack':
     this.options = {

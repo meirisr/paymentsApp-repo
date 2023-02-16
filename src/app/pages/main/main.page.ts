@@ -10,6 +10,8 @@ import { UserInfoService } from 'src/app/services/user-info.service';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
 
+
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',

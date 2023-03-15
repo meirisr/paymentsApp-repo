@@ -24,7 +24,7 @@ export class UserInfoService {
     private utils: UtilsService
   ) {}
 
-  public getUserDetails(): void {
+  public getUserDetails() {
     this.http
       .get(`${environment.serverUrl}/user/get-user-details`)
       .pipe(
@@ -40,7 +40,7 @@ export class UserInfoService {
       .subscribe(
         async () => {},
         async (err) => {
-          console.log(err);
+         
           this.onHttpErorr(err, '');
         }
       );
@@ -93,8 +93,6 @@ export class UserInfoService {
         {
           before: Date.now(),
           after: afterDate,
-          //from the first day of the this month
-          //  Date.UTC(date.getFullYear(), date.getMonth(),1)
         },
         {
           headers: new HttpHeaders({ station: 'Maya-Tours' }),
@@ -217,8 +215,8 @@ export class UserInfoService {
             (data) => console.log(data),
             (err) => console.log(err)
           );
-          console.log(data);
-          this.getCreditCardInfo();
+          // console.log(data);
+          // this.getCreditCardInfo();
         },
         async (res) => {
           this.onHttpErorr(res, '');

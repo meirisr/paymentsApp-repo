@@ -69,6 +69,7 @@ export class UserDetailsPage implements OnInit {
       }
     );
     this.subscriptions.push(updateUserInfo$);
+    this.goToMenu()
   }
   async getuserInfo(): Promise<void> {
    

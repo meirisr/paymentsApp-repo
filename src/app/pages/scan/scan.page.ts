@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
 import {
   BarcodeScanner,
@@ -21,7 +21,7 @@ import { TranslationService } from 'src/app/services/utils/translation.service';
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
 })
-export class ScanPage implements OnInit {
+export class ScanPage implements OnInit , OnDestroy{
   private subscriptions: Subscription[] = [];
   isFlashAvailable: boolean = true;
   isFlashOn: boolean = false;
@@ -49,15 +49,15 @@ export class ScanPage implements OnInit {
   }
 
   ngOnInit() {
-    let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
-      async (data) => {
-        if (data)this.navigateService.goToTravelRouteTracking();
-      },
-      async (error) => {
-        console.log(error);
-      }
-    );
-    this.subscriptions.push(routeInfoSubscription);
+    // let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
+    //   async (data) => {
+    //     if (data)this.navigateService.goToTravelRouteTracking();
+    //   },
+    //   async (error) => {
+    //     console.log(error);
+    //   }
+    // );
+    // this.subscriptions.push(routeInfoSubscription);
 
 
     // this.utils.presentLoader();
@@ -110,11 +110,24 @@ export class ScanPage implements OnInit {
           userLocation: this.userLocation,
           busNomber: this.result,
         });
-        this.navigateService.goToPayment();
-        // if (hotelId) {
-        //   this.navigateService.goToPayment();
-        // } else {
-        // this.getTrip();
+        
+          let hotelId = await this.storageService.getHotelId();
+          this.travelProcessService
+            .newTransportationDrive({userLocation:this.userLocation,busNomber:this.result}, hotelId.value)
+            .subscribe(
+              (data) => {
+                console.log(data)
+                this.travelProcessService.paymentTrip.next(true); //true
+                this.storageService.setRouteDetails(true);
+              },
+              (err) => {
+                this.travelProcessService.paymentTrip.next(false); //none
+                console.log(err);
+              }
+            );
+            this.navigateService.goToMenu();
+      
+        
       }
     }
   }
@@ -215,7 +228,10 @@ export class ScanPage implements OnInit {
     this.navigateService.goToMenu();
   }
   ngOnDestroy() {
-    // this.utils.dismissLoader();
+    if (Capacitor.isNativePlatform()) {
+      BarcodeScanner.stopScan();
+    }
+    this.scanNotAllowed = false;
     document.querySelector('body').classList.remove('scanBg');
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }

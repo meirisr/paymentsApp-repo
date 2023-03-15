@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import {
@@ -17,7 +17,7 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class MainPage {
+export class MainPage implements OnInit,AfterViewInit{
   private subscriptions: Subscription[] = [];
   headerText: string;
   noData: boolean = false;
@@ -37,8 +37,8 @@ export class MainPage {
     });
   }
   ngOnInit() {
-    this.noData = false;
-    this.getHistoryData(this.selectValue);
+    this.noData = true;
+    // this.getHistoryData(this.selectValue);
       // let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
       //   async (data) => {
       //     console.log(data)
@@ -64,9 +64,9 @@ export class MainPage {
   ngAfterViewInit(): void {
     let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
       async (data) => {
-     
         if (!data) {
           this.noData = true;
+
           return;
         }
         this.noData = false;
@@ -124,23 +124,34 @@ export class MainPage {
     );
     this.subscriptions.push(userInfo$);
   }
-  formatDate(item) {
-    let date = new Date(item.created);
+  currentDateAndTime(){
+    const date=new Date()
+    return this.formatTime(date)+' ,'+this.formatDate(date)
+  }
+  formatDate(created) {
+    let date = new Date(created);
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
     return day + '.' + month + '.' + year;
   }
-  formatTime(item) {
-    let date = new Date(item.created);
+  formatTime(created) {
+    let date = new Date(created);
     const h = date.getHours();
     const m = date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes();
     return h + ':' + m;
   }
   handleChange(e) {
     this.selectValue = e.target.value;
-    this.getHistoryData(e.target.value);
+    // this.getHistoryData(e.target.value);
     console.log(e.target.value);
+  }
+  onEndTrip() {
+    this.travelProcessService.paymentTrip.next(false);
+    this.travelProcessService.routeInfo.next(false);
+    this.storageService.deleteRouteDetails();
+    this.navigateService.goToMenu();
+    // const loader=  this.utils.presentEndOfTripModal(this.origin.stationName,this.destination.stationName);
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

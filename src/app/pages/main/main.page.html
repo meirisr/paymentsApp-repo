@@ -1,68 +1,38 @@
+<img *ngIf="noData" src="../../../assets/images/mainBackground.png" /><img>
 <ion-header class="ion-no-border">
-  <!-- <ion-toolbar> -->
       <ion-menu-button  menu="main" class="{{'menu-btn-side'|translate}}">
         <ion-img src="../../../assets/menu-btn.svg"></ion-img>
-      </ion-menu-button>
-    <!-- </ion-toolbar> -->
-</ion-header>
-<ion-content dir="{{'dir'|translate}}">
-  <ng-container  *ngIf="noData">
-    <div style="text-align:center ; display: none;"><h3>{{'pages.main.startTrip'|translate}}</h3></div>
-    <div  class="card-container ion-activatable" (click)="onClick()">
-      <!-- <ion-card> -->
-        <app-lottie [type]="'mainScanBtn'"></app-lottie>
-        <!-- <ion-card-header>
-          <img src="../../../assets/qrCode.svg" />
-     
-        </ion-card-header> -->
-        <ion-ripple-effect></ion-ripple-effect>
-      <!-- </ion-card> -->
-    </div>
-
-  </ng-container>
-
-  <!-- <ion-row *ngIf="!noData" class="ion-text-center ion-padding alert-row ion-activatable"
-  (click)="onActiveTrip()">
-    <ion-col class=""> -->
-      <div *ngIf="!noData" class=" footer-container ion-text-center ion-padding ion-activatable"  (click)="onActiveTrip()">
-        <div class="activeTripeBtn">
-          <h4 style="margin-top:10px;">{{'pages.main.activeTrip'|translate}}</h4>
-          <ion-ripple-effect></ion-ripple-effect>
-        </div>
-      </div>
-      
-         <div style="position: absolute;
-         top: 40vh; width: 100vw;">
-        <ion-list dir="{{'dir'|translate}}">
-          <ion-item class="select">
-            <ion-label>הסטוריית נסיעות</ion-label>
-            <ion-select
-              interface="popover"
-              [value]="selectValue"
-              placeholder=""
-              (ionChange)="handleChange($event)"
-            >
-              <ion-select-option value="all"
-                >{{'pages.history.all'|translate}}</ion-select-option
-              >
-              <ion-select-option value="month"
-                >{{'pages.history.currentMonth'|translate}}</ion-select-option
-              >
-              <ion-select-option value="today"
-                >{{'pages.history.today'|translate}}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-        </ion-list>
        
-      <ion-list style="height: 50vh; overflow: auto;">
-        <ng-container *ngFor="let trip of historyCards">
-          <ion-item lines="inset">
-            <ion-label ><p>קו:&nbsp;&nbsp;{{trip.vehicle}}</p></ion-label>
-            <ion-label slot="end"><p>{{formatTime(trip)}},&nbsp;{{formatDate(trip)}}</p></ion-label>
-          </ion-item>
          
-        </ng-container>
-      </ion-list>
-    </div> 
+        
+      </ion-menu-button>
+</ion-header>
+<ion-content [class.active]="!noData" dir="{{'dir'|translate}}">
+
+  <ng-container  *ngIf="noData">
+    <div  class="card-container ion-activatable" >
+      <img src="../../../assets/scan.svg" (click)="onClick()">
+    </div>
+    <ion-row style="top:20vh;
+    position: absolute;
+    width: 100vw;">
+     <ion-col>
+    <app-history-list [height]="30"></app-history-list>
+   </ion-col>
+</ion-row> 
+  </ng-container>
+      <ng-container  *ngIf="!noData">
+      <div  class="card-container-active ion-activatable" >
+        <img src="../../../assets/activeTrip.svg" style="margin-bottom: 15px;">
+        <ion-label>{{currentDateAndTime()}}</ion-label>
+      </div>
+    
+      <div class="footer">
+        <ion-button  (click)="onEndTrip()">סיום</ion-button>
+      </div>
+     
+    </ng-container>
+    
 </ion-content>
+
+

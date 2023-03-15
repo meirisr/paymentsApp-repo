@@ -69,8 +69,11 @@ export class SmsCodeFormComponent implements OnInit, AfterViewInit {
     };
     this.logInServer.getToken(credentials).subscribe(
       async (data) => {
+        console.log('data')
+        this.navigateService.goToIntro();
         // this.utils.dismissLoader(loader);
         await this.authenticationService.loadToken().then(() => {
+          console.log('data2')
           setTimeout(() => {
             this.navigateService.goToIntro();
           }, 200);

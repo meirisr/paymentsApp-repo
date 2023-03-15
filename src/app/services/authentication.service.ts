@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { GetResult } from '@capacitor/storage';
@@ -13,9 +13,7 @@ import { UserInfoService } from './user-info.service';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    null
-  );
+  isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<any>(null);
 
   private refreshToken: GetResult;
   private hotelId: GetResult;
@@ -36,13 +34,13 @@ export class AuthenticationService {
     this.hotelName = await this.storageService.getHotelName();
   };
   getAllUserInfo = () => {
-    this.userInfoServer.getUnpaidTrips();
+    // this.userInfoServer.getUnpaidTrips();
     this.userInfoServer.getUserDetails();
-    this.userInfoServer.getCreditCardInfo();
+    // this.userInfoServer.getCreditCardInfo();
     if (this.hotelId.value != null && this.hotelName != null) {
-      this.loginService
-        .isUserPermitToOrganization(this.hotelId.value, this.hotelName.value)
-        .subscribe();
+      // this.loginService
+      //   .isUserPermitToOrganization(this.hotelId.value, this.hotelName.value)
+      //   .subscribe();
     }
   };
 
@@ -52,8 +50,9 @@ export class AuthenticationService {
       this.isTokenValid(this.token.value).subscribe(
         async (res: boolean) => {
           if (res) {
-            this.getAllUserInfo();
             this.isAuthenticated$.next(true);
+            this.getAllUserInfo();
+       
           } else {
             this.storageService.deleteStorege(userStoregeObj.TOKEN_KEY);
             this.storageService.deleteStorege(userStoregeObj.HOTEL_ID);

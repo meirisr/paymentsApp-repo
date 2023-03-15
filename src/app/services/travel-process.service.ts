@@ -92,7 +92,8 @@ export class TravelProcessService {
     return this.http.post(
       `${environment.serverUrl}/transportation/insert-new-transportation-drive-without-route`,
       {
-        vehicle: +trip.busNomber,
+        vehicle:"163",
+        //  +trip.busNomber,
         organizationId: +hotelId,
         // organizationId: "41",
         // stationId: 59562,

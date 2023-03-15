@@ -1,0 +1,47 @@
+
+<div class="ion-no-border" dir="{{'dir'|translate}}">
+  <ion-list dir="{{'dir'|translate}}">
+    <ion-item class="select">
+      <ion-label>{{'pages.history.travelHistory'|translate}}</ion-label>
+      <ion-select
+        interface="popover"
+        [value]="selectValue"
+        placeholder=""
+        (ionChange)="handleChange($event)"
+      >
+        <ion-select-option value="all"
+          >{{'pages.history.all'|translate}}</ion-select-option
+        >
+        <ion-select-option value="month"
+          >{{'pages.history.currentMonth'|translate}}</ion-select-option
+        >
+        <ion-select-option value="today"
+          >{{'pages.history.today'|translate}}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item lines="none">
+      <!-- <ion-text style="font-weight: bold"
+        >{{'pages.history.details'|translate}}</ion-text
+      > -->
+      <ion-text
+        >({{historyCards.length}}&nbsp;{{'pages.history.trips'|translate}})</ion-text
+      >
+    </ion-item>
+  </ion-list>
+</div>
+<ion-content  dir="{{'dir'|translate}}"[ngStyle]="{'height.vh': height}" >
+  <ion-list>
+    <ng-container *ngFor="let trip of historyCards">
+      <ion-item lines="inset">
+        <ion-label ><p>קו:&nbsp;&nbsp;{{trip.vehicle}}</p></ion-label>
+        <ion-label ><p>{{formatTime(trip)}},&nbsp;{{formatDate(trip)}}</p></ion-label>
+        <ion-label slot="end"><p>קוד:&nbsp;&nbsp;{{trip.id}}</p></ion-label>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+
+
+</ion-content>

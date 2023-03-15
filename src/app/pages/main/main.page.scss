@@ -2,8 +2,9 @@
   --width: 500px;
 }
 
-ion-content {
-  --padding-top: 10vh;
+ion-content.active {
+  // --padding-top: 10vh;
+  --background: url('../../../assets/images/activeTripBackground.png') no-repeat center/cover fixed;
 }
 
 .nemu-text {
@@ -35,35 +36,39 @@ ion-card-header {
   padding-top: 35%;
 }
 .card-container {
-  display: flex;
-  justify-content: center;
-  // margin-top: 5vh;
+  position: fixed;
+    top: 18vh;
+    transform: translateX(-50%);
+    left: 50%;
+
 }
-// .card-container ion-card {
-// border-radius: 60%;
-// background: #ffb300;
-// height: 200px;
-// width: 200px;
-// border: 3px solid white;
-// }
+.card-container-active {
+  position: fixed;
+    top: 35vh;
+    transform: translateX(-50%);
+    left: 50%;
+    text-align: center;
+
+}
+.footer{
+  width: 100vw;
+  position: fixed;
+  text-align: center;
+  bottom: 5vh;
+}
+.footer > ion-button{
+  height: 48px;
+  width: 154px;
+  --background: white;
+  --color: black;
+  font-size: 1.2rem;
+    font-weight: bold;
+}
+
 ion-card-title {
   color: #000 !important;
 }
-// .alert-row{
-//     position: absolute;
-//     width: 100vw;
-//     top: 5vh;
 
-// }
-// .alert{
-//   margin-bottom: 0rem;
-//   display: flex;
-//   justify-content: space-around;
-//   background-color: #fff;
-//   color: #000;
-//   border: 2px solid #FFB300;
-
-// }
 .payment-body {
   position: fixed;
   top: 15vh;
@@ -95,7 +100,7 @@ div:after {
 }
 .footer-container {
   position: absolute;
-  top: 20vh;
+  top: 25vh;
   width: 100vw;
 }
 .activeTripeBtn {

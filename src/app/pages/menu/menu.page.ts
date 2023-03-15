@@ -6,6 +6,7 @@ import { App } from '@capacitor/app';
 import { NavigateHlperService } from 'src/app/services/utils/navigate-hlper.service';
 import { TravelProcessService } from 'src/app/services/travel-process.service';
 import { Subscription } from 'rxjs';
+import { UserInfoService } from 'src/app/services/user-info.service';
 
 @Component({
   selector: 'app-menu',
@@ -30,7 +31,7 @@ export class MenuPage implements OnInit{
     private navigateService: NavigateHlperService,
     public navCtrl: NavController,
     private storageService: StorageService,
-    private travelProcessService: TravelProcessService,
+    private userInfoServer: UserInfoService,
   ) {
     
     this.platform.backButton.subscribeWithPriority(10, () => {
@@ -40,22 +41,23 @@ export class MenuPage implements OnInit{
 
   }
   ngOnInit() {
+    // this.getuserInfo()
     
-    let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
-      async (data) => {
+    // let routeInfoSubscription = this.travelProcessService.paymentTrip.subscribe(
+    //   async (data) => {
      
-        if (data)this.navigateService.goToTravelRouteTracking();
-      },
-      async (error) => {
-        console.log(error);
-      }
-    );
-    this.subscriptions.push(routeInfoSubscription);
+    //     if (data)this.navigateService.goToTravelRouteTracking();
+    //   },
+    //   async (error) => {
+    //     console.log(error);
+    //   }
+    // );
+    // this.subscriptions.push(routeInfoSubscription);
 
 
   }
   ngAfterViewInit(): void {
-    this.getuserInfo()
+  
     this.hideSplashScreen();
   }
   async hideSplashScreen(): Promise<void> {}
@@ -63,8 +65,8 @@ export class MenuPage implements OnInit{
   settings(): void {
     this.navigateService.goToSettings();
   }
-  scan(): void {
-    this.navigateService.goToScan();
+  menu(): void {
+    this.navigateService.goToMenu();
   }
   map(): void {
     this.navigateService.goToTravelRouteTracking();
@@ -109,6 +111,7 @@ export class MenuPage implements OnInit{
     await alert.present();
   }
   async getuserInfo(): Promise<void> {
+    this.userInfoServer.getUserDetails()
     this.userEmail = (JSON.parse(
       (await this.storageService.getUserDetails()).value)?.email??''
     );

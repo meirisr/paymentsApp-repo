@@ -21,24 +21,28 @@ export class HeaderInterceptor implements HttpInterceptor {
     private storageService: StorageService,
     private authenticationService: AuthenticationService
   ) {}
-
+ 
+  
   intercept(
     httpRequest: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return from(this.TokenValidation(httpRequest, next)).pipe(
       switchMap((token) => {
+        // console.log(token)
+      //  this.storageService.getToken().then(v=>this.token=v.value)
         if (
           httpRequest.url.includes('GetDetailsByVehicle') ||
           httpRequest.url.includes('get-organization-per-station')
         ) {
+         
           return next.handle(httpRequest);
         }
         const modifieRequest = httpRequest.clone({
           headers: httpRequest.headers.append(
             'Authorization',
-            `Bearer ${token}`
-          ),
+            `Bearer ${token}`,
+          )
         });
         return next.handle(modifieRequest);
       })
@@ -62,6 +66,7 @@ export class HeaderInterceptor implements HttpInterceptor {
             if (!val) {
               this.authenticationService.loadToken();
             } else {
+              // console.log(tokenVal.value)
               return tokenVal.value;
             }
           });

@@ -1,0 +1,30 @@
+
+ion-list{
+  padding: 0%;
+}
+ion-item {
+  --border-color:gray;
+  margin: 0;
+  padding: 0px 5px;
+ 
+}
+ion-item.header {
+  margin-top: 2vh;
+ 
+}
+ion-item.select {
+  // padding: 0 10vw;
+  // margin-top: 2vh;
+  padding: 0px 15px;
+  --highlight-background: #10101055;
+}
+p{
+  color: #fff !important;
+}
+ion-text {
+  color: #fff !important;
+  margin: 0 2px;
+}
+ion-label{
+  color: #fff!important;
+}
